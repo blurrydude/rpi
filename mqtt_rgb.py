@@ -6,12 +6,28 @@ import neopixel
 
 ############# CONFIG #############
 listentopic = "commands"
-myname = "gameroompi"
+myname = "set later"
 broker = "192.168.1.22"
 pixel_pin = board.D18
 num_pixels = 83
 ORDER = neopixel.GRB
+rainbow_cycle_delay = 0.001
 ##################################
+
+myname = socket.gethostname()
+
+if myname == "gameroompi":
+    num_pixels = 83
+    rainbow_cycle_delay = 0.001
+elif myname == "canvaspi":
+    num_pixels = 50
+    rainbow_cycle_delay = 0.001
+elif myname == "clockpi":
+    num_pixels = 60
+    rainbow_cycle_delay = 0.001
+elif myname == "windowpi":
+    num_pixels = 16
+    rainbow_cycle_delay = 0.001
 
 pixels = neopixel.NeoPixel(
     pixel_pin, num_pixels, brightness=0.2, auto_write=False, pixel_order=ORDER
@@ -99,6 +115,6 @@ if __name__ == "__main__":
                 fill(wheel(j))
                 time.sleep(0.066)
             elif mode == 4:
-                rainbow_cycle(0.001)
+                rainbow_cycle(rainbow_cycle_delay)
     client.loop_stop()
     client.disconnect()
