@@ -108,24 +108,30 @@ mqttCommands = [
     MosquittoCommand(    "darken electronics room", "shellies/shellyswitch25-/relay/0/command", "off")
 ]
 
-mqttCommands.append(MosquittoCommand("set bedroom color black", "windowpi/commands", "*,0,0,0"))
-mqttCommands.append(MosquittoCommand("set bedroom color full",  "windowpi/commands", "*,255,255,255"))
-mqttCommands.append(MosquittoCommand("set game room color black", "clockpi/commands", "*,0,0,0"))
-mqttCommands.append(MosquittoCommand("set game room color full",  "clockpi/commands", "*,255,255,255"))
-mqttCommands.append(MosquittoCommand("set canvas color black", "canvaspi/commands", "*,0,0,0"))
-mqttCommands.append(MosquittoCommand("set canvas color full",  "canvaspi/commands", "*,255,255,255"))
+mqttCommands.append(MosquittoCommand("set bedroom color black", "windowpi/commands", "0:0:0:0"))
+mqttCommands.append(MosquittoCommand("set bedroom color full",  "windowpi/commands", "0:255:255:255"))
+mqttCommands.append(MosquittoCommand("set bedroom color gradient",  "windowpi/commands", "3:0"))
+mqttCommands.append(MosquittoCommand("set bedroom color rainbow",  "windowpi/commands", "4:0"))
+mqttCommands.append(MosquittoCommand("set game room color black", "clockpi/commands", "0:0:0:0"))
+mqttCommands.append(MosquittoCommand("set game room color full",  "clockpi/commands", "0:255:255:255"))
+mqttCommands.append(MosquittoCommand("set game room color gradient",  "clockpi/commands", "3:0"))
+mqttCommands.append(MosquittoCommand("set game room color rainbow",  "clockpi/commands", "4:0"))
+mqttCommands.append(MosquittoCommand("set canvas color black", "canvaspi/commands", "0:0:0:0"))
+mqttCommands.append(MosquittoCommand("set canvas color full",  "canvaspi/commands", "0:255:255:255"))
+mqttCommands.append(MosquittoCommand("set canvas color gradient",  "canvaspi/commands", "3:0"))
+mqttCommands.append(MosquittoCommand("set canvas color rainbow",  "canvaspi/commands", "4:0"))
 ## Load colors dynamically because I'm too lazy to code it all out
 colors = ["green","yellow","white","blue","red","purple","orange"]
-rgb = ["0,192,0","96,96,0","64,64,64","0,0,192","192,0,0","96,0,96","128,64,0"]
-brightrgb = ["0,255,0","255,255,0","128,128,128","0,0,255","255,0,0","255,0,255","255,128,0"]
+rgb = ["0:192:0","96:96:0","64:64:64","0:0:192","192:0:0","96:0:96","128:64:0"]
+brightrgb = ["0:255:0","255:255:0","128:128:128","0:0:255","255:0:0","255:0:255","255:128:0"]
 i = 0
 for color in colors:
-    mqttCommands.append(MosquittoCommand("set bedroom color bright "+color, "windowpi/commands", "*," + brightrgb[i]))
-    mqttCommands.append(MosquittoCommand("set bedroom color "+color, "windowpi/commands", "*," + rgb[i]))
-    mqttCommands.append(MosquittoCommand("set game room color bright "+color, "clockpi/commands", "*," + brightrgb[i]))
-    mqttCommands.append(MosquittoCommand("set game room color "+color, "clockpi/commands", "*," + rgb[i]))
-    mqttCommands.append(MosquittoCommand("set canvas color bright "+color, "canvaspi/commands", "*," + brightrgb[i]))
-    mqttCommands.append(MosquittoCommand("set canvas color "+color, "canvaspi/commands", "*," + rgb[i]))
+    mqttCommands.append(MosquittoCommand("set bedroom color bright "+color, "windowpi/commands", "0:" + brightrgb[i]))
+    mqttCommands.append(MosquittoCommand("set bedroom color "+color, "windowpi/commands", "0:" + rgb[i]))
+    mqttCommands.append(MosquittoCommand("set game room color bright "+color, "clockpi/commands", "0:" + brightrgb[i]))
+    mqttCommands.append(MosquittoCommand("set game room color "+color, "clockpi/commands", "0:" + rgb[i]))
+    mqttCommands.append(MosquittoCommand("set canvas color bright "+color, "canvaspi/commands", "0:" + brightrgb[i]))
+    mqttCommands.append(MosquittoCommand("set canvas color "+color, "canvaspi/commands", "0:" + rgb[i]))
     i = i + 1
 
 def on_message(client, userdata, message):
