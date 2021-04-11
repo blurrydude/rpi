@@ -1,63 +1,50 @@
 #! /usr/bin/env python3
 import paho.mqtt.client as mqtt
 import time
-import pifacedigitalio as p
+from omxplayer.player import OMXPlayer
+from pathlib import Path
+import os
 
 ############# CONFIG #############
 listentopic = "commands"
-myname = "garagepi"
+myname = "whitenoisepi"
 broker = "192.168.1.22"
 ##################################
 
-dooropen = [False,False]
 running = True
 client = mqtt.Client()
+#player = OMXPlayer("/home/pi/Desktop/OceanWaves1.mp4")
+#player.quit()
 
 def mosquittoMessage(message):
     client.publish(myname+"/status",message)
 
-def openDoor(bay):
-    global dooropen
-#    if dooropen[bay] == True:
-#        return 'NO'
-    p.digital_write(bay,1)
-    time.sleep(1)
-    p.digital_write(bay,0)
-    dooropen[bay] = True
-    return 'OK'
-
-def closeDoor(bay):
-    global dooropen
-#    if dooropen[bay] == False:
-#        return 'NO'
-    p.digital_write(bay,1)
-    time.sleep(1)
-    p.digital_write(bay,0)
-    dooropen[bay] = False
-    return 'OK'
-
 def on_message(client, userdata, message):
+    #global player
     global running
     result = str(message.payload.decode("utf-8"))
     print("Received: "+result)
-    bits = result.split(':')
-    addy = int(bits[0])
-    if bits[1] == '1':
-        check = openDoor(addy)
-    else:
-        check = closeDoor(addy)
-    print(check)
+    if "start" in result:
+        os.system("/usr/bin/omxplayer -b -o local /home/pi/Desktop/OceanWaves1.mp4")
+        #player = OMXPlayer("/home/pi/Desktop/OceanWaves1.mp4")
+    elif "stop" in result:
+        #player.quit()
+        os.system("killall omxplayer ")
+        #os.system("killall -s 9 omxplayer ")
 
 if __name__ == "__main__":
-    p.init()
     client.on_message = on_message
     client.connect(broker)
     topic = myname + '/' + listentopic
-    print('subscribing to '+topic)
+    mosquittoMessage('subscribing to '+topic)
     client.subscribe(topic)
     client.loop_start()
     while running is True:
         time.sleep(5)
         mosquittoMessage("alive at "+str(round(time.time())))
+    #try:
+        #player.quit()
+    #except:
+        #print("meh")
     client.loop_stop()
     client.disconnect()

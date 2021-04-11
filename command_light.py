@@ -15,6 +15,9 @@ running = True
 pixels = neopixel.NeoPixel(board.D18, led_count)
 client = mqtt.Client()
 
+def mosquittoMessage(message):
+    client.publish(myname+"/status",message)
+
 def on_message(client, userdata, message):
     global running
     global pixels
@@ -47,6 +50,7 @@ if __name__ == "__main__":
     client.subscribe(topic)
     client.loop_start()
     while running is True:
-        time.sleep(1)
+        time.sleep(5)
+        mosquittoMessage("alive at "+str(round(time.time())))
     client.loop_stop()
     client.disconnect()

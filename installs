@@ -1,0 +1,10 @@
+switchpi
+========
+sudo apt-get update && sudo apt-get install python3-pip
+sudo pip3 install paho-mqtt
+sudo apt-get install python-rpi.gpio python3-rpi.gpio
+
+all
+===
+git config --global credential.helper store
+git clone "https://github.com/blurrydude/rpi.git"
