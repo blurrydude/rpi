@@ -84,7 +84,8 @@ def mosquittoDo(topic, command):
 def on_message(client, userdata, message):
     global running
     result = str(message.payload.decode("utf-8"))
-    print("Client: "+client)
+    topic = str(message.topic.decode("utf-8"))
+    print("Topic: "+topic)
     print("Received: "+result)
     
 def do_circuit(id, milli):
