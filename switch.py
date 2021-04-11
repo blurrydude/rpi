@@ -163,8 +163,10 @@ if __name__ == "__main__":
     client.on_message = on_message
     client.connect(broker)
     subscriptions = []
-    for c in circuit.items():
-        subscriptions.append(("shellies/"+c["address"], 0))
+    for k in circuit.keys():
+        c = circuit[k]
+        addy = "shellies/"+c["address"]
+        subscriptions.append((addy, 0))
     client.subscribe(subscriptions)
     client.loop_start()
     while running is True:
