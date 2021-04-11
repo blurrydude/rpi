@@ -39,6 +39,9 @@ mode = 0
 # modes: 0-fill, 1-single pixel, 2-range, 3-gradient, 4-rainbow chase
 j = 0
 
+def mosquittoMessage(message):
+    client.publish(myname+"/status",message)
+
 def wheel(pos):
     # Input a value 0 to 255 to get a color value.
     # The colours are a transition r - g - b - back to r.
@@ -106,10 +109,12 @@ if __name__ == "__main__":
     client.loop_start()
     while running is True:
         if mode <= 2:
-            time.sleep(1)
+            time.sleep(5)
+            mosquittoMessage("alive at "+str(round(time.time())))
         else:
             if j + 1 > 255:
                 j = 0
+                mosquittoMessage("alive at "+str(round(time.time())))
             else:
                 j = j + 1
             if mode == 3:
