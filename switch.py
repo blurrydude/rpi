@@ -53,6 +53,7 @@ circuit = {
     "J1": {"id": "J1", "address": "shellyswitch25-8CAAB55F402F", "relay":"0"}, #192.168.1.239 - Hallway
     "J2": {"id": "J2", "address": "shellyswitch25-8CAAB55F402F", "relay":"1"} #192.168.1.239 - Master Bath Vent Fan
 }
+reverse_lookup = {} #I can't figure out a better or faster way
 pin = {
      "4": {"switch": 1,  "circuit": ""}, # Was something else
     "17": {"switch": 2,  "circuit": "C2"},
@@ -85,8 +86,7 @@ def on_message(client, userdata, message):
     global running
     result = str(message.payload.decode("utf-8"))
     topic = message.topic
-    print("Topic: "+topic)
-    print("Received: "+result)
+    print(reverse_lookup[topic]+": "+result)
     
 def do_circuit(id, milli):
     global circuit_state
@@ -161,14 +161,15 @@ GPIO.add_event_detect(21,GPIO.RISING,callback=button_callback)
 
 
 if __name__ == "__main__":
-    client.on_message = on_message
-    client.connect(broker)
     subscriptions = []
     for k in circuit.keys():
         c = circuit[k]
         addy = "shellies/"+c["address"]+"/relay/"+c["relay"]
         print("preparing "+addy)
         subscriptions.append((addy, 0))
+        reverse_lookup[addy] = k
+    client.on_message = on_message
+    client.connect(broker)
     client.subscribe(subscriptions)
     client.loop_start()
     while running is True:
