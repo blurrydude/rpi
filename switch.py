@@ -166,6 +166,7 @@ if __name__ == "__main__":
     for k in circuit.keys():
         c = circuit[k]
         addy = "shellies/"+c["address"]
+        print("preparing "+addy)
         subscriptions.append((addy, 0))
     client.subscribe(subscriptions)
     client.loop_start()
