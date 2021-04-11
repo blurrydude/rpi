@@ -86,7 +86,11 @@ def on_message(client, userdata, message):
     global running
     result = str(message.payload.decode("utf-8"))
     topic = message.topic
-    print(reverse_lookup[topic]+": "+result)
+    cid = reverse_lookup[topic]
+    if result == "on":
+        circuit_state[cid] = True
+    else:
+        circuit_state[cid] = False
     
 def do_circuit(id, milli):
     global circuit_state
