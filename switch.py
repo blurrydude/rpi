@@ -4,8 +4,14 @@ import paho.mqtt.client as mqtt
 import socket
 
 myname = socket.gethostname()
+############# CONFIG #############
+broker = "192.168.1.22"
 live = True
+##################################
 last_press = 0
+running = True
+client = mqtt.Client()
+
 circuit_state = {
     "A1": False,
     "B1": False,
@@ -28,24 +34,24 @@ circuit_state = {
 }
 
 circuit = {
-    "A1": "shellies/shelly1pm-8CAAB574C489/relay/0/command", #192.168.1.60 - Fireplace Lights
-    "B1": "shellies/shelly1pm-84CCA8A11963/relay/0/command", #192.168.1.62 - Lamp Post and Driveway
-    "C1": "shellies/shellyswitch25-8CAAB55F44D6/relay/0/command", #192.168.1.243 - Porch Light
-    "C2": "shellies/shellyswitch25-8CAAB55F44D6/relay/1/command", #192.168.1.243 - Dining Room Light
-    "D1": "shellies/shellyswitch25-8CAAB55F405D/relay/0/command", #192.168.1.242 - Office Fan
-    "D2": "shellies/shellyswitch25-8CAAB55F405D/relay/1/command", #192.168.1.242 - Kitchen Lights
-    "E1": "shellies/shellyswitch25-8CAAB55F3B3F/relay/0/command", #192.168.1.244 - Office Lights
-    "E2": "shellies/shellyswitch25-8CAAB55F3B3F/relay/1/command", #192.168.1.244 - Unknown
-    "F1": "shellies/shellyswitch25-8CAAB55F4553/relay/0/command", #192.168.1.245 - Unknown
-    "F2": "shellies/shellyswitch25-8CAAB55F4553/relay/1/command", #192.168.1.245 - Bar Lights
-    "G1": "shellies/shellyswitch25-8CAAB55F44D7/relay/0/command", #192.168.1.61  - Unknown
-    "G2": "shellies/shellyswitch25-8CAAB55F44D7/relay/1/command", #192.168.1.61  - Unknown
-    "H1": "shellies/shellyswitch25-8CAAB561DDED/relay/0/command", #192.168.1.240 - Bathroom Lights and Fan
-    "H2": "shellies/shellyswitch25-8CAAB561DDED/relay/1/command", #192.168.1.240 - Garage Lights
-    "I1": "shellies/shellyswitch25-8CAAB561DDCF/relay/0/command", #192.168.1.241 - Master Bath Lights
-    "I2": "shellies/shellyswitch25-8CAAB561DDCF/relay/1/command", #192.168.1.241 - Stairway Lights
-    "J1": "shellies/shellyswitch25-8CAAB55F402F/relay/0/command", #192.168.1.239 - Hallway
-    "J2": "shellies/shellyswitch25-8CAAB55F402F/relay/1/command" #192.168.1.239 - Master Bath Vent Fan
+    "A1": {"id": "A1", "address": "shelly1pm-8CAAB574C489", "relay":"0"}, #192.168.1.60 - Fireplace Lights
+    "B1": {"id": "B1", "address": "shelly1pm-84CCA8A11963", "relay":"0"}, #192.168.1.62 - Lamp Post and Driveway
+    "C1": {"id": "C1", "address": "shellyswitch25-8CAAB55F44D6", "relay":"0"}, #192.168.1.243 - Porch Light
+    "C2": {"id": "C2", "address": "shellyswitch25-8CAAB55F44D6", "relay":"1"}, #192.168.1.243 - Dining Room Light
+    "D1": {"id": "D1", "address": "shellyswitch25-8CAAB55F405D", "relay":"0"}, #192.168.1.242 - Office Fan
+    "D2": {"id": "D2", "address": "shellyswitch25-8CAAB55F405D", "relay":"1"}, #192.168.1.242 - Kitchen Lights
+    "E1": {"id": "E1", "address": "shellyswitch25-8CAAB55F3B3F", "relay":"0"}, #192.168.1.244 - Office Lights
+    "E2": {"id": "E2", "address": "shellyswitch25-8CAAB55F3B3F", "relay":"1"}, #192.168.1.244 - Unknown
+    "F1": {"id": "F1", "address": "shellyswitch25-8CAAB55F4553", "relay":"0"}, #192.168.1.245 - Unknown
+    "F2": {"id": "F2", "address": "shellyswitch25-8CAAB55F4553", "relay":"1"}, #192.168.1.245 - Bar Lights
+    "G1": {"id": "G1", "address": "shellyswitch25-8CAAB55F44D7", "relay":"0"}, #192.168.1.61  - Unknown
+    "G2": {"id": "G2", "address": "shellyswitch25-8CAAB55F44D7", "relay":"1"}, #192.168.1.61  - Unknown
+    "H1": {"id": "H1", "address": "shellyswitch25-8CAAB561DDED", "relay":"0"}, #192.168.1.240 - Bathroom Lights and Fan
+    "H2": {"id": "H2", "address": "shellyswitch25-8CAAB561DDED", "relay":"1"}, #192.168.1.240 - Garage Lights
+    "I1": {"id": "I1", "address": "shellyswitch25-8CAAB561DDCF", "relay":"0"}, #192.168.1.241 - Master Bath Lights
+    "I2": {"id": "I2", "address": "shellyswitch25-8CAAB561DDCF", "relay":"1"}, #192.168.1.241 - Stairway Lights
+    "J1": {"id": "J1", "address": "shellyswitch25-8CAAB55F402F", "relay":"0"}, #192.168.1.239 - Hallway
+    "J2": {"id": "J2", "address": "shellyswitch25-8CAAB55F402F", "relay":"1"} #192.168.1.239 - Master Bath Vent Fan
 }
 pin = {
      "4": {"switch": 1,  "circuit": ""}, # Was something else
@@ -73,19 +79,22 @@ def mosquittoMessage(message):
     mosquittoDo(myname+"/status",message)
 
 def mosquittoDo(topic, command):
-    client = mqtt.Client()
-    client.connect("192.168.1.22")
     client.publish(topic,command)
-    client.disconnect()
 
-def do_thing(id, milli):
+def on_message(client, userdata, message):
+    global running
+    result = str(message.payload.decode("utf-8"))
+    print("Client: "+client)
+    print("Received: "+result)
+    
+def do_circuit(id, milli):
     global circuit_state
     pdata = pin[id]
     if pdata["circuit"] == "":
         return
     sid = pdata["switch"]
     cid = pdata["circuit"]
-    topic = circuit[cid]
+    topic = "shellies/"+circuit[cid]["address"]+"/relay/"+circuit[cid]["relay"]+"/command"
     state = circuit_state[cid]
     command = ""
     if state is True:
@@ -105,7 +114,7 @@ def button_callback(channel):
     diff = milli - last_press
     last_press = milli
     if diff > 2000:
-        do_thing(id, milli)
+        do_circuit(id, milli)
 
 GPIO.setwarnings(False) # Ignore warning for now
 GPIO.setmode(GPIO.BCM)
@@ -149,8 +158,18 @@ GPIO.add_event_detect(16,GPIO.RISING,callback=button_callback)
 GPIO.add_event_detect(20,GPIO.RISING,callback=button_callback)
 GPIO.add_event_detect(21,GPIO.RISING,callback=button_callback)
 
-while True:
-    time.sleep(5)
-    mosquittoMessage("alive at "+str(round(time.time())))
 
-GPIO.cleanup() # Clean up
+if __name__ == "__main__":
+    client.on_message = on_message
+    client.connect(broker)
+    subscriptions = []
+    for c in circuit:
+        subscriptions.append(("shellies/"+c["address"], 0))
+    client.subscribe(subscriptions)
+    client.loop_start()
+    while running is True:
+        time.sleep(5)
+        mosquittoMessage("alive at "+str(round(time.time())))
+    client.loop_stop()
+    client.disconnect()
+    GPIO.cleanup()
