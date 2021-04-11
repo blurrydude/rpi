@@ -118,7 +118,7 @@ def button_callback(channel):
     milli = round(time.time() * 1000)
     diff = milli - last_press
     last_press = milli
-    if diff > 2000:
+    if diff > 2500:
         do_circuit(id, milli)
 
 GPIO.setwarnings(False) # Ignore warning for now
