@@ -3,13 +3,22 @@ import board
 import neopixel
 import paho.mqtt.client as mqtt
 import time
+import socket
 
+myname = socket.gethostname()
 ############# CONFIG #############
 listentopic = "commands"
-myname = "windowpi"
 broker = "192.168.1.22"
 led_count = 16
 ##################################
+if myname == "windowpi":
+    led_count = 16
+elif myname == "clockpi":
+    led_count = 60
+elif myname == "canvaspi":
+    led_count = 50
+elif myname == "gameroompi":
+    led_count = 83
 
 running = True
 pixels = neopixel.NeoPixel(board.D18, led_count)
