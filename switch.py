@@ -1,7 +1,9 @@
 import RPi.GPIO as GPIO
 import time
 import paho.mqtt.client as mqtt
+import socket
 
+myname = socket.gethostname()
 live = True
 last_press = 0
 circuit_state = {
