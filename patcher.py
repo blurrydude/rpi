@@ -1,5 +1,8 @@
 import os
 import time
+import os.path
+from os import path
+
 def doCheck():
     os.system('cd /home/pi/rpi && git pull --all')
     time.sleep(9)
