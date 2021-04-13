@@ -31,7 +31,7 @@ elif myname == "windowpi":
     rainbow_cycle_delay = 0.001
 
 pixels = neopixel.NeoPixel(
-    pixel_pin, num_pixels, brightness=0.2, auto_write=False, pixel_order=ORDER
+    pixel_pin, num_pixels, brightness=1.0, auto_write=False, pixel_order=ORDER
 )
 running = True
 client = mqtt.Client()
