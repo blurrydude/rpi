@@ -123,6 +123,8 @@ def on_message(client, userdata, message):
 def on_key_down():
     global running
     global mode
+    global key_down
+    global current_color
     if key_down is True:
         check = False
         for m in modes:
