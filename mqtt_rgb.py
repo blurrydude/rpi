@@ -127,7 +127,7 @@ if __name__ == "__main__":
             elif mode == 4:
                 rainbow_cycle(rainbow_cycle_delay)
         elif mode == 5:
-            r = random.randint(0,255)
+            r = random.randint(1,16) * 16 - 1
             a = random.randint(0, num_pixels-1)
             pixels[a] = wheel(r)
             pixels.show()
