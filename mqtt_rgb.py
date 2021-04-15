@@ -17,7 +17,6 @@ ORDER = neopixel.GRB
 rainbow_cycle_delay = 0.001
 ##################################
 
-mode = 3
 modes = ["0","1","2","3","4","5","6","7"]
 myname = socket.gethostname()
 current_colors = []
@@ -46,9 +45,9 @@ elif myname == "namepi":
 pixels = neopixel.NeoPixel(
     pixel_pin, num_pixels, brightness=1.0, auto_write=False, pixel_order=ORDER
 )
-running = True
+running = False
 client = mqtt.Client()
-mode = 0
+mode = 3
 # modes: 0-fill, 1-single pixel, 2-range, 3-gradient, 4-rainbow chase
 j = 0
 
@@ -159,6 +158,7 @@ if __name__ == "__main__":
     print('subscribing to '+topic)
     client.subscribe(topic)
     client.loop_start()
+    running = True
     while running is True:
         now = time.time()
         on_key_down()
