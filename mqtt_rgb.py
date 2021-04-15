@@ -17,6 +17,11 @@ rainbow_cycle_delay = 0.001
 ##################################
 
 myname = socket.gethostname()
+current_colors = []
+current_color = (0,0,0)
+
+for i in range(0,num_pixels):
+    current_colors.append((0,0,0))
 
 if myname == "gameroompi":
     num_pixels = 83
@@ -66,6 +71,13 @@ def wheel(pos):
         g = int(pos * 3)
         b = int(255 - pos * 3)
     return (r, g, b) if ORDER in (neopixel.RGB, neopixel.GRB) else (r, g, b, 0)
+
+def all_same():
+    check = True
+    for i in range(0,num_pixels):
+        if current_colors[i] != current_color:
+            check = False
+    return check
 
 def fill(color):
     pixels.fill(color)
@@ -130,6 +142,16 @@ if __name__ == "__main__":
             r = random.randint(1,8) * 32 - 1
             a = random.randint(0, num_pixels-1)
             pixels[a] = wheel(r)
+            pixels.show()
+            time.sleep(1)
+        elif mode == 6:
+            if all_same() is True:
+                current_color = wheel(random.randint(1,8) * 32 - 1)
+                time.sleep(random.randint(5,30))
+            a = random.randint(0, num_pixels-1)
+            while current_colors[a] == current_color:
+                a = random.randint(0, num_pixels-1)
+            pixels[a] = current_color
             pixels.show()
             time.sleep(1)
     client.loop_stop()
