@@ -17,6 +17,8 @@ ORDER = neopixel.GRB
 rainbow_cycle_delay = 0.001
 ##################################
 
+mode = 3
+modes = ["0","1","2","3","4","5","6","7"]
 myname = socket.gethostname()
 current_colors = []
 current_color = (0,0,0)
@@ -118,10 +120,12 @@ def on_message(client, userdata, message):
                 s = s + 1
             pixels.show()
 
-def on_key_down(key):
+def on_key_down():
     global running
     global mode
-    mode = int(key)
+    for m in modes:
+        if keyboard.is_pressed(m):
+            mode = int(m)
     if mode == 0:
         fill(current_color)
     elif mode == 1:
@@ -157,9 +161,7 @@ if __name__ == "__main__":
     client.loop_start()
     while running is True:
         now = time.time()
-        key = keyboard.read_key()
-        if key in ["0","1","2","3","4","5","6","7","8","9"]:
-            on_key_down(key)
+        on_key_down()
         if now < wait_till:
             continue
         if mode <= 2:
