@@ -11,7 +11,7 @@ listentopic = "commands"
 myname = "set later"
 broker = "192.168.1.22"
 pixel_pin = board.D18
-num_pixels = 83
+num_pixels = 8
 ORDER = neopixel.GRB
 rainbow_cycle_delay = 0.001
 ##################################
