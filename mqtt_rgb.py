@@ -174,7 +174,7 @@ if __name__ == "__main__":
             pixels[a] = current_color
             current_colors[a] = current_color
             pixels.show()
-            time.sleep(0.125)
+            time.sleep(0.25)
         elif mode == 7:
             if all_same() is True:
                 original_color = current_color
@@ -191,6 +191,6 @@ if __name__ == "__main__":
             pixels[x] = current_color
             current_colors[a] = current_color
             pixels.show()
-            time.sleep(0.125)
+            time.sleep(0.25)
     client.loop_stop()
     client.disconnect()
