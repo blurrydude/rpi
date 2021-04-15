@@ -130,7 +130,6 @@ def on_key_down():
         for m in modes:
             if keyboard.is_pressed(m):
                 check = True
-                mode = int(m)
         key_down = check
         return
     for m in modes:
