@@ -19,6 +19,7 @@ rainbow_cycle_delay = 0.001
 myname = socket.gethostname()
 current_colors = []
 current_color = (0,0,0)
+wait_till = time.time()
 
 for i in range(0,num_pixels):
     current_colors.append((0,0,0))
@@ -116,6 +117,19 @@ def on_message(client, userdata, message):
                 s = s + 1
             pixels.show()
 
+def on_key_down(key):
+    global running
+    global mode
+    mode = int(key)
+    if mode == 0:
+        fill(current_color)
+    elif mode == 1:
+        current_color = wheel(random.randint(1,8) * 32 - 1)
+        fill(current_color)
+    elif mode == 2:
+        current_color = wheel(random.randint(1,8) * 32 - 1)
+        fill(current_color)
+
 def translate_name_address(a):
     if a == 0:
         return 5
@@ -141,8 +155,12 @@ if __name__ == "__main__":
     client.subscribe(topic)
     client.loop_start()
     while running is True:
+        now = time.time()
+        if now < wait_till:
+            return
         if mode <= 2:
-            time.sleep(5)
+            wait_till = time.time() + 5.0
+            #time.sleep(5)
             mosquittoMessage("alive at "+str(round(time.time())))
         elif mode == 3 or mode == 4:
             if j + 1 > 255:
@@ -152,7 +170,9 @@ if __name__ == "__main__":
                 j = j + 1
             if mode == 3:
                 fill(wheel(j))
-                time.sleep(0.066)
+                wait_till = time.time() + 0.066
+                return
+                #time.sleep(0.066)
             elif mode == 4:
                 rainbow_cycle(rainbow_cycle_delay)
         elif mode == 5:
@@ -160,28 +180,35 @@ if __name__ == "__main__":
             a = random.randint(0, num_pixels-1)
             pixels[a] = wheel(r)
             pixels.show()
-            time.sleep(1)
+            wait_till = time.time() + 1.0
+            return
+            #time.sleep(1)
         elif mode == 6:
-            if all_same() is True:
+            if all_same() is True and now < wait_till:
                 original_color = current_color
                 current_color = wheel(random.randint(1,8) * 32 - 1)
                 while current_color == original_color:
                     current_color = wheel(random.randint(1,8) * 32 - 1)
-                time.sleep(random.randint(5,30))
+                #time.sleep(random.randint(5,30))
+                wait_till = time.time() + random.randint(5,30)
             a = random.randint(0, num_pixels-1)
             while current_colors[a] == current_color:
                 a = random.randint(0, num_pixels-1)
             pixels[a] = current_color
             current_colors[a] = current_color
             pixels.show()
-            time.sleep(0.25)
+            #time.sleep(0.25)
+            wait_till = time.time() + 0.25
+            return
         elif mode == 7:
-            if all_same() is True:
+            if all_same() is True and now < wait_till:
                 original_color = current_color
                 current_color = wheel(random.randint(1,8) * 32 - 1)
                 while current_color == original_color:
                     current_color = wheel(random.randint(1,8) * 32 - 1)
-                time.sleep(random.randint(5,30))
+                #time.sleep(random.randint(5,30))
+                wait_till = time.time() + random.randint(5,30)
+                return
             a = 0
             while current_colors[a] == current_color:
                 a = a + 1
@@ -191,6 +218,8 @@ if __name__ == "__main__":
             pixels[x] = current_color
             current_colors[a] = current_color
             pixels.show()
-            time.sleep(0.1)
+            #time.sleep(0.1)
+            wait_till = time.time() + 0.1
+            return
     client.loop_stop()
     client.disconnect()
