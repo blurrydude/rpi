@@ -22,6 +22,7 @@ myname = socket.gethostname()
 current_colors = []
 current_color = (0,0,0)
 wait_till = time.time()
+key_down = False
 
 for i in range(0,num_pixels):
     current_colors.append((0,0,0))
@@ -122,8 +123,17 @@ def on_message(client, userdata, message):
 def on_key_down():
     global running
     global mode
+    if key_down is True:
+        check = False
+        for m in modes:
+            if keyboard.is_pressed(m):
+                check = True
+                mode = int(m)
+        key_down = check
+        return
     for m in modes:
         if keyboard.is_pressed(m):
+            key_down = True
             mode = int(m)
     if mode == 0:
         fill(current_color)
