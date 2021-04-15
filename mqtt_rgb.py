@@ -84,6 +84,9 @@ def all_same():
     return check
 
 def fill(color):
+    current_color = color
+    for i in range(0,num_pixels):
+        current_colors[i] = color
     pixels.fill(color)
     pixels.show()
 
