@@ -5,7 +5,11 @@ import board
 import neopixel
 import socket
 import random
-import keyboard
+try:
+    import keyboard
+    print("keyboard module present")
+except:
+    keyboard = None
 
 ############# CONFIG #############
 listentopic = "commands"
@@ -53,7 +57,8 @@ mode = 3
 j = 0
 
 def mosquittoMessage(message):
-    client.publish(myname+"/status",message)
+    if client is not None:
+        client.publish(myname+"/status",message)
 
 def wheel(pos):
     # Input a value 0 to 255 to get a color value.
@@ -128,6 +133,8 @@ def on_key_down():
     global mode
     global key_down
     global current_color
+    if keyboard is None:
+        return
     if key_down is True:
         check = False
         for m in modes:
@@ -167,12 +174,16 @@ def translate_name_address(a):
     return 0
 
 if __name__ == "__main__":
-    client.on_message = on_message
-    client.connect(broker)
-    topic = myname + '/' + listentopic
-    print('subscribing to '+topic)
-    client.subscribe(topic)
-    client.loop_start()
+    try:
+        client.on_message = on_message
+        client.connect(broker)
+    except:
+        client = None
+    if client is not None:
+        topic = myname + '/' + listentopic
+        print('subscribing to '+topic)
+        client.subscribe(topic)
+        client.loop_start()
     running = True
     while running is True:
         now = time.time()
