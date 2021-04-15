@@ -141,10 +141,7 @@ def on_key_down():
         return
     if mode == 0:
         fill(current_color)
-    elif mode == 1:
-        current_color = wheel(random.randint(1,8) * 32 - 1)
-        fill(current_color)
-    elif mode == 2:
+    else:
         current_color = wheel(random.randint(1,8) * 32 - 1)
         fill(current_color)
     key_down = True
