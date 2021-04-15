@@ -32,7 +32,7 @@ elif myname == "windowpi":
     rainbow_cycle_delay = 0.001
 elif myname == "namepi":
     num_pixels = 8
-    rainbow_cycle_delay = 0.001
+    rainbow_cycle_delay = 0.01
 
 pixels = neopixel.NeoPixel(
     pixel_pin, num_pixels, brightness=1.0, auto_write=False, pixel_order=ORDER
