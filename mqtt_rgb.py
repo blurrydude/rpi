@@ -174,11 +174,16 @@ if __name__ == "__main__":
             time.sleep(0.333)
         elif mode == 7:
             if all_same() is True:
+                original_color = current_color
                 current_color = wheel(random.randint(1,8) * 32 - 1)
+                while current_color == original_color:
+                    current_color = wheel(random.randint(1,8) * 32 - 1)
                 time.sleep(random.randint(5,30))
             a = 0
             while current_colors[a] == current_color:
                 a = a + 1
+            if a >= num_pixels:
+                a = 0
             x = translate_name_address(a)
             pixels[x] = current_color
             current_colors[a] = current_color
