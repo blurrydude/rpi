@@ -116,6 +116,23 @@ def on_message(client, userdata, message):
                 s = s + 1
             pixels.show()
 
+def translate_name_address(a):
+    if a == 0:
+        return 5
+    if a == 1:
+        return 6
+    if a == 2:
+        return 7
+    if a == 3:
+        return 4
+    if a == 4:
+        return 3
+    if a == 5:
+        return 2
+    if a == 6:
+        return 1
+    return 0
+
 if __name__ == "__main__":
     client.on_message = on_message
     client.connect(broker)
@@ -162,7 +179,8 @@ if __name__ == "__main__":
             a = 0
             while current_colors[a] == current_color:
                 a = a + 1
-            pixels[a] = current_color
+            x = translate_name_address(a)
+            pixels[x] = current_color
             current_colors[a] = current_color
             pixels.show()
             time.sleep(0.333)
