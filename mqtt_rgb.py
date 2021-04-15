@@ -201,7 +201,7 @@ if __name__ == "__main__":
             continue
             #time.sleep(1)
         elif mode == 6:
-            if all_same() is True and now < wait_till:
+            if all_same() is True:
                 original_color = current_color
                 current_color = wheel(random.randint(1,8) * 32 - 1)
                 while current_color == original_color:
@@ -218,7 +218,7 @@ if __name__ == "__main__":
             wait_till = time.time() + 0.25
             continue
         elif mode == 7:
-            if all_same() is True and now < wait_till:
+            if all_same() is True:
                 original_color = current_color
                 current_color = wheel(random.randint(1,8) * 32 - 1)
                 while current_color == original_color:
