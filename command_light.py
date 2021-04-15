@@ -19,6 +19,9 @@ elif myname == "canvaspi":
     led_count = 50
 elif myname == "gameroompi":
     led_count = 83
+elif myname == "namepi":
+    num_pixels = 8
+    rainbow_cycle_delay = 0.001
 
 running = True
 pixels = neopixel.NeoPixel(board.D18, led_count)

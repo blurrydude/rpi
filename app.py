@@ -23,6 +23,26 @@ keywordTopics = [
     #KeywordTopic("fireplace light", "shellies/shellyswitch25-8CAAB55F44D7/relay/0/command"),
     #KeywordTopic("dining room light", "shellies/shellyswitch25-8CAAB55F44D7/relay/0/command")
 ]
+circuit = {
+    "A1": {"id": "A1", "address": "shelly1pm-8CAAB574C489",      "relay":"0"}, #192.168.1.60 - Fireplace Lights
+    "B1": {"id": "B1", "address": "shelly1pm-84CCA8A11963",      "relay":"0"}, #192.168.1.62 - Lamp Post and Driveway
+    "C1": {"id": "C1", "address": "shellyswitch25-8CAAB55F44D6", "relay":"0"}, #192.168.1.243 - Porch Light
+    "C2": {"id": "C2", "address": "shellyswitch25-8CAAB55F44D6", "relay":"1"}, #192.168.1.243 - Dining Room Light
+    "D1": {"id": "D1", "address": "shellyswitch25-8CAAB55F405D", "relay":"0"}, #192.168.1.242 - Office Fan
+    "D2": {"id": "D2", "address": "shellyswitch25-8CAAB55F405D", "relay":"1"}, #192.168.1.242 - Kitchen Lights
+    "E1": {"id": "E1", "address": "shellyswitch25-8CAAB55F3B3F", "relay":"0"}, #192.168.1.244 - Office Lights
+    "E2": {"id": "E2", "address": "shellyswitch25-8CAAB55F3B3F", "relay":"1"}, #192.168.1.244 - Unknown
+    "F1": {"id": "F1", "address": "shellyswitch25-8CAAB55F4553", "relay":"0"}, #192.168.1.245 - Unknown
+    "F2": {"id": "F2", "address": "shellyswitch25-8CAAB55F4553", "relay":"1"}, #192.168.1.245 - Bar Lights
+    "G1": {"id": "G1", "address": "shellyswitch25-8CAAB55F44D7", "relay":"0"}, #192.168.1.61  - Unknown
+    "G2": {"id": "G2", "address": "shellyswitch25-8CAAB55F44D7", "relay":"1"}, #192.168.1.61  - Unknown
+    "H1": {"id": "H1", "address": "shellyswitch25-8CAAB561DDED", "relay":"0"}, #192.168.1.240 - Bathroom Lights and Fan
+    "H2": {"id": "H2", "address": "shellyswitch25-8CAAB561DDED", "relay":"1"}, #192.168.1.240 - Garage Lights
+    "I1": {"id": "I1", "address": "shellyswitch25-8CAAB561DDCF", "relay":"0"}, #192.168.1.241 - Master Bath Lights
+    "I2": {"id": "I2", "address": "shellyswitch25-8CAAB561DDCF", "relay":"1"}, #192.168.1.241 - Stairway Lights
+    "J1": {"id": "J1", "address": "shellyswitch25-8CAAB55F402F", "relay":"0"}, #192.168.1.239 - Hallway
+    "J2": {"id": "J2", "address": "shellyswitch25-8CAAB55F402F", "relay":"1"} #192.168.1.239 - Master Bath Vent Fan
+}
 mqttCommands = [
     MosquittoCommand("open bay one", "garagepi/commands", "0:1"),
     MosquittoCommand("close bay one", "garagepi/commands", "0:0"),
@@ -157,6 +177,12 @@ def mosquittoDo(topic, command):
 
 app = FlaskAPI(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
+
+
+@app.route('/circuit/<cid>/<action>')
+def action(cid, action):
+    mosquittoDo("shellies/"+circuit[cid]["address"]+"/relay/"+circuit[cid]["relay"]+"/command",action)
+    return 'OK'
 
 @app.route('/mqtt/<deviceId>/<address>/<action>')
 def action(deviceId, address, action):

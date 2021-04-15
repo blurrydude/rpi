@@ -1,15 +1,18 @@
+import keyboard
+
+while True:
+    if keyboard.read_key() == "p":
+        print("You pressed p")
+        break
+
 #! /usr/bin/env python3
-import paho.mqtt.client as mqtt
 import time
 import board
 import neopixel
 import socket
-import random
 
 ############# CONFIG #############
-listentopic = "commands"
 myname = "set later"
-broker = "192.168.1.22"
 pixel_pin = board.D18
 num_pixels = 83
 ORDER = neopixel.GRB
@@ -37,14 +40,9 @@ elif myname == "namepi":
 pixels = neopixel.NeoPixel(
     pixel_pin, num_pixels, brightness=1.0, auto_write=False, pixel_order=ORDER
 )
-running = True
-client = mqtt.Client()
 mode = 0
 # modes: 0-fill, 1-single pixel, 2-range, 3-gradient, 4-rainbow chase
 j = 0
-
-def mosquittoMessage(message):
-    client.publish(myname+"/status",message)
 
 def wheel(pos):
     # Input a value 0 to 255 to get a color value.
@@ -105,20 +103,13 @@ def on_message(client, userdata, message):
             pixels.show()
 
 if __name__ == "__main__":
-    client.on_message = on_message
-    client.connect(broker)
-    topic = myname + '/' + listentopic
-    print('subscribing to '+topic)
-    client.subscribe(topic)
-    client.loop_start()
-    while running is True:
-        if mode <= 2:
-            time.sleep(5)
-            mosquittoMessage("alive at "+str(round(time.time())))
-        elif mode == 3 or mode == 4:
+    while True:
+        key = keyboard.read_key()
+        if key in ["0","1","2","3","4","5","6","7","8","9",".","/","*","-","+"]:
+            
+        if mode > 2:
             if j + 1 > 255:
                 j = 0
-                mosquittoMessage("alive at "+str(round(time.time())))
             else:
                 j = j + 1
             if mode == 3:
@@ -126,10 +117,3 @@ if __name__ == "__main__":
                 time.sleep(0.066)
             elif mode == 4:
                 rainbow_cycle(rainbow_cycle_delay)
-        elif mode == 5:
-            r = random.randint(0,255)
-            a = random.randint(0, num_pixels-1)
-            pixels[a] = wheel(r)
-            time.sleep(1)
-    client.loop_stop()
-    client.disconnect()
