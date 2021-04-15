@@ -174,10 +174,13 @@ def translate_name_address(a):
     return 0
 
 if __name__ == "__main__":
-    try:
-        client.on_message = on_message
-        client.connect(broker)
-    except:
+    if mqtt_enabled is True:
+        try:
+            client.on_message = on_message
+            client.connect(broker)
+        except:
+            client = None
+    else:
         client = None
     if client is not None:
         topic = myname + '/' + listentopic
