@@ -5,6 +5,7 @@ import board
 import neopixel
 import socket
 import random
+import keyboard
 
 ############# CONFIG #############
 listentopic = "commands"
@@ -156,6 +157,9 @@ if __name__ == "__main__":
     client.loop_start()
     while running is True:
         now = time.time()
+        key = keyboard.read_key()
+        if key in ["0","1","2","3","4","5","6","7","8","9"]:
+            on_key_down(key)
         if now < wait_till:
             continue
         if mode <= 2:
