@@ -132,9 +132,13 @@ def on_key_down():
                 check = True
         key_down = check
         return
+    do_stuff = False
     for m in modes:
         if keyboard.is_pressed(m):
+            do_stuff = True
             mode = int(m)
+    if do_stuff is False:
+        return
     if mode == 0:
         fill(current_color)
     elif mode == 1:
