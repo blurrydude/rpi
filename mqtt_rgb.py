@@ -135,7 +135,6 @@ def on_key_down():
         return
     for m in modes:
         if keyboard.is_pressed(m):
-            key_down = True
             mode = int(m)
     if mode == 0:
         fill(current_color)
@@ -145,6 +144,7 @@ def on_key_down():
     elif mode == 2:
         current_color = wheel(random.randint(1,8) * 32 - 1)
         fill(current_color)
+    key_down = True
 
 def translate_name_address(a):
     if a == 0:
