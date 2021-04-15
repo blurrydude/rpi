@@ -130,6 +130,7 @@ if __name__ == "__main__":
             r = random.randint(0,255)
             a = random.randint(0, num_pixels-1)
             pixels[a] = wheel(r)
+            pixels.show()
             time.sleep(1)
     client.loop_stop()
     client.disconnect()
