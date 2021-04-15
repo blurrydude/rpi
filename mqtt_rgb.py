@@ -19,6 +19,7 @@ pixel_pin = board.D18
 num_pixels = 8
 ORDER = neopixel.GRB
 rainbow_cycle_delay = 0.001
+mqtt_enabled = True
 ##################################
 
 modes = ["0","1","2","3","4","5","6","7"]
@@ -46,12 +47,18 @@ elif myname == "windowpi":
 elif myname == "namepi":
     num_pixels = 8
     rainbow_cycle_delay = 0.05
+    mqtt_enabled = False
 
 pixels = neopixel.NeoPixel(
     pixel_pin, num_pixels, brightness=1.0, auto_write=False, pixel_order=ORDER
 )
 running = False
-client = mqtt.Client()
+if mqtt_enabled is True:
+    client = mqtt.Client()
+    print("mqtt enabled")
+else:
+    client = None
+    print("mqtt disabled")
 mode = 3
 # modes: 0-fill, 1-single pixel, 2-range, 3-gradient, 4-rainbow chase
 j = 0
@@ -180,8 +187,6 @@ if __name__ == "__main__":
             client.connect(broker)
         except:
             client = None
-    else:
-        client = None
     if client is not None:
         topic = myname + '/' + listentopic
         print('subscribing to '+topic)
