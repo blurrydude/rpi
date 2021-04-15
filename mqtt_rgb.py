@@ -152,7 +152,8 @@ if __name__ == "__main__":
             while current_colors[a] == current_color:
                 a = random.randint(0, num_pixels-1)
             pixels[a] = current_color
+            current_colors[a] = current_color
             pixels.show()
-            time.sleep(1)
+            time.sleep(0.333)
     client.loop_stop()
     client.disconnect()
