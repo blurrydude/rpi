@@ -157,7 +157,7 @@ if __name__ == "__main__":
     while running is True:
         now = time.time()
         if now < wait_till:
-            return
+            continue
         if mode <= 2:
             wait_till = time.time() + 5.0
             #time.sleep(5)
@@ -171,7 +171,7 @@ if __name__ == "__main__":
             if mode == 3:
                 fill(wheel(j))
                 wait_till = time.time() + 0.066
-                return
+                continue
                 #time.sleep(0.066)
             elif mode == 4:
                 rainbow_cycle(rainbow_cycle_delay)
@@ -181,7 +181,7 @@ if __name__ == "__main__":
             pixels[a] = wheel(r)
             pixels.show()
             wait_till = time.time() + 1.0
-            return
+            continue
             #time.sleep(1)
         elif mode == 6:
             if all_same() is True and now < wait_till:
@@ -199,7 +199,7 @@ if __name__ == "__main__":
             pixels.show()
             #time.sleep(0.25)
             wait_till = time.time() + 0.25
-            return
+            continue
         elif mode == 7:
             if all_same() is True and now < wait_till:
                 original_color = current_color
@@ -208,7 +208,7 @@ if __name__ == "__main__":
                     current_color = wheel(random.randint(1,8) * 32 - 1)
                 #time.sleep(random.randint(5,30))
                 wait_till = time.time() + random.randint(5,30)
-                return
+                continue
             a = 0
             while current_colors[a] == current_color:
                 a = a + 1
@@ -220,6 +220,6 @@ if __name__ == "__main__":
             pixels.show()
             #time.sleep(0.1)
             wait_till = time.time() + 0.1
-            return
+            continue
     client.loop_stop()
     client.disconnect()
