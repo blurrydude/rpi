@@ -155,5 +155,16 @@ if __name__ == "__main__":
             current_colors[a] = current_color
             pixels.show()
             time.sleep(0.333)
+        elif mode == 7:
+            if all_same() is True:
+                current_color = wheel(random.randint(1,8) * 32 - 1)
+                time.sleep(random.randint(5,30))
+            a = 0
+            while current_colors[a] == current_color:
+                a = a + 1
+            pixels[a] = current_color
+            current_colors[a] = current_color
+            pixels.show()
+            time.sleep(0.333)
     client.loop_stop()
     client.disconnect()
