@@ -191,6 +191,6 @@ if __name__ == "__main__":
             pixels[x] = current_color
             current_colors[a] = current_color
             pixels.show()
-            time.sleep(0.25)
+            time.sleep(0.125)
     client.loop_stop()
     client.disconnect()
