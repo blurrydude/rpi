@@ -212,6 +212,7 @@ if __name__ == "__main__":
                     current_color = wheel(random.randint(1,8) * 32 - 1)
                 #time.sleep(random.randint(5,30))
                 wait_till = time.time() + random.randint(5,30)
+                continue
             a = random.randint(0, num_pixels-1)
             while current_colors[a] == current_color:
                 a = random.randint(0, num_pixels-1)
