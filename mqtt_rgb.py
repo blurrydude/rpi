@@ -29,9 +29,6 @@ current_color = (0,0,0)
 wait_till = time.time()
 key_down = False
 
-for i in range(0,num_pixels):
-    current_colors.append((0,0,0))
-
 if myname == "gameroompi":
     num_pixels = 83
     rainbow_cycle_delay = 0.001
@@ -48,6 +45,9 @@ elif myname == "namepi":
     num_pixels = 8
     rainbow_cycle_delay = 0.05
     mqtt_enabled = False
+
+for i in range(0,num_pixels):
+    current_colors.append((0,0,0))
 
 pixels = neopixel.NeoPixel(
     pixel_pin, num_pixels, brightness=1.0, auto_write=False, pixel_order=ORDER
