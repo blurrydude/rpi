@@ -124,7 +124,7 @@ def button_callback(channel):
     milli = round(time.time() * 1000)
     diff = milli - last_press
     last_press = milli
-    if diff > 2500:
+    if diff > 1500:
         do_circuit(id, milli)
 
 GPIO.setwarnings(False) # Ignore warning for now
@@ -171,13 +171,15 @@ GPIO.add_event_detect(21,GPIO.RISING,callback=button_callback)
 
 
 if __name__ == "__main__":
-    subscriptions = []
+    #subscriptions = []
     #for k in circuit.keys():
     #    c = circuit[k]
     #    addy = "shellies/"+c["address"]+"/relay/"+c["relay"]
     #    print("preparing "+addy)
     #    subscriptions.append((addy, 0))
     #    reverse_lookup[addy] = k
+    start = time.time()
+    last_pulse = start
     while running is True:
         while connected is False:
             try:
@@ -190,8 +192,11 @@ if __name__ == "__main__":
                 print("BAD - client failed connection. Will try again in five seconds")
                 connected = False
                 time.sleep(5)
-        mosquittoMessage("alive at "+str(round(time.time())))
-        time.sleep(5)
+        now = time.time()
+        if now - last_pulse >= 5:
+            mosquittoMessage("alive at "+str(round(time.time())))
+            last_pulse = now
+        
     #try:
         #client.loop_stop()
         #client.disconnect()
