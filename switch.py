@@ -82,7 +82,9 @@ def mosquittoMessage(message):
 
 def mosquittoDo(topic, command):
     try:
+        client.connect(broker)
         client.publish(topic,command)
+        client.disconnect()
     except:
         print("BAD - Failed to publish "+command+" to "+topic)
 
@@ -170,29 +172,29 @@ GPIO.add_event_detect(21,GPIO.RISING,callback=button_callback)
 
 if __name__ == "__main__":
     subscriptions = []
-    for k in circuit.keys():
-        c = circuit[k]
-        addy = "shellies/"+c["address"]+"/relay/"+c["relay"]
-        print("preparing "+addy)
-        subscriptions.append((addy, 0))
-        reverse_lookup[addy] = k
+    #for k in circuit.keys():
+    #    c = circuit[k]
+    #    addy = "shellies/"+c["address"]+"/relay/"+c["relay"]
+    #    print("preparing "+addy)
+    #    subscriptions.append((addy, 0))
+    #    reverse_lookup[addy] = k
     while running is True:
         while connected is False:
             try:
-                client.on_message = on_message
-                client.connect(broker)
-                client.subscribe(subscriptions)
-                client.loop_start()
+                #client.on_message = on_message
+                #client.connect(broker)
+                #client.subscribe(subscriptions)
+                #client.loop_start()
                 connected = True
             except:
-                print("BAD - client failed connection. MQTT disabled. Will try again in five seconds")
+                print("BAD - client failed connection. Will try again in five seconds")
                 connected = False
                 time.sleep(5)
         mosquittoMessage("alive at "+str(round(time.time())))
         time.sleep(5)
-    try:
-        client.loop_stop()
-        client.disconnect()
-    except:
-        print("INFO - Client diconnet failed. Maybe, the connection failed first or during runtime.")
+    #try:
+        #client.loop_stop()
+        #client.disconnect()
+    #except:
+        #print("INFO - Client diconnet failed. Maybe, the connection failed first or during runtime.")
     GPIO.cleanup()
