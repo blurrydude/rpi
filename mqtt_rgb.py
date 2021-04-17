@@ -10,6 +10,7 @@ try:
     print("keyboard module present")
 except:
     keyboard = None
+    print("keyboard module not present. Please run sudo pip3 install keyboard")
 
 ############# CONFIG #############
 listentopic = "commands"
@@ -164,6 +165,8 @@ def on_key_down():
     key_down = True
 
 def translate_name_address(a):
+    if num_pixels > 8:
+        return a
     if a == 0:
         return 5
     if a == 1:

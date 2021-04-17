@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import time
+from datetime import datetime
 import paho.mqtt.client as mqtt
 import socket
 
@@ -116,7 +117,8 @@ def do_circuit(id, milli):
         circuit_state[cid] = True
     if live is True:
         mosquittoDo(topic,command)
-    print("Switch "+str(sid)+" at "+str(milli))
+    dt_object = datetime.fromtimestamp(round(milli / 1000))
+    print("Switch "+str(sid)+" at "+str(dt_object))
 
 def button_callback(channel):
     global last_press
