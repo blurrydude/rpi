@@ -11,6 +11,7 @@ live = True
 last_press = 0
 running = True
 client = mqtt.Client()
+connected = False
 
 circuit_state = {
     "A1": False,
@@ -80,7 +81,10 @@ def mosquittoMessage(message):
     mosquittoDo(myname+"/status",message)
 
 def mosquittoDo(topic, command):
-    client.publish(topic,command)
+    try:
+        client.publish(topic,command)
+    except:
+        print("BAD - Failed to publish "+command+" to "+topic)
 
 def on_message(client, userdata, message):
     global running
@@ -172,13 +176,23 @@ if __name__ == "__main__":
         print("preparing "+addy)
         subscriptions.append((addy, 0))
         reverse_lookup[addy] = k
-    client.on_message = on_message
-    client.connect(broker)
-    client.subscribe(subscriptions)
-    client.loop_start()
     while running is True:
-        time.sleep(5)
+        while connected is False:
+            try:
+                client.on_message = on_message
+                client.connect(broker)
+                client.subscribe(subscriptions)
+                client.loop_start()
+                connected = True
+            except:
+                print("BAD - client failed connection. MQTT disabled. Will try again in five seconds")
+                connected = False
+                time.sleep(5)
         mosquittoMessage("alive at "+str(round(time.time())))
-    client.loop_stop()
-    client.disconnect()
+        time.sleep(5)
+    try:
+        client.loop_stop()
+        client.disconnect()
+    except:
+        print("INFO - Client diconnet failed. Maybe, the connection failed first or during runtime.")
     GPIO.cleanup()
