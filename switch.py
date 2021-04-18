@@ -36,24 +36,24 @@ circuit_state = {
 }
 
 circuit = {
-    "A1": {"id": "A1", "address": "shelly1pm-8CAAB574C489", "relay":"0"}, #192.168.1.60 - Fireplace Lights
-    "B1": {"id": "B1", "address": "shelly1pm-84CCA8A11963", "relay":"0"}, #192.168.1.62 - Lamp Post and Driveway
-    "C1": {"id": "C1", "address": "shellyswitch25-8CAAB55F44D6", "relay":"0"}, #192.168.1.243 - Porch Light
-    "C2": {"id": "C2", "address": "shellyswitch25-8CAAB55F44D6", "relay":"1"}, #192.168.1.243 - Dining Room Light
-    "D1": {"id": "D1", "address": "shellyswitch25-8CAAB55F405D", "relay":"0"}, #192.168.1.242 - Office Fan
-    "D2": {"id": "D2", "address": "shellyswitch25-8CAAB55F405D", "relay":"1"}, #192.168.1.242 - Kitchen Lights
-    "E1": {"id": "E1", "address": "shellyswitch25-8CAAB55F3B3F", "relay":"0"}, #192.168.1.244 - Office Lights
-    "E2": {"id": "E2", "address": "shellyswitch25-8CAAB55F3B3F", "relay":"1"}, #192.168.1.244 - Unknown
-    "F1": {"id": "F1", "address": "shellyswitch25-8CAAB55F4553", "relay":"0"}, #192.168.1.245 - Unknown
-    "F2": {"id": "F2", "address": "shellyswitch25-8CAAB55F4553", "relay":"1"}, #192.168.1.245 - Bar Lights
-    "G1": {"id": "G1", "address": "shellyswitch25-8CAAB55F44D7", "relay":"0"}, #192.168.1.61  - Unknown
-    "G2": {"id": "G2", "address": "shellyswitch25-8CAAB55F44D7", "relay":"1"}, #192.168.1.61  - Unknown
-    "H1": {"id": "H1", "address": "shellyswitch25-8CAAB561DDED", "relay":"0"}, #192.168.1.240 - Bathroom Lights and Fan
-    "H2": {"id": "H2", "address": "shellyswitch25-8CAAB561DDED", "relay":"1"}, #192.168.1.240 - Garage Lights
-    "I1": {"id": "I1", "address": "shellyswitch25-8CAAB561DDCF", "relay":"0"}, #192.168.1.241 - Master Bath Lights
-    "I2": {"id": "I2", "address": "shellyswitch25-8CAAB561DDCF", "relay":"1"}, #192.168.1.241 - Stairway Lights
-    "J1": {"id": "J1", "address": "shellyswitch25-8CAAB55F402F", "relay":"0"}, #192.168.1.239 - Hallway
-    "J2": {"id": "J2", "address": "shellyswitch25-8CAAB55F402F", "relay":"1"} #192.168.1.239 - Master Bath Vent Fan
+    "A1": {"id": "A1", "address": "shelly1pm-8CAAB574C489", "relay":"0"     , "pressed":0,"confirmed":0}, #192.168.1.60 - Fireplace Lights
+    "B1": {"id": "B1", "address": "shelly1pm-84CCA8A11963", "relay":"0"     , "pressed":0,"confirmed":0}, #192.168.1.62 - Lamp Post and Driveway
+    "C1": {"id": "C1", "address": "shellyswitch25-8CAAB55F44D6", "relay":"0", "pressed":0,"confirmed":0}, #192.168.1.243 - Porch Light
+    "C2": {"id": "C2", "address": "shellyswitch25-8CAAB55F44D6", "relay":"1", "pressed":0,"confirmed":0}, #192.168.1.243 - Dining Room Light
+    "D1": {"id": "D1", "address": "shellyswitch25-8CAAB55F405D", "relay":"0", "pressed":0,"confirmed":0}, #192.168.1.242 - Office Fan
+    "D2": {"id": "D2", "address": "shellyswitch25-8CAAB55F405D", "relay":"1", "pressed":0,"confirmed":0}, #192.168.1.242 - Kitchen Lights
+    "E1": {"id": "E1", "address": "shellyswitch25-8CAAB55F3B3F", "relay":"0", "pressed":0,"confirmed":0}, #192.168.1.244 - Office Lights
+    "E2": {"id": "E2", "address": "shellyswitch25-8CAAB55F3B3F", "relay":"1", "pressed":0,"confirmed":0}, #192.168.1.244 - Unknown
+    "F1": {"id": "F1", "address": "shellyswitch25-8CAAB55F4553", "relay":"0", "pressed":0,"confirmed":0}, #192.168.1.245 - Unknown
+    "F2": {"id": "F2", "address": "shellyswitch25-8CAAB55F4553", "relay":"1", "pressed":0,"confirmed":0}, #192.168.1.245 - Bar Lights
+    "G1": {"id": "G1", "address": "shellyswitch25-8CAAB55F44D7", "relay":"0", "pressed":0,"confirmed":0}, #192.168.1.61  - Unknown
+    "G2": {"id": "G2", "address": "shellyswitch25-8CAAB55F44D7", "relay":"1", "pressed":0,"confirmed":0}, #192.168.1.61  - Unknown
+    "H1": {"id": "H1", "address": "shellyswitch25-8CAAB561DDED", "relay":"0", "pressed":0,"confirmed":0}, #192.168.1.240 - Bathroom Lights and Fan
+    "H2": {"id": "H2", "address": "shellyswitch25-8CAAB561DDED", "relay":"1", "pressed":0,"confirmed":0}, #192.168.1.240 - Garage Lights
+    "I1": {"id": "I1", "address": "shellyswitch25-8CAAB561DDCF", "relay":"0", "pressed":0,"confirmed":0}, #192.168.1.241 - Master Bath Lights
+    "I2": {"id": "I2", "address": "shellyswitch25-8CAAB561DDCF", "relay":"1", "pressed":0,"confirmed":0}, #192.168.1.241 - Stairway Lights
+    "J1": {"id": "J1", "address": "shellyswitch25-8CAAB55F402F", "relay":"0", "pressed":0,"confirmed":0}, #192.168.1.239 - Hallway
+    "J2": {"id": "J2", "address": "shellyswitch25-8CAAB55F402F", "relay":"1", "pressed":0,"confirmed":0} #192.168.1.239 - Master Bath Vent Fan
 }
 reverse_lookup = {} #I can't figure out a better or faster way
 pin = {
@@ -127,9 +127,25 @@ def button_callback(channel):
     global last_press
     id = str(channel)
     ts = getTimeStamp()
-    if ts > last_press+1:
-        do_circuit(id, milli)
-    last_press = ts
+    if ts > last_press:
+        tap(id, ts)
+        last_press = ts
+
+def tap(id, ts):
+    if circuit[id]["pressed"] > 0 and circuit[id]["confirmed"] > 0:
+        circuit[id]["pressed"] = 0
+        circuit[id]["confirmed"] = 0
+        do_circuit(id, ts)
+    elif circuit[id]["pressed"] > 0:
+        circuit[id]["confirmed"] = ts
+    else:
+        circuit[id]["pressed"] = ts
+    limit = ts - 3
+    for c in circuit:
+        if c["pressed"] <= limit:
+            c["pressed"] = 0
+            c["confirmed"] = 0
+        
 
 GPIO.setwarnings(False) # Ignore warning for now
 GPIO.setmode(GPIO.BCM)
