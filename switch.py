@@ -142,7 +142,7 @@ def tap(id, ts):
         circuit[cid]["confirmed"] = ts
         print("switch "+cid+" confirmed")
     else:
-        circuit[id]["pressed"] = ts
+        circuit[cid]["pressed"] = ts
         print("switch "+cid+" pressed")
     limit = ts - 3
     for c in circuit:
