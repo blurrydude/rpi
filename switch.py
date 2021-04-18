@@ -99,7 +99,7 @@ def on_message(client, userdata, message):
     else:
         circuit_state[cid] = False
     
-def do_circuit(id, milli):
+def do_circuit(id, ts):
     global circuit_state
     pdata = pin[id]
     if pdata["circuit"] == "":
@@ -117,17 +117,17 @@ def do_circuit(id, milli):
         circuit_state[cid] = True
     if live is True:
         mosquittoDo(topic,command)
-    dt_object = datetime.fromtimestamp(round(milli / 1000))
+    dt_object = datetime.fromtimestamp(ts)
     print("Switch "+str(sid)+" at "+str(dt_object))
 
 def getTimeStamp():
-    return round(time.time())
+    return time.time()
 
 def button_callback(channel):
     global last_press
     id = str(channel)
     ts = getTimeStamp()
-    if ts > last_press:
+    if ts > last_press+500:
         tap(id, ts)
         last_press = ts
 
@@ -146,10 +146,10 @@ def tap(id, ts):
         print("switch "+cid+" pressed")
     limit = ts - 3
     for ck in circuit.keys():
-        if c[ck]["pressed"] < limit:
-            c[ck]["pressed"] = 0
-            c[ck]["confirmed"] = 0
-            print("switch "+str(c[ck]["id"])+" cleared")
+        if circuit[ck]["pressed"] < limit:
+            circuit[ck]["pressed"] = 0
+            circuit[ck]["confirmed"] = 0
+            print("switch "+str(circuit[ck]["id"])+" cleared")
         
 
 GPIO.setwarnings(False) # Ignore warning for now
