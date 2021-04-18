@@ -138,13 +138,16 @@ def tap(id, ts):
         do_circuit(id, ts)
     elif circuit[id]["pressed"] > 0:
         circuit[id]["confirmed"] = ts
+        print("switch "+str(id)+" confirmed")
     else:
         circuit[id]["pressed"] = ts
+        print("switch "+str(id)+" pressed")
     limit = ts - 3
     for c in circuit:
-        if c["pressed"] <= limit:
+        if c["pressed"] < limit:
             c["pressed"] = 0
             c["confirmed"] = 0
+            print("switch "+str(c["id"])+" cleared")
         
 
 GPIO.setwarnings(False) # Ignore warning for now
