@@ -132,16 +132,18 @@ def button_callback(channel):
         last_press = ts
 
 def tap(id, ts):
-    if circuit[id]["pressed"] > 0 and circuit[id]["confirmed"] > 0:
-        circuit[id]["pressed"] = 0
-        circuit[id]["confirmed"] = 0
+    pdata = pin[id]
+    cid = pdata["circuit"]
+    if circuit[cid]["pressed"] > 0 and circuit[cid]["confirmed"] > 0:
+        circuit[cid]["pressed"] = 0
+        circuit[cid]["confirmed"] = 0
         do_circuit(id, ts)
-    elif circuit[id]["pressed"] > 0:
-        circuit[id]["confirmed"] = ts
-        print("switch "+str(id)+" confirmed")
+    elif circuit[cid]["pressed"] > 0:
+        circuit[cid]["confirmed"] = ts
+        print("switch "+cid+" confirmed")
     else:
         circuit[id]["pressed"] = ts
-        print("switch "+str(id)+" pressed")
+        print("switch "+cid+" pressed")
     limit = ts - 3
     for c in circuit:
         if c["pressed"] < limit:
