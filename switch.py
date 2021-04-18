@@ -120,14 +120,16 @@ def do_circuit(id, milli):
     dt_object = datetime.fromtimestamp(round(milli / 1000))
     print("Switch "+str(sid)+" at "+str(dt_object))
 
+def getTimeStamp():
+    return round(time.time())
+
 def button_callback(channel):
     global last_press
     id = str(channel)
-    milli = round(time.time() * 1000)
-    diff = milli - last_press
-    last_press = milli
-    if diff > 1500:
+    ts = getTimeStamp()
+    if ts > last_press+1:
         do_circuit(id, milli)
+    last_press = ts
 
 GPIO.setwarnings(False) # Ignore warning for now
 GPIO.setmode(GPIO.BCM)
