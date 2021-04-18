@@ -136,6 +136,7 @@ def tap(id, ts):
     cid = pdata["circuit"]
     if circuit[cid]["pressed"] > 0:
         circuit[cid]["pressed"] = 0
+        print("switch "+cid+" confirmed")
         do_circuit(id, ts)
     else:
         circuit[cid]["pressed"] = ts
@@ -169,25 +170,25 @@ GPIO.setup(16, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(20, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(21, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-GPIO.add_event_detect(4,GPIO.RISING,callback=button_callback)
-GPIO.add_event_detect(17,GPIO.RISING,callback=button_callback)
-GPIO.add_event_detect(27,GPIO.RISING,callback=button_callback)
-GPIO.add_event_detect(22,GPIO.RISING,callback=button_callback)
-GPIO.add_event_detect(5,GPIO.RISING,callback=button_callback)
-GPIO.add_event_detect(6,GPIO.RISING,callback=button_callback)
-GPIO.add_event_detect(13,GPIO.RISING,callback=button_callback)
-GPIO.add_event_detect(19,GPIO.RISING,callback=button_callback)
-GPIO.add_event_detect(26,GPIO.RISING,callback=button_callback)
-GPIO.add_event_detect(18,GPIO.RISING,callback=button_callback)
-GPIO.add_event_detect(23,GPIO.RISING,callback=button_callback)
-GPIO.add_event_detect(24,GPIO.RISING,callback=button_callback)
-GPIO.add_event_detect(25,GPIO.RISING,callback=button_callback)
-GPIO.add_event_detect(8,GPIO.RISING,callback=button_callback)
-GPIO.add_event_detect(7,GPIO.RISING,callback=button_callback)
-GPIO.add_event_detect(12,GPIO.RISING,callback=button_callback)
-GPIO.add_event_detect(16,GPIO.RISING,callback=button_callback)
-GPIO.add_event_detect(20,GPIO.RISING,callback=button_callback)
-GPIO.add_event_detect(21,GPIO.RISING,callback=button_callback)
+GPIO.add_event_detect(4,GPIO.BOTH,callback=button_callback)
+GPIO.add_event_detect(17,GPIO.BOTH,callback=button_callback)
+GPIO.add_event_detect(27,GPIO.BOTH,callback=button_callback)
+GPIO.add_event_detect(22,GPIO.BOTH,callback=button_callback)
+GPIO.add_event_detect(5,GPIO.BOTH,callback=button_callback)
+GPIO.add_event_detect(6,GPIO.BOTH,callback=button_callback)
+GPIO.add_event_detect(13,GPIO.BOTH,callback=button_callback)
+GPIO.add_event_detect(19,GPIO.BOTH,callback=button_callback)
+GPIO.add_event_detect(26,GPIO.BOTH,callback=button_callback)
+GPIO.add_event_detect(18,GPIO.BOTH,callback=button_callback)
+GPIO.add_event_detect(23,GPIO.BOTH,callback=button_callback)
+GPIO.add_event_detect(24,GPIO.BOTH,callback=button_callback)
+GPIO.add_event_detect(25,GPIO.BOTH,callback=button_callback)
+GPIO.add_event_detect(8,GPIO.BOTH,callback=button_callback)
+GPIO.add_event_detect(7,GPIO.BOTH,callback=button_callback)
+GPIO.add_event_detect(12,GPIO.BOTH,callback=button_callback)
+GPIO.add_event_detect(16,GPIO.BOTH,callback=button_callback)
+GPIO.add_event_detect(20,GPIO.BOTH,callback=button_callback)
+GPIO.add_event_detect(21,GPIO.BOTH,callback=button_callback)
 
 
 if __name__ == "__main__":
