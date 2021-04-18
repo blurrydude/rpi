@@ -127,7 +127,7 @@ def button_callback(channel):
     global last_press
     id = str(channel)
     ts = getTimeStamp()
-    if ts > last_press+500:
+    if ts > last_press+0.5:
         tap(id, ts)
         last_press = ts
 
