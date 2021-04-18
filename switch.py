@@ -142,7 +142,7 @@ def tap(id, ts):
         print("switch "+cid+" pressed")
     limit = ts - 3
     for ck in circuit.keys():
-        if circuit[ck]["pressed"] < limit:
+        if ck != cid and circuit[ck]["pressed"] != 0 and circuit[ck]["pressed"] < limit:
             circuit[ck]["pressed"] = 0
             print("switch "+str(circuit[ck]["id"])+" cleared")
         
