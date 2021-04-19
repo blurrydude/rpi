@@ -193,22 +193,22 @@ GPIO.add_event_detect(21,GPIO.FALLING,callback=button_callback)
 
 
 if __name__ == "__main__":
-    #subscriptions = []
-    #for k in circuit.keys():
-    #    c = circuit[k]
-    #    addy = "shellies/"+c["address"]+"/relay/"+c["relay"]
-    #    print("preparing "+addy)
-    #    subscriptions.append((addy, 0))
-    #    reverse_lookup[addy] = k
+    subscriptions = []
+    for k in circuit.keys():
+       c = circuit[k]
+       addy = "shellies/"+c["address"]+"/relay/"+c["relay"]
+       print("preparing "+addy)
+       subscriptions.append((addy, 0))
+       reverse_lookup[addy] = k
     start = time.time()
     last_pulse = start
     while running is True:
         while connected is False:
             try:
-                #client.on_message = on_message
-                #client.connect(broker)
-                #client.subscribe(subscriptions)
-                #client.loop_start()
+                client.on_message = on_message
+                client.connect(broker)
+                client.subscribe(subscriptions)
+                client.loop_start()
                 connected = True
             except:
                 print("BAD - client failed connection. Will try again in five seconds")
@@ -219,9 +219,9 @@ if __name__ == "__main__":
             mosquittoMessage("alive at "+str(round(time.time())))
             last_pulse = now
         
-    #try:
-        #client.loop_stop()
-        #client.disconnect()
-    #except:
-        #print("INFO - Client diconnet failed. Maybe, the connection failed first or during runtime.")
+    try:
+        client.loop_stop()
+        client.disconnect()
+    except:
+        print("INFO - Client diconnet failed. Maybe, the connection failed first or during runtime.")
     GPIO.cleanup()
