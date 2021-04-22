@@ -147,7 +147,7 @@ def gotoroom(roomname):
     room = map[current_room]
     for button in room["buttons"]:
         button.grid_forget()
-    for rgbbutton in room["rgbbuttons"]:
+    for button in room["rgbbuttons"]:
         button.grid_forget()
     for button in room["onbuttons"]:
         button.grid_forget()
