@@ -100,6 +100,8 @@ map = {
 myname = socket.gethostname()
 ############# CONFIG #############
 broker = "192.168.1.22"
+button_height = 2
+button_width = 20
 ##################################
 current_room = "Living Room"
 client = mqtt.Client()
@@ -209,20 +211,20 @@ for roomkey in map.keys():
     map[roomkey]["rgbbuttons"] = []
     map[roomkey]["labels"] = []
     for portal in room["portals"]:
-        button.append(tk.Button(text=portal,command=lambda id=portal: room_click(id), height=2, width=30))
+        button.append(tk.Button(text=portal,command=lambda id=portal: room_click(id), height=button_height, width=button_width))
         map[roomkey]["buttons"].append(button[b])
         b = b + 1
     for cid in room["circuits"]:
         circuit = circuits[cid]
         label.append(tk.Label(text=circuit["label"]))
-        onbutton.append(tk.Button(text="ON",command=lambda id=cid: on_click(id), height=2, width=30))
-        offbutton.append(tk.Button(text="OFF",command=lambda id=cid: off_click(id), height=2, width=30))
+        onbutton.append(tk.Button(text="ON",command=lambda id=cid: on_click(id), height=button_height, width=button_width))
+        offbutton.append(tk.Button(text="OFF",command=lambda id=cid: off_click(id), height=button_height, width=button_width))
         map[roomkey]["onbuttons"].append(onbutton[nb])
         map[roomkey]["offbuttons"].append(offbutton[nb])
         map[roomkey]["labels"].append(label[nb])
         nb = nb + 1
     for rgb in room["rgb"]:
         for color in colors:
-            map[roomkey]["rgbbuttons"].append(tk.Button(text=color["label"],command=lambda id=rgb, command=color["command"]: rgb_click(id, command), height=2, width=30))
+            map[roomkey]["rgbbuttons"].append(tk.Button(text=color["label"],command=lambda id=rgb, command=color["command"]: rgb_click(id, command), height=button_height, width=button_width))
 gotoroom(current_room)
 window.mainloop()
