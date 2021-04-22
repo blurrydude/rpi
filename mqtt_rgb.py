@@ -61,7 +61,7 @@ else:
     client = None
     print("mqtt disabled")
 mode = 3
-# modes: 0-fill, 1-single pixel, 2-range, 3-gradient, 4-rainbow chase
+# modes: 0-fill, 1-single pixel, 2-range, 3-gradient, 4-rainbow chase, 5-random pixels, 6-change random, 7-change swipe
 j = 0
 
 def mosquittoMessage(message):

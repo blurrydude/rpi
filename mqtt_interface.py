@@ -27,59 +27,73 @@ circuits = {
 map = {
     "Bedroom": {
         "portals": ["Master Bath", "Hallway"],
-        "circuits": ["E2","F1","G1","G2"]
+        "circuits": ["E2","F1","G1","G2"],
+        "rgb": ["windowpi"]
     },
     "Master Bath": {
         "portals": ["Bedroom"],
-        "circuits": ["I1","J2"]
+        "circuits": ["I1","J2"],
+        "rgb": []
     },
     "Hallway": {
         "portals": ["Bedroom","Bathroom","Library","Workout Room","Living Room"],
-        "circuits": ["J1"]
+        "circuits": ["J1"],
+        "rgb": []
     },
     "Bathroom": {
         "portals": ["Hallway"],
-        "circuits": ["H1"]
+        "circuits": ["H1"],
+        "rgb": []
     },
     "Library": {
         "portals": ["Hallway"],
-        "circuits": []
+        "circuits": [],
+        "rgb": []
     },
     "Workout Room": {
         "portals": ["Hallway"],
-        "circuits": []
+        "circuits": [],
+        "rgb": []
     },
     "Living Room": {
         "portals": ["Hallway","Kitchen","Dining Room"],
-        "circuits": ["A1","B1","C1"]
+        "circuits": ["A1","B1","C1"],
+        "rgb": ["canvaspi"]
     },
     "Kitchen": {
         "portals": ["Living Room","Shop","Dining Room"],
-        "circuits": ["D2","F2"]
+        "circuits": ["D2","F2"],
+        "rgb": []
     },
     "Dining Room": {
         "portals": ["Kitchen","Game Room","Office"],
-        "circuits": ["C2"]
+        "circuits": ["C2"],
+        "rgb": []
     },
     "Game Room": {
         "portals": ["Dining Room","Deck"],
-        "circuits": []
+        "circuits": [],
+        "rgb": ["clockpi","gameroompi"]
     },
     "Office": {
         "portals": ["Dining Room","Deck"],
-        "circuits": ["D1","E1"]
+        "circuits": ["D1","E1"],
+        "rgb": []
     },
     "Shop": {
         "portals": ["Kitchen","Laundry Room","Electronics Room"],
-        "circuits": ["H2","I2"]
+        "circuits": ["H2","I2"],
+        "rgb": []
     },
     "Laundry Room": {
         "portals": ["Shop"],
-        "circuits": []
+        "circuits": [],
+        "rgb": []
     },
     "Electronics Room": {
         "portals": ["Shop"],
-        "circuits": []
+        "circuits": [],
+        "rgb": []
     }
 }
 
@@ -105,6 +119,9 @@ def mosquittoDo(topic, command):
     except:
         print("BAD - Failed to publish "+command+" to "+topic)
 
+def rgb_click(id, command):
+    mosquittoDo(id+'/commands',command)
+
 def room_click(id):
     gotoroom(id)
 
@@ -127,6 +144,8 @@ def gotoroom(roomname):
     global greetingvar
     room = map[current_room]
     for button in room["buttons"]:
+        button.grid_forget()
+    for rgbbutton in room["rgbbuttons"]:
         button.grid_forget()
     for button in room["onbuttons"]:
         button.grid_forget()
@@ -153,30 +172,57 @@ def gotoroom(roomname):
     for button in room["offbuttons"]:
         button.grid(row=r, column=3)
         r = r + 1
+    c = 2
+    for button in room["rgbbuttons"]:
+        button.grid(row=r, column=c)
+        if c == 2:
+            c = 3
+        else:
+            r = r + 1
+            c = 2
 button = []
 onbutton = []
 offbutton = []
 label = []
 b = 0
 nb = 0
+colors = [
+    {"label":"white","command":"0:255:255:255"},
+    {"label":"red","command":"0:255:0:0"},
+    {"label":"green","command":"0:0:255:0"},
+    {"label":"blue","command":"0:0:0:255"},
+    {"label":"orange","command":"0:255:64:0"},
+    {"label":"purple","command":"0:255:0:255"},
+    {"label":"teal","command":"0:0:255:255"},
+    {"label":"off","command":"0:0:0:0"},
+    {"label":"gradient","command":"3:0"},
+    {"label":"rainbow","command":"4:0"},
+    {"label":"random pixels","command":"5:0"},
+    {"label":"random change","command":"6:0"},
+    {"label":"swipe change","command":"7:0"}
+]
 for roomkey in map.keys():
     room = map[roomkey]
     map[roomkey]["buttons"] = []
     map[roomkey]["onbuttons"] = []
     map[roomkey]["offbuttons"] = []
+    map[roomkey]["rgbbuttons"] = []
     map[roomkey]["labels"] = []
     for portal in room["portals"]:
-        button.append(tk.Button(text=portal,command=lambda id=portal: room_click(id), height=3, width=40))
+        button.append(tk.Button(text=portal,command=lambda id=portal: room_click(id), height=2, width=40))
         map[roomkey]["buttons"].append(button[b])
         b = b + 1
     for cid in room["circuits"]:
         circuit = circuits[cid]
         label.append(tk.Label(text=circuit["label"]))
-        onbutton.append(tk.Button(text="ON",command=lambda id=cid: on_click(id), height=3, width=40))
-        offbutton.append(tk.Button(text="OFF",command=lambda id=cid: off_click(id), height=3, width=40))
+        onbutton.append(tk.Button(text="ON",command=lambda id=cid: on_click(id), height=2, width=40))
+        offbutton.append(tk.Button(text="OFF",command=lambda id=cid: off_click(id), height=2, width=40))
         map[roomkey]["onbuttons"].append(onbutton[nb])
         map[roomkey]["offbuttons"].append(offbutton[nb])
         map[roomkey]["labels"].append(label[nb])
         nb = nb + 1
+    for rgb in room["rgb"]:
+        for color in colors:
+            map[roomkey]["rgbbuttons"].append(tk.Button(text=color["label"],command=lambda id=rgb, command=color["command"]: rgb_click(id, command), height=2, width=40))
 gotoroom(current_room)
 window.mainloop()
