@@ -1,0 +1,80 @@
+{
+    "circuits": {
+        "A1": {"id": "A1", "address": "shelly1pm-8CAAB574C489", "relay":"0"     , "label":"Fireplace"},
+        "B1": {"id": "B1", "address": "shelly1pm-84CCA8A11963", "relay":"0"     , "label":"Lamp post"},
+        "C1": {"id": "C1", "address": "shellyswitch25-8CAAB55F44D6", "relay":"0", "label":"Porch"},
+        "C2": {"id": "C2", "address": "shellyswitch25-8CAAB55F44D6", "relay":"1", "label":"Dining Room"},
+        "D1": {"id": "D1", "address": "shellyswitch25-8CAAB55F405D", "relay":"0", "label":"Office Fan"},
+        "D2": {"id": "D2", "address": "shellyswitch25-8CAAB55F405D", "relay":"1", "label":"Kitchen"},
+        "E1": {"id": "E1", "address": "shellyswitch25-8CAAB55F3B3F", "relay":"0", "label":"Office Lights"},
+        "E2": {"id": "E2", "address": "shellyswitch25-8CAAB55F3B3F", "relay":"1", "label":"Unknown 1"},
+        "F1": {"id": "F1", "address": "shellyswitch25-8CAAB55F4553", "relay":"0", "label":"Unknown 2"},
+        "F2": {"id": "F2", "address": "shellyswitch25-8CAAB55F4553", "relay":"1", "label":"Bar"},
+        "G1": {"id": "G1", "address": "shellyswitch25-8CAAB55F44D7", "relay":"0", "label":"Unknown 3"},
+        "G2": {"id": "G2", "address": "shellyswitch25-8CAAB55F44D7", "relay":"1", "label":"Unknown 4"},
+        "H1": {"id": "H1", "address": "shellyswitch25-8CAAB561DDED", "relay":"0", "label":"Guest Bathroom"},
+        "H2": {"id": "H2", "address": "shellyswitch25-8CAAB561DDED", "relay":"1", "label":"Garage Lights"},
+        "I1": {"id": "I1", "address": "shellyswitch25-8CAAB561DDCF", "relay":"0", "label":"Master Bath"},
+        "I2": {"id": "I2", "address": "shellyswitch25-8CAAB561DDCF", "relay":"1", "label":"Stairway"},
+        "J1": {"id": "J1", "address": "shellyswitch25-8CAAB55F402F", "relay":"0", "label":"Hallway"},
+        "J2": {"id": "J2", "address": "shellyswitch25-8CAAB55F402F", "relay":"1", "label":"Shower Fan"}
+    },
+    "rooms": {
+        "Bedroom": {
+            "portals": ["Master Bath", "Hallway"],
+            "circuits": ["E2","F1","G1","G2"]
+        },
+        "Master Bath": {
+            "portals": ["Bedroom"],
+            "circuits": ["I1","J2"]
+        },
+        "Hallway": {
+            "portals": ["Bedroom","Bathroom","Library","Workout Room","Living Room"],
+            "circuits": ["J1"]
+        },
+        "Bathroom": {
+            "portals": ["Hallway"],
+            "circuits": ["H1"]
+        },
+        "Library": {
+            "portals": ["Hallway"],
+            "circuits": []
+        },
+        "Workout Room": {
+            "portals": ["Hallway"],
+            "circuits": []
+        },
+        "Living Room": {
+            "portals": ["Hallway","Kitchen","Dining Room"],
+            "circuits": ["A1","B1","C1"]
+        },
+        "Kitchen": {
+            "portals": ["Living Room","Shop","Dining Room"],
+            "circuits": ["D2","F2"]
+        },
+        "Dining Room": {
+            "portals": ["Kitchen","Game Room","Office"],
+            "circuits": ["C2"]
+        },
+        "Game Room": {
+            "portals": ["Dining Room","Deck"],
+            "circuits": []
+        },
+        "Office": {
+            "portals": ["Dining Room","Deck"],
+            "circuits": ["D1","E1"]
+        },
+        "Shop": {
+            "portals": ["Kitchen","Laundry Room","Electronics Room"],
+            "circuits": ["H2","I1"]
+        },
+        "Laundry Room": {
+            "portals": ["Shop"],
+            "circuits": []
+        },
+        "Electronics Room": {
+            "portals": ["Shop"],
+            "circuits": []
+        }
+    }
+}
