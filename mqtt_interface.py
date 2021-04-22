@@ -104,7 +104,7 @@ broker = "192.168.1.22"
 current_room = "Living Room"
 client = mqtt.Client()
 window = tk.Tk()
-#window.attributes("-fullscreen", 1)
+window.attributes("-fullscreen", 1)
 greetingvar = tk.StringVar()
 greetingvar.set('MQTT Control Switch - '+current_room)
 greeting = tk.Label(textvariable=greetingvar, bg="black", fg="white")
@@ -209,20 +209,20 @@ for roomkey in map.keys():
     map[roomkey]["rgbbuttons"] = []
     map[roomkey]["labels"] = []
     for portal in room["portals"]:
-        button.append(tk.Button(text=portal,command=lambda id=portal: room_click(id), height=2, width=40))
+        button.append(tk.Button(text=portal,command=lambda id=portal: room_click(id), height=2, width=30))
         map[roomkey]["buttons"].append(button[b])
         b = b + 1
     for cid in room["circuits"]:
         circuit = circuits[cid]
         label.append(tk.Label(text=circuit["label"]))
-        onbutton.append(tk.Button(text="ON",command=lambda id=cid: on_click(id), height=2, width=40))
-        offbutton.append(tk.Button(text="OFF",command=lambda id=cid: off_click(id), height=2, width=40))
+        onbutton.append(tk.Button(text="ON",command=lambda id=cid: on_click(id), height=2, width=30))
+        offbutton.append(tk.Button(text="OFF",command=lambda id=cid: off_click(id), height=2, width=30))
         map[roomkey]["onbuttons"].append(onbutton[nb])
         map[roomkey]["offbuttons"].append(offbutton[nb])
         map[roomkey]["labels"].append(label[nb])
         nb = nb + 1
     for rgb in room["rgb"]:
         for color in colors:
-            map[roomkey]["rgbbuttons"].append(tk.Button(text=color["label"],command=lambda id=rgb, command=color["command"]: rgb_click(id, command), height=2, width=40))
+            map[roomkey]["rgbbuttons"].append(tk.Button(text=color["label"],command=lambda id=rgb, command=color["command"]: rgb_click(id, command), height=2, width=30))
 gotoroom(current_room)
 window.mainloop()
