@@ -235,6 +235,7 @@ greeting.grid(row=0, column=1, sticky="nesw", pady=4)
 
 def on_message(client, userdata, message):
     global text_var
+    global circuit_state
     if ready is not True:
         return
     result = str(message.payload.decode("utf-8"))
@@ -338,7 +339,6 @@ if __name__ == "__main__":
             connected = False
             time.sleep(5)
     b = 0
-    nb = 0
     for roomkey in map.keys():
         room = map[roomkey]
         button = tk.Button(text=roomkey,command=lambda id=roomkey: room_click(id), height=button_height, font=base_font)
@@ -356,7 +356,6 @@ if __name__ == "__main__":
             map[roomkey]["onbuttons"].append(onbutton[cid])
             map[roomkey]["offbuttons"].append(offbutton[cid])
             map[roomkey]["labels"].append(label[cid])
-            nb = nb + 1
         for rgb in room["rgb"]:
             for color in colors:
                 map[roomkey]["rgbbuttons"].append(tk.Button(text=color["label"],command=lambda id=rgb, command=color["command"]: rgb_click(id, command), height=button_height, font=base_font))
