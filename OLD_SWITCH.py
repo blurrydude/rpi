@@ -1,4 +1,4 @@
-from gpiozero import Button
+import RPi.GPIO as GPIO
 import time
 from datetime import datetime
 import paho.mqtt.client as mqtt
@@ -125,7 +125,7 @@ def getTimeStamp():
 
 def button_callback(channel):
     global last_press
-    id = str(channel.pin).replace("GPIO","")
+    id = str(channel)
     ts = getTimeStamp()
     if ts > last_press+1.5:
         tap(id, ts)
@@ -148,51 +148,48 @@ def tap(id, ts):
 #             circuit[ck]["pressed"] = 0
 #             print("switch "+str(circuit[ck]["id"])+" cleared")
         
-for k in pin.keys():
-    button = Button(int(k))
-    button.when_pressed = button_callback
 
-# GPIO.setwarnings(False) # Ignore warning for now
-# GPIO.setmode(GPIO.BCM)
-# GPIO.setup(4, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-# GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-# GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-# GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-# GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-# GPIO.setup(6, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-# GPIO.setup(13, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-# GPIO.setup(19, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-# GPIO.setup(26, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-# GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-# GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-# GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-# GPIO.setup(25, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-# GPIO.setup(8, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-# GPIO.setup(7, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-# GPIO.setup(12, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-# GPIO.setup(16, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-# GPIO.setup(20, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-# GPIO.setup(21, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setwarnings(False) # Ignore warning for now
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(4, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(6, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(13, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(19, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(26, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(25, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(8, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(7, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(12, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(16, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(20, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(21, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-# GPIO.add_event_detect(4,GPIO.FALLING,callback=button_callback)
-# GPIO.add_event_detect(17,GPIO.FALLING,callback=button_callback)
-# GPIO.add_event_detect(27,GPIO.FALLING,callback=button_callback)
-# GPIO.add_event_detect(22,GPIO.FALLING,callback=button_callback)
-# GPIO.add_event_detect(5,GPIO.FALLING,callback=button_callback)
-# GPIO.add_event_detect(6,GPIO.FALLING,callback=button_callback)
-# GPIO.add_event_detect(13,GPIO.FALLING,callback=button_callback)
-# GPIO.add_event_detect(19,GPIO.FALLING,callback=button_callback)
-# GPIO.add_event_detect(26,GPIO.FALLING,callback=button_callback)
-# GPIO.add_event_detect(18,GPIO.FALLING,callback=button_callback)
-# GPIO.add_event_detect(23,GPIO.FALLING,callback=button_callback)
-# GPIO.add_event_detect(24,GPIO.FALLING,callback=button_callback)
-# GPIO.add_event_detect(25,GPIO.FALLING,callback=button_callback)
-# GPIO.add_event_detect(8,GPIO.FALLING,callback=button_callback)
-# GPIO.add_event_detect(7,GPIO.FALLING,callback=button_callback)
-# GPIO.add_event_detect(12,GPIO.FALLING,callback=button_callback)
-# GPIO.add_event_detect(16,GPIO.FALLING,callback=button_callback)
-# GPIO.add_event_detect(20,GPIO.FALLING,callback=button_callback)
-# GPIO.add_event_detect(21,GPIO.FALLING,callback=button_callback)
+GPIO.add_event_detect(4,GPIO.FALLING,callback=button_callback)
+GPIO.add_event_detect(17,GPIO.FALLING,callback=button_callback)
+GPIO.add_event_detect(27,GPIO.FALLING,callback=button_callback)
+GPIO.add_event_detect(22,GPIO.FALLING,callback=button_callback)
+GPIO.add_event_detect(5,GPIO.FALLING,callback=button_callback)
+GPIO.add_event_detect(6,GPIO.FALLING,callback=button_callback)
+GPIO.add_event_detect(13,GPIO.FALLING,callback=button_callback)
+GPIO.add_event_detect(19,GPIO.FALLING,callback=button_callback)
+GPIO.add_event_detect(26,GPIO.FALLING,callback=button_callback)
+GPIO.add_event_detect(18,GPIO.FALLING,callback=button_callback)
+GPIO.add_event_detect(23,GPIO.FALLING,callback=button_callback)
+GPIO.add_event_detect(24,GPIO.FALLING,callback=button_callback)
+GPIO.add_event_detect(25,GPIO.FALLING,callback=button_callback)
+GPIO.add_event_detect(8,GPIO.FALLING,callback=button_callback)
+GPIO.add_event_detect(7,GPIO.FALLING,callback=button_callback)
+GPIO.add_event_detect(12,GPIO.FALLING,callback=button_callback)
+GPIO.add_event_detect(16,GPIO.FALLING,callback=button_callback)
+GPIO.add_event_detect(20,GPIO.FALLING,callback=button_callback)
+GPIO.add_event_detect(21,GPIO.FALLING,callback=button_callback)
 
 
 if __name__ == "__main__":
@@ -227,3 +224,4 @@ if __name__ == "__main__":
         client.disconnect()
     except:
         print("INFO - Client diconnet failed. Maybe, the connection failed first or during runtime.")
+    GPIO.cleanup()
