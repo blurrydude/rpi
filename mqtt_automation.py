@@ -35,7 +35,7 @@ rules = [
     {"circuit":"H2", "type":"timeOfDay", "time":"00:00","state":"off","last_execution":0},
     {"circuit":"I2", "type":"timeOfDay", "time":"00:00","state":"on","last_execution":0},
     {"circuit":"I2", "type":"timeOfDay", "time":"02:00","state":"off","last_execution":0},
-    {"circuit":"I2", "type":"timeOfDay", "time":"09:09","state":"off","last_execution":0},
+    {"circuit":"I2", "type":"timeOfDay", "time":"09:10","state":"on","last_execution":0},
     {"circuit":"J2", "type":"timer", "time":"01:00","last_start":0},
     {"circuit":"I2", "type":"timer", "time":"00:01","last_start":0}
 ]
