@@ -46,6 +46,10 @@ elif myname == "namepi":
     num_pixels = 8
     rainbow_cycle_delay = 0.05
     mqtt_enabled = False
+elif myname == "workbenchpi":
+    num_pixels = 1
+    rainbow_cycle_delay = 0.001
+    mqtt_enabled = False
 
 for i in range(0,num_pixels):
     current_colors.append((0,0,0))
