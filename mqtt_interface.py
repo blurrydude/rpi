@@ -202,8 +202,8 @@ window.columnconfigure(3, minsize=column_width)
 
 greetingvar = tk.StringVar()
 greetingvar.set(current_room)
-greeting = tk.Label(textvariable=greetingvar, font=("Times", 24))
-greeting.grid(row=0, column=1, sticky="nesw", pady=15)
+greeting = tk.Label(textvariable=greetingvar, font=("Times", 20))
+greeting.grid(row=0, column=1, sticky="nesw", pady=5)
 
 def mosquittoDo(topic, command):
     try:
