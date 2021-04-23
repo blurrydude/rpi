@@ -72,7 +72,7 @@ def check_time_of_day_rule(now, rid):
     target = rules[rid]["time"].split(":")
     dtnow = datetime.datetime.now()
     if int(target[0]) == dtnow.hour and int(target[1]) == dtnow.minute:
-        print("time of day rule triggered for "+circuits[cid]["label"])
+        print("time of day rule triggered for "+circuits[rules[rid]["circuit"]]["label"])
         rules[rid]["last_execution"] = now
         circuit = circuits[rules[rid]["circuit"]]
         topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]+"/command"
