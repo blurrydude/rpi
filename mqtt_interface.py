@@ -187,6 +187,8 @@ myname = socket.gethostname()
 ############# CONFIG #############
 broker = "192.168.1.22"
 button_height = 1
+base_font = ("Times", 12)
+header_font = ("Times", 16)
 ##################################
 current_room = "Living Room"
 client = mqtt.Client()
@@ -202,8 +204,8 @@ window.columnconfigure(3, minsize=column_width)
 
 greetingvar = tk.StringVar()
 greetingvar.set(current_room)
-greeting = tk.Label(textvariable=greetingvar, font=("Times", 20))
-greeting.grid(row=0, column=1, sticky="nesw", pady=5)
+greeting = tk.Label(textvariable=greetingvar, font=header_font)
+greeting.grid(row=0, column=1, sticky="nesw", pady=4)
 
 def mosquittoDo(topic, command):
     try:
@@ -251,10 +253,6 @@ def gotoroom(roomname):
     current_room = roomname
     greetingvar.set(current_room)
     room = map[current_room]
-    # r = 1
-    # for button in room["buttons"]:
-    #     button.grid(row=r, column=0)
-    #     r = r + 1
     r = 1
     for label in room["labels"]:
         label.grid(row=r, column=1, sticky="ew", padx=2, pady=2)
@@ -275,7 +273,6 @@ def gotoroom(roomname):
         else:
             r = r + 1
             c = 2
-#button = []
 onbutton = []
 offbutton = []
 label = []
@@ -283,24 +280,20 @@ b = 0
 nb = 0
 for roomkey in map.keys():
     room = map[roomkey]
-    button = tk.Button(text=roomkey,command=lambda id=roomkey: room_click(id), height=button_height, font=("Times", 16))
+    button = tk.Button(text=roomkey,command=lambda id=roomkey: room_click(id), height=button_height, font=base_font)
     button.grid(row=b+1, column=0, sticky="ew", padx=2, pady=2)
     b = b + 1
-    # for portal in room["portals"]:
-    #     button.append(tk.Button(text=portal,command=lambda id=portal: room_click(id), height=button_height))
-    #     map[roomkey]["buttons"].append(button[b])
-    #     b = b + 1
     for cid in room["circuits"]:
         circuit = circuits[cid]
-        label.append(tk.Label(text=circuit["label"], font=("Times", 16)))
-        onbutton.append(tk.Button(text="ON",command=lambda id=cid: on_click(id), height=button_height, font=("Times", 16)))
-        offbutton.append(tk.Button(text="OFF",command=lambda id=cid: off_click(id), height=button_height, font=("Times", 16)))
+        label.append(tk.Label(text=circuit["label"], font=base_font))
+        onbutton.append(tk.Button(text="ON",command=lambda id=cid: on_click(id), height=button_height, font=base_font))
+        offbutton.append(tk.Button(text="OFF",command=lambda id=cid: off_click(id), height=button_height, font=base_font))
         map[roomkey]["onbuttons"].append(onbutton[nb])
         map[roomkey]["offbuttons"].append(offbutton[nb])
         map[roomkey]["labels"].append(label[nb])
         nb = nb + 1
     for rgb in room["rgb"]:
         for color in colors:
-            map[roomkey]["rgbbuttons"].append(tk.Button(text=color["label"],command=lambda id=rgb, command=color["command"]: rgb_click(id, command), height=button_height, font=("Times", 16)))
+            map[roomkey]["rgbbuttons"].append(tk.Button(text=color["label"],command=lambda id=rgb, command=color["command"]: rgb_click(id, command), height=button_height, font=base_font))
 gotoroom(current_room)
 window.mainloop()
