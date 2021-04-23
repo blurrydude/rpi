@@ -79,9 +79,9 @@ def check_timer_rule(now, rid):
     global rules
 
 def check_rule(now, rid):
-    if rule["type"] == "timeOfDay":
+    if rules[rid]["type"] == "timeOfDay":
         check_time_of_day_rule(rid)
-    if rule["type"] == "timer":
+    if rules[rid]["type"] == "timer":
         check_timer_rule(rid)
 
 def on_message(client, userdata, message):
