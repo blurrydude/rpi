@@ -86,7 +86,7 @@ def check_timer_rule(now, rid):
     d = now - l
     cid = rules[rid]["circuit"]
     o = circuit_state[cid]
-    if o is True and s >= d:
+    if o is True and d >= s:
         circuit = circuits[cid]
         topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]+"/command"
         mosquittoDo(topic,"off")
