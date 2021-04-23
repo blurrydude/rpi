@@ -24,6 +24,27 @@ circuits = {
     "J2": {"id": "J2", "address": "shellyswitch25-8CAAB55F402F", "relay":"1", "label":"Shower Fan"} #192.168.1.239 - Master Bath Vent Fan
 }
 
+circuit_state = {
+    "A1": False,
+    "B1": False,
+    "C1": False,
+    "C2": False,
+    "D1": False,
+    "D2": False,
+    "E1": False,
+    "E2": False,
+    "F1": False,
+    "F2": False,
+    "G1": False,
+    "G2": False,
+    "H1": False,
+    "H2": False,
+    "I1": False,
+    "I2": False,
+    "J1": False,
+    "J2": False
+}
+
 map = {
     "Bedroom": {
         "portals": ["Master Bath", "Hallway"],
@@ -182,7 +203,8 @@ colors = [
     {"label":"random change","command":"6:0"},
     {"label":"swipe change","command":"7:0"}
 ]
-
+reverse_lookup = {} #I can't figure out a better or faster way
+text_var = {}
 myname = socket.gethostname()
 ############# CONFIG #############
 broker = "192.168.1.22"
@@ -201,18 +223,39 @@ window.columnconfigure(0, minsize=column_width)
 window.columnconfigure(1, minsize=column_width)
 window.columnconfigure(2, minsize=column_width)
 window.columnconfigure(3, minsize=column_width)
+onbutton = {}
+offbutton = {}
+label = {}
+ready = False
 
 greetingvar = tk.StringVar()
 greetingvar.set(current_room)
 greeting = tk.Label(textvariable=greetingvar, font=header_font)
 greeting.grid(row=0, column=1, sticky="nesw", pady=4)
 
+def on_message(client, userdata, message):
+    global text_var
+    if ready is not True:
+        return
+    result = str(message.payload.decode("utf-8"))
+    topic = message.topic
+    cid = reverse_lookup[topic]
+    previous = circuit_state[cid]
+    if result == "on":
+        circuit_state[cid] = True
+        text_var[cid+"ON"].set("[[[ ON ]]]")
+        text_var[cid+"OFF"].set("OFF")
+    else:
+        circuit_state[cid] = False
+        text_var[cid+"ON"].set("ON")
+        text_var[cid+"OFF"].set("[[[ OFF ]]]")
+    # if circuit_state[cid] != previous:
+    #     gotoroom(current_room)
+
 def mosquittoDo(topic, command):
     try:
         print("publishing '"+command+"' to "+topic)
-        client.connect(broker)
         client.publish(topic,command)
-        client.disconnect()
     except:
         print("BAD - Failed to publish "+command+" to "+topic)
 
@@ -273,27 +316,55 @@ def gotoroom(roomname):
         else:
             r = r + 1
             c = 2
-onbutton = []
-offbutton = []
-label = []
-b = 0
-nb = 0
-for roomkey in map.keys():
-    room = map[roomkey]
-    button = tk.Button(text=roomkey,command=lambda id=roomkey: room_click(id), height=button_height, font=base_font)
-    button.grid(row=b+1, column=0, sticky="ew", padx=2, pady=2)
-    b = b + 1
-    for cid in room["circuits"]:
-        circuit = circuits[cid]
-        label.append(tk.Label(text=circuit["label"], font=base_font))
-        onbutton.append(tk.Button(text="ON",command=lambda id=cid: on_click(id), height=button_height, font=base_font))
-        offbutton.append(tk.Button(text="OFF",command=lambda id=cid: off_click(id), height=button_height, font=base_font))
-        map[roomkey]["onbuttons"].append(onbutton[nb])
-        map[roomkey]["offbuttons"].append(offbutton[nb])
-        map[roomkey]["labels"].append(label[nb])
-        nb = nb + 1
-    for rgb in room["rgb"]:
-        for color in colors:
-            map[roomkey]["rgbbuttons"].append(tk.Button(text=color["label"],command=lambda id=rgb, command=color["command"]: rgb_click(id, command), height=button_height, font=base_font))
-gotoroom(current_room)
-window.mainloop()
+
+if __name__ == "__main__":
+    subscriptions = []
+    for k in circuits.keys():
+        c = circuits[k]
+        addy = "shellies/"+c["address"]+"/relay/"+c["relay"]
+        print("preparing "+addy)
+        subscriptions.append((addy, 0))
+        reverse_lookup[addy] = k
+    connected = False
+    while connected is False:
+        try:
+            client.on_message = on_message
+            client.connect(broker)
+            client.subscribe(subscriptions)
+            client.loop_start()
+            connected = True
+        except:
+            print("BAD - client failed connection. Will try again in five seconds")
+            connected = False
+            time.sleep(5)
+    b = 0
+    nb = 0
+    for roomkey in map.keys():
+        room = map[roomkey]
+        button = tk.Button(text=roomkey,command=lambda id=roomkey: room_click(id), height=button_height, font=base_font)
+        button.grid(row=b+1, column=0, sticky="ew", padx=2, pady=2)
+        b = b + 1
+        for cid in room["circuits"]:
+            circuit = circuits[cid]
+            text_var[cid+"ON"] = tk.StringVar()
+            text_var[cid+"OFF"] = tk.StringVar()
+            text_var[cid+"ON"].set("ON")
+            text_var[cid+"OFF"].set("OFF")
+            label[cid] = tk.Label(text=circuit["label"], font=base_font)
+            onbutton[cid] = tk.Button(textvariable=text_var[cid+"ON"],command=lambda id=cid: on_click(id), height=button_height, font=base_font)
+            offbutton[cid] = tk.Button(textvariable=text_var[cid+"OFF"],command=lambda id=cid: off_click(id), height=button_height, font=base_font)
+            map[roomkey]["onbuttons"].append(onbutton[cid])
+            map[roomkey]["offbuttons"].append(offbutton[cid])
+            map[roomkey]["labels"].append(label[cid])
+            nb = nb + 1
+        for rgb in room["rgb"]:
+            for color in colors:
+                map[roomkey]["rgbbuttons"].append(tk.Button(text=color["label"],command=lambda id=rgb, command=color["command"]: rgb_click(id, command), height=button_height, font=base_font))
+    gotoroom(current_room)
+    ready = True
+    window.mainloop()
+    try:
+        client.loop_stop()
+        client.disconnect()
+    except:
+        print("INFO - Client diconnet failed. Maybe, the connection failed first or during runtime.")
