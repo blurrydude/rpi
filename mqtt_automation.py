@@ -35,7 +35,8 @@ rules = [
     {"circuit":"H2", "type":"timeOfDay", "time":"00:00","state":"off","last_execution":0},
     {"circuit":"I2", "type":"timeOfDay", "time":"00:00","state":"on","last_execution":0},
     {"circuit":"I2", "type":"timeOfDay", "time":"02:00","state":"off","last_execution":0},
-    {"circuit":"J2", "type":"timer", "time":"01:00","last_start":0}
+    {"circuit":"J2", "type":"timer", "time":"01:00","last_start":0},
+    {"circuit":"I2", "type":"timer", "time":"00:01","last_start":0}
 ]
 
 circuit_state = {
@@ -77,6 +78,19 @@ def check_time_of_day_rule(now, rid):
 
 def check_timer_rule(now, rid):
     global rules
+    t = rules[rid]["time"].split(":")
+    h = int(t[0])
+    m = int(t[1])
+    s = (m*60) + (h*3600)
+    l = rules[rid]["last_start"]
+    d = now - l
+    cid = rules[rid]["circuit"]
+    o = circuit_state[cid]
+    if o is True and s >= d:
+        circuit = circuits[cid]
+        topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]+"/command"
+        mosquittoDo(topic,"off")
+        rules[rid]["last_start"] = now
 
 def check_rule(now, rid):
     if rules[rid]["type"] == "timeOfDay":
@@ -89,6 +103,7 @@ def on_message(client, userdata, message):
     global circuits
     if running is not True:
         return
+    now = round(time.time())
     result = str(message.payload.decode("utf-8"))
     topic = message.topic
     cid = reverse_lookup[topic]
@@ -99,6 +114,10 @@ def on_message(client, userdata, message):
         circuit_state[cid] = False
     if circuit_state[cid] != previous:
         circuits[cid]["last_update"] = round(time.time())
+        if circuit_state[cid] is True:
+            for rid in range(0,len(rules)):
+                if rules[rid]["circuit"] == cid and rules[rid]["type"] == "timer":
+                    rules[rid]["last_start"] = now
 
 def mosquittoDo(topic, command):
     try:
