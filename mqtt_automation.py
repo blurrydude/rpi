@@ -35,6 +35,7 @@ rules = [
     {"circuit":"H2", "type":"timeOfDay", "time":"00:00","state":"off","last_execution":0},
     {"circuit":"I2", "type":"timeOfDay", "time":"00:00","state":"on","last_execution":0},
     {"circuit":"I2", "type":"timeOfDay", "time":"02:00","state":"off","last_execution":0},
+    {"circuit":"I2", "type":"timeOfDay", "time":"09:04","state":"off","last_execution":0},
     {"circuit":"J2", "type":"timer", "time":"01:00","last_start":0},
     {"circuit":"I2", "type":"timer", "time":"00:01","last_start":0}
 ]
@@ -71,6 +72,7 @@ def check_time_of_day_rule(now, rid):
     target = rules[rid]["time"].split(":")
     dtnow = datetime.datetime.now()
     if target[0] == dtnow.hour and target[1] == dtnow.minute:
+        print("time of day rule triggered for "+circuits[cid]["label"])
         rules[rid]["last_execution"] = now
         circuit = circuits[rules[rid]["circuit"]]
         topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]+"/command"
@@ -87,7 +89,7 @@ def check_timer_rule(now, rid):
     cid = rules[rid]["circuit"]
     o = circuit_state[cid]
     if o is True and d >= s:
-        print("d: "+str(d)+ " s: "+str(s))
+        print("timer rule triggered for "+circuits[cid]["label"])
         circuit = circuits[cid]
         topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]+"/command"
         mosquittoDo(topic,"off")
