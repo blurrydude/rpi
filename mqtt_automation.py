@@ -80,9 +80,9 @@ def check_timer_rule(now, rid):
 
 def check_rule(now, rid):
     if rules[rid]["type"] == "timeOfDay":
-        check_time_of_day_rule(rid)
+        check_time_of_day_rule(now, rid)
     if rules[rid]["type"] == "timer":
-        check_timer_rule(rid)
+        check_timer_rule(now, rid)
 
 def on_message(client, userdata, message):
     global circuit_state
