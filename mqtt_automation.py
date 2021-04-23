@@ -1,6 +1,13 @@
 import paho.mqtt.client as mqtt
 import time
 import datetime
+import socket
+
+myname = socket.gethostname()
+############# CONFIG #############
+broker = "192.168.1.22"
+##################################
+client = mqtt.Client()
 
 circuits = {
     "A1": {"id": "A1", "address": "shelly1pm-8CAAB574C489", "relay":"0"     , "label":"Fireplace", "last_update": 0}, #192.168.1.60 - Fireplace Lights
