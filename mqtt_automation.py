@@ -31,12 +31,30 @@ circuits = {
 }
 
 rules = [
+    {"circuit":"A1", "type":"timeOfDay", "time":"00:00","state":"off","last_execution":0},
+    {"circuit":"C2", "type":"timeOfDay", "time":"00:00","state":"off","last_execution":0},
+    {"circuit":"D1", "type":"timeOfDay", "time":"00:00","state":"off","last_execution":0},
+    {"circuit":"D2", "type":"timeOfDay", "time":"00:00","state":"off","last_execution":0},
+    {"circuit":"E1", "type":"timeOfDay", "time":"00:00","state":"off","last_execution":0},
+    {"circuit":"F2", "type":"timeOfDay", "time":"00:00","state":"off","last_execution":0},
+    {"circuit":"B1", "type":"timeOfDay", "time":"08:00","state":"off","last_execution":0},
+    {"circuit":"B1", "type":"timeOfDay", "time":"19:00","state":"on","last_execution":0},
+    {"circuit":"C1", "type":"timeOfDay", "time":"08:00","state":"off","last_execution":0},
+    {"circuit":"C1", "type":"timeOfDay", "time":"19:00","state":"on","last_execution":0},
+    {"circuit":"C1", "type":"timeOfDay", "time":"23:00","state":"off","last_execution":0},
+    {"circuit":"C1", "type":"timeOfDay", "time":"04:00","state":"on","last_execution":0},
     {"circuit":"D2", "type":"timeOfDay", "time":"00:00","state":"off","last_execution":0},
     {"circuit":"H2", "type":"timeOfDay", "time":"00:00","state":"off","last_execution":0},
+    {"circuit":"H2", "type":"timeOfDay", "time":"09:00","state":"off","last_execution":0},
+    {"circuit":"H2", "type":"timeOfDay", "time":"17:00","state":"on","last_execution":0},
+    {"circuit":"H2", "type":"timeOfDay", "time":"06:00","state":"on","last_execution":0},
+    {"circuit":"D2", "type":"timeOfDay", "time":"05:00","state":"on","last_execution":0},
+    {"circuit":"D2", "type":"timeOfDay", "time":"16:00","state":"on","last_execution":0},
+    {"circuit":"A1", "type":"timeOfDay", "time":"18:00","state":"on","last_execution":0},
     {"circuit":"I2", "type":"timeOfDay", "time":"00:00","state":"on","last_execution":0},
     {"circuit":"I2", "type":"timeOfDay", "time":"02:00","state":"off","last_execution":0},
     {"circuit":"I2", "type":"timeOfDay", "time":"09:10","state":"on","last_execution":0},
-    {"circuit":"J2", "type":"timer", "time":"01:00","last_start":0},
+    {"circuit":"J2", "type":"timer", "time":"01:15","last_start":0},
     {"circuit":"I2", "type":"timer", "time":"00:01","last_start":0}
 ]
 
@@ -151,6 +169,20 @@ if __name__ == "__main__":
             time.sleep(5)
     
     running = True
+    circuit = circuits["I2"]
+    topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]+"/command"
+    mosquittoDo(topic,"on")
+    time.sleep(1)
+    mosquittoDo(topic,"off")
+    time.sleep(1)
+    mosquittoDo(topic,"on")
+    time.sleep(1)
+    mosquittoDo(topic,"off")
+    time.sleep(1)
+    mosquittoDo(topic,"on")
+    time.sleep(1)
+    mosquittoDo(topic,"off")
+    time.sleep(1)
     while running is True:
         now = round(time.time())
         for i in range(0, len(rules)):
