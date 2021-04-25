@@ -31,7 +31,7 @@ wait_till = time.time()
 key_down = False
 
 if myname == "gameroompi":
-    num_pixels = 83
+    num_pixels = 32
     rainbow_cycle_delay = 0.001
 elif myname == "canvaspi":
     num_pixels = 50
