@@ -46,12 +46,6 @@ for event in gamepad.read_loop():
         if event.code == 0:
             percent = (event.value-128)/127
             print(percent)
-            if event.value == 1:
-                rudderLeft(1)
-            if event.value == 255:
-                rudderRight(1)
-            if event.value == 128:
-                rudderCenter()
         if event.code == 1:
             percent = (event.value-128)/127
             print(percent)
