@@ -31,7 +31,7 @@ for event in gamepad.read_loop():
         #     all(0.5 * direction)
         # if event.code == 291 and event.value == 1: #X
         #     all(1.0 * direction)
-        if event.code == 308 and event.value == 1: #left shoulder
+        if event.code in [308, 307] and event.value == 1: #left shoulder
             if current_y != center:
                 curreny_y = center
                 kit.servo[1].angle = current_y
@@ -39,13 +39,28 @@ for event in gamepad.read_loop():
                 current_x = center + angle_range-1
                 kit.servo[0].angle = current_x
         #     crabLeft()
-        if event.code == 309 and event.value == 1: #right shoulder
+        if event.code in [309, 312] and event.value == 1: #right shoulder
             if current_y != center:
                 curreny_y = center
                 kit.servo[1].angle = current_y
             if current_x != center - angle_range:
                 current_x = center - angle_range-1
                 kit.servo[0].angle = current_x
+        if event.code in [313] and event.value == 1:
+            if current_x != center:
+                current_x = center
+                kit.servo[0].angle = current_x
+            if current_y != center + angle_range:
+                current_y = center + angle_range-1
+                kit.servo[1].angle = current_y
+        #     crabLeft()
+        if event.code in [304] and event.value == 1:
+            if current_x != center:
+                current_x = center
+                kit.servo[0].angle = current_x
+            if current_y != center - angle_range:
+                current_y = center - angle_range-1
+                kit.servo[1].angle = current_y
         #     crabRight()
         # if event.code == 294 and event.value == 1: #left trigger
         #     rotateLeft()
@@ -61,7 +76,7 @@ for event in gamepad.read_loop():
         #     allStop()
         # if event.code == 296 and event.value == 1: #select
         #     trimRudderLeft()
-        if event.code == 316 and event.value == 1: #start
+        if event.code == 316 and event.value == 1 or event.code in [307, 312, 313, 304] and event.value == 0: #start
             center_motors()
             
             
