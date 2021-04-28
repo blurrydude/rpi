@@ -8,10 +8,13 @@ gamepad = InputDevice('/dev/input/event0')
 center = 90
 angle_range = 45
 
-kit.servo[0].angle = center
-kit.servo[1].angle = center
-current_x = center
-current_y = center
+def center_motors():
+    current_x = center
+    current_y = center
+    kit.servo[0].angle = current_x
+    kit.servo[1].angle = current_y
+
+center_motors()
 
 for event in gamepad.read_loop():
     #filters by event type
@@ -55,8 +58,8 @@ for event in gamepad.read_loop():
         #     allStop()
         # if event.code == 296 and event.value == 1: #select
         #     trimRudderLeft()
-        # if event.code == 297 and event.value == 1: #start
-        #     trimRudderRight()
+        if event.code == 316 and event.value == 1: #start
+            center_motors()
             
             
     if event.type == ecodes.EV_ABS:
