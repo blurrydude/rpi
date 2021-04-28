@@ -30,7 +30,7 @@ for event in gamepad.read_loop():
                 curreny_y = center
                 kit.servo[1].angle = current_y
             if current_x < center + angle_range:
-                current_x = center + angle_range
+                current_x = center + angle_range-1
                 kit.servo[0].angle = current_x
         #     crabLeft()
         if event.code == 309 and event.value == 1: #right shoulder
@@ -38,7 +38,7 @@ for event in gamepad.read_loop():
                 curreny_y = center
                 kit.servo[1].angle = current_y
             if current_x < center - angle_range:
-                current_x = center - angle_range
+                current_x = center - angle_range-1
                 kit.servo[0].angle = current_x
         #     crabRight()
         # if event.code == 294 and event.value == 1: #left trigger
