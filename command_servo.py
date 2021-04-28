@@ -79,6 +79,7 @@ for event in gamepad.read_loop():
         # if event.code == 296 and event.value == 1: #select
         #     trimRudderLeft()
         if event.code == 316 and event.value == 1 or event.code in [307, 312] and event.value == 0: #start
+            steppers.stepper1.release()
             center_motors()
             
             
@@ -100,5 +101,3 @@ for event in gamepad.read_loop():
                 percent = -1.0
             current_y = percent * angle_range + center
             kit.servo[1].angle = current_y
-
-steppers.stepper1.release()
