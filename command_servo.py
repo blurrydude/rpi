@@ -45,7 +45,17 @@ for event in gamepad.read_loop():
         #print(event)
         if event.code == 0:
             percent = (event.value-128)/127
-            print(percent)
+            if percent > 1.0:
+                percent = 1.0
+            if percent < -1.0:
+                percent = -1.0
+            angle = percent * 90 + 90
+            print(angle)
         if event.code == 1:
             percent = (event.value-128)/127
-            print(percent)
+            if percent > 1.0:
+                percent = 1.0
+            if percent < -1.0:
+                percent = -1.0
+            angle = percent * 90 + 90
+            print(angle)
