@@ -7,11 +7,11 @@ gamepad = InputDevice('/dev/input/event0')
 
 center = 90
 angle_range = 45
-current_x = 0
-current_y = 0
 
 kit.servo[0].angle = center
 kit.servo[1].angle = center
+current_x = center
+current_y = center
 
 for event in gamepad.read_loop():
     #filters by event type
