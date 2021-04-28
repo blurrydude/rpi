@@ -1,5 +1,6 @@
 from adafruit_servokit import ServoKit
 from adafruit_motorkit import MotorKit
+from adafruit_motor import stepper
 import time
 from evdev import InputDevice, categorize, ecodes
 
