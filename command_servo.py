@@ -5,7 +5,8 @@ from evdev import InputDevice, categorize, ecodes
 kit = ServoKit(channels=16)
 gamepad = InputDevice('/dev/input/event0')
 
-kit.servo[0].angle = 0
+kit.servo[0].angle = 90
+kit.servo[1].angle = 90
 
 for event in gamepad.read_loop():
     #filters by event type
@@ -50,7 +51,7 @@ for event in gamepad.read_loop():
             if percent < -1.0:
                 percent = -1.0
             angle = percent * 90 + 90
-            print(angle)
+            kit.servo[0].angle = angle
         if event.code == 1:
             percent = (event.value-128)/127
             if percent > 1.0:
@@ -58,4 +59,5 @@ for event in gamepad.read_loop():
             if percent < -1.0:
                 percent = -1.0
             angle = percent * 90 + 90
-            print(angle)
+            kit.servo[1].angle = angle
+            
