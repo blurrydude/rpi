@@ -29,7 +29,7 @@ for event in gamepad.read_loop():
             if current_y != center:
                 curreny_y = center
                 kit.servo[1].angle = current_y
-            if current_x < center + angle_range:
+            if current_x != center + angle_range:
                 current_x = center + angle_range-1
                 kit.servo[0].angle = current_x
         #     crabLeft()
@@ -37,7 +37,7 @@ for event in gamepad.read_loop():
             if current_y != center:
                 curreny_y = center
                 kit.servo[1].angle = current_y
-            if current_x < center - angle_range:
+            if current_x != center - angle_range:
                 current_x = center - angle_range-1
                 kit.servo[0].angle = current_x
         #     crabRight()
