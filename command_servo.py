@@ -51,7 +51,7 @@ for event in gamepad.read_loop():
                 current_x = center
                 kit.servo[0].angle = current_x
             if current_y != center + angle_range:
-                current_y = center + angle_range-1
+                current_y = center + angle_range-4
                 kit.servo[1].angle = current_y
         #     crabLeft()
         if event.code in [304] and event.value == 1:
@@ -59,7 +59,7 @@ for event in gamepad.read_loop():
                 current_x = center
                 kit.servo[0].angle = current_x
             if current_y != center - angle_range:
-                current_y = center - angle_range-1
+                current_y = center - angle_range-4
                 kit.servo[1].angle = current_y
         #     crabRight()
         # if event.code == 294 and event.value == 1: #left trigger
