@@ -52,14 +52,14 @@ for event in gamepad.read_loop():
                 kit.servo[0].angle = current_x
         if event.code in [313] and event.value == 1:
             target = current_turn + 20
-            while current_turn is not target:
+            while current_turn < target:
                 current_turn = current_turn + 1
                 steppers.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
             print(current_turn)
         #     crabLeft()
         if event.code in [304] and event.value == 1:
             target = current_turn - 20
-            while current_turn is not target:
+            while current_turn > target:
                 current_turn = current_turn - 1
                 steppers.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
             print(current_turn)
