@@ -6,7 +6,7 @@ kit = ServoKit(channels=16)
 gamepad = InputDevice('/dev/input/event0')
 
 center = 90
-angle_range = 60
+angle_range = 55
 
 current_x = center
 current_y = center
