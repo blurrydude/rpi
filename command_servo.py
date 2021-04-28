@@ -53,14 +53,14 @@ for event in gamepad.read_loop():
             target = current_turn + 10
             while current_turn is not target:
                 current_turn = current_turn + 1
-                kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
+                steppers.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
             print(current_turn)
         #     crabLeft()
         if event.code in [304] and event.value == 1:
             target = current_turn - 10
             while current_turn is not target:
                 current_turn = current_turn + 1
-                kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
+                steppers.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
             print(current_turn)
         #     crabRight()
         # if event.code == 294 and event.value == 1: #left trigger
