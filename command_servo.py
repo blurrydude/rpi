@@ -16,7 +16,7 @@ kit.servo[1].angle = center
 for event in gamepad.read_loop():
     #filters by event type
     if event.type == ecodes.EV_KEY:
-        #print(event)
+        print(event)
         # if event.code == 288 and event.value == 1: #Y
         #     all(0.25 * direction)
         # if event.code == 289 and event.value == 1: #B
@@ -25,21 +25,21 @@ for event in gamepad.read_loop():
         #     all(0.5 * direction)
         # if event.code == 291 and event.value == 1: #X
         #     all(1.0 * direction)
-        if event.code == 292 and event.value == 1: #left shoulder
-            if current_y != center:
-                curreny_y = center
-                kit.servo[1].angle = current_y
-            if current_x < center + angle_range:
-                current_x = center + angle_range
-                kit.servo[0].angle = current_x
+        # if event.code == 292 and event.value == 1: #left shoulder
+        #     if current_y != center:
+        #         curreny_y = center
+        #         kit.servo[1].angle = current_y
+        #     if current_x < center + angle_range:
+        #         current_x = center + angle_range
+        #         kit.servo[0].angle = current_x
         #     crabLeft()
-        if event.code == 293 and event.value == 1: #right shoulder
-            if current_y != center:
-                curreny_y = center
-                kit.servo[1].angle = current_y
-            if current_x < center - angle_range:
-                current_x = center - angle_range
-                kit.servo[0].angle = current_x
+        # if event.code == 293 and event.value == 1: #right shoulder
+        #     if current_y != center:
+        #         curreny_y = center
+        #         kit.servo[1].angle = current_y
+        #     if current_x < center - angle_range:
+        #         current_x = center - angle_range
+        #         kit.servo[0].angle = current_x
         #     crabRight()
         # if event.code == 294 and event.value == 1: #left trigger
         #     rotateLeft()
