@@ -100,4 +100,5 @@ for event in gamepad.read_loop():
                 percent = -1.0
             current_y = percent * angle_range + center
             kit.servo[1].angle = current_y
-            
+
+steppers.stepper1.release()
