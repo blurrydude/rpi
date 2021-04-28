@@ -8,6 +8,9 @@ gamepad = InputDevice('/dev/input/event0')
 center = 90
 angle_range = 45
 
+current_x = center
+current_y = center
+
 def center_motors():
     current_x = center
     current_y = center
