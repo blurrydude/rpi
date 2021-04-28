@@ -1,8 +1,9 @@
-from adafruit_servokit import ServoKit
+from adafruit_servokit import ServoKit, MotorKit
 import time
 from evdev import InputDevice, categorize, ecodes
 
 kit = ServoKit(channels=16)
+steppers = MotorKit(address=0x61)
 gamepad = InputDevice('/dev/input/event0')
 
 center = 90
@@ -10,6 +11,7 @@ angle_range = 50
 
 current_x = center
 current_y = center
+current_turn = 0
 
 def center_motors():
     current_x = center
@@ -47,20 +49,18 @@ for event in gamepad.read_loop():
                 current_x = center - angle_range-1
                 kit.servo[0].angle = current_x
         if event.code in [313] and event.value == 1:
-            if current_x != center:
-                current_x = center
-                kit.servo[0].angle = current_x
-            if current_y != center + angle_range:
-                current_y = center + angle_range-4
-                kit.servo[1].angle = current_y
+            target = current_turn + 10
+            while current_turn is not target:
+                current_turn = current_turn + 1
+                kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
+            print(current_turn)
         #     crabLeft()
         if event.code in [304] and event.value == 1:
-            if current_x != center:
-                current_x = center
-                kit.servo[0].angle = current_x
-            if current_y != center - angle_range:
-                current_y = center - angle_range-4
-                kit.servo[1].angle = current_y
+            target = current_turn - 10
+            while current_turn is not target:
+                current_turn = current_turn + 1
+                kit.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
+            print(current_turn)
         #     crabRight()
         # if event.code == 294 and event.value == 1: #left trigger
         #     rotateLeft()
@@ -76,7 +76,7 @@ for event in gamepad.read_loop():
         #     allStop()
         # if event.code == 296 and event.value == 1: #select
         #     trimRudderLeft()
-        if event.code == 316 and event.value == 1 or event.code in [307, 312, 313, 304] and event.value == 0: #start
+        if event.code == 316 and event.value == 1 or event.code in [307, 312] and event.value == 0: #start
             center_motors()
             
             
