@@ -9,7 +9,7 @@ kit.servo[0].angle = 0
 
 for event in gamepad.read_loop():
     #filters by event type
-    if event.type == ecodes.EV_KEY:
+    #if event.type == ecodes.EV_KEY:
         #print(event)
         # if event.code == 288 and event.value == 1: #Y
         #     all(0.25 * direction)
