@@ -6,7 +6,7 @@ kit = ServoKit(channels=16)
 gamepad = InputDevice('/dev/input/event0')
 
 center = 90
-angle_range = 45
+angle_range = 50
 
 current_x = center
 current_y = center
@@ -83,7 +83,7 @@ for event in gamepad.read_loop():
     if event.type == ecodes.EV_ABS:
         #print(event)
         if event.code == 0:
-            percent = (event.value-128)/127
+            percent = (event.value-128)/-127
             if percent > 1.0:
                 percent = 1.0
             if percent < -1.0:
