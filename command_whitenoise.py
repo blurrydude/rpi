@@ -1,9 +1,10 @@
 #! /usr/bin/env python3
 import paho.mqtt.client as mqtt
 import time
-from omxplayer.player import OMXPlayer
+#from omxplayer.player import OMXPlayer
 from pathlib import Path
-import os
+#import os
+import subprocess
 
 ############# CONFIG #############
 listentopic = "commands"
@@ -25,12 +26,15 @@ def on_message(client, userdata, message):
     result = str(message.payload.decode("utf-8"))
     print("Received: "+result)
     if "start" in result:
-        os.system("/usr/bin/omxplayer -b -o local /home/pi/Desktop/OceanWaves1.mp4")
+        #os.system("/usr/bin/omxplayer -b -o local /home/pi/Desktop/OceanWaves1.mp4")
         #player = OMXPlayer("/home/pi/Desktop/OceanWaves1.mp4")
+        #os.startfile("/home/pi/Desktop/OceanWaves1.mp4")
+        subprocess.call("/usr/bin/omxplayer -b -o local /home/pi/Desktop/OceanWaves1.mp4")
     elif "stop" in result:
         #player.quit()
-        os.system("killall omxplayer ")
+        #os.system("killall omxplayer ")
         #os.system("killall -s 9 omxplayer ")
+        subprocess.call("killall omxplayer ")
 
 if __name__ == "__main__":
     client.on_message = on_message
