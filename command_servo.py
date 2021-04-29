@@ -159,12 +159,12 @@ for event in gamepad.read_loop():
         if event.code == 16 and event.value == 0: # left or right released
             if current_neck_rotation_position > 0:
                 while current_neck_rotation_position > 0:
-                current_neck_rotation_position = current_neck_rotation_position - 1
-                stepper_neck_rotation.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
+                    current_neck_rotation_position = current_neck_rotation_position - 1
+                    stepper_neck_rotation.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
             if current_neck_rotation_position < 0:
                 while current_neck_rotation_position < 0:
-                current_neck_rotation_position = current_neck_rotation_position + 1
-                stepper_neck_rotation.onestep(style=stepper.DOUBLE)
+                    current_neck_rotation_position = current_neck_rotation_position + 1
+                    stepper_neck_rotation.onestep(style=stepper.DOUBLE)
 
         if event.code == 16 and event.value == 1: # right pressed
             target = current_neck_rotation_position - neck_rotation_step
