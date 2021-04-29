@@ -3,7 +3,7 @@ import paho.mqtt.client as mqtt
 import time
 #from omxplayer.player import OMXPlayer
 from pathlib import Path
-#import os
+import os
 import subprocess
 
 ############# CONFIG #############
@@ -28,8 +28,8 @@ def on_message(client, userdata, message):
     if "start" in result:
         #os.system("/usr/bin/omxplayer -b -o local /home/pi/Desktop/OceanWaves1.mp4")
         #player = OMXPlayer("/home/pi/Desktop/OceanWaves1.mp4")
-        #os.startfile("/home/pi/Desktop/OceanWaves1.mp4")
-        subprocess.call("/home/pi/rpi/start_whitenoise.sh")
+        os.startfile("/home/pi/Desktop/OceanWaves1.mp4")
+        #subprocess.call("/home/pi/rpi/start_whitenoise.sh")
     elif "stop" in result:
         #player.quit()
         #os.system("killall omxplayer ")
