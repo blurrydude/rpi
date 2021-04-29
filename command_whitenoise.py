@@ -29,12 +29,12 @@ def on_message(client, userdata, message):
         #os.system("/usr/bin/omxplayer -b -o local /home/pi/Desktop/OceanWaves1.mp4")
         #player = OMXPlayer("/home/pi/Desktop/OceanWaves1.mp4")
         #os.startfile("/home/pi/Desktop/OceanWaves1.mp4")
-        subprocess.call("sudo bash ./usr/bin/omxplayer -b -o local /home/pi/Desktop/OceanWaves1.mp4")
+        subprocess.call("bash ./home/pi/rpi/start_whitenoise.sh")
     elif "stop" in result:
         #player.quit()
         #os.system("killall omxplayer ")
         #os.system("killall -s 9 omxplayer ")
-        subprocess.call("sudo bash killall omxplayer ")
+        subprocess.call("bash ./home/pi/rpi/stop_whitenoise.sh")
 
 if __name__ == "__main__":
     client.on_message = on_message
