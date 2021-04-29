@@ -20,18 +20,19 @@ servo_eye_y = servos.servo[1]
 stepper_neck_rotation = steppers.stepper1
 button_eyes_left = 308 # left shoulder
 button_eyes_right = 309 # right shoulder
-button_eyes_center = 316 # start button
+button_eyes_center = 310 # trigger
 button_temp_eyes_left = 307 # left button
 button_temp_eyes_right = 312 # right button
 button_neck_rotate_left = 313 # up button for now
 button_neck_rotate_right = 304 # down button for now
+button_toggle_stepper_release = 316 # start button
 ##################################
 
 current_eye_x = eye_x_center
 current_eye_y = eye_y_center
 
 current_neck_rotation_position = 0
-release_neck_stepper_after_movement = True
+release_neck_stepper_after_movement = False
 
 def center_eyes():
     current_eye_x = eye_x_center
@@ -85,7 +86,17 @@ for event in gamepad.read_loop():
                 print("neck stepper released")
         if event.code == button_eyes_center and event.value == 1 or event.code in [button_temp_eyes_left, button_temp_eyes_right] and event.value == 0: #start
             center_eyes()
-            
+        if event.code == button_toggle_stepper_release and event.value == 1:
+            if release_neck_stepper_after_movement is True:
+                release_neck_stepper_after_movement = False
+                stepper_neck_rotation.onestep(style=stepper.DOUBLE)
+                stepper_neck_rotation.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
+                print("release_neck_stepper_after_movement: False")
+            else:
+                release_neck_stepper_after_movement = True
+                stepper_neck_rotation.release()
+                print("release_neck_stepper_after_movement: True")
+                print("neck stepper released")
             
     if event.type == ecodes.EV_ABS:
         #print(event)
