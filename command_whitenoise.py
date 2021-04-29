@@ -26,10 +26,10 @@ def on_message(client, userdata, message):
     result = str(message.payload.decode("utf-8"))
     print("Received: "+result)
     if "start" in result:
-        os.system("/usr/bin/omxplayer -b -o local /home/pi/Desktop/OceanWaves1.mp4")
+        #os.system("/usr/bin/omxplayer -b -o local /home/pi/Desktop/OceanWaves1.mp4")
         #player = OMXPlayer("/home/pi/Desktop/OceanWaves1.mp4")
         #os.startfile("/home/pi/Desktop/OceanWaves1.mp4")
-        #subprocess.call("/home/pi/rpi/start_whitenoise.sh")
+        subprocess.call("/home/pi/rpi/start_whitenoise.sh")
     elif "stop" in result:
         #player.quit()
         #os.system("killall omxplayer ")
