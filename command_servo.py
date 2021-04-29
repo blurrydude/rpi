@@ -44,7 +44,7 @@ center_eyes()
 for event in gamepad.read_loop():
     #filters by event type
     if event.type == ecodes.EV_KEY:
-        print("key:"+str(event.code)+" value:"+event.value)
+        print("key:"+str(event.code)+" value:"+str(event.value))
         if event.code in [button_eyes_left, button_temp_eyes_left] and event.value == 1:
             if current_eye_y != eye_y_center:
                 curreny_y = eye_y_center
