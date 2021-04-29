@@ -4,83 +4,87 @@ from adafruit_motor import stepper
 import time
 from evdev import InputDevice, categorize, ecodes
 
-kit = ServoKit(channels=16)
+servos = ServoKit(channels=16)
 steppers = MotorKit(address=0x61)
 gamepad = InputDevice('/dev/input/event0')
 
-center = 90
-angle_range = 50
+############# CONFIG #############
+eye_x_center = 90
+eye_y_center = 90
+eye_x_angle_range = 50
+eye_y_angle_range = 35
+neck_rotation_range = 100
+neck_rotation_step = 20
+servo_eye_x = servos.servo[0]
+servo_eye_y = servos.servo[1]
+stepper_neck_rotation = steppers.stepper1
+button_eyes_left = 308 # left shoulder
+button_eyes_right = 309 # right shoulder
+button_eyes_center = 316 # start button
+button_temp_eyes_left = 307 # left button
+button_temp_eyes_right = 312 # right button
+button_neck_rotate_left = 313 # up button for now
+button_neck_rotate_right = 304 # down button for now
+##################################
 
-current_x = center
-current_y = center
-current_turn = 0
+current_eye_x = eye_x_center
+current_eye_y = eye_y_center
 
-def center_motors():
-    current_x = center
-    current_y = center
-    kit.servo[0].angle = current_x
-    kit.servo[1].angle = current_y
+current_neck_rotation_position = 0
+release_neck_stepper_after_movement = True
 
-center_motors()
+def center_eyes():
+    current_eye_x = eye_x_center
+    current_eye_y = eye_y_center
+    servo_eye_x.angle = current_eye_x
+    servo_eye_y.angle = current_eye_y
+
+center_eyes()
 
 for event in gamepad.read_loop():
     #filters by event type
     if event.type == ecodes.EV_KEY:
-        print(event)
-        # if event.code == 288 and event.value == 1: #Y
-        #     all(0.25 * direction)
-        # if event.code == 289 and event.value == 1: #B
-        #     allStop()
-        # if event.code == 290 and event.value == 1: #A
-        #     all(0.5 * direction)
-        # if event.code == 291 and event.value == 1: #X
-        #     all(1.0 * direction)
-        if event.code in [308, 307] and event.value == 1: #left shoulder
-            if current_y != center:
-                curreny_y = center
-                kit.servo[1].angle = current_y
-            if current_x != center + angle_range:
-                current_x = center + angle_range-1
-                kit.servo[0].angle = current_x
-        #     crabLeft()
-        if event.code in [309, 312] and event.value == 1: #right shoulder
-            if current_y != center:
-                curreny_y = center
-                kit.servo[1].angle = current_y
-            if current_x != center - angle_range:
-                current_x = center - angle_range-1
-                kit.servo[0].angle = current_x
+        print("key:"+str(event.code)+" value:"+event.value)
+        if event.code in [button_eyes_left, button_temp_eyes_left] and event.value == 1:
+            if current_eye_y != eye_y_center:
+                curreny_y = eye_y_center
+                servo_eye_y.angle = current_eye_y
+            if current_eye_x != eye_x_center + angle_range:
+                current_eye_x = eye_x_center + angle_range-1
+                servo_eye_x.angle = current_eye_x
+        if event.code in [button_eyes_right, button_temp_eyes_right] and event.value == 1:
+            if current_eye_y != eye_y_center:
+                curreny_y = eye_y_center
+                servo_eye_y.angle = current_eye_y
+            if current_eye_x != eye_x_center - angle_range:
+                current_eye_x = eye_x_center - angle_range-1
+                servo_eye_x.angle = current_eye_x
         if event.code in [313] and event.value == 1:
-            target = current_turn + 20
-            while current_turn < target:
-                current_turn = current_turn + 1
-                steppers.stepper1.onestep(style=stepper.DOUBLE)
-            print(current_turn)
+            target = current_neck_rotation_position + neck_rotation_step
+            if target > neck_rotation_range/2:
+                print("neck_rotation_range limit: +/- "+str(neck_rotation_range/2))
+                return
+            while current_neck_rotation_position < target:
+                current_neck_rotation_position = current_neck_rotation_position + 1
+                stepper_neck_rotation.onestep(style=stepper.DOUBLE)
+            print("current_neck_rotation_position: "+str(current_neck_rotation_position))
+            if release_neck_stepper_after_movement is True:
+                stepper_neck_rotation.release()
+                print("neck stepper released")
         #     crabLeft()
         if event.code in [304] and event.value == 1:
-            target = current_turn - 20
-            while current_turn > target:
-                current_turn = current_turn - 1
-                steppers.stepper1.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
-            print(current_turn)
-        #     crabRight()
-        # if event.code == 294 and event.value == 1: #left trigger
-        #     rotateLeft()
-        # if event.code == 295 and event.value == 1: #right trigger
-        #     rotateRight()
-        # if event.code == 292 and event.value == 0: #left shoulder release
-        #     allStop()
-        # if event.code == 293 and event.value == 0: #right shoulder release
-        #     allStop()
-        # if event.code == 294 and event.value == 0: #left trigger release
-        #     allStop()
-        # if event.code == 295 and event.value == 0: #right trigger release
-        #     allStop()
-        # if event.code == 296 and event.value == 1: #select
-        #     trimRudderLeft()
-        if event.code == 316 and event.value == 1 or event.code in [307, 312] and event.value == 0: #start
-            steppers.stepper1.release()
-            center_motors()
+            target = current_neck_rotation_position - neck_rotation_step
+            if target < neck_rotation_range/-2:
+                print("neck_rotation_range limit: +/- "+str(neck_rotation_range/2))
+            while current_neck_rotation_position > target:
+                current_neck_rotation_position = current_neck_rotation_position - 1
+                stepper_neck_rotation.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
+            print("current_neck_rotation_position: "+str(current_neck_rotation_position))
+            if release_neck_stepper_after_movement is True:
+                stepper_neck_rotation.release()
+                print("neck stepper released")
+        if event.code == button_eyes_center and event.value == 1 or event.code in [button_temp_eyes_left, button_temp_eyes_right] and event.value == 0: #start
+            center_eyes()
             
             
     if event.type == ecodes.EV_ABS:
@@ -91,13 +95,13 @@ for event in gamepad.read_loop():
                 percent = 1.0
             if percent < -1.0:
                 percent = -1.0
-            current_x = percent * angle_range + center
-            kit.servo[0].angle = current_x
+            current_eye_x = percent * angle_range + eye_x_center
+            servo_eye_x.angle = current_eye_x
         if event.code == 1:
             percent = (event.value-128)/127
             if percent > 1.0:
                 percent = 1.0
             if percent < -1.0:
                 percent = -1.0
-            current_y = percent * angle_range + center
-            kit.servo[1].angle = current_y
+            current_eye_y = percent * angle_range + eye_y_center
+            servo_eye_y.angle = current_eye_y
