@@ -49,15 +49,15 @@ for event in gamepad.read_loop():
             if current_eye_y != eye_y_center:
                 curreny_y = eye_y_center
                 servo_eye_y.angle = current_eye_y
-            if current_eye_x != eye_x_center + angle_range:
-                current_eye_x = eye_x_center + angle_range-1
+            if current_eye_x != eye_x_center + eye_x_angle_range:
+                current_eye_x = eye_x_center + eye_x_angle_range-1
                 servo_eye_x.angle = current_eye_x
         if event.code in [button_eyes_right, button_temp_eyes_right] and event.value == 1:
             if current_eye_y != eye_y_center:
                 curreny_y = eye_y_center
                 servo_eye_y.angle = current_eye_y
-            if current_eye_x != eye_x_center - angle_range:
-                current_eye_x = eye_x_center - angle_range-1
+            if current_eye_x != eye_x_center - eye_x_angle_range:
+                current_eye_x = eye_x_center - eye_x_angle_range-1
                 servo_eye_x.angle = current_eye_x
         if event.code in [313] and event.value == 1:
             target = current_neck_rotation_position + neck_rotation_step
@@ -95,7 +95,7 @@ for event in gamepad.read_loop():
                 percent = 1.0
             if percent < -1.0:
                 percent = -1.0
-            current_eye_x = percent * angle_range + eye_x_center
+            current_eye_x = percent * eye_x_angle_range + eye_x_center
             servo_eye_x.angle = current_eye_x
         if event.code == 1:
             percent = (event.value-128)/127
@@ -103,5 +103,5 @@ for event in gamepad.read_loop():
                 percent = 1.0
             if percent < -1.0:
                 percent = -1.0
-            current_eye_y = percent * angle_range + eye_y_center
+            current_eye_y = percent * eye_y_angle_range + eye_y_center
             servo_eye_y.angle = current_eye_y
