@@ -82,6 +82,7 @@ for event in gamepad.read_loop():
             target = current_neck_rotation_position - neck_rotation_step
             if target < neck_rotation_range/-2:
                 print("neck_rotation_range limit: +/- "+str(neck_rotation_range/2))
+                continue
             while current_neck_rotation_position > target:
                 current_neck_rotation_position = current_neck_rotation_position - 1
                 stepper_neck_rotation.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
