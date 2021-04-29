@@ -15,8 +15,11 @@ eye_x_angle_range = 50
 eye_y_angle_range = 35
 neck_rotation_range = 100
 neck_rotation_step = 20
+head_tilt_angle_range = 20
+head_tilt_center = 90
 servo_eye_x = servos.servo[0]
 servo_eye_y = servos.servo[1]
+servo_head_tilt = servos.servo[2]
 stepper_neck_rotation = steppers.stepper1
 button_eyes_left = 308 # left shoulder
 button_eyes_right = 309 # right shoulder
@@ -26,6 +29,8 @@ button_temp_eyes_right = 312 # right button
 button_neck_rotate_left = 313 # up button for now
 button_neck_rotate_right = 304 # down button for now
 button_toggle_stepper_release = 316 # start button
+button_head_tilt_forward = 306 # B button
+button_head_tilt_backward = 305 # A button
 ##################################
 
 current_eye_x = eye_x_center
@@ -60,7 +65,7 @@ for event in gamepad.read_loop():
             if current_eye_x != eye_x_center - eye_x_angle_range:
                 current_eye_x = eye_x_center - eye_x_angle_range-1
                 servo_eye_x.angle = current_eye_x
-        if event.code in [313] and event.value == 1:
+        if event.code == button_neck_rotate_left and event.value == 1:
             target = current_neck_rotation_position + neck_rotation_step
             if target > neck_rotation_range/2:
                 print("neck_rotation_range limit: +/- "+str(neck_rotation_range/2))
@@ -73,7 +78,7 @@ for event in gamepad.read_loop():
                 stepper_neck_rotation.release()
                 print("neck stepper released")
         #     crabLeft()
-        if event.code in [304] and event.value == 1:
+        if event.code == button_neck_rotate_right and event.value == 1:
             target = current_neck_rotation_position - neck_rotation_step
             if target < neck_rotation_range/-2:
                 print("neck_rotation_range limit: +/- "+str(neck_rotation_range/2))
@@ -84,6 +89,15 @@ for event in gamepad.read_loop():
             if release_neck_stepper_after_movement is True:
                 stepper_neck_rotation.release()
                 print("neck stepper released")
+        if event.code == button_head_tilt_forward and event.value == 1:
+            head_tilt_position = head_tilt_center + head_tilt_angle_range
+            servo_head_tilt.angle = head_tilt_position
+        if event.code == button_head_tilt_backward and event.value == 1:
+            head_tilt_position = head_tilt_center - head_tilt_angle_range
+            servo_head_tilt.angle = head_tilt_position
+        if event.code in [button_head_tilt_backward,button_head_tilt_forward] and event.value == 0:
+            head_tilt_position = head_tilt_center
+            servo_head_tilt.angle = head_tilt_position
         if event.code == button_eyes_center and event.value == 1 or event.code in [button_temp_eyes_left, button_temp_eyes_right] and event.value == 0: #start
             center_eyes()
         if event.code == button_toggle_stepper_release and event.value == 1:
