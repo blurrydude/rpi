@@ -77,7 +77,6 @@ for event in gamepad.read_loop():
             if release_neck_stepper_after_movement is True:
                 stepper_neck_rotation.release()
                 print("neck stepper released")
-        #     crabLeft()
         if event.code == button_neck_rotate_right and event.value == 1:
             target = current_neck_rotation_position - neck_rotation_step
             if target < neck_rotation_range/-2:
@@ -131,3 +130,51 @@ for event in gamepad.read_loop():
                 percent = -1.0
             current_eye_y = percent * eye_y_angle_range + eye_y_center
             servo_eye_y.angle = current_eye_y
+
+        if event.code == 17 and event.value == -1: # up pressed
+            head_tilt_position = head_tilt_center + head_tilt_angle_range
+            servo_head_tilt.angle = head_tilt_position
+
+        if event.code == 17 and event.value == 0: # up or down released
+            head_tilt_position = head_tilt_center
+            servo_head_tilt.angle = head_tilt_position
+
+        if event.code == 17 and event.value == 1: # down pressed
+            head_tilt_position = head_tilt_center - head_tilt_angle_range
+            servo_head_tilt.angle = head_tilt_position
+
+        if event.code == 16 and event.value == -1: # left pressed
+            target = current_neck_rotation_position + neck_rotation_step
+            if target > neck_rotation_range/2:
+                print("neck_rotation_range limit: +/- "+str(neck_rotation_range/2))
+                continue
+            while current_neck_rotation_position < target:
+                current_neck_rotation_position = current_neck_rotation_position + 1
+                stepper_neck_rotation.onestep(style=stepper.DOUBLE)
+            print("current_neck_rotation_position: "+str(current_neck_rotation_position))
+            if release_neck_stepper_after_movement is True:
+                stepper_neck_rotation.release()
+                print("neck stepper released")
+
+        if event.code == 16 and event.value == 0: # left or right released
+            if current_neck_rotation_position > 0:
+                while current_neck_rotation_position > 0:
+                current_neck_rotation_position = current_neck_rotation_position - 1
+                stepper_neck_rotation.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
+            if current_neck_rotation_position < 0:
+                while current_neck_rotation_position < 0:
+                current_neck_rotation_position = current_neck_rotation_position + 1
+                stepper_neck_rotation.onestep(style=stepper.DOUBLE)
+
+        if event.code == 16 and event.value == 1: # right pressed
+            target = current_neck_rotation_position - neck_rotation_step
+            if target < neck_rotation_range/-2:
+                print("neck_rotation_range limit: +/- "+str(neck_rotation_range/2))
+                continue
+            while current_neck_rotation_position > target:
+                current_neck_rotation_position = current_neck_rotation_position - 1
+                stepper_neck_rotation.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
+            print("current_neck_rotation_position: "+str(current_neck_rotation_position))
+            if release_neck_stepper_after_movement is True:
+                stepper_neck_rotation.release()
+                print("neck stepper released")
