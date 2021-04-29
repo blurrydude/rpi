@@ -3,7 +3,7 @@ import paho.mqtt.client as mqtt
 import time
 #from omxplayer.player import OMXPlayer
 from pathlib import Path
-import startfile
+import os
 import subprocess
 
 ############# CONFIG #############
