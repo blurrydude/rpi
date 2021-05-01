@@ -83,26 +83,26 @@ def eyes_go_right():
         current_eye_x = eye_x_center - eye_x_angle_range-1
         servo_eye_x.angle = current_eye_x
 
-def eyes_go_up():
-def eyes_go_down():
-def rotate_neck_left():
-def rotate_neck_right():
-def rotate_neck_center():
-def tilt_head_forward():
-def tilt_head_back():
-def tilt_head_left():
-def tilt_head_right():
-def level_head():
-def open_jaw():
-def close_jaw():
-def relax_brow():
-def furrow_brow():
-def curl_lips():
-def relax_lips():
-def lift_head():
-def lower_head():
-def extend_neck():
-def retract_neck():
+# def eyes_go_up():
+# def eyes_go_down():
+# def rotate_neck_left():
+# def rotate_neck_right():
+# def rotate_neck_center():
+# def tilt_head_forward():
+# def tilt_head_back():
+# def tilt_head_left():
+# def tilt_head_right():
+# def level_head():
+# def open_jaw():
+# def close_jaw():
+# def relax_brow():
+# def furrow_brow():
+# def curl_lips():
+# def relax_lips():
+# def lift_head():
+# def lower_head():
+# def extend_neck():
+# def retract_neck():
 
 center_eyes()
 
