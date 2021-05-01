@@ -9,18 +9,18 @@ steppers = MotorKit(address=0x61)
 gamepad = InputDevice('/dev/input/event0')
 
 cbuttons = {
-    GAMEPAD_X: 16,
-    GAMEPAD_Y: 17,
-    CARDINAL_N: 313,
-    CARDINAL_E: 312,
-    CARDINAL_S: 304,
-    CARDINAL_W: 307,
-    A: 305,
-    B: 306,
-    LEFT_SHOULDER: 308,
-    RIGHT_SHOULDER: 309,
-    START: 316,
-    TRIGGER: 310
+    "GAMEPAD_X": 16,
+    "GAMEPAD_Y": 17,
+    "CARDINAL_N": 313,
+    "CARDINAL_E": 312,
+    "CARDINAL_S": 304,
+    "CARDINAL_W": 307,
+    "A": 305,
+    "B": 306,
+    "LEFT_SHOULDER": 308,
+    "RIGHT_SHOULDER": 309,
+    "START": 316,
+    "TRIGGER": 310
 }
 
 ############# CONFIG #############
