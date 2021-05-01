@@ -8,6 +8,21 @@ servos = ServoKit(channels=16)
 steppers = MotorKit(address=0x61)
 gamepad = InputDevice('/dev/input/event0')
 
+cbuttons = {
+    GAMEPAD_X: 16,
+    GAMEPAD_Y: 17,
+    CARDINAL_N: 313,
+    CARDINAL_E: 312,
+    CARDINAL_S: 304,
+    CARDINAL_W: 307,
+    A: 305,
+    B: 306,
+    LEFT_SHOULDER: 308,
+    RIGHT_SHOULDER: 309,
+    START: 316,
+    TRIGGER: 310
+}
+
 ############# CONFIG #############
 eye_x_center = 90
 eye_y_center = 90
@@ -21,6 +36,7 @@ servo_eye_x = servos.servo[0]
 servo_eye_y = servos.servo[1]
 servo_head_tilt = servos.servo[2]
 stepper_neck_rotation = steppers.stepper1
+
 button_eyes_left = 308 # left shoulder
 button_eyes_right = 309 # right shoulder
 button_eyes_center = 310 # trigger
@@ -39,11 +55,54 @@ current_eye_y = eye_y_center
 current_neck_rotation_position = 0
 release_neck_stepper_after_movement = False
 
+def center_eyes_y():
+    global current_eye_y
+    if current_eye_y != eye_y_center:
+        current_y = eye_y_center
+        servo_eye_y.angle = current_eye_y
+
+def center_eyes_x():
+    global current_eye_x
+    if current_eye_x != eye_x_center:
+        current_x = eye_x_center
+        servo_eye_x.angle = current_eye_x
+
 def center_eyes():
-    current_eye_x = eye_x_center
-    current_eye_y = eye_y_center
-    servo_eye_x.angle = current_eye_x
-    servo_eye_y.angle = current_eye_y
+    center_eyes_x()
+    center_eyes_y()
+
+def eyes_go_left():
+    center_eyes_y()
+    if current_eye_x != eye_x_center + eye_x_angle_range-1:
+        current_eye_x = eye_x_center + eye_x_angle_range-1
+        servo_eye_x.angle = current_eye_x
+
+def eyes_go_right():
+    center_eyes_y()
+    if current_eye_x != eye_x_center - eye_x_angle_range-1:
+        current_eye_x = eye_x_center - eye_x_angle_range-1
+        servo_eye_x.angle = current_eye_x
+
+def eyes_go_up():
+def eyes_go_down():
+def rotate_neck_left():
+def rotate_neck_right():
+def rotate_neck_center():
+def tilt_head_forward():
+def tilt_head_back():
+def tilt_head_left():
+def tilt_head_right():
+def level_head():
+def open_jaw():
+def close_jaw():
+def relax_brow():
+def furrow_brow():
+def curl_lips():
+def relax_lips():
+def lift_head():
+def lower_head():
+def extend_neck():
+def retract_neck():
 
 center_eyes()
 
@@ -52,19 +111,11 @@ for event in gamepad.read_loop():
     if event.type == ecodes.EV_KEY:
         print("key:"+str(event.code)+" value:"+str(event.value))
         if event.code in [button_eyes_left, button_temp_eyes_left] and event.value == 1:
-            if current_eye_y != eye_y_center:
-                curreny_y = eye_y_center
-                servo_eye_y.angle = current_eye_y
-            if current_eye_x != eye_x_center + eye_x_angle_range:
-                current_eye_x = eye_x_center + eye_x_angle_range-1
-                servo_eye_x.angle = current_eye_x
+            eyes_go_left()
+
         if event.code in [button_eyes_right, button_temp_eyes_right] and event.value == 1:
-            if current_eye_y != eye_y_center:
-                curreny_y = eye_y_center
-                servo_eye_y.angle = current_eye_y
-            if current_eye_x != eye_x_center - eye_x_angle_range:
-                current_eye_x = eye_x_center - eye_x_angle_range-1
-                servo_eye_x.angle = current_eye_x
+            eyes_go_right()
+
         if event.code == button_neck_rotate_left and event.value == 1:
             target = current_neck_rotation_position + neck_rotation_step
             if target > neck_rotation_range/2:
