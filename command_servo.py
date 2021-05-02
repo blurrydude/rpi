@@ -72,12 +72,14 @@ def center_eyes():
     center_eyes_y()
 
 def eyes_go_left():
+    global current_eye_x
     center_eyes_y()
     if current_eye_x != eye_x_center + eye_x_angle_range-1:
         current_eye_x = eye_x_center + eye_x_angle_range-1
         servo_eye_x.angle = current_eye_x
 
 def eyes_go_right():
+    global current_eye_x
     center_eyes_y()
     if current_eye_x != eye_x_center - eye_x_angle_range-1:
         current_eye_x = eye_x_center - eye_x_angle_range-1
