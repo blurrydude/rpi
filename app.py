@@ -188,11 +188,6 @@ def action(cid, action):
     mosquittoDo("shellies/"+circuit[cid]["address"]+"/relay/"+circuit[cid]["relay"]+"/command",action)
     return 'OK'
 
-@app.route('/mqtt/<deviceId>/<address>/<action>')
-def action(deviceId, address, action):
-    mosquittoDo("shellies/"+deviceId+"/relay/"+address+"/command",action)
-    return 'OK'
-
 @app.route('/control/<text>')
 def control(text):
     command = text.lower()
