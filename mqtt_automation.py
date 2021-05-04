@@ -2,6 +2,7 @@ import paho.mqtt.client as mqtt
 import time
 import datetime
 import socket
+import json
 
 myname = socket.gethostname()
 ############# CONFIG #############
@@ -87,6 +88,13 @@ circuit_state = {
 reverse_lookup = {} #I can't figure out a better or faster way
 
 running = False
+
+last_rule_update = round(time.time())
+
+def load_rules():
+    global rules
+    f = open('rules.json',)
+    rules = json.load(f)
 
 def check_time_of_day_rule(now, rid):
     global rules
@@ -191,6 +199,9 @@ if __name__ == "__main__":
     time.sleep(1)
     while running is True:
         now = round(time.time())
+        if last_rule_update <= now - 10:
+            load_rules()
+            last_rule_update = round(time.time())
         for i in range(0, len(rules)):
             check_rule(now, i)
         # always wait a second at the bottom to allow subscribers to update states
