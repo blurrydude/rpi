@@ -2,6 +2,7 @@ import os
 import time
 import os.path
 from os import path
+import datetime
 
 def doCheck():
     os.system('cd /home/pi/rpi && git pull --all')
@@ -17,7 +18,8 @@ def doCheck():
     with open(local_version_file, "r") as read_file:
         local_version = read_file.read()
 
-    if local_version != repo_version:
+    now = datetime.datetime.now()
+    if local_version != repo_version or (now.hour == 0 and now.minute == 0):
         with open(local_version_file, "w") as write_file:
             write_file.write(repo_version)
         time.sleep(1)
