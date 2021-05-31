@@ -17,8 +17,16 @@ client = mqtt.Client()
 #player = OMXPlayer("/home/pi/Desktop/OceanWaves1.mp4")
 #player.quit()
 
+bad = 0
+
 def mosquittoMessage(message):
-    client.publish(myname+"/status",message)
+    global bad
+    try:
+        client.publish(myname+"/status",message)
+    except:
+        bad = bad + 1
+        if bad > 3:
+            os.system('sudo reboot now')
 
 def on_message(client, userdata, message):
     #global player

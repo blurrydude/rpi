@@ -4,6 +4,7 @@ import neopixel
 import paho.mqtt.client as mqtt
 import time
 import socket
+import os
 
 myname = socket.gethostname()
 ############# CONFIG #############
@@ -27,8 +28,16 @@ running = True
 pixels = neopixel.NeoPixel(board.D18, led_count)
 client = mqtt.Client()
 
+bad = 0
+
 def mosquittoMessage(message):
-    client.publish(myname+"/status",message)
+    global bad
+    try:
+        client.publish(myname+"/status",message)
+    except:
+        bad = bad + 1
+        if bad > 3:
+            os.system('sudo reboot now')
 
 def on_message(client, userdata, message):
     global running

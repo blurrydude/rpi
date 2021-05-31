@@ -2,6 +2,7 @@
 import paho.mqtt.client as mqtt
 import time
 import pifacedigitalio as p
+import os
 
 ############# CONFIG #############
 listentopic = "commands"
@@ -13,8 +14,17 @@ dooropen = [False,False]
 running = True
 client = mqtt.Client()
 
+bad = 0
+
 def mosquittoMessage(message):
-    client.publish(myname+"/status",message)
+    global bad
+    try:
+        client.publish(myname+"/status",message)
+    except:
+        bad = bad + 1
+        if bad > 3:
+            os.system('sudo reboot now')
+
 
 def openDoor(bay):
     global dooropen
