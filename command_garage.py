@@ -22,7 +22,7 @@ def mosquittoMessage(message):
         client.publish(myname+"/status",message)
     except:
         bad = bad + 1
-        if bad > 3:
+        if bad > 10:
             os.system('sudo reboot now')
 
 
