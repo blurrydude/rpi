@@ -100,8 +100,8 @@ mqttCommands = [
     MosquittoCommand(    "turn off hallway", "shellies/shellyswitch25-8CAAB55F402F/relay/0/command", "off"),
     MosquittoCommand("turn on master bath", "shellies/shellyswitch25-8CAAB561DDCF/relay/0/command", "on"),
     MosquittoCommand(    "turn off master bath", "shellies/shellyswitch25-8CAAB561DDCF/relay/0/command", "off"),
-    MosquittoCommand("turn on bath room", "shellies/shellyswitch25-8CAAB5561DDED/relay/0/command", "on"),
-    MosquittoCommand(    "turn off bath room", "shellies/shellyswitch25-8CAAB5561DDED/relay/0/command", "off"),
+    MosquittoCommand("turn on guest bath", "shellies/shellyswitch25-8CAAB5561DDED/relay/0/command", "on"),
+    MosquittoCommand(    "turn off guest bath", "shellies/shellyswitch25-8CAAB5561DDED/relay/0/command", "off"),
     #MosquittoCommand("turn on living room", "shellies/shellyswitch25-/relay/0/command", "on"),
     #MosquittoCommand(    "turn off living room", "shellies/shellyswitch25-/relay/0/command", "off"),
     MosquittoCommand("turn on kitchen", "shellies/shellyswitch25-8CAAB55F405D/relay/1/command", "on"),
@@ -110,6 +110,14 @@ mqttCommands = [
     MosquittoCommand(    "turn off bar", "shellies/shellyswitch25-8CAAB55F4553/relay/1/command", "off"),
     MosquittoCommand("turn on office", "shellies/shellyswitch25-8CAAB55F3B3F/relay/0/command", "on"),
     MosquittoCommand(    "turn off office", "shellies/shellyswitch25-8CAAB55F3B3F/relay/0/command", "off"),
+    MosquittoCommand("turn on unknown one", "shellies/shellyswitch25-8CAAB55F3B3F/relay/1/command", "on"),
+    MosquittoCommand(    "turn off unknown one", "shellies/shellyswitch25-8CAAB55F3B3F/relay/1/command", "off"),
+    MosquittoCommand("turn on unknown two", "shellies/shellyswitch25-8CAAB55F4553/relay/0/command", "on"),
+    MosquittoCommand(    "turn off unknown two", "shellies/shellyswitch25-8CAAB55F4553/relay/0/command", "off"),
+    MosquittoCommand("turn on unknown three", "shellies/shellyswitch25-8CAAB55F44D7/relay/0/command", "on"),
+    MosquittoCommand(    "turn off unknown three", "shellies/shellyswitch25-8CAAB55F44D7/relay/0/command", "off"),
+    MosquittoCommand("turn on unknown four", "shellies/shellyswitch25-8CAAB55F44D7/relay/1/command", "on"),
+    MosquittoCommand(    "turn off unknown four", "shellies/shellyswitch25-8CAAB55F44D7/relay/1/command", "off"),
     #MosquittoCommand("turn on table one", "shellies/shellyswitch25-/relay/0/command", "on"),
     #MosquittoCommand(    "turn off table one", "shellies/shellyswitch25-/relay/0/command", "off"),
     #MosquittoCommand("turn on table two", "shellies/shellyswitch25-/relay/0/command", "on"),
@@ -192,6 +200,59 @@ def action(cid, action):
 def control(text):
     command = text.lower()
     mosquittoDo("incoming/commands", command)
+    if "switch to" in command:
+        if "night mode" in command:
+            control("turn off shop")
+            control("turn on stairs")
+            control("turn on porch")
+            control("turn on lamp post")
+            control("turn off kitchen")
+            control("turn off bar")
+            control("turn off fireplace")
+            control("turn off office")
+            control("turn off dining room")
+            control("turn off guest bathroom")
+            control("turn off hallway")
+            control("turn off shower fan")
+            control("turn off master bath")
+            return 'OK'
+        if "evening mode" in command:
+            control("turn off shop")
+            control("turn on stairs")
+            control("turn on porch")
+            control("turn on lamp post")
+            control("turn off kitchen")
+            control("turn off bar")
+            control("turn on fireplace")
+            control("turn off office")
+            control("turn off dining room")
+            control("turn off guest bathroom")
+            control("turn off hallway")
+            control("turn off shower fan")
+            control("turn on master bath")
+            return 'OK'
+        if "morning mode" in command:
+            control("turn on shop")
+            control("turn off stairs")
+            control("turn on kitchen")
+            control("turn on bar")
+            control("turn off fireplace")
+            control("turn off office")
+            control("turn off dining room")
+            control("turn off guest bathroom")
+            control("turn off hallway")
+            control("turn off shower fan")
+            control("turn off master bath")
+            return 'OK'
+        if "lunch mode" in command:
+            control("turn on kitchen")
+            control("turn on bar")
+            control("turn on dining room")
+            return 'OK'
+        if "shower mode" in command:
+            control("turn on shower fan")
+            control("turn on master bath")
+            return 'OK'
     for cmd in mqttCommands:
         words = cmd.keyword.split(' ')
         count = 0
@@ -200,8 +261,7 @@ def control(text):
                 count = count + 1
         if count == len(words):
             mosquittoDo(cmd.topic, cmd.command)
-            return 'OK'
-    return 'NO'
+    return 'OK'
 
 if __name__ == '__main__':
     app.run(debug=False, port=8080, host='192.168.1.23')
