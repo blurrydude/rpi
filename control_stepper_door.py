@@ -54,12 +54,12 @@ for event in gamepad.read_loop():
     if event.type == ecodes.EV_KEY:
         if event.code == button_neck_rotate_left and event.value == 1:
             x = 0
-            while x < 200:
+            while x < 17800:
                 x = x + 1
                 stepper_neck_rotation.onestep(style=stepper.DOUBLE)
             stepper_neck_rotation.release()
         if event.code == button_neck_rotate_right and event.value == 1:
-            x = 200
+            x = 17800
             while x > 0:
                 x = x - 1
                 stepper_neck_rotation.onestep(direction=stepper.BACKWARD, style=stepper.DOUBLE)
