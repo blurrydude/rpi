@@ -215,7 +215,7 @@ if __name__ == "__main__":
         if last_rule_update <= now - 10:
             load_rules()
             last_rule_update = round(time.time())
-            mosquittoMessage("mqtt_rgb "+str(myip).split(' ')[0].replace("b'","")+" alive at "+str(round(time.time())))
+            mosquittoMessage("mqtt_rgb "+str(myip).split(' ')[0].replace("b'","")+" alive at "+datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
         for i in range(0, len(rules)):
             check_rule(now, i)
         # always wait a second at the bottom to allow subscribers to update states

@@ -4,6 +4,7 @@ import time
 import pifacedigitalio as p
 import os
 import subprocess
+from datetime import datetime
 
 myip = subprocess.check_output(['hostname', '-I'])
 ############# CONFIG #############
@@ -70,6 +71,6 @@ if __name__ == "__main__":
     client.loop_start()
     while running is True:
         time.sleep(5)
-        mosquittoMessage("command_garage "+str(myip).split(' ')[0].replace("b'","")+" alive at "+str(round(time.time())))
+        mosquittoMessage("command_garage "+str(myip).split(' ')[0].replace("b'","")+" alive at "+datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
     client.loop_stop()
     client.disconnect()

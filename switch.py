@@ -4,6 +4,7 @@ from datetime import datetime
 import paho.mqtt.client as mqtt
 import socket
 import subprocess
+from datetime import datetime
 
 myname = socket.gethostname()
 myip = subprocess.check_output(['hostname', '-I'])
@@ -221,7 +222,7 @@ if __name__ == "__main__":
                 time.sleep(5)
         now = time.time()
         if now - last_pulse >= 5:
-            mosquittoMessage("switch "+str(myip).split(' ')[0].replace("b'","")+" alive at "+str(round(time.time())))
+            mosquittoMessage("switch "+str(myip).split(' ')[0].replace("b'","")+" alive at "+datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
             last_pulse = now
         
     try:

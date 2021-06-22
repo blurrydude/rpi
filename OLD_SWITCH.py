@@ -216,7 +216,7 @@ if __name__ == "__main__":
                 time.sleep(5)
         now = time.time()
         if now - last_pulse >= 5:
-            mosquittoMessage("alive at "+str(round(time.time())))
+            mosquittoMessage("alive at "+datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
             last_pulse = now
         
     try:
