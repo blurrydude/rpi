@@ -1,14 +1,18 @@
+import subprocess
 import paho.mqtt.client as mqtt
 import time
 import datetime
 import socket
 import json
+import os
 
 myname = socket.gethostname()
+myip = subprocess.check_output(["hostname","-I"])
 ############# CONFIG #############
 broker = "192.168.1.22"
 ##################################
 client = mqtt.Client()
+bad = 0
 
 circuits = {
     "fireplace": {"id": "fireplace", "address": "shelly1pm-8CAAB574C489", "relay":"0"     , "label":"Fireplace", "last_update": 0}, #192.168.1.60 - Fireplace Lights
@@ -154,6 +158,15 @@ def on_message(client, userdata, message):
                 if rules[rid]["circuit"] == cid and rules[rid]["type"] == "timer":
                     rules[rid]["last_start"] = now
 
+def mosquittoMessage(message):
+    global bad
+    try:
+        client.publish(myname+"/status",message)
+    except:
+        bad = bad + 1
+        if bad > 10:
+            os.system('sudo reboot now')
+
 def mosquittoDo(topic, command):
     try:
         print("publishing '"+command+"' to "+topic)
@@ -202,6 +215,7 @@ if __name__ == "__main__":
         if last_rule_update <= now - 10:
             load_rules()
             last_rule_update = round(time.time())
+            mosquittoMessage("mqtt_rgb "+str(myip).split(' ')[0].replace("b'","")+" alive at "+str(round(time.time())))
         for i in range(0, len(rules)):
             check_rule(now, i)
         # always wait a second at the bottom to allow subscribers to update states

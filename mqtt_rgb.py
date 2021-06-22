@@ -215,7 +215,7 @@ if __name__ == "__main__":
         elif mode == 3 or mode == 4:
             if j + 1 > 255:
                 j = 0
-                mosquittoMessage("bqtt_rgb "+str(myip).split(' ')[0].replace("b'","")+" alive at "+str(round(time.time())))
+                mosquittoMessage("mqtt_rgb "+str(myip).split(' ')[0].replace("b'","")+" alive at "+str(round(time.time())))
             else:
                 j = j + 1
             if mode == 3:
