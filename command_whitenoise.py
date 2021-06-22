@@ -7,7 +7,7 @@ import os
 import subprocess
 import subprocess
 
-myip = subprocess.call(['hostname', '-I'])
+myip = subprocess.check_output(['hostname', '-I'])
 ############# CONFIG #############
 listentopic = "commands"
 myname = "whitenoisepi"
@@ -39,12 +39,12 @@ def on_message(client, userdata, message):
         #os.system("/usr/bin/omxplayer -b -o local /home/pi/Desktop/OceanWaves1.mp4")
         #player = OMXPlayer("/home/pi/Desktop/OceanWaves1.mp4")
         #os.startfile("/home/pi/Desktop/OceanWaves1.mp4")
-        subprocess.call("/home/pi/rpi/start_whitenoise.sh")
+        subprocess.check_output("/home/pi/rpi/start_whitenoise.sh")
     elif "stop" in result:
         #player.quit()
         #os.system("killall omxplayer ")
         #os.system("killall -s 9 omxplayer ")
-        subprocess.call("/home/pi/rpi/stop_whitenoise.sh")
+        subprocess.check_output("/home/pi/rpi/stop_whitenoise.sh")
 
 if __name__ == "__main__":
     client.on_message = on_message

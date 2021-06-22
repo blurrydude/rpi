@@ -7,7 +7,7 @@ import socket
 import random
 import subprocess
 
-myip = subprocess.call(['hostname', '-I'])
+myip = subprocess.check_output(['hostname', '-I'])
 try:
     import keyboard
     print("keyboard module present")
