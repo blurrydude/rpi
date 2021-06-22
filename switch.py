@@ -3,8 +3,10 @@ import time
 from datetime import datetime
 import paho.mqtt.client as mqtt
 import socket
+import commands
 
 myname = socket.gethostname()
+myip = commands.getoutput('hostname -I')
 ############# CONFIG #############
 broker = "192.168.1.22"
 live = True
@@ -219,7 +221,7 @@ if __name__ == "__main__":
                 time.sleep(5)
         now = time.time()
         if now - last_pulse >= 5:
-            mosquittoMessage("alive at "+str(round(time.time())))
+            mosquittoMessage(str(myip)+" alive at "+str(round(time.time())))
             last_pulse = now
         
     try:

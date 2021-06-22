@@ -3,7 +3,9 @@ import paho.mqtt.client as mqtt
 import time
 import pifacedigitalio as p
 import os
+import commands
 
+myip = commands.getoutput('hostname -I')
 ############# CONFIG #############
 listentopic = "commands"
 myname = "garagepi"
@@ -68,6 +70,6 @@ if __name__ == "__main__":
     client.loop_start()
     while running is True:
         time.sleep(5)
-        mosquittoMessage("alive at "+str(round(time.time())))
+        mosquittoMessage(str(myip)+" alive at "+str(round(time.time())))
     client.loop_stop()
     client.disconnect()

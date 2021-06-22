@@ -5,8 +5,10 @@ import paho.mqtt.client as mqtt
 import time
 import socket
 import os
+import commands
 
 myname = socket.gethostname()
+myip = commands.getoutput('hostname -I')
 ############# CONFIG #############
 listentopic = "commands"
 broker = "192.168.1.22"
@@ -72,6 +74,6 @@ if __name__ == "__main__":
     client.loop_start()
     while running is True:
         time.sleep(5)
-        mosquittoMessage("alive at "+str(round(time.time())))
+        mosquittoMessage(str(myip)+" alive at "+str(round(time.time())))
     client.loop_stop()
     client.disconnect()
