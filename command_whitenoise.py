@@ -55,7 +55,7 @@ if __name__ == "__main__":
     client.loop_start()
     while running is True:
         time.sleep(5)
-        mosquittoMessage("command_whitenoise "+str(myip).split(' ')[1].replace("b'","")+" alive at "+str(round(time.time())))
+        mosquittoMessage("command_whitenoise "+str(myip).split(' ')[0].replace("b'","")+" alive at "+str(round(time.time())))
     #try:
         #player.quit()
     #except:
