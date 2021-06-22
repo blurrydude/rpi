@@ -3,10 +3,10 @@ import time
 from datetime import datetime
 import paho.mqtt.client as mqtt
 import socket
-import commands
+import subprocess
 
 myname = socket.gethostname()
-myip = commands.getoutput('hostname -I')
+myip = subprocess.call('hostname -I')
 ############# CONFIG #############
 broker = "192.168.1.22"
 live = True

@@ -5,10 +5,10 @@ import paho.mqtt.client as mqtt
 import time
 import socket
 import os
-import commands
+import subprocess
 
 myname = socket.gethostname()
-myip = commands.getoutput('hostname -I')
+myip = subprocess.call('hostname -I')
 ############# CONFIG #############
 listentopic = "commands"
 broker = "192.168.1.22"

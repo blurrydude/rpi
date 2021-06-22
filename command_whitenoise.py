@@ -5,9 +5,9 @@ import time
 from pathlib import Path
 import os
 import subprocess
-import commands
+import subprocess
 
-myip = commands.getoutput('hostname -I')
+myip = subprocess.call('hostname -I')
 ############# CONFIG #############
 listentopic = "commands"
 myname = "whitenoisepi"

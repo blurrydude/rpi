@@ -3,9 +3,9 @@ import paho.mqtt.client as mqtt
 import time
 import pifacedigitalio as p
 import os
-import commands
+import subprocess
 
-myip = commands.getoutput('hostname -I')
+myip = subprocess.call('hostname -I')
 ############# CONFIG #############
 listentopic = "commands"
 myname = "garagepi"

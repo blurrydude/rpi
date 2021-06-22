@@ -5,9 +5,9 @@ import board
 import neopixel
 import socket
 import random
-import commands
+import subprocess
 
-myip = commands.getoutput('hostname -I')
+myip = subprocess.call('hostname -I')
 try:
     import keyboard
     print("keyboard module present")
