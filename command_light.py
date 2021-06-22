@@ -8,7 +8,7 @@ import os
 import subprocess
 
 myname = socket.gethostname()
-myip = subprocess.call('hostname -I')
+myip = subprocess.call(['hostname', '-I'])
 ############# CONFIG #############
 listentopic = "commands"
 broker = "192.168.1.22"

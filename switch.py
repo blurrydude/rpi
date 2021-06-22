@@ -6,7 +6,7 @@ import socket
 import subprocess
 
 myname = socket.gethostname()
-myip = subprocess.call('hostname -I')
+myip = subprocess.call(['hostname', '-I'])
 ############# CONFIG #############
 broker = "192.168.1.22"
 live = True

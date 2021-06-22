@@ -5,7 +5,7 @@ import pifacedigitalio as p
 import os
 import subprocess
 
-myip = subprocess.call('hostname -I')
+myip = subprocess.call(['hostname', '-I'])
 ############# CONFIG #############
 listentopic = "commands"
 myname = "garagepi"
