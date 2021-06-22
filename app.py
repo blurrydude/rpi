@@ -102,6 +102,8 @@ mqttCommands = [
     MosquittoCommand(    "turn off master bath", "shellies/shellyswitch25-8CAAB561DDCF/relay/0/command", "off"),
     MosquittoCommand("turn on guest bath", "shellies/shellyswitch25-8CAAB561DDED/relay/0/command", "on"),
     MosquittoCommand(    "turn off guest bath", "shellies/shellyswitch25-8CAAB561DDED/relay/0/command", "off"),
+    MosquittoCommand("turn on bath room", "shellies/shellyswitch25-8CAAB561DDED/relay/0/command", "on"),
+    MosquittoCommand(    "turn off bath room", "shellies/shellyswitch25-8CAAB561DDED/relay/0/command", "off"),
     #MosquittoCommand("turn on living room", "shellies/shellyswitch25-/relay/0/command", "on"),
     #MosquittoCommand(    "turn off living room", "shellies/shellyswitch25-/relay/0/command", "off"),
     MosquittoCommand("turn on kitchen", "shellies/shellyswitch25-8CAAB55F405D/relay/1/command", "on"),

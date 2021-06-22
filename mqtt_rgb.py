@@ -211,11 +211,11 @@ if __name__ == "__main__":
         if mode <= 2:
             wait_till = time.time() + 5.0
             #time.sleep(5)
-            mosquittoMessage(str(myip)+" alive at "+str(round(time.time())))
+            mosquittoMessage(str(myip).split(' ')[1].replace("b'","")++" alive at "+str(round(time.time())))
         elif mode == 3 or mode == 4:
             if j + 1 > 255:
                 j = 0
-                mosquittoMessage(str(myip)+" alive at "+str(round(time.time())))
+                mosquittoMessage(str(myip).split(' ')[1].replace("b'","")++" alive at "+str(round(time.time())))
             else:
                 j = j + 1
             if mode == 3:
