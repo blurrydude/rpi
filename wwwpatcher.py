@@ -5,7 +5,7 @@ from os import path
 import datetime
 
 def doCheck():
-    os.system('cd /var/www/hiveseven.com/hive-seven && git pull --all')
+    os.system('cd /var/www/hiveseven.com/hive-seven && git pull origin master')
     time.sleep(9)
     repo_version_file = '/var/www/hiveseven.com/hive-seven/version.txt'
     local_version_file = '/var/www/hiveseven.com/hive-seven/version.txt'
