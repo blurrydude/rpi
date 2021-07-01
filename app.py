@@ -203,6 +203,36 @@ def control(text):
     command = text.lower()
     mosquittoDo("incoming/commands", command)
     if "switch to" in command:
+        if "alert mode" in command:
+            control("turn on shop")
+            control("turn on stairs")
+            control("turn on porch")
+            control("turn on lamp post")
+            control("turn on kitchen")
+            control("turn on bar")
+            control("turn on fireplace")
+            control("turn on office")
+            control("turn on dining room")
+            control("turn on guest bathroom")
+            control("turn on hallway")
+            control("turn on shower fan")
+            control("turn on master bath")
+            return 'OK'
+        if "dark mode" in command:
+            control("turn off shop")
+            control("turn off stairs")
+            control("turn off porch")
+            control("turn off lamp post")
+            control("turn off kitchen")
+            control("turn off bar")
+            control("turn off fireplace")
+            control("turn off office")
+            control("turn off dining room")
+            control("turn off guest bathroom")
+            control("turn off hallway")
+            control("turn off shower fan")
+            control("turn off master bath")
+            return 'OK'
         if "night mode" in command:
             control("turn off shop")
             control("turn on stairs")
