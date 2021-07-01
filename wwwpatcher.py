@@ -8,7 +8,7 @@ def doCheck():
     os.system('cd /var/www/hiveseven.com/hive-seven && git pull origin master')
     time.sleep(9)
     repo_version_file = '/var/www/hiveseven.com/hive-seven/version.txt'
-    local_version_file = '/home/pi/www_version.txt'
+    local_version_file = '/var/www/hiveseven.com/www_version.txt'
     with open(repo_version_file, "r") as read_file:
         repo_version = read_file.read()
     if path.exists(local_version_file) == False:
