@@ -22,11 +22,11 @@ circuits = {
     "officefan": {"id": "officefan", "address": "shellyswitch25-8CAAB55F405D", "relay":"0", "label":"Office Fan", "last_update": 0}, #192.168.1.242 - Office Fan
     "kitchen": {"id": "kitchen", "address": "shellyswitch25-8CAAB55F405D", "relay":"1", "label":"Kitchen", "last_update": 0}, #192.168.1.242 - Kitchen Lights
     "office": {"id": "office", "address": "shellyswitch25-8CAAB55F3B3F", "relay":"0", "label":"Office Lights", "last_update": 0}, #192.168.1.244 - Office Lights
-    "unknown1": {"id": "unknown1", "address": "shellyswitch25-8CAAB55F3B3F", "relay":"1", "label":"Unknown 1", "last_update": 0}, #192.168.1.244 - Unknown
-    "unknown2": {"id": "unknown2", "address": "shellyswitch25-8CAAB55F4553", "relay":"0", "label":"Unknown 2", "last_update": 0}, #192.168.1.245 - Unknown
+    "livingroomtv": {"id": "livingroomtv", "address": "shellyswitch25-8CAAB55F3B3F", "relay":"1", "label":"Livingroom TV", "last_update": 0}, #192.168.1.244 - Unknown
+    "workoutroom": {"id": "workoutroom", "address": "shellyswitch25-8CAAB55F4553", "relay":"0", "label":"Gym Lamp", "last_update": 0}, #192.168.1.245 - Unknown
     "bar": {"id": "bar", "address": "shellyswitch25-8CAAB55F4553", "relay":"1", "label":"Bar", "last_update": 0}, #192.168.1.245 - Bar Lights
-    "unknown3": {"id": "unknown3", "address": "shellyswitch25-8CAAB55F44D7", "relay":"0", "label":"Unknown 3", "last_update": 0}, #192.168.1.61  - Unknown
-    "unknown4": {"id": "unknown4", "address": "shellyswitch25-8CAAB55F44D7", "relay":"1", "label":"Unknown 4", "last_update": 0}, #192.168.1.61  - Unknown
+    "bedroom": {"id": "bedroom", "address": "shellyswitch25-8CAAB55F44D7", "relay":"0", "label":"Bedroom Lamp", "last_update": 0}, #192.168.1.61  - Unknown
+    "library": {"id": "library", "address": "shellyswitch25-8CAAB55F44D7", "relay":"1", "label":"Library Lamp", "last_update": 0}, #192.168.1.61  - Unknown
     "guestbath": {"id": "guestbath", "address": "shellyswitch25-8CAAB561DDED", "relay":"0", "label":"Guest Bathroom", "last_update": 0}, #192.168.1.240 - Bathroom Lights and Fan
     "garage": {"id": "garage", "address": "shellyswitch25-8CAAB561DDED", "relay":"1", "label":"Garage Lights", "last_update": 0}, #192.168.1.240 - Garage Lights
     "masterbath": {"id": "masterbath", "address": "shellyswitch25-8CAAB561DDCF", "relay":"0", "label":"Master Bath", "last_update": 0}, #192.168.1.241 - Master Bath Lights
@@ -66,6 +66,7 @@ rules = [
     {"circuit":"stairway", "type":"timeOfDay", "time":"06:00","state":"off","last_execution":0},
     {"circuit":"stairway", "type":"timeOfDay", "time":"22:50","state":"on","last_execution":0},
     {"circuit":"stairway", "type":"timeOfDay", "time":"01:00","state":"off","last_execution":0},
+    {"circuit":"bedroom", "type":"timeOfDay", "time":"21:00","state":"on","last_execution":0},
     {"circuit":"showerfan", "type":"timer", "time":"01:15","last_start":0}
 ]
 

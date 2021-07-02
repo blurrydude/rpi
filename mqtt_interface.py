@@ -11,11 +11,11 @@ circuits = {
     "D1": {"id": "D1", "address": "shellyswitch25-8CAAB55F405D", "relay":"0", "label":"Office Fan"}, #192.168.1.242 - Office Fan
     "D2": {"id": "D2", "address": "shellyswitch25-8CAAB55F405D", "relay":"1", "label":"Kitchen"}, #192.168.1.242 - Kitchen Lights
     "E1": {"id": "E1", "address": "shellyswitch25-8CAAB55F3B3F", "relay":"0", "label":"Office Lights"}, #192.168.1.244 - Office Lights
-    "E2": {"id": "E2", "address": "shellyswitch25-8CAAB55F3B3F", "relay":"1", "label":"Unknown 1"}, #192.168.1.244 - Unknown
-    "F1": {"id": "F1", "address": "shellyswitch25-8CAAB55F4553", "relay":"0", "label":"Unknown 2"}, #192.168.1.245 - Unknown
+    "E2": {"id": "E2", "address": "shellyswitch25-8CAAB55F3B3F", "relay":"1", "label":"Livingroom TV"}, #192.168.1.244 - Unknown
+    "F1": {"id": "F1", "address": "shellyswitch25-8CAAB55F4553", "relay":"0", "label":"Gym Lamp"}, #192.168.1.245 - Unknown
     "F2": {"id": "F2", "address": "shellyswitch25-8CAAB55F4553", "relay":"1", "label":"Bar"}, #192.168.1.245 - Bar Lights
-    "G1": {"id": "G1", "address": "shellyswitch25-8CAAB55F44D7", "relay":"0", "label":"Unknown 3"}, #192.168.1.61  - Unknown
-    "G2": {"id": "G2", "address": "shellyswitch25-8CAAB55F44D7", "relay":"1", "label":"Unknown 4"}, #192.168.1.61  - Unknown
+    "G1": {"id": "G1", "address": "shellyswitch25-8CAAB55F44D7", "relay":"0", "label":"Bedroom Lamp"}, #192.168.1.61  - Unknown
+    "G2": {"id": "G2", "address": "shellyswitch25-8CAAB55F44D7", "relay":"1", "label":"Library Lamp"}, #192.168.1.61  - Unknown
     "H1": {"id": "H1", "address": "shellyswitch25-8CAAB561DDED", "relay":"0", "label":"Guest Bathroom"}, #192.168.1.240 - Bathroom Lights and Fan
     "H2": {"id": "H2", "address": "shellyswitch25-8CAAB561DDED", "relay":"1", "label":"Garage Lights"}, #192.168.1.240 - Garage Lights
     "I1": {"id": "I1", "address": "shellyswitch25-8CAAB561DDCF", "relay":"0", "label":"Master Bath"}, #192.168.1.241 - Master Bath Lights
@@ -48,7 +48,7 @@ circuit_state = {
 map = {
     "Bedroom": {
         "portals": ["Master Bath", "Hallway"],
-        "circuits": ["E2","F1","G1","G2"],
+        "circuits": ["G1"],
         "rgb": ["windowpi"],
         "buttons": [],
         "onbuttons": [],
@@ -88,7 +88,7 @@ map = {
     },
     "Library": {
         "portals": ["Hallway"],
-        "circuits": [],
+        "circuits": ["G2"],
         "rgb": [],
         "buttons": [],
         "onbuttons": [],
@@ -98,7 +98,7 @@ map = {
     },
     "Workout Room": {
         "portals": ["Hallway"],
-        "circuits": [],
+        "circuits": ["F1"],
         "rgb": [],
         "buttons": [],
         "onbuttons": [],
@@ -108,7 +108,7 @@ map = {
     },
     "Living Room": {
         "portals": ["Hallway","Kitchen","Dining Room"],
-        "circuits": ["A1","B1","C1"],
+        "circuits": ["A1","B1","C1","E2"],
         "rgb": ["canvaspi"],
         "buttons": [],
         "onbuttons": [],
