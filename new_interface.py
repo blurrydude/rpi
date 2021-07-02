@@ -84,6 +84,7 @@ height = window.winfo_screenheight()
 
 window.attributes("-fullscreen", 1)
 window.geometry(str(width)+"x"+str(height))
+window.configure(bg='black')
 window.columnconfigure(0, minsize=width*0.1)
 window.columnconfigure(1, minsize=width*0.8)
 window.columnconfigure(2, minsize=width*0.1)
@@ -92,19 +93,19 @@ switch_label.set("Fireplace")
 button1label.set("ON")
 button2label.set("OFF")
 
-left = tk.Button(text="<",command=lambda id=0: previous_switch(), height=2, font = ("Times", 24))
+left = tk.Button(text="<",command=lambda id=0: previous_switch(), height=2, font = ("Times", 24), bg='#5555aa', fg='black')
 left.grid(row=0, column=0, sticky="ew", padx=5, pady=2)
 
-switchlabel = tk.Label(textvariable=switch_label, font=("Times", 32))
+switchlabel = tk.Label(textvariable=switch_label, font=("Times", 32), bg='black', fg='white')
 switchlabel.grid(row=0, column=1, sticky="nesw", pady=5, padx=5)
 
-right = tk.Button(text=">",command=lambda id=0: next_switch(), height=2, font = ("Times", 24))
+right = tk.Button(text=">",command=lambda id=0: next_switch(), height=2, font = ("Times", 24), bg='#5555aa', fg='black')
 right.grid(row=0, column=2, sticky="ew", padx=5, pady=2)
 
-onbutton = tk.Button(textvariable=button1label,command=lambda id=0: on_click(), height=3, font = ("Times", 32))
+onbutton = tk.Button(textvariable=button1label,command=lambda id=0: on_click(), height=3, font = ("Times", 32), bg='#55aa55', fg='black')
 onbutton.grid(row=2, column=1, sticky="ew", padx=5, pady=2)
 
-offbutton = tk.Button(textvariable=button2label,command=lambda id=0: off_click(), height=3, font = ("Times", 32))
+offbutton = tk.Button(textvariable=button2label,command=lambda id=0: off_click(), height=3, font = ("Times", 32), bg='#aa5555', fg='black')
 offbutton.grid(row=3, column=1, sticky="ew", padx=5, pady=2)
 
 window.mainloop()
