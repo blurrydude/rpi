@@ -19,7 +19,8 @@ circuits = [
     {"address": "shellyswitch25-8CAAB561DDCF", "relay":"0", "label":"Master Bath"}, #192.168.1.241 - Master Bath Lights
     {"address": "shellyswitch25-8CAAB561DDCF", "relay":"1", "label":"Stairway"}, #192.168.1.241 - Stairway Lights
     {"address": "shellyswitch25-8CAAB55F402F", "relay":"0", "label":"Hallway"}, #192.168.1.239 - Hallway
-    {"address": "shellyswitch25-8CAAB55F402F", "relay":"1", "label":"Shower Fan"} #192.168.1.239 - Master Bath Vent Fan
+    {"address": "shellyswitch25-8CAAB55F402F", "relay":"1", "label":"Shower Fan"}, #192.168.1.239 - Master Bath Vent Fan
+    {"address": "", "relay":"1", "label":"SYSTEM"} 
 ]
 
 current_circuit = 0
@@ -38,12 +39,16 @@ def mosquittoDo(topic, command):
 def on_click():
     print("on_click")
     c = circuits[current_circuit]
+    if c["label"] == "SYSTEM":
+        return
     topic = "shellies/"+c["address"]+"/relay/"+c["relay"]+"/command"
     mosquittoDo(topic,"on")
 
 def off_click():
     print("off_click")
     c = circuits[current_circuit]
+    if c["label"] == "SYSTEM":
+        exit()
     topic = "shellies/"+c["address"]+"/relay/"+c["relay"]+"/command"
     mosquittoDo(topic,"off")
 
@@ -74,14 +79,14 @@ window = tk.Tk()
 button1label = tk.StringVar()
 button2label = tk.StringVar()
 switch_label = tk.StringVar()
-width = 800
-height = 600
+width = window.winfo_screenwidth()
+height = window.winfo_screenheight()
 
 window.attributes("-fullscreen", 1)
-window.geometry("800x600")
-window.columnconfigure(0, minsize=60)
-window.columnconfigure(1, minsize=680)
-window.columnconfigure(2, minsize=60)
+window.geometry(str(width)+"x"+str(height))
+window.columnconfigure(0, minsize=width*0.1)
+window.columnconfigure(1, minsize=width*0.8)
+window.columnconfigure(2, minsize=width*0.1)
 
 switch_label.set("Guest Bathroom")
 button1label.set("ON")
