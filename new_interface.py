@@ -101,10 +101,10 @@ switchlabel.grid(row=0, column=1, sticky="nesw", pady=5, padx=5)
 right = tk.Button(text=">",command=lambda id=0: next_switch(), height=2, font = ("Times", 24))
 right.grid(row=0, column=2, sticky="ew", padx=5, pady=2)
 
-onbutton = tk.Button(textvariable=button1label,command=lambda id=0: on_click(), height=4, font = ("Times", 32))
+onbutton = tk.Button(textvariable=button1label,command=lambda id=0: on_click(), height=3, font = ("Times", 32))
 onbutton.grid(row=2, column=1, sticky="ew", padx=5, pady=2)
 
-offbutton = tk.Button(textvariable=button2label,command=lambda id=0: off_click(), height=4, font = ("Times", 32))
+offbutton = tk.Button(textvariable=button2label,command=lambda id=0: off_click(), height=3, font = ("Times", 32))
 offbutton.grid(row=3, column=1, sticky="ew", padx=5, pady=2)
 
 window.mainloop()
