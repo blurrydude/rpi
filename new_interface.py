@@ -88,7 +88,7 @@ window.columnconfigure(0, minsize=width*0.1)
 window.columnconfigure(1, minsize=width*0.8)
 window.columnconfigure(2, minsize=width*0.1)
 
-switch_label.set("Guest Bathroom")
+switch_label.set("Fireplace")
 button1label.set("ON")
 button2label.set("OFF")
 
