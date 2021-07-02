@@ -15,24 +15,24 @@ client = mqtt.Client()
 bad = 0
 
 circuits = {
-    "fireplace": {"id": "fireplace", "address": "shelly1pm-8CAAB574C489", "relay":"0"     , "label":"Fireplace", "last_update": 0}, #192.168.1.60 - Fireplace Lights
+    "bedroom": {"id": "bedroom", "address": "shellyswitch25-8CAAB55F44D7", "relay":"0", "label":"Bedroom Lamp", "last_update": 0}, #192.168.1.61  - Unknown
+    "masterbath": {"id": "masterbath", "address": "shellyswitch25-8CAAB561DDCF", "relay":"0", "label":"Master Bath", "last_update": 0}, #192.168.1.241 - Master Bath Lights
+    "showerfan": {"id": "showerfan", "address": "shellyswitch25-8CAAB55F402F", "relay":"1", "label":"Shower Fan", "last_update": 0}, #192.168.1.239 - Master Bath Vent Fan
+    "hallway": {"id": "hallway", "address": "shellyswitch25-8CAAB55F402F", "relay":"0", "label":"Hallway", "last_update": 0}, #192.168.1.239 - Hallway
+    "guestbath": {"id": "guestbath", "address": "shellyswitch25-8CAAB561DDED", "relay":"0", "label":"Guest Bathroom", "last_update": 0}, #192.168.1.240 - Bathroom Lights and Fan
+    "library": {"id": "library", "address": "shellyswitch25-8CAAB55F44D7", "relay":"1", "label":"Library Lamp", "last_update": 0}, #192.168.1.61  - Unknown
+    "workoutroom": {"id": "workoutroom", "address": "shellyswitch25-8CAAB55F4553", "relay":"0", "label":"Gym Lamp", "last_update": 0}, #192.168.1.245 - Unknown
+    "livingroomtv": {"id": "livingroomtv", "address": "shellyswitch25-8CAAB55F3B3F", "relay":"1", "label":"Livingroom TV", "last_update": 0}, #192.168.1.244 - Unknown
     "lamppost": {"id": "lamppost", "address": "shelly1pm-84CCA8A11963", "relay":"0"     , "label":"Lamp post", "last_update": 0}, #192.168.1.62 - Lamp Post and Driveway
     "porch": {"id": "porch", "address": "shellyswitch25-8CAAB55F44D6", "relay":"0", "label":"Porch", "last_update": 0}, #192.168.1.243 - Porch Light
+    "fireplace": {"id": "fireplace", "address": "shelly1pm-8CAAB574C489", "relay":"0"     , "label":"Fireplace", "last_update": 0}, #192.168.1.60 - Fireplace Lights
     "dining": {"id": "dining", "address": "shellyswitch25-8CAAB55F44D6", "relay":"1", "label":"Dining Room", "last_update": 0}, #192.168.1.243 - Dining Room Light
-    "officefan": {"id": "officefan", "address": "shellyswitch25-8CAAB55F405D", "relay":"0", "label":"Office Fan", "last_update": 0}, #192.168.1.242 - Office Fan
     "kitchen": {"id": "kitchen", "address": "shellyswitch25-8CAAB55F405D", "relay":"1", "label":"Kitchen", "last_update": 0}, #192.168.1.242 - Kitchen Lights
-    "office": {"id": "office", "address": "shellyswitch25-8CAAB55F3B3F", "relay":"0", "label":"Office Lights", "last_update": 0}, #192.168.1.244 - Office Lights
-    "livingroomtv": {"id": "livingroomtv", "address": "shellyswitch25-8CAAB55F3B3F", "relay":"1", "label":"Livingroom TV", "last_update": 0}, #192.168.1.244 - Unknown
-    "workoutroom": {"id": "workoutroom", "address": "shellyswitch25-8CAAB55F4553", "relay":"0", "label":"Gym Lamp", "last_update": 0}, #192.168.1.245 - Unknown
     "bar": {"id": "bar", "address": "shellyswitch25-8CAAB55F4553", "relay":"1", "label":"Bar", "last_update": 0}, #192.168.1.245 - Bar Lights
-    "bedroom": {"id": "bedroom", "address": "shellyswitch25-8CAAB55F44D7", "relay":"0", "label":"Bedroom Lamp", "last_update": 0}, #192.168.1.61  - Unknown
-    "library": {"id": "library", "address": "shellyswitch25-8CAAB55F44D7", "relay":"1", "label":"Library Lamp", "last_update": 0}, #192.168.1.61  - Unknown
-    "guestbath": {"id": "guestbath", "address": "shellyswitch25-8CAAB561DDED", "relay":"0", "label":"Guest Bathroom", "last_update": 0}, #192.168.1.240 - Bathroom Lights and Fan
+    "officefan": {"id": "officefan", "address": "shellyswitch25-8CAAB55F405D", "relay":"0", "label":"Office Fan", "last_update": 0}, #192.168.1.242 - Office Fan
+    "office": {"id": "office", "address": "shellyswitch25-8CAAB55F3B3F", "relay":"0", "label":"Office Lights", "last_update": 0}, #192.168.1.244 - Office Lights
     "garage": {"id": "garage", "address": "shellyswitch25-8CAAB561DDED", "relay":"1", "label":"Garage Lights", "last_update": 0}, #192.168.1.240 - Garage Lights
-    "masterbath": {"id": "masterbath", "address": "shellyswitch25-8CAAB561DDCF", "relay":"0", "label":"Master Bath", "last_update": 0}, #192.168.1.241 - Master Bath Lights
     "stairway": {"id": "stairway", "address": "shellyswitch25-8CAAB561DDCF", "relay":"1", "label":"Stairway", "last_update": 0}, #192.168.1.241 - Stairway Lights
-    "hallway": {"id": "hallway", "address": "shellyswitch25-8CAAB55F402F", "relay":"0", "label":"Hallway", "last_update": 0}, #192.168.1.239 - Hallway
-    "showerfan": {"id": "showerfan", "address": "shellyswitch25-8CAAB55F402F", "relay":"1", "label":"Shower Fan", "last_update": 0} #192.168.1.239 - Master Bath Vent Fan
 }
 
 rules = [

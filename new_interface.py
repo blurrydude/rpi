@@ -2,27 +2,37 @@ import tkinter as tk
 import paho.mqtt.client as mqtt
 
 circuits = [
-    {"address": "shelly1pm-8CAAB574C489", "relay":"0"     , "label":"Fireplace"}, #192.168.1.60 - Fireplace Lights
+    {"address": "shellyswitch25-8CAAB55F44D7", "relay":"0", "label":"Bedroom Lamp"}, #192.168.1.61  - Bedroom Lamp Outlet
+    {"address": "shellyswitch25-8CAAB561DDCF", "relay":"0", "label":"Master Bath"}, #192.168.1.241 - Master Bath Lights
+    {"address": "shellyswitch25-8CAAB55F402F", "relay":"1", "label":"Shower Fan"}, #192.168.1.239 - Master Bath Vent Fan
+    {"address": "shellyswitch25-8CAAB55F402F", "relay":"0", "label":"Hallway"}, #192.168.1.239 - Hallway
+    {"address": "shellyswitch25-8CAAB561DDED", "relay":"0", "label":"Guest Bathroom"}, #192.168.1.240 - Bathroom Lights and Fan
+    {"address": "shellyswitch25-8CAAB55F44D7", "relay":"1", "label":"Library Lamp"}, #192.168.1.61  - Library Lamp Outlet
+    {"address": "shellyswitch25-8CAAB55F4553", "relay":"0", "label":"Gym Lamp"}, #192.168.1.245 - Gym Lamp Outlet
+    {"address": "shellyswitch25-8CAAB55F3B3F", "relay":"1", "label":"Livingroom TV"}, #192.168.1.244 - Livingroom TV Outlet
     {"address": "shelly1pm-84CCA8A11963", "relay":"0"     , "label":"Lamp post"}, #192.168.1.62 - Lamp Post and Driveway
     {"address": "shellyswitch25-8CAAB55F44D6", "relay":"0", "label":"Porch"}, #192.168.1.243 - Porch Light
+    {"address": "shelly1pm-8CAAB574C489", "relay":"0"     , "label":"Fireplace"}, #192.168.1.60 - Fireplace Lights
     {"address": "shellyswitch25-8CAAB55F44D6", "relay":"1", "label":"Dining Room"}, #192.168.1.243 - Dining Room Light
-    {"address": "shellyswitch25-8CAAB55F405D", "relay":"0", "label":"Office Fan"}, #192.168.1.242 - Office Fan
     {"address": "shellyswitch25-8CAAB55F405D", "relay":"1", "label":"Kitchen"}, #192.168.1.242 - Kitchen Lights
-    {"address": "shellyswitch25-8CAAB55F3B3F", "relay":"0", "label":"Office Lights"}, #192.168.1.244 - Office Lights
-    {"address": "shellyswitch25-8CAAB55F3B3F", "relay":"1", "label":"Livingroom TV"}, #192.168.1.244 - Livingroom TV Outlet
-    {"address": "shellyswitch25-8CAAB55F4553", "relay":"0", "label":"Gym Lamp"}, #192.168.1.245 - Gym Lamp Outlet
     {"address": "shellyswitch25-8CAAB55F4553", "relay":"1", "label":"Bar"}, #192.168.1.245 - Bar Lights
-    {"address": "shellyswitch25-8CAAB55F44D7", "relay":"0", "label":"Bedroom Lamp"}, #192.168.1.61  - Bedroom Lamp Outlet
-    {"address": "shellyswitch25-8CAAB55F44D7", "relay":"1", "label":"Library Lamp"}, #192.168.1.61  - Library Lamp Outlet
-    {"address": "shellyswitch25-8CAAB561DDED", "relay":"0", "label":"Guest Bathroom"}, #192.168.1.240 - Bathroom Lights and Fan
+    {"address": "shellyswitch25-8CAAB55F405D", "relay":"0", "label":"Office Fan"}, #192.168.1.242 - Office Fan
+    {"address": "shellyswitch25-8CAAB55F3B3F", "relay":"0", "label":"Office Lights"}, #192.168.1.244 - Office Lights
     {"address": "shellyswitch25-8CAAB561DDED", "relay":"1", "label":"Garage Lights"}, #192.168.1.240 - Garage Lights
-    {"address": "shellyswitch25-8CAAB561DDCF", "relay":"0", "label":"Master Bath"}, #192.168.1.241 - Master Bath Lights
     {"address": "shellyswitch25-8CAAB561DDCF", "relay":"1", "label":"Stairway"}, #192.168.1.241 - Stairway Lights
-    {"address": "shellyswitch25-8CAAB55F402F", "relay":"0", "label":"Hallway"}, #192.168.1.239 - Hallway
-    {"address": "shellyswitch25-8CAAB55F402F", "relay":"1", "label":"Shower Fan"}, #192.168.1.239 - Master Bath Vent Fan
     {"address": "", "relay":"1", "label":"SYSTEM"} 
 ]
 
+modes = [
+    {"label":"Morning","circuits":[None,None,None,None,None,None,None,None,False,False,False,False,True,True,None,None,True,False]},
+    {"label":"Dark","circuits":[False,False,False,False,False,False,False,None,False,False,False,False,False,False,False,False,False,False]},
+    {"label":"Lunch","circuits":[None,None,None,None,None,None,None,None,None,None,None,True,True,True,None,None,False,True]},
+    {"label":"Shower","circuits":[True,True,True,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None]},
+    {"label":"Evening","circuits":[True,True,False,True,False,False,False,None,True,True,True,False,False,True,None,False,False,True]},
+    {"label":"Night","circuits":[False,False,False,False,False,False,False,None,True,True,False,False,False,False,None,False,False,True]},
+    {"label":"Alert","circuits":[True,True,True,True,True,True,True,None,True,True,True,True,True,True,None,True,True,True]}
+]
+current_mode = 0
 current_circuit = 0
 broker = "192.168.1.22"
 client = mqtt.Client()
@@ -75,10 +85,33 @@ def next_switch():
     print("switch to "+c["label"])
     switch_label.set(c["label"])
 
+def cycle_mode():
+    global current_mode
+    if current_mode == len(modes)-1:
+        current_mode = 0
+    else:
+        current_mode = current_mode + 1
+    m = modes[current_mode]
+    mode_label.set(m["label"])
+
+def set_mode():
+    m = modes[current_mode]
+    for ci in range(0,len(m["circuits"])):
+        v = m["circuits"][ci]
+        if v is None:
+            continue
+        co = "off"
+        if v is True:
+            co = "on"
+        c = circuits[ci]
+        topic = "shellies/"+c["address"]+"/relay/"+c["relay"]+"/command"
+        mosquittoDo(topic,co)
+
 window = tk.Tk()
 button1label = tk.StringVar()
 button2label = tk.StringVar()
 switch_label = tk.StringVar()
+mode_label = tk.StringVar()
 width = window.winfo_screenwidth()
 height = window.winfo_screenheight()
 
@@ -89,7 +122,8 @@ window.columnconfigure(0, minsize=width*0.1)
 window.columnconfigure(1, minsize=width*0.8)
 window.columnconfigure(2, minsize=width*0.1)
 
-switch_label.set("Fireplace")
+switch_label.set(circuits[current_circuit]["label"])
+mode_label.set(modes[current_mode]["label"])
 button1label.set("ON")
 button2label.set("OFF")
 
@@ -107,5 +141,14 @@ onbutton.grid(row=2, column=1, sticky="ew", padx=5, pady=2)
 
 offbutton = tk.Button(textvariable=button2label,command=lambda id=0: off_click(), height=3, font = ("Times", 32), bg='#aa5555', fg='black')
 offbutton.grid(row=3, column=1, sticky="ew", padx=5, pady=2)
+
+bottomleft = tk.Button(text="^",command=lambda id=0: cycle_mode(), height=2, font = ("Times", 24), bg='#5555aa', fg='black')
+bottomleft.grid(row=4, column=0, sticky="ew", padx=5, pady=2)
+
+bottomright = tk.Button(text="set",command=lambda id=0: set_mode(), height=2, font = ("Times", 20), bg='#5555aa', fg='black')
+bottomright.grid(row=4, column=2, sticky="ew", padx=5, pady=2)
+
+switchlabel = tk.Label(textvariable=mode_label, font=("Times", 24), bg='black', fg='white')
+switchlabel.grid(row=4, column=1, sticky="nesw", pady=5, padx=5)
 
 window.mainloop()
