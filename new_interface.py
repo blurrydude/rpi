@@ -72,6 +72,12 @@ def previous_switch():
     c = circuits[current_circuit]
     print("switch to "+c["label"])
     switch_label.set(c["label"])
+    if c["label"] == "SYSTEM":
+        hide_on_button()
+        show_system_info()
+    else:
+        hide_system_info()
+        show_on_button()
     
 
 def next_switch():
@@ -84,6 +90,12 @@ def next_switch():
     c = circuits[current_circuit]
     print("switch to "+c["label"])
     switch_label.set(c["label"])
+    if c["label"] == "SYSTEM":
+        hide_on_button()
+        show_system_info()
+    else:
+        hide_system_info()
+        show_on_button()
 
 def cycle_mode():
     global current_mode
@@ -106,6 +118,18 @@ def set_mode():
         c = circuits[ci]
         topic = "shellies/"+c["address"]+"/relay/"+c["relay"]+"/command"
         mosquittoDo(topic,co)
+
+def show_on_button():
+    onbutton.grid(row=2, column=1, sticky="ew", padx=5, pady=2)
+
+def hide_on_button():
+    onbutton.grid_forget()
+
+def show_system_info():
+    systeminfo.grid(row=2, column=1, sticky="nesw", padx=5, pady=2)
+
+def hide_system_info():
+    systeminfo.grid_forget()
 
 window = tk.Tk()
 button1label = tk.StringVar()
@@ -137,7 +161,7 @@ right = tk.Button(text=">",command=lambda id=0: next_switch(), height=2, font = 
 right.grid(row=0, column=2, sticky="ew", padx=5, pady=2)
 
 onbutton = tk.Button(textvariable=button1label,command=lambda id=0: on_click(), height=3, font = ("Times", 32), bg='#55aa55', fg='black')
-onbutton.grid(row=2, column=1, sticky="ew", padx=5, pady=2)
+show_on_button()
 
 offbutton = tk.Button(textvariable=button2label,command=lambda id=0: off_click(), height=3, font = ("Times", 32), bg='#aa5555', fg='black')
 offbutton.grid(row=3, column=1, sticky="ew", padx=5, pady=2)
@@ -150,5 +174,7 @@ bottomright.grid(row=4, column=2, sticky="ew", padx=5, pady=2)
 
 switchlabel = tk.Label(textvariable=mode_label, font=("Times", 24), bg='black', fg='white')
 switchlabel.grid(row=4, column=1, sticky="nesw", pady=5, padx=5)
+
+systeminfo = tk.Label(text="You can cycle through modes with the bottom left button and use the bottom right to set one.", font=("Times", 20), bg='black', fg='white')
 
 window.mainloop()
