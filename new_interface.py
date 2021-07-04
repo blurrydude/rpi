@@ -1,5 +1,7 @@
 import tkinter as tk
-import paho.mqtt.client as mqtt
+dev = True
+if dev == False:
+    import paho.mqtt.client as mqtt
 
 circuits = [
     {"address": "shellyswitch25-8CAAB55F44D7", "relay":"0", "label":"Bedroom Lamp"}, #192.168.1.61  - Bedroom Lamp Outlet
@@ -35,16 +37,21 @@ modes = [
 current_mode = 0
 current_circuit = 0
 broker = "192.168.1.22"
-client = mqtt.Client()
+client = None
+if dev == False:
+    client = mqtt.Client()
 
 def mosquittoDo(topic, command):
-    client.connect(broker)
+    if dev == False:
+        client.connect(broker)
     try:
         print("publishing '"+command+"' to "+topic)
-        client.publish(topic,command)
+        if dev == False:
+            client.publish(topic,command)
     except:
         print("BAD - Failed to publish "+command+" to "+topic)
-    client.disconnect()
+    if dev == False:
+        client.disconnect()
 
 def on_click():
     print("on_click")
@@ -127,9 +134,27 @@ def hide_on_button():
 
 def show_system_info():
     systeminfo.grid(row=2, column=1, sticky="nesw", padx=5, pady=2)
+    systeminfo2.grid(row=3, column=1, sticky="nesw", padx=5, pady=2)
+    offbutton.grid_forget()
+    offbutton.grid(row=4, column=1, sticky="ew", padx=5, pady=2)
+    bottomleft.grid_forget()
+    bottomleft.grid(row=5, column=0, sticky="ew", padx=5, pady=2)
+    bottomright.grid_forget()
+    bottomright.grid(row=5, column=2, sticky="ew", padx=5, pady=2)
+    modelabel.grid_forget()
+    modelabel.grid(row=5, column=1, sticky="nesw", pady=5, padx=5)
 
 def hide_system_info():
     systeminfo.grid_forget()
+    systeminfo2.grid_forget()
+    offbutton.grid_forget()
+    offbutton.grid(row=3, column=1, sticky="ew", padx=5, pady=2)
+    bottomleft.grid_forget()
+    bottomleft.grid(row=4, column=0, sticky="ew", padx=5, pady=2)
+    bottomright.grid_forget()
+    bottomright.grid(row=4, column=2, sticky="ew", padx=5, pady=2)
+    modelabel.grid_forget()
+    modelabel.grid(row=4, column=1, sticky="nesw", pady=5, padx=5)
 
 window = tk.Tk()
 button1label = tk.StringVar()
@@ -172,9 +197,10 @@ bottomleft.grid(row=4, column=0, sticky="ew", padx=5, pady=2)
 bottomright = tk.Button(text="set",command=lambda id=0: set_mode(), height=2, font = ("Times", 20), bg='#5555aa', fg='black')
 bottomright.grid(row=4, column=2, sticky="ew", padx=5, pady=2)
 
-switchlabel = tk.Label(textvariable=mode_label, font=("Times", 24), bg='black', fg='white')
-switchlabel.grid(row=4, column=1, sticky="nesw", pady=5, padx=5)
+modelabel = tk.Label(textvariable=mode_label, font=("Times", 24), bg='black', fg='white')
+modelabel.grid(row=4, column=1, sticky="nesw", pady=5, padx=5)
 
 systeminfo = tk.Label(text="You can cycle through modes with the bottom left button and use the bottom right to set one.", font=("Times", 20), bg='black', fg='white')
+systeminfo2 = tk.Label(text="Pressing OFF will exit this software.", font=("Times", 20), bg='black', fg='white')
 
 window.mainloop()
