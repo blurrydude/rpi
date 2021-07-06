@@ -1,5 +1,5 @@
 import tkinter as tk
-dev = False
+dev = True
 if dev == False:
     import paho.mqtt.client as mqtt
 
@@ -200,7 +200,7 @@ bottomright.grid(row=4, column=2, sticky="ew", padx=5, pady=2)
 modelabel = tk.Label(textvariable=mode_label, font=("Times", 24), bg='black', fg='white')
 modelabel.grid(row=4, column=1, sticky="nesw", pady=5, padx=5)
 
-systeminfo = tk.Label(text="You can cycle through modes with the bottom left button and use the bottom right to set one.", font=("Times", 20), bg='black', fg='white')
-systeminfo2 = tk.Label(text="Pressing OFF will exit this software.", font=("Times", 20), bg='black', fg='white')
+systeminfo = tk.Label(text="You can cycle through modes with the bottom left button and use the bottom right to set one.", font=("Times", 16), bg='black', fg='white')
+systeminfo2 = tk.Label(text="Pressing OFF will exit this software.", font=("Times", 16), bg='black', fg='white')
 
 window.mainloop()
