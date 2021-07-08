@@ -3,6 +3,9 @@ import time
 import os.path
 from os import path
 import datetime
+import socket
+
+myname = socket.gethostname()
 
 def doCheck():
     os.system('cd /home/pi/rpi && git pull --all')
@@ -19,7 +22,7 @@ def doCheck():
         local_version = read_file.read()
 
     now = datetime.datetime.now()
-    if local_version != repo_version or (now.hour == 0 and now.minute == 0):
+    if local_version != repo_version or (now.hour == 0 and now.minute == 0 and myname != "whitenoisepi"):
         with open(local_version_file, "w") as write_file:
             write_file.write(repo_version)
         time.sleep(1)

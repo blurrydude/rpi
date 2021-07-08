@@ -12,9 +12,9 @@ circuits = [
     {"address": "shellyswitch25-8CAAB55F44D7", "relay":"1", "label":"Library Lamp"}, #192.168.1.61  - Library Lamp Outlet
     {"address": "shellyswitch25-8CAAB55F4553", "relay":"0", "label":"Gym Lamp"}, #192.168.1.245 - Gym Lamp Outlet
     {"address": "shellyswitch25-8CAAB55F3B3F", "relay":"1", "label":"Livingroom TV"}, #192.168.1.244 - Livingroom TV Outlet
-    {"address": "shelly1pm-84CCA8A11963", "relay":"0"     , "label":"Lamp post"}, #192.168.1.62 - Lamp Post and Driveway
+    {"address": "shelly1pm-84CCA8A11963",      "relay":"0", "label":"Lamp post"}, #192.168.1.62 - Lamp Post and Driveway
     {"address": "shellyswitch25-8CAAB55F44D6", "relay":"0", "label":"Porch"}, #192.168.1.243 - Porch Light
-    {"address": "shelly1pm-8CAAB574C489", "relay":"0"     , "label":"Fireplace"}, #192.168.1.60 - Fireplace Lights
+    {"address": "shelly1pm-8CAAB574C489",      "relay":"0", "label":"Fireplace"}, #192.168.1.60 - Fireplace Lights
     {"address": "shellyswitch25-8CAAB55F44D6", "relay":"1", "label":"Dining Room"}, #192.168.1.243 - Dining Room Light
     {"address": "shellyswitch25-8CAAB55F405D", "relay":"1", "label":"Kitchen"}, #192.168.1.242 - Kitchen Lights
     {"address": "shellyswitch25-8CAAB55F4553", "relay":"1", "label":"Bar"}, #192.168.1.245 - Bar Lights

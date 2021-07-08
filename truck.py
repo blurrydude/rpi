@@ -1,4 +1,3 @@
-from new_interface import on_click
 import tkinter as tk
 from time import sleep
 
@@ -84,12 +83,26 @@ color = {
     "black": "#000000",
     "white": "#ffffff",
     "orange": "#aaaa55",
-    "darkorange": "#999955",
+    "darkorange": "#999900",
     "purple": "#aa55aa",
-    "darkpurple": "#995599",
+    "darkpurple": "#990099",
     "aqua": "#55aaaa",
-    "darkaqua": "#559999"
+    "darkaqua": "#009999"
 }
+
+def rpm_changed(x):
+    global rpm
+    global screen
+    rpm = x
+    screen["sensors"].labels[1].text.set(str(rpm))
+    if x == 0:
+        screen["sensors"].labels[1].fg = color["grey"]
+    elif x < 700:
+        screen["sensors"].labels[1].fg = color["orange"]
+    elif x < 3500:
+        screen["sensors"].labels[1].fg = color["green"]
+    else:
+        screen["sensors"].labels[1].fg = color["red"]
 
 def quit():
     exit()
@@ -104,13 +117,14 @@ def toggle_light(light_name):
     i = 0
     for key in light:
         state = "off"
-        c = "darkaqua"
+        c = "darkgrey"
         if light[key] is True:
             state = "on"
             c = "aqua"
-        screen["lights"]["buttons"][i].Button.text = key + " " + state
-        screen["lights"]["buttons"][i].Button.bg = color[c]
+        screen["lights"].buttons[i].text.set(key + " " + state)
+        screen["lights"].buttons[i].bg = color[c]
         i = i + 1
+    screen["lights"].clear()
     screen["lights"].draw()
 
 def toggle_coil():
@@ -121,19 +135,19 @@ def toggle_coil():
     #TODO: use GPIO to do this thing
     if coil is True:
         coil = False
-        screen["main"].buttons[0].text.set("Coil Off")
-        screen["main"].buttons[0].bg = color["blue"]
-        screen["main"].buttons[1].bg = color["black"]
-        screen["main"].buttons[1].text.set("Start")
+        screen["ignition"].buttons[0].text.set("Coil Off")
+        screen["ignition"].buttons[0].bg = color["blue"]
+        screen["ignition"].buttons[1].bg = color["black"]
+        screen["ignition"].buttons[1].text.set("Start")
         running = False
-        rpm = 0
+        rpm_changed(0)
     else:
         coil = True
-        screen["main"].buttons[0].text.set("Coil On")
-        screen["main"].buttons[0].bg = color["green"]
-        screen["main"].buttons[1].bg = color["blue"]
-    screen["main"].clear()
-    screen["main"].draw()
+        screen["ignition"].buttons[0].text.set("Coil On")
+        screen["ignition"].buttons[0].bg = color["green"]
+        screen["ignition"].buttons[1].bg = color["blue"]
+    screen["ignition"].clear()
+    screen["ignition"].draw()
 
 def start_engine():
     global running
@@ -142,15 +156,15 @@ def start_engine():
     #TODO: use GPIO to do this thing
     if coil is False or running is True:
         return
-    screen["main"].buttons[1].bg = color["green"]
+    screen["ignition"].buttons[1].bg = color["green"]
     sleep(2)
     #TODO: make sure the engine started before statusing
-    rpm = 750
-    screen["main"].buttons[1].bg = color["black"]
-    screen["main"].buttons[1].text.set("Running")
+    rpm_changed(750)
+    screen["ignition"].buttons[1].bg = color["black"]
+    screen["ignition"].buttons[1].text.set("Running")
     running = True
-    screen["main"].clear()
-    screen["main"].draw()
+    screen["ignition"].clear()
+    screen["ignition"].draw()
 
 def navigate_to(screen_name):
     global current_screen
@@ -207,13 +221,14 @@ light = {
 
 current_screen = "main"
 
-screen["main"].buttons.append(Button("Ignition",lambda scrn="ignition": navigate_to(scrn),2,("Times",16),color["darkgreen"],color["white"],0,3,6,"nesw",5,5))
-screen["main"].buttons.append(Button("Sensors",lambda scrn="sensors": navigate_to(scrn),2,("Times",16),color["darkblue"],color["white"],1,3,6,"nesw",5,5))
-screen["main"].buttons.append(Button("Lights",lambda scrn="lights": navigate_to(scrn),2,("Times",16),color["darkaqua"],color["white"],2,3,6,"nesw",5,5))
-screen["main"].buttons.append(Button("Sound",lambda scrn="sound": navigate_to(scrn),2,("Times",16),color["darkorange"],color["white"],3,3,6,"nesw",5,5))
-screen["main"].labels.append(Label(" ",16,"black","black",4,1,12,"nesw",5,5))
+screen["main"].labels.append(Label("MAIN MENU",16,"black","white",0,3,6,"nesw",0,0))
+screen["main"].buttons.append(Button("Ignition",lambda scrn="ignition": navigate_to(scrn),2,("Times",16),color["darkgreen"],color["white"],1,3,6,"nesw",5,5))
+screen["main"].buttons.append(Button("Sensors",lambda scrn="sensors": navigate_to(scrn),2,("Times",16),color["darkblue"],color["white"],2,3,6,"nesw",5,5))
+screen["main"].buttons.append(Button("Lights",lambda scrn="lights": navigate_to(scrn),2,("Times",16),color["darkaqua"],color["white"],3,3,6,"nesw",5,5))
+screen["main"].buttons.append(Button("Sound",lambda scrn="sound": navigate_to(scrn),2,("Times",16),color["darkorange"],color["white"],4,3,6,"nesw",5,5))
 screen["main"].labels.append(Label(" ",16,"black","black",5,1,12,"nesw",5,5))
-screen["main"].buttons.append(Button("Exit",lambda id=0: quit(),2,("Times",16),color["red"],color["black"],6,3,6,"nesw",5,5))
+screen["main"].labels.append(Label(" ",16,"black","black",6,1,12,"nesw",5,5))
+screen["main"].buttons.append(Button("Exit",lambda id=0: quit(),2,("Times",16),color["red"],color["black"],7,3,6,"nesw",5,5))
 
 screen["ignition"].buttons.append(Button("Coil Off",lambda id=0: toggle_coil(),2,("Times",16),color["darkgreen"],color["black"],0,3,6,"nesw",5,5))
 screen["ignition"].buttons.append(Button("Start",lambda id=0: start_engine(),2,("Times",16),color["darkgrey"],color["grey"],1,3,6,"nesw",5,5))
@@ -221,14 +236,21 @@ screen["ignition"].labels.append(Label(" ",16,"black","black",2,1,12,"nesw",5,5)
 screen["ignition"].labels.append(Label(" ",16,"black","black",3,1,12,"nesw",5,5))
 screen["ignition"].buttons.append(Button("Home",lambda scrn="main": navigate_to(scrn),2,("Times",16),color["blue"],color["white"],4,3,6,"nesw",5,5))
 
+screen["sensors"].labels.append(Label("RPM:",72,"black","white",0,3,3,"nesw",5,5))
+screen["sensors"].labels.append(Label("0",72,"black","grey",0,6,3,"nesw",5,5))
 screen["sensors"].labels.append(Label(" ",16,"black","black",2,1,12,"nesw",5,5))
 screen["sensors"].labels.append(Label(" ",16,"black","black",3,1,12,"nesw",5,5))
 screen["sensors"].buttons.append(Button("Home",lambda scrn="main": navigate_to(scrn),2,("Times",16),color["blue"],color["white"],4,3,6,"nesw",5,5))
 
 i = 0
+p = 2
 for key in light:
-    screen["lights"].buttons.append(Button(key+" off",lambda l=key: toggle_light(l),2,("Times",16),color["darkaqua"],color["white"],i,3,6,"nesw",5,5))
-    i = i + 1
+    screen["lights"].buttons.append(Button(key+" off",lambda l=key: toggle_light(l),2,("Times",16),color["darkgrey"],color["white"],i,p,4,"nesw",5,5))
+    if p == 2:
+        p = 6
+    else:
+        p = 2
+        i = i + 1
 
 screen["lights"].labels.append(Label(" ",16,"black","black",i,1,12,"nesw",5,5))
 screen["lights"].labels.append(Label(" ",16,"black","black",i+1,1,12,"nesw",5,5))
