@@ -16,7 +16,9 @@ circuits = [
     {"address": "shellyswitch25-8CAAB55F44D6", "relay":"0", "label":"Porch"}, #192.168.1.243 - Porch Light
     {"address": "shelly1pm-8CAAB574C489",      "relay":"0", "label":"Fireplace"}, #192.168.1.60 - Fireplace Lights
     {"address": "shellyswitch25-8CAAB55F44D6", "relay":"1", "label":"Dining Room"}, #192.168.1.243 - Dining Room Light
+    {"address": "shelly1pm-C82B961DD3B1",      "relay":"0", "label":"Game Room"}, #192.168.1.165 - Game Room Lights
     {"address": "shellyswitch25-8CAAB55F405D", "relay":"1", "label":"Kitchen"}, #192.168.1.242 - Kitchen Lights
+    {"address": "shellyswitch25-tobeinstalled", "relay":"0", "label":"Under Cabinet"}, #192.168.1.x - Under Cabinet Lights
     {"address": "shellyswitch25-8CAAB55F4553", "relay":"1", "label":"Bar"}, #192.168.1.245 - Bar Lights
     {"address": "shellyswitch25-8CAAB55F405D", "relay":"0", "label":"Office Fan"}, #192.168.1.242 - Office Fan
     {"address": "shellyswitch25-8CAAB55F3B3F", "relay":"0", "label":"Office Lights"}, #192.168.1.244 - Office Lights
@@ -26,13 +28,13 @@ circuits = [
 ]
 
 modes = [
-    {"label":"Morning","circuits":[None,None,None,None,None,None,None,None,False,False,False,False,True,True,None,None,True,False]},
-    {"label":"Dark","circuits":[False,False,False,False,False,False,False,None,False,False,False,False,False,False,False,False,False,False]},
-    {"label":"Lunch","circuits":[None,None,None,None,None,None,None,None,None,None,None,True,True,True,None,None,False,True]},
-    {"label":"Shower","circuits":[True,True,True,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None]},
-    {"label":"Evening","circuits":[True,True,False,True,False,False,False,None,True,True,True,False,False,True,None,False,False,True]},
-    {"label":"Night","circuits":[False,False,False,False,False,False,False,None,True,True,False,False,False,False,None,False,False,True]},
-    {"label":"Alert","circuits":[True,True,True,True,True,True,True,None,True,True,True,True,True,True,None,True,True,True]}
+    {"label":"Morning","circuits":[None,None,None,None,None,None,None,None,False,False,False,False,False,True,False,True,None,None,True,False]},
+    {"label":"Dark","circuits":[False,False,False,False,False,False,False,None,False,False,False,False,False,False,False,False,False,False,False,False]},
+    {"label":"Lunch","circuits":[None,None,None,None,None,None,None,None,None,None,None,None,True,True,None,True,None,None,False,True]},
+    {"label":"Shower","circuits":[True,True,True,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None]},
+    {"label":"Evening","circuits":[True,True,False,True,False,False,False,None,True,True,True,True,False,False,True,True,None,False,False,True]},
+    {"label":"Night","circuits":[False,False,False,False,False,False,False,None,True,True,False,False,False,False,True,False,None,False,False,True]},
+    {"label":"Alert","circuits":[True,True,True,True,True,True,True,None,True,True,True,True,True,True,True,True,None,True,True,True]}
 ]
 current_mode = 0
 current_circuit = 0

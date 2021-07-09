@@ -41,7 +41,9 @@ circuit = {
     "I1": {"id": "I1", "address": "shellyswitch25-8CAAB561DDCF", "relay":"0"}, #192.168.1.241 - Master Bath Lights
     "I2": {"id": "I2", "address": "shellyswitch25-8CAAB561DDCF", "relay":"1"}, #192.168.1.241 - Stairway Lights
     "J1": {"id": "J1", "address": "shellyswitch25-8CAAB55F402F", "relay":"0"}, #192.168.1.239 - Hallway
-    "J2": {"id": "J2", "address": "shellyswitch25-8CAAB55F402F", "relay":"1"} #192.168.1.239 - Master Bath Vent Fan
+    "J2": {"id": "J2", "address": "shellyswitch25-8CAAB55F402F", "relay":"1"}, #192.168.1.239 - Master Bath Vent Fan
+    "K1": {"id": "K1", "address": "shelly1pm-C82B961DD3B1", "relay":"0"}, #192.168.1.165 - Game Room Light
+    "L1": {"id": "L1", "address": "shellyswitch25-tobeinstalled", "relay":"0"} #192.168.1.x - Under Cabinet Lights
 }
 mqttCommands = [
     MosquittoCommand("open bay one", "garagepi/commands", "0:1"),
@@ -88,6 +90,10 @@ mqttCommands = [
     MosquittoCommand("turn off shower fan", "shellies/shellyswitch25-8CAAB55F402F/relay/1/command", "off"),
     MosquittoCommand("turn on fireplace", "shellies/shelly1pm-8CAAB574C489/relay/0/command", "on"),
     MosquittoCommand(    "turn off fireplace", "shellies/shelly1pm-8CAAB574C489/relay/0/command", "off"),
+    MosquittoCommand("turn on game room", "shellies/shelly1pm-C82B961DD3B1/relay/0/command", "on"),
+    MosquittoCommand(    "turn off game room", "shellies/shelly1pm-C82B961DD3B1/relay/0/command", "off"),
+    MosquittoCommand("turn on under cabinet", "shellies/shelly1pm-tobeinstalled/relay/0/command", "on"),
+    MosquittoCommand(    "turn off under cabinet", "shellies/shelly1pm-tobeinstalled/relay/0/command", "off"),
     MosquittoCommand("turn on dining room", "shellies/shellyswitch25-8CAAB55F44D6/relay/1/command", "on"),
     MosquittoCommand(    "turn off dining room", "shellies/shellyswitch25-8CAAB55F44D6/relay/1/command", "off"),
     MosquittoCommand("turn on bedroom", "shellies/shellyswitch25-8CAAB55F44D7/relay/0/command", "on"),
@@ -220,6 +226,8 @@ def control(text):
             control("turn on bedroom")
             control("turn on library")
             control("turn on workout room")
+            control("turn on under cabinet")
+            control("turn on game room")
             return 'OK'
         if "dark mode" in command:
             control("turn off shop")
@@ -238,6 +246,8 @@ def control(text):
             control("turn off bedroom")
             control("turn off library")
             control("turn off workout room")
+            control("turn off under cabinet")
+            control("turn off game room")
             return 'OK'
         if "night mode" in command:
             control("turn off shop")
@@ -256,6 +266,8 @@ def control(text):
             control("turn off bedroom")
             control("turn off library")
             control("turn off workout room")
+            control("turn on under cabinet")
+            control("turn off game room")
             return 'OK'
         if "evening mode" in command:
             control("turn off shop")
@@ -274,6 +286,8 @@ def control(text):
             control("turn on bedroom")
             control("turn off library")
             control("turn off workout room")
+            control("turn on under cabinet")
+            control("turn on game room")
             return 'OK'
         if "morning mode" in command:
             control("turn on shop")
@@ -290,6 +304,8 @@ def control(text):
             control("turn off bedroom")
             control("turn off library")
             control("turn off workout room")
+            control("turn off under cabinet")
+            control("turn off game room")
             return 'OK'
         if "lunch mode" in command:
             control("turn on kitchen")
