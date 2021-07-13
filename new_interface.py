@@ -11,14 +11,17 @@ circuits = [
     {"address": "shellyswitch25-8CAAB561DDED", "relay":"0", "label":"Guest Bathroom"}, #192.168.1.240 - Bathroom Lights and Fan
     {"address": "shellyswitch25-8CAAB55F44D7", "relay":"1", "label":"Library Lamp"}, #192.168.1.61  - Library Lamp Outlet
     {"address": "shellyswitch25-8CAAB55F4553", "relay":"0", "label":"Gym Lamp"}, #192.168.1.245 - Gym Lamp Outlet
-    {"address": "shellyswitch25-8CAAB55F3B3F", "relay":"1", "label":"Livingroom TV"}, #192.168.1.244 - Livingroom TV Outlet
+    #{"address": "shellyswitch25-8CAAB55F3B3F", "relay":"1", "label":"Livingroom TV"}, #192.168.1.244 - Livingroom TV Outlet
+    {"address": "shelly1pm-68C63AFB315A", "relay":"0", "label":"Livingroom Lamp"}, #192.168.1.x - Under Cabinet Lights
     {"address": "shelly1pm-84CCA8A11963",      "relay":"0", "label":"Lamp post"}, #192.168.1.62 - Lamp Post and Driveway
     {"address": "shellyswitch25-8CAAB55F44D6", "relay":"0", "label":"Porch"}, #192.168.1.243 - Porch Light
     {"address": "shelly1pm-8CAAB574C489",      "relay":"0", "label":"Fireplace"}, #192.168.1.60 - Fireplace Lights
     {"address": "shellyswitch25-8CAAB55F44D6", "relay":"1", "label":"Dining Room"}, #192.168.1.243 - Dining Room Light
     {"address": "shelly1pm-C82B961DD3B1",      "relay":"0", "label":"Game Room"}, #192.168.1.165 - Game Room Lights
+    {"address": "shelly1pm-68C63AFB726B", "relay":"0", "label":"Game Tables"}, #192.168.1.x - Under Cabinet Lights
     {"address": "shellyswitch25-8CAAB55F405D", "relay":"1", "label":"Kitchen"}, #192.168.1.242 - Kitchen Lights
-    {"address": "shellyswitch25-tobeinstalled", "relay":"0", "label":"Under Cabinet"}, #192.168.1.x - Under Cabinet Lights
+    {"address": "shelly1pm-F4CFA2747F54", "relay":"0", "label":"Coffee Station"}, #192.168.1.x - Coffee Station
+    {"address": "shelly1pm-68C63AFB6B0A", "relay":"0", "label":"Under Cabinet"}, #192.168.1.x - Under Cabinet Lights
     {"address": "shellyswitch25-8CAAB55F4553", "relay":"1", "label":"Bar"}, #192.168.1.245 - Bar Lights
     {"address": "shellyswitch25-8CAAB55F405D", "relay":"0", "label":"Office Fan"}, #192.168.1.242 - Office Fan
     {"address": "shellyswitch25-8CAAB55F3B3F", "relay":"0", "label":"Office Lights"}, #192.168.1.244 - Office Lights
@@ -28,18 +31,18 @@ circuits = [
 ]
 
 modes = [
-    {"label":"Morning","circuits":[None,None,None,None,None,None,None,None,False,False,False,False,False,True,False,True,None,None,True,False]},
-    {"label":"Dark","circuits":[False,False,False,False,False,False,False,None,False,False,False,False,False,False,False,False,False,False,False,False]},
-    {"label":"Lunch","circuits":[None,None,None,None,None,None,None,None,None,None,None,None,True,True,None,True,None,None,False,True]},
-    {"label":"Shower","circuits":[True,True,True,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None]},
-    {"label":"Evening","circuits":[True,True,False,True,False,False,False,None,True,True,True,True,False,False,True,True,None,False,False,True]},
-    {"label":"Night","circuits":[False,False,False,False,False,False,False,None,True,True,False,False,False,False,True,False,None,False,False,True]},
-    {"label":"Alert","circuits":[True,True,True,True,True,True,True,None,True,True,True,True,True,True,True,True,None,True,True,True]}
+    {"label":"Morning","circuits":[ None, None, None, None, None, None, None, None,False,False,False,False,False, True, None,False, True, True, True, None, None, True,False]},
+    {"label":"Dark","circuits":   [False,False,False,False,False,False,False, None,False,False,False,False,False,False, None,False,False,False,False,False,False,False,False]},
+    {"label":"Lunch","circuits":  [ None, None, None, None, None, None, None, None, None, None, None, None, True, True, None, None, True,False, True, None, None,False, True]},
+    {"label":"Shower","circuits": [ True, True, True, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]},
+    {"label":"Evening","circuits":[ True, True,False, True,False,False,False, None, True, True, True, True,False,False, True, True, True, True, True, None,False,False, True]},
+    {"label":"Night","circuits":  [False,False,False,False,False,False,False, None, True, True,False,False,False,False,False, True, True,False,False, None,False,False, True]},
+    {"label":"Alert","circuits":  [ True, True, True, True, True, True, True, None, True, True, True, True, True, True, True, True, True, True, True, None, True, True, True]}
 ]
 current_mode = 0
 current_circuit = 0
 broker = "192.168.1.22"
-client = None
+client =  None
 if dev == False:
     client = mqtt.Client()
 
@@ -119,10 +122,10 @@ def set_mode():
     m = modes[current_mode]
     for ci in range(0,len(m["circuits"])):
         v = m["circuits"][ci]
-        if v is None:
+        if v is  None:
             continue
         co = "off"
-        if v is True:
+        if v is  True:
             co = "on"
         c = circuits[ci]
         topic = "shellies/"+c["address"]+"/relay/"+c["relay"]+"/command"
