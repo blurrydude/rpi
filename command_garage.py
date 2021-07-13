@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
-import paho.mqtt.client as mqtt
 import time
+time.sleep(15)
+import paho.mqtt.client as mqtt
 import pifacedigitalio as p
 import os
 import subprocess
