@@ -46,7 +46,8 @@ circuit = {
     "L1": {"id": "L1", "address": "shelly1pm-68C63AFB315A", "relay":"0"}, #192.168.1.x - Livingroom Lamp
     "M1": {"id": "M1", "address": "shelly1pm-68C63AFB726B", "relay":"0"}, #192.168.1.x - Game Tables
     "N1": {"id": "N1", "address": "shelly1pm-68C63AFB6B0A", "relay":"0"}, #192.168.1.x - Under Cabinet
-    "O1": {"id": "O1", "address": "shelly1pm-F4CFA2747F54", "relay":"0"} #192.168.1.x - Coffee Station
+    "O1": {"id": "O1", "address": "shelly1pm-F4CFA2747F54", "relay":"0"}, #192.168.1.x - Coffee Station
+    "P1": {"id": "P1", "address": "shelly1pm-68C63AFB6BD5", "relay":"0"} #192.168.1.170 - Bench Fan
 }
 mqttCommands = [
     MosquittoCommand("open bay one", "garagepi/commands", "0:1"),
@@ -93,6 +94,8 @@ mqttCommands = [
     MosquittoCommand("turn off shower fan", "shellies/shellyswitch25-8CAAB55F402F/relay/1/command", "off"),
     MosquittoCommand("turn on fireplace", "shellies/shelly1pm-8CAAB574C489/relay/0/command", "on"),
     MosquittoCommand(    "turn off fireplace", "shellies/shelly1pm-8CAAB574C489/relay/0/command", "off"),
+    MosquittoCommand("turn on bench fan", "shellies/shelly1pm-68C63AFB6BD5/relay/0/command", "on"),
+    MosquittoCommand(    "turn off bench fan", "shellies/shelly1pm-68C63AFB6BD5/relay/0/command", "off"),
     MosquittoCommand("turn on game room", "shellies/shelly1pm-C82B961DD3B1/relay/0/command", "on"),
     MosquittoCommand(    "turn off game room", "shellies/shelly1pm-C82B961DD3B1/relay/0/command", "off"),
     MosquittoCommand("turn on livingroom lamp", "shellies/shelly1pm-68C63AFB315A/relay/0/command", "on"),
