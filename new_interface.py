@@ -289,8 +289,8 @@ window.columnconfigure(0, minsize=width*0.1)
 window.columnconfigure(1, minsize=width*0.8)
 window.columnconfigure(2, minsize=width*0.1)
 
-switch_label.set(circuits[current_circuit]["label"])
-mode_label.set(modes[current_mode]["label"])
+switch_label.set(circuits[current_circuit])
+mode_label.set(modes[current_mode])
 button1label.set("ON")
 button2label.set("OFF")
 
