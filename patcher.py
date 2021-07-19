@@ -4,6 +4,7 @@ import os.path
 from os import path
 import datetime
 import socket
+import json
 
 myname = socket.gethostname()
 webserver = myname == "rpi4-web-server"
@@ -27,7 +28,11 @@ def doCheck():
         with open(local_version_file, "w") as write_file:
             write_file.write(repo_version)
         time.sleep(1)
+    if webserver is True:
+        os.system('sudo systemctl restart flaskrest.service')
+    if webserver is False:
         os.system('sudo reboot now')
         exit()
+        
 
 doCheck()
