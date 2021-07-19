@@ -6,7 +6,8 @@ import datetime
 import socket
 
 myname = socket.gethostname()
-
+webserver = myname == "rpi4-web-server"
+whitenoise = myname == "whitenoisepi"
 def doCheck():
     os.system('cd /home/pi/rpi && git pull --all')
     time.sleep(9)
@@ -22,7 +23,7 @@ def doCheck():
         local_version = read_file.read()
 
     now = datetime.datetime.now()
-    if local_version != repo_version or (now.hour == 0 and now.minute == 0 and myname != "whitenoisepi"):
+    if local_version != repo_version or (now.hour == 0 and now.minute == 0 and webserver is False and whitenoise is False):
         with open(local_version_file, "w") as write_file:
             write_file.write(repo_version)
         time.sleep(1)
