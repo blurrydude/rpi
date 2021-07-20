@@ -48,7 +48,7 @@ def mosquittoDo(topic, command):
     return 'OK'
 
 def heartbeat():
-    mosquittoDo(myname + " "+str(myip).split(' ')[0].replace("b'","")+" alive at "+datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
+    mosquittoDo("pi/"+myname+"/status",myname + " "+str(myip).split(' ')[0].replace("b'","")+" alive at "+datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
 
 def log(message):
     with open('/home/pi/SMS.log','a') as write_file:
@@ -127,3 +127,4 @@ def doCheck():
         
 
 doCheck()
+heartbeat()

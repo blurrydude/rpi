@@ -1,8 +1,8 @@
 {
-    "command_garage": "0.1",
-    "command_light": "0.1",
-    "mqtt_rgb": "0.1.0",
-    "command_whitenoise": "0.1.1",
-    "new_interface": "0.1",
-    "app": "1.0.4"
+    "command_garage": "0.1.1",
+    "command_light": "0.1.1",
+    "mqtt_rgb": "0.1.1",
+    "command_whitenoise": "0.1.2",
+    "new_interface": "0.1.1",
+    "app": "1.0.5"
 }

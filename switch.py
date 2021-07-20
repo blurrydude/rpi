@@ -222,7 +222,7 @@ if __name__ == "__main__":
                 time.sleep(5)
         now = time.time()
         if now - last_pulse >= 5:
-            mosquittoMessage("switch "+str(myip).split(' ')[0].replace("b'","")+" alive at "+datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
+            #mosquittoMessage("switch "+str(myip).split(' ')[0].replace("b'","")+" alive at "+datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
             last_pulse = now
         
     try:

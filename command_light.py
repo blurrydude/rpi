@@ -75,6 +75,6 @@ if __name__ == "__main__":
     client.loop_start()
     while running is True:
         time.sleep(5)
-        mosquittoMessage("command_light "+str(myip).split(' ')[0].replace("b'","")+" alive at "+datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
+        #mosquittoMessage("command_light "+str(myip).split(' ')[0].replace("b'","")+" alive at "+datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
     client.loop_stop()
     client.disconnect()

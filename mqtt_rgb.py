@@ -212,11 +212,11 @@ if __name__ == "__main__":
         if mode <= 2:
             wait_till = time.time() + 5.0
             #time.sleep(5)
-            mosquittoMessage("mqtt_rgb "+str(myip).split(' ')[0].replace("b'","")+" alive at "+datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
+            #mosquittoMessage("mqtt_rgb "+str(myip).split(' ')[0].replace("b'","")+" alive at "+datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
         elif mode == 3 or mode == 4:
             if j + 1 > 255:
                 j = 0
-                mosquittoMessage("mqtt_rgb "+str(myip).split(' ')[0].replace("b'","")+" alive at "+datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
+                #mosquittoMessage("mqtt_rgb "+str(myip).split(' ')[0].replace("b'","")+" alive at "+datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
             else:
                 j = j + 1
             if mode == 3:
