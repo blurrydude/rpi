@@ -41,15 +41,19 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 @app.route('/debug',methods=['GET'])
 def debug():
     body = request.args.get("Body")
+    sender = request.args.get("From")
+    if sender != "+19377166465":
+        sms(sender + " tried to send me the command: "+ body)
+        return 'bad'
     return control("sms "+body)
 
 @app.route('/control/<text>')
 def control(text):
     command = text.lower()
-    sms = False
+    smst = False
     if "sms" in command:
         command = command.replace("sms","")
-        sms = True
+        smst = True
     mosquittoDo("incoming/commands", command)
     com = "off"
     command_list = []
@@ -86,7 +90,8 @@ def control(text):
                 topic = "shellies/"+c["address"]+"/relay/"+c["relay"]+"/command"
                 command_list.append({"t":topic,"c":com})
         text = text + "Turning "+c["label"]+" "+com+"\n"
-    sms(text)
+    if smst is True:
+        sms(text)
     for cmd in command_list:
         mosquittoDo(cmd["t"],cmd["c"])
     return 'OK'
