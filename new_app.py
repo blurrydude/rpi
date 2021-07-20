@@ -78,8 +78,9 @@ def debug():
 
 @app.route('/pistates',methods=['GET'])
 def pistates():
-    pi = json.load('/home/pi/pistates.json')
-    return pi
+    f = open('/home/pi/pistates.json')
+    states = json.load(f)
+    return states
 
 @app.route('/states',methods=['GET'])
 def states():
