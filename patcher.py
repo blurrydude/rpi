@@ -62,8 +62,9 @@ def doCheck():
         time.sleep(1)
     if webserver is True:
         os.system('sudo cp /home/pi/rpi/new_app.py /var/www/api/app.py && sudo systemctl restart flaskrest.service')
-        sms(myname+' updated '+whatiuse+' from '+local_version[whatiuse]+' to '+repo_version[whatiuse])
+        sms('restarting flask on '+myname+' because '+whatiuse+' updated from '+local_version[whatiuse]+' to '+repo_version[whatiuse])
     if webserver is False:
+        sms('restarting '+myname+' because '+whatiuse+' updated from '+local_version[whatiuse]+' to '+repo_version[whatiuse])
         os.system('sudo reboot now')
         exit()
         
