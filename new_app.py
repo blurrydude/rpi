@@ -13,18 +13,27 @@ except:
 
 f = open('/home/pi/rpi/circuits.json')
 circuits = json.load(f)
+retries = 0
 
 def sms(message, to):
+    global retries
     if twilled is False:
         return
-    account_sid = 'AC26cbcaf937e606af51c6a384728a4e75' 
-    auth_token = '0bbd4df550e70c0e7350aa8db30a7329' 
-    client = Client(account_sid, auth_token)
-    client.messages.create(  
-        messaging_service_sid='MG1cf18075f26dc8ff965a5d2d1940dab5', 
-        body=message,      
-        to=to 
-    ) 
+    try:
+        account_sid = 'AC26cbcaf937e606af51c6a384728a4e75' 
+        auth_token = '0bbd4df550e70c0e7350aa8db30a7329' 
+        client = Client(account_sid, auth_token)
+        client.messages.create(  
+            messaging_service_sid='MG1cf18075f26dc8ff965a5d2d1940dab5', 
+            body=message,      
+            to=to 
+        )
+        retries = 0 
+    except:
+        if retries < 4:
+            retries = retries + 1
+            time.sleep(1)
+            sms(message, to)
 
 def mosquittoDo(topic, command):
     global received
@@ -46,8 +55,8 @@ def debug():
     sender = request.args.get("From")
     if sender not in allowed_senders:
         sms(sender + " tried to send me the command: "+ body, "+19377166465")
-        #time.sleep(1)
-        #sms("I think you have the wrong number, you don't appear to be authorized to talk to me.", sender)
+        time.sleep(1)
+        sms("I think you have the wrong number, you don't appear to be authorized to talk to me.", sender)
         return 'bad'
     return control("sms~"+sender+"~"+body)
 
