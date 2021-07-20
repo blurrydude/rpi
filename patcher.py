@@ -49,7 +49,7 @@ def doCheck():
             write_file.write(repo_version)
         time.sleep(1)
     if webserver is True:
-        os.system('sudo systemctl restart flaskrest.service')
+        os.system('sudo cp /home/pi/rpi/new_app.py /var/www/api/app.py && sudo systemctl restart flaskrest.service')
     if webserver is False:
         os.system('sudo reboot now')
         exit()
