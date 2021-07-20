@@ -18,6 +18,7 @@ except:
     twilled = False
 
 def sms(message):
+    print('sms: '+message)
     if twilled is False:
         return
     account_sid = 'AC26cbcaf937e606af51c6a384728a4e75' 
@@ -67,7 +68,7 @@ def doCheck():
     now = datetime.datetime.now()
     if local_version[whatiuse] != repo_version[whatiuse] or (now.hour == 0 and now.minute == 0 and webserver is False and whitenoise is False):
         with open(local_version_file, "w") as write_file:
-            write_file.write(repo_version)
+            write_file.write(json.dumps(repo_version))
         time.sleep(1)
         if webserver is True:
             os.system('sudo cp /home/pi/rpi/new_app.py /var/www/api/app.py && sudo systemctl restart flaskrest.service')
