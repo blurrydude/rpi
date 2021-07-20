@@ -46,6 +46,7 @@ def debug():
     sender = request.args.get("From")
     if sender not in allowed_senders:
         sms(sender + " tried to send me the command: "+ body, "+19377166465")
+        time.sleep(1)
         sms("I think you have the wrong number, you don't appear to be authorized to talk to me.", sender)
         return 'bad'
     return control("sms~"+sender+"~"+body)
