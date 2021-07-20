@@ -13,9 +13,11 @@ twilled = False
 try:
     from twilio.rest import Client
     twilled = True
+    print('we have twilio')
 except:
     os.system('pip install --yes twilio')
     twilled = False
+    print('we do not have twilio')
 
 def sms(message):
     print('sms: '+message)
@@ -53,22 +55,28 @@ def doCheck():
     local_version_file = '/home/pi/version.json'
     with open(repo_version_file, "r") as read_file:
         repo_version = json.load(read_file)
+        print('loaded repo version file')
     if path.exists(local_version_file) == False:
         with open(local_version_file, "w") as write_file:
             write_file.write(json.dumps(repo_version))
+            print('created new local version file')
 
     with open(local_version_file, "r") as read_file:
         local_version = None
         try:
             local_version = json.load(read_file)
+            print('loaded local version file')
         except:
             with open(local_version_file, "w") as write_file:
                 write_file.write(json.dumps(repo_version))
+                print('error loading. created local version file')
 
+    print('local: '+local_version[whatiuse]+' repo: '+repo_version[whatiuse])
     now = datetime.datetime.now()
     if local_version[whatiuse] != repo_version[whatiuse] or (now.hour == 0 and now.minute == 0 and webserver is False and whitenoise is False):
         with open(local_version_file, "w") as write_file:
             write_file.write(json.dumps(repo_version))
+            print('updated local version file')
         time.sleep(1)
         if webserver is True:
             print('copying app')
