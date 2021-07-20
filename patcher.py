@@ -26,11 +26,11 @@ except:
     print('we do not have twilio')
 try:
     import paho.mqtt.client as mqtt
-    twilled = True
+    mqtted = True
     print('we have paho')
 except:
     os.system('pip3 install paho-mqtt')
-    twilled = False
+    mqtted = False
     print('we do not have paho')
 
 def mosquittoDo(topic, command):
