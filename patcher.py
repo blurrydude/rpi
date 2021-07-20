@@ -71,6 +71,7 @@ def doCheck():
             write_file.write(json.dumps(repo_version))
         time.sleep(1)
         if webserver is True:
+            print('copying app')
             os.system('sudo cp /home/pi/rpi/new_app.py /var/www/api/app.py && sudo systemctl restart flaskrest.service')
             sms('restarting flask on '+myname+' because '+whatiuse+' updated from '+local_version[whatiuse]+' to '+repo_version[whatiuse])
         if webserver is False:
