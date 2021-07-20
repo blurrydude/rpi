@@ -59,6 +59,7 @@ allowed_senders = ["+19377893750","+19377166465"]
 def debug():
     body = request.args.get("Body")
     sender = request.args.get("From")
+    log("received: "+body+"\nfrom: "+sender+'\n\n')
     if sender not in allowed_senders:
         sms(sender + " tried to send me the command: "+ body, "+19377166465")
         time.sleep(1)
