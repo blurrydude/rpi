@@ -20,11 +20,12 @@ def on_message(client, userdata, message):
     s = result.replace(", ", "_").replace("alive at ", "").split(" ")
     name = s[0]
     ip = s[1]
-    timestamp = s[2]
+    ts = s[2]
+    print(name+" "+ip+" "+ts)
     pi[name] = {
         "name": name,
         "ip": ip,
-        "heartbeat": timestamp
+        "heartbeat": ts
     }
     with open("/home/pi/pistates.json") as write_file:
         write_file.write(json.dumps(pi))
