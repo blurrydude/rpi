@@ -127,5 +127,5 @@ def doCheck():
             exit()
         
 
-doCheck()
 heartbeat()
+doCheck()
