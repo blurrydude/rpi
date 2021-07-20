@@ -10,7 +10,7 @@ f = open('circuits.json')
 circuits = json.load(f)
 
 client = mqtt.Client()
-pi = []
+pi = {}
 
 def on_message(client, userdata, message):
     global running
