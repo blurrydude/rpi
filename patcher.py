@@ -55,17 +55,17 @@ def doCheck():
     with open(local_version_file, "r") as read_file:
         local_version_json = read_file.read()
 
-    repo_version = json.load(repo_version_json)[whatiuse]
-    local_version = json.load(local_version_json)[whatiuse]
+    repo_version = json.load(repo_version_json)
+    local_version = json.load(local_version_json)
 
     now = datetime.datetime.now()
-    if local_version != repo_version or (now.hour == 0 and now.minute == 0 and webserver is False and whitenoise is False):
+    if local_version[whatiuse] != repo_version[whatiuse] or (now.hour == 0 and now.minute == 0 and webserver is False and whitenoise is False):
         with open(local_version_file, "w") as write_file:
             write_file.write(repo_version)
         time.sleep(1)
     if webserver is True:
         os.system('sudo cp /home/pi/rpi/new_app.py /var/www/api/app.py && sudo systemctl restart flaskrest.service')
-        sms('flask service restarting - updated from '+local_version+' to '+repo_version)
+        sms('flask service restarting - updated from '+local_version[whatiuse]+' to '+repo_version[whatiuse])
     if webserver is False:
         os.system('sudo reboot now')
         exit()
