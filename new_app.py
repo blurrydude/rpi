@@ -46,10 +46,13 @@ def sms(message, to):
 def mosquittoDo(topic, command):
     global received
     global result
-    client = mqtt.Client()
-    client.connect("192.168.1.22")
-    client.publish(topic,command)
-    client.disconnect()
+    try:
+        client = mqtt.Client()
+        client.connect("192.168.1.22")
+        client.publish(topic,command)
+        client.disconnect()
+    except:
+        print('failed')
     return 'OK'
 
 app = FlaskAPI(__name__)
@@ -116,7 +119,7 @@ def control(text):
                 command_list.append({"t":topic,"c":com})
                 text = text + c["label"]+" "+com+"\n"
     elif "shop door" in command:
-        command_list.append({"t":"garagepi/commands","c":"1:0"})
+        command_list.append({"t":"baydoorpi/commands","c":"1:0"})
         text = text + "opening shop door\n"
     elif "status" in command:
         text = text + "Yeah, I'm alive\n"

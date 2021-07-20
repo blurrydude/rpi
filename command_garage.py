@@ -6,11 +6,12 @@ import pifacedigitalio as p
 import os
 import subprocess
 from datetime import datetime
+import socket
 
+myname = socket.gethostname()
 myip = subprocess.check_output(['hostname', '-I'])
 ############# CONFIG #############
 listentopic = "commands"
-myname = "garagepi"
 broker = "192.168.1.22"
 ##################################
 

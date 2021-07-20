@@ -6,11 +6,14 @@ import datetime
 import socket
 import json
 import sys
+import subprocess
 
 myname = socket.gethostname()
+myip = subprocess.check_output(['hostname', '-I'])
 webserver = myname == "rpi4-web-server"
 whitenoise = myname == "whitenoisepi"
 twilled = False
+mqtted = False
 f = open('/home/pi/config.json')
 config = json.load(f)
 try:
@@ -21,6 +24,31 @@ except:
     os.system('pip3 install twilio')
     twilled = False
     print('we do not have twilio')
+try:
+    import paho.mqtt.client as mqtt
+    twilled = True
+    print('we have paho')
+except:
+    os.system('pip3 install paho-mqtt')
+    twilled = False
+    print('we do not have paho')
+
+def mosquittoDo(topic, command):
+    global received
+    global result
+    if mqtted is False:
+        return
+    try:
+        client = mqtt.Client()
+        client.connect("192.168.1.22")
+        client.publish(topic,command)
+        client.disconnect()
+    except:
+        print('failed')
+    return 'OK'
+
+def heartbeat():
+    mosquittoDo(myname + " "+str(myip).split(' ')[0].replace("b'","")+" alive at "+datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
 
 def log(message):
     with open('/home/pi/SMS.log','a') as write_file:
