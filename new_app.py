@@ -52,7 +52,7 @@ def control(text):
     command = text.lower()
     smst = False
     if "sms" in command:
-        command = command.replace("sms","")
+        command = command.replace("sms ","")
         smst = True
     mosquittoDo("incoming/commands", command)
     com = "off"
@@ -67,7 +67,7 @@ def control(text):
                 if z.lower() in command:
                     topic = "shellies/"+c["address"]+"/relay/"+c["relay"]+"/command"
                     command_list.append({"t":topic,"c":com})
-        text = text + "Turning "+z+" zone "+com+"\n"
+                    text = text + "Turning "+z+" zone "+com+"\n"
     elif "mode" in command:
         for ci in range(0,len(circuits)):
             c = circuits[ci]
@@ -79,17 +79,17 @@ def control(text):
                 if m.lower() in command:
                     com = "off"
             if com is None:
-                return
+                continue
             topic = "shellies/"+c["address"]+"/relay/"+c["relay"]+"/command"
             command_list.append({"t":topic,"c":com})
-        text = text + "Setting "+m+" mode\n"
+            text = text + "Setting "+m+" mode\n"
     elif "turn" in command:
         for ci in range(0,len(circuits)):
             c = circuits[ci]
             if c["label"].lower() in command or c["label"].lower().replace("light","lamp") in command:
                 topic = "shellies/"+c["address"]+"/relay/"+c["relay"]+"/command"
                 command_list.append({"t":topic,"c":com})
-        text = text + "Turning "+c["label"]+" "+com+"\n"
+                text = text + "Turning "+c["label"]+" "+com+"\n"
     if smst is True:
         sms(text)
     for cmd in command_list:
