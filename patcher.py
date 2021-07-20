@@ -17,7 +17,7 @@ def sms(message):
     if webserver is False:
         return
     account_sid = 'AC26cbcaf937e606af51c6a384728a4e75' 
-    auth_token = '7b8e7b5be6d3e4c2246d9f8ed5156ddc' 
+    auth_token = '0bbd4df550e70c0e7350aa8db30a7329' 
     client = Client(account_sid, auth_token)
     client.messages.create(  
         messaging_service_sid='MG1cf18075f26dc8ff965a5d2d1940dab5', 
