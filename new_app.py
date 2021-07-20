@@ -67,7 +67,7 @@ def control(text):
                 if z.lower() in command:
                     topic = "shellies/"+c["address"]+"/relay/"+c["relay"]+"/command"
                     command_list.append({"t":topic,"c":com})
-                    text = text + "Turning "+z+" zone "+com+"\n"
+                    text = text + "Turning "+c["label"]+" "+com+"\n"
     elif "mode" in command:
         for ci in range(0,len(circuits)):
             c = circuits[ci]
@@ -82,7 +82,7 @@ def control(text):
                 continue
             topic = "shellies/"+c["address"]+"/relay/"+c["relay"]+"/command"
             command_list.append({"t":topic,"c":com})
-            text = text + "Setting "+m+" mode\n"
+            text = text + "Turning "+c["label"]+" "+com+"\n"
     elif "turn" in command:
         for ci in range(0,len(circuits)):
             c = circuits[ci]
