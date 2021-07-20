@@ -40,6 +40,7 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/debug',methods=['GET','POST'])
 def debug():
+    data = "could not retrieve body..."
     try:
         data = request.args.get('Body')
     except:
@@ -47,7 +48,11 @@ def debug():
             data = request.form.get('Body')
         except:
             data = "could not retrieve body..."
-    sms('echo: '+data)
+    try:
+        sms('echo: '+data)
+    except:
+        with open('/home/pi/SMS.log','a') as wf:
+            wf.write(data+'\n')
     return 'OK'
 
 @app.route('/control/<text>')
