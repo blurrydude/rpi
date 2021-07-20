@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 from os import write
 import time
-time.sleep(15)
+#time.sleep(15)
 import paho.mqtt.client as mqtt
 import json
 
