@@ -9,12 +9,15 @@ import json
 myname = socket.gethostname()
 webserver = myname == "rpi4-web-server"
 whitenoise = myname == "whitenoisepi"
-
-if webserver is True:
+twilled = False
+try:
     from twilio.rest import Client
+    twilled = True
+except:
+    twilled = False
 
 def sms(message):
-    if webserver is False:
+    if twilled is False:
         return
     account_sid = 'AC26cbcaf937e606af51c6a384728a4e75' 
     auth_token = '0bbd4df550e70c0e7350aa8db30a7329' 
