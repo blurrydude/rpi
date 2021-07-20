@@ -3,33 +3,15 @@ import time
 time.sleep(15)
 import paho.mqtt.client as mqtt
 import pifacedigitalio as p
-import os
 import subprocess
-from datetime import datetime
 import socket
 
 myname = socket.gethostname()
 myip = subprocess.check_output(['hostname', '-I'])
-############# CONFIG #############
-listentopic = "commands"
-broker = "192.168.1.22"
-##################################
 
 dooropen = [False,False]
 running = True
 client = mqtt.Client()
-
-bad = 0
-
-def mosquittoMessage(message):
-    global bad
-    try:
-        client.publish(myname+"/status",message)
-    except:
-        bad = bad + 1
-        if bad > 10:
-            os.system('sudo reboot now')
-
 
 def openDoor(bay):
     global dooropen
@@ -54,25 +36,24 @@ def closeDoor(bay):
 def on_message(client, userdata, message):
     global running
     result = str(message.payload.decode("utf-8"))
-    print("Received: "+result)
+    #print("Received: "+result)
     bits = result.split(':')
     addy = int(bits[0])
     if bits[1] == '1':
         check = openDoor(addy)
     else:
         check = closeDoor(addy)
-    print(check)
+    #print(check)
 
 if __name__ == "__main__":
     p.init()
     client.on_message = on_message
-    client.connect(broker)
-    topic = myname + '/' + listentopic
-    print('subscribing to '+topic)
+    client.connect('192.168.1.22')
+    topic = 'pi/' + myname + '/commands'
+    #print('subscribing to '+topic)
     client.subscribe(topic)
     client.loop_start()
     while running is True:
-        time.sleep(5)
-        #mosquittoMessage("command_garage "+str(myip).split(' ')[0].replace("b'","")+" alive at "+datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
+        time.sleep(1)
     client.loop_stop()
     client.disconnect()

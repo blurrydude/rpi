@@ -17,9 +17,6 @@ except:
     print("keyboard module not present. Please run sudo pip3 install keyboard")
 
 ############# CONFIG #############
-listentopic = "commands"
-myname = "set later"
-broker = "192.168.1.22"
 pixel_pin = board.D18
 num_pixels = 8
 ORDER = neopixel.GRB
@@ -71,10 +68,6 @@ else:
 mode = 3
 # modes: 0-fill, 1-single pixel, 2-range, 3-gradient, 4-rainbow chase, 5-random pixels, 6-change random, 7-change swipe
 j = 0
-
-def mosquittoMessage(message):
-    if client is not None:
-        client.publish(myname+"/status",message)
 
 def wheel(pos):
     # Input a value 0 to 255 to get a color value.
@@ -195,11 +188,11 @@ if __name__ == "__main__":
     if mqtt_enabled is True:
         try:
             client.on_message = on_message
-            client.connect(broker)
+            client.connect('192.168.1.22')
         except:
             client = None
     if client is not None:
-        topic = myname + '/' + listentopic
+        topic = 'pi/' + myname + '/commands'
         print('subscribing to '+topic)
         client.subscribe(topic)
         client.loop_start()

@@ -119,7 +119,7 @@ def control(text):
                 command_list.append({"t":topic,"c":com})
                 text = text + c["label"]+" "+com+"\n"
     elif "shop door" in command:
-        command_list.append({"t":"baydoorpi/commands","c":"1:0"})
+        command_list.append({"t":"pi/baydoorpi/commands","c":"1:0"})
         text = text + "opening shop door\n"
     elif "status" in command:
         text = text + "Yeah, I'm alive\n"
