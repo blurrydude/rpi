@@ -21,7 +21,7 @@ elif myname == "clockpi":
     led_count = 60
 elif myname == "canvaspi":
     led_count = 50
-elif myname == "gameroompi":
+elif myname == "addresspi":
     led_count = 83
 elif myname == "namepi":
     num_pixels = 8

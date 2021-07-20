@@ -34,7 +34,7 @@ current_color = (0,0,0)
 wait_till = time.time()
 key_down = False
 
-if myname == "gameroompi":
+if myname == "addresspi":
     num_pixels = 32
     rainbow_cycle_delay = 0.001
 elif myname == "canvaspi":
@@ -50,7 +50,7 @@ elif myname == "namepi":
     num_pixels = 8
     rainbow_cycle_delay = 0.05
     mqtt_enabled = False
-elif myname == "workbenchpi":
+elif myname == "hallwaypi":
     num_pixels = 1
     rainbow_cycle_delay = 0.001
     mqtt_enabled = True

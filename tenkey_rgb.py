@@ -21,7 +21,7 @@ rainbow_cycle_delay = 0.001
 
 myname = socket.gethostname()
 
-if myname == "gameroompi":
+if myname == "addresspi":
     num_pixels = 83
     rainbow_cycle_delay = 0.001
 elif myname == "canvaspi":

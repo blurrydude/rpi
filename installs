@@ -13,3 +13,5 @@ git clone "https://github.com/blurrydude/rpi.git"
 sudo apt-get install git python3-pip -y
 
 sudo pip3 install adafruit-circuitpython-neopixel && pip3 install --force-reinstall adafruit-blinka
+
+sudo nano /etc/xdg/lxsession/LXDE-pi/autostart

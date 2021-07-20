@@ -46,10 +46,10 @@ lookup = {
     "rpi4-web-server": "app",
     "whitenoisepi": "command_whitenoise",
     "mosquitto": "new_interface",
-    "workbenchpi": "new_interface",
+    "hallwaypi": "new_interface",
     "canvaspi": "mqtt_rgb",
     "clockpi": "mqtt_rgb",
-    "gameroompi": "mqtt_rgb",
+    "addresspi": "mqtt_rgb",
     "raspberrypi": "new_interface",
     "motorpi": "command_garage"
 }

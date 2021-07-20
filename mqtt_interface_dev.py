@@ -118,7 +118,7 @@ map = {
     "Game Room": {
         "portals": ["Dining Room","Deck"],
         "circuits": [],
-        "rgb": ["clockpi","gameroompi"],
+        "rgb": ["clockpi","addresspi"],
         "buttons": [],
         "onbuttons": [],
         "offbuttons": [],
