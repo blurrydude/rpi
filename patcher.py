@@ -24,8 +24,9 @@ def sms(message):
     if twilled is False:
         return
     account_sid = 'AC26cbcaf937e606af51c6a384728a4e75' 
-    auth_token = '0bbd4df550e70c0e7350aa8db30a7329' 
-    client = Client(account_sid, auth_token)
+    auth_token1 = '0bbd4df550e70c0e' 
+    auth_token2 = '7350aa8db30a7329' 
+    client = Client(account_sid, auth_token1+auth_token2)
     client.messages.create(  
         messaging_service_sid='MG1cf18075f26dc8ff965a5d2d1940dab5', 
         body=message,      

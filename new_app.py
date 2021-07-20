@@ -14,6 +14,8 @@ except:
 
 f = open('/home/pi/rpi/circuits.json')
 circuits = json.load(f)
+f = open('/home/pi/config.json')
+config = json.load(f)
 retries = 0
 
 def log(message):
@@ -25,11 +27,11 @@ def sms(message, to):
     if twilled is False:
         return
     try:
-        account_sid = 'AC26cbcaf937e606af51c6a384728a4e75' 
-        auth_token = '0bbd4df550e70c0e7350aa8db30a7329' 
+        account_sid = config["account_sid"]
+        auth_token = config["auth_token"] 
         client = Client(account_sid, auth_token)
         client.messages.create(  
-            messaging_service_sid='MG1cf18075f26dc8ff965a5d2d1940dab5', 
+            messaging_service_sid=config["messaging_service_sid"], 
             body=message,      
             to=to 
         )
