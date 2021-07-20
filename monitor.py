@@ -18,6 +18,7 @@ def on_message(client, userdata, message):
     address = bits[1]
     relay = bits[3]
     with open("/home/pi/"+address+"_"+relay+".state") as write_file:
+        print(address + " " + relay + " " + result)
         write_file.write(result)
     #print(check)
 
