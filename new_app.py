@@ -38,10 +38,9 @@ def mosquittoDo(topic, command):
 app = FlaskAPI(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
-@app.route('/debug',methods=['GET','POST'])
+@app.route('/debug',methods=['GET'])
 def debug():
-    req = request.get_data()
-    body = req['Body']
+    body = request.args.get("Body")
     return body
 
 @app.route('/control/<text>')
