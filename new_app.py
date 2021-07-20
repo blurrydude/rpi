@@ -100,7 +100,7 @@ def control(text):
     elif "shop door" in command:
         command_list.append({"t":"garagepi/commands","c":"1:0"})
         text = text + "opening shop door\n"
-    elif "shop door" in command:
+    elif "status" in command:
         text = text + "Yeah, I'm alive\n"
     if smst is True:
         sms(text,smssender)
