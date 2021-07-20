@@ -4,6 +4,7 @@ from flask_cors import CORS
 import paho.mqtt.client as mqtt
 import time
 import json
+import sys
 twilled = False
 try:
     from twilio.rest import Client
@@ -14,6 +15,10 @@ except:
 f = open('/home/pi/rpi/circuits.json')
 circuits = json.load(f)
 retries = 0
+
+def log(message):
+    with open('/home/pi/SMS.log','a') as write_file:
+        write_file.write(message+'\n')
 
 def sms(message, to):
     global retries
@@ -30,6 +35,7 @@ def sms(message, to):
         )
         retries = 0 
     except:
+        log("Unexpected error:", sys.exc_info()[0])
         if retries < 4:
             retries = retries + 1
             time.sleep(1)
