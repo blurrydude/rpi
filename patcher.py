@@ -95,7 +95,7 @@ def sms(message):
             to='+19377166465' 
         )
     except:
-        log("Unexpected error:", sys.exc_info()[0])
+        log("Unexpected error:" + sys.exc_info()[0])
 
 def doCheck():
     os.system('cd /home/pi/rpi && git pull --all')

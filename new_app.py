@@ -41,7 +41,7 @@ def sms(message, to):
         )
         retries = 0 
     except:
-        log("Unexpected error:", sys.exc_info()[0])
+        log("Unexpected error:" + sys.exc_info()[0])
         if retries < 4:
             retries = retries + 1
             time.sleep(1)
