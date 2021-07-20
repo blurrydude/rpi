@@ -94,7 +94,7 @@ def states():
                     states[circuit["label"]] = x.read()
         else:
             continue
-    return json.dumps(states)
+    return states
 
 @app.route('/control/<text>')
 def control(text):
