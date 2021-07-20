@@ -53,6 +53,7 @@ def doCheck():
             write_file.write(json.dumps(repo_version))
 
     with open(local_version_file, "r") as read_file:
+        local_version = None
         try:
             local_version = json.load(read_file)
         except:
