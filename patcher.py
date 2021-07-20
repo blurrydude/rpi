@@ -35,28 +35,30 @@ except:
 
 lookup = {
     "rpi4-web-server": "app",
-    "whitenoisepi": "command_whitenoise"
+    "whitenoisepi": "command_whitenoise",
+    "addresspi": "mqtt_rgb",
+    "windowpi": "mqtt_rgb"
 }
 
 whatiuse = "command_light"
 if myname in lookup.keys():
     whatiuse = lookup[myname]
+else:
+    try:
+        xstart = open('/etc/xdg/lxsession/LXDE-pi/autostart')
+        if "new_interface" in xstart:
+            whatiuse = "new_interface"
+    except:
+        whatiuse = "command_light"
 
-try:
-    xstart = open('/etc/xdg/lxsession/LXDE-pi/autostart')
-    if "new_interface" in xstart:
-        whatiuse = "new_interface"
-except:
-    whatiuse = whatiuse
-
-try:
-    xstart = open('/etc/rc.local')
-    if "mqtt_rgb" in xstart:
-        whatiuse = "mqtt_rgb"
-    if "command_garage" in xstart:
-        whatiuse = "command_garage"
-except:
-    whatiuse = whatiuse
+    try:
+        xstart = open('/etc/rc.local')
+        if "mqtt_rgb" in xstart:
+            whatiuse = "mqtt_rgb"
+        if "command_garage" in xstart:
+            whatiuse = "command_garage"
+    except:
+        whatiuse = "command_light"
 
 def mosquittoDo(topic, command):
     global received
