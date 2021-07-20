@@ -33,6 +33,31 @@ except:
     mqtted = False
     print('we do not have paho')
 
+lookup = {
+    "rpi4-web-server": "app",
+    "whitenoisepi": "command_whitenoise"
+}
+
+whatiuse = "command_light"
+if myname in lookup.keys():
+    whatiuse = lookup[myname]
+
+try:
+    xstart = open('/etc/xdg/lxsession/LXDE-pi/autostart')
+    if "new_interface" in xstart:
+        whatiuse = "new_interface"
+except:
+    whatiuse = whatiuse
+
+try:
+    xstart = open('/etc/rc.local')
+    if "mqtt_rgb" in xstart:
+        whatiuse = "mqtt_rgb"
+    if "command_garage" in xstart:
+        whatiuse = "command_garage"
+except:
+    whatiuse = whatiuse
+
 def mosquittoDo(topic, command):
     global received
     global result
@@ -70,23 +95,6 @@ def sms(message):
     except:
         log("Unexpected error:", sys.exc_info()[0])
 
-lookup = {
-    "rpi4-web-server": "app",
-    "whitenoisepi": "command_whitenoise",
-    "mosquitto": "new_interface",
-    "hallwaypi": "new_interface",
-    "canvaspi": "mqtt_rgb",
-    "clockpi": "mqtt_rgb",
-    "addresspi": "mqtt_rgb",
-    "windowpi": "mqtt_rgb",
-    "raspberrypi": "new_interface",
-    "baydoorpi": "command_garage"
-}
-
-whatiuse = "command_light"
-if myname in lookup.keys():
-    whatiuse = lookup[myname]
-
 def doCheck():
     os.system('cd /home/pi/rpi && git pull --all')
     time.sleep(9)
@@ -122,9 +130,9 @@ def doCheck():
             os.system('sudo cp /home/pi/rpi/new_app.py /var/www/api/app.py && sudo systemctl restart flaskrest.service')
             sms('restarting flask on '+myname+' because '+whatiuse+' updated from '+local_version[whatiuse]+' to '+repo_version[whatiuse])
         if webserver is False:
-            sms('restarting '+myname+' because '+whatiuse+' updated from '+local_version[whatiuse]+' to '+repo_version[whatiuse])
             mosquittoDo("pi/"+myname+"/status",myname + " "+str(myip).split(' ')[0].replace("b'","")+" restarting at "+datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
             os.system('sudo reboot now')
+            sms('restarting '+myname+' because '+whatiuse+' updated from '+local_version[whatiuse]+' to '+repo_version[whatiuse])
             exit()
         
 
