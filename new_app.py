@@ -38,9 +38,9 @@ def mosquittoDo(topic, command):
 app = FlaskAPI(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
-@app.route('/debug/<text>')
-def debug(text):
-    command = text.lower()
+@app.route('/debug',method=['POST'])
+def debug():
+    command = json.dumps(request.args.to_dict())
     sms(command)
 
 @app.route('/control/<text>')
