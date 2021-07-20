@@ -17,7 +17,7 @@ def on_message(client, userdata, message):
     result = str(message.payload.decode("utf-8"))
     if "alive at" not in result:
         return
-    s = result.replace(", ", "_").replace("alive at ", "").split(" ")
+    s = result.replace(", ", "_").replace("-", "_").replace("alive at ", "").split(" ")
     name = s[0]
     ip = s[1]
     ts = s[2]
