@@ -76,7 +76,7 @@ def debug():
         return 'bad'
     return control("sms~"+sender+"~"+body)
 
-@app.route('/states')
+@app.route('/states',methods=['GET'])
 def states():
     dirname = '/home/pi'
     
