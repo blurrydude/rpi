@@ -30,6 +30,7 @@ if __name__ == "__main__":
             relays = 2
         for i in range(relays):
             topic = 'shellies/'+circuit["address"]+'/relay/'+str(i)
+            print('subscribing to '+topic)
             client.subscribe(topic)
     client.loop_start()
     while running is True:
