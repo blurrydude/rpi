@@ -78,8 +78,9 @@ lookup = {
     "canvaspi": "mqtt_rgb",
     "clockpi": "mqtt_rgb",
     "addresspi": "mqtt_rgb",
+    "windowpi": "mqtt_rgb",
     "raspberrypi": "new_interface",
-    "motorpi": "command_garage"
+    "baydoorpi": "command_garage"
 }
 
 whatiuse = "command_light"
