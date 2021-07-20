@@ -5,6 +5,9 @@ import paho.mqtt.client as mqtt
 import time
 import json
 import sys
+import socket
+
+myname = socket.gethostname()
 twilled = False
 try:
     from twilio.rest import Client
@@ -81,7 +84,7 @@ def control(text):
         command = split[2]
         smssender = split[1]
         smst = True
-    mosquittoDo("incoming/commands", command)
+    mosquittoDo("pi/"+myname+"/command", command)
     com = "off"
     command_list = []
     text = ""
