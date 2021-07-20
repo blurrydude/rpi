@@ -14,7 +14,7 @@ def on_message(client, userdata, message):
     global running
     result = str(message.payload.decode("utf-8"))
     #print("Received: "+result)
-    bits = result.split('/')
+    bits = message.topic.split('/')
     address = bits[1]
     relay = bits[3]
     with open("/home/pi/"+address+"_"+relay+".state") as write_file:
