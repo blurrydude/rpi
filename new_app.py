@@ -4,9 +4,27 @@ from flask_cors import CORS
 import paho.mqtt.client as mqtt
 import time
 import json
+twilled = False
+try:
+    from twilio.rest import Client
+    twilled = True
+except:
+    twilled = False
 
 f = open('/home/pi/rpi/circuits.json')
 circuits = json.load(f)
+
+def sms(message):
+    if twilled is False:
+        return
+    account_sid = 'AC26cbcaf937e606af51c6a384728a4e75' 
+    auth_token = '0bbd4df550e70c0e7350aa8db30a7329' 
+    client = Client(account_sid, auth_token)
+    client.messages.create(  
+        messaging_service_sid='MG1cf18075f26dc8ff965a5d2d1940dab5', 
+        body=message,      
+        to='+19377166465' 
+    ) 
 
 def mosquittoDo(topic, command):
     global received
@@ -19,6 +37,11 @@ def mosquittoDo(topic, command):
 
 app = FlaskAPI(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
+
+@app.route('/debug/<text>')
+def debug(text):
+    command = text.lower()
+    sms(command)
 
 @app.route('/control/<text>')
 def control(text):
