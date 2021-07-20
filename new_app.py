@@ -91,7 +91,7 @@ def states():
             for circuit in circuits:
                 if circuit["address"] == address and circuit["relay"] == relay:
                     x = open(dirname+'/'+address+'_'+relay+'.state')
-                    states[circuit["label"]] = x
+                    states[circuit["label"]] = x.read()
         else:
             continue
     return json.dumps(states)
