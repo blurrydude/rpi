@@ -85,7 +85,7 @@ def states():
     for f in os.listdir(dirname):
         if f.endswith(ext):
             s = f.split('/')
-            a = s.split[len(s)-1].split('.')[0].split('_')
+            a = s[len(s)-1].split('.')[0].split('_')
             address = a[0]
             relay = a[1]
             for circuit in circuits:
