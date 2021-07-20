@@ -99,13 +99,13 @@
     "address": "shelly1pm-F4CFA2747F54", "relay":"0", "label":"Coffee Station",
     "onModes": ["Morning", "Lunch", "Dinner", "Evening", "Night", "Alert"],
     "offModes":["Dark", "Day"],
-    "zones":["All", "Kitchen", "Counters", "Down Stairs"]}, 
+    "zones":["All", "Kitchen", "Counter", "Down Stairs"]}, 
 
     {"notes":"192.168.1.x - Under Cabinet Lights",
     "address": "shelly1pm-68C63AFB6B0A", "relay":"0", "label":"Under Cabinet",
     "onModes": ["Morning", "Lunch", "Dinner", "Alert"],
     "offModes":["Dark", "Night", "Evening", "Day"],
-    "zones":["All", "Kitchen", "Counters", "Down Stairs"]}, 
+    "zones":["All", "Kitchen", "Counter", "Down Stairs"]}, 
 
     {"notes":"192.168.1.245 - Bar Lights",
     "address": "shellyswitch25-8CAAB55F4553", "relay":"1", "label":"Bar",
