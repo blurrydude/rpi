@@ -41,14 +41,19 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 @app.route('/debug',methods=['GET'])
 def debug():
     body = request.args.get("Body")
-    return control(body)
+    return control("sms "+body)
 
 @app.route('/control/<text>')
 def control(text):
     command = text.lower()
+    sms = False
+    if "sms" in command:
+        command = command.replace("sms","")
+        sms = True
     mosquittoDo("incoming/commands", command)
     com = "off"
     command_list = []
+    text = ""
     if "on" in command:
         com = "on"
     if "zone" in command or "area" in command or "all of the" in command:
@@ -58,6 +63,7 @@ def control(text):
                 if z.lower() in command:
                     topic = "shellies/"+c["address"]+"/relay/"+c["relay"]+"/command"
                     command_list.append({"t":topic,"c":com})
+        text = text + "Turning "+z+" zone "+com+"\n"
     elif "mode" in command:
         for ci in range(0,len(circuits)):
             c = circuits[ci]
@@ -72,12 +78,15 @@ def control(text):
                 return
             topic = "shellies/"+c["address"]+"/relay/"+c["relay"]+"/command"
             command_list.append({"t":topic,"c":com})
+        text = text + "Setting "+m+" mode\n"
     elif "turn" in command:
         for ci in range(0,len(circuits)):
             c = circuits[ci]
             if c["label"].lower() in command or c["label"].lower().replace("light","lamp") in command:
                 topic = "shellies/"+c["address"]+"/relay/"+c["relay"]+"/command"
                 command_list.append({"t":topic,"c":com})
+        text = text + "Turning "+c["label"]+" "+com+"\n"
+    sms(text)
     for cmd in command_list:
         mosquittoDo(cmd["t"],cmd["c"])
     return 'OK'
