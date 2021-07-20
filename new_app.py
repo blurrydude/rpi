@@ -118,6 +118,7 @@ def control(text):
         text = text + "opening shop door\n"
     elif "status" in command:
         text = text + "Yeah, I'm alive\n"
+    log(text)
     if smst is True:
         sms(text,smssender)
     for cmd in command_list:
