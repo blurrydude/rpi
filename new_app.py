@@ -71,7 +71,7 @@ def control(text):
                 if z.lower() in command:
                     topic = "shellies/"+c["address"]+"/relay/"+c["relay"]+"/command"
                     command_list.append({"t":topic,"c":com})
-                    text = text + "Turning "+c["label"]+" "+com+"\n"
+                    text = text + c["label"]+" "+com+"\n"
     elif "mode" in command:
         for ci in range(0,len(circuits)):
             c = circuits[ci]
@@ -86,14 +86,15 @@ def control(text):
                 continue
             topic = "shellies/"+c["address"]+"/relay/"+c["relay"]+"/command"
             command_list.append({"t":topic,"c":com})
-            text = text + "Turning "+c["label"]+" "+com+"\n"
+            text = text + c["label"]+" "+com+"\n"
     elif "turn" in command:
+        command = command.replace("shop", "garage")
         for ci in range(0,len(circuits)):
             c = circuits[ci]
             if c["label"].lower() in command or c["label"].lower().replace("light","lamp") in command:
                 topic = "shellies/"+c["address"]+"/relay/"+c["relay"]+"/command"
                 command_list.append({"t":topic,"c":com})
-                text = text + "Turning "+c["label"]+" "+com+"\n"
+                text = text + c["label"]+" "+com+"\n"
     elif "shop door" in command:
         command_list.append({"t":"garagepi/commands","c":"1:0"})
         text = text + "opening shop door\n"
