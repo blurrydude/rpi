@@ -90,10 +90,11 @@ def states():
             relay = a[1]
             for circuit in circuits:
                 if circuit["address"] == address and circuit["relay"] == relay:
-                    states[circuit["label"]] = open(f)
+                    x = open(dirname+'/'+address+'_'+relay+'.state')
+                    states[circuit["label"]] = x
         else:
             continue
-    return states
+    return json.dumps(states)
 
 @app.route('/control/<text>')
 def control(text):
