@@ -6,6 +6,7 @@ import time
 import json
 import sys
 import socket
+import os
 
 myname = socket.gethostname()
 twilled = False
@@ -74,6 +75,25 @@ def debug():
         sms("I think you have the wrong number, you don't appear to be authorized to talk to me.", sender)
         return 'bad'
     return control("sms~"+sender+"~"+body)
+
+@app.route('/states')
+def states():
+    dirname = '/home/pi'
+    
+    ext = ('.state')
+    states = {}
+    for f in os.listdir(dirname):
+        if f.endswith(ext):
+            s = f.split('/')
+            a = s.split[len(s)].split('.')[0].split('_')
+            address = a[0]
+            relay = a[1]
+            for circuit in circuits:
+                if circuit["address"] == address and circuit["relay"] == relay:
+                    states[circuit["label"]] = open(f)
+        else:
+            continue
+    return states
 
 @app.route('/control/<text>')
 def control(text):
