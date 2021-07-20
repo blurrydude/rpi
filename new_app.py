@@ -76,6 +76,11 @@ def debug():
         return 'bad'
     return control("sms~"+sender+"~"+body)
 
+@app.route('/pistates',methods=['GET'])
+def pistates():
+    pi = json.load('/home/pi/pistates.json')
+    return pi
+
 @app.route('/states',methods=['GET'])
 def states():
     dirname = '/home/pi'
