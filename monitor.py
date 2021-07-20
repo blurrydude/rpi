@@ -16,7 +16,8 @@ def on_message(client, userdata, message):
     #print("Received: "+result)
     bits = result.split('/')
     address = bits[1]
-    with open("/home/pi/"+address+".state") as write_file:
+    relay = bits[3]
+    with open("/home/pi/"+address+"_"+relay+".state") as write_file:
         write_file.write(result)
     #print(check)
 
