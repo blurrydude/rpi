@@ -40,8 +40,8 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/debug',method=['POST'])
 def debug():
-    command = json.dumps(request.args.to_dict())
-    sms(command)
+    request_data = request.get_json()
+    sms(request_data)
 
 @app.route('/control/<text>')
 def control(text):
