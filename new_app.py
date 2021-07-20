@@ -22,6 +22,9 @@ def mosquittoDo(topic, command):
     client.disconnect()
     return 'OK'
 
+app = FlaskAPI(__name__)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
+
 @app.route('/sms/<message>')
 def sms(message):
     client.messages.create(  
@@ -29,9 +32,6 @@ def sms(message):
         body=message,      
         to='+19377166465' 
     ) 
-
-app = FlaskAPI(__name__)
-cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/control/<text>')
 def control(text):
