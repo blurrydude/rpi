@@ -25,7 +25,7 @@ def on_message(client, userdata, message):
         "ip": ip,
         "heartbeat": timestamp
     }
-    with open("pistates.json") as write_file:
+    with open("/home/pi/pistates.json") as write_file:
         write_file.write(json.dumps(pi))
 
 if __name__ == "__main__":
