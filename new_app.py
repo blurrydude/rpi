@@ -40,8 +40,8 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/debug',methods=['GET','POST'])
 def debug():
-    with open('SMS.json','w') as write_file:
-        write_file.write(request.json)
+    data = request.args.get('Body')
+    sms('echo: '+data)
     return 'OK'
 
 @app.route('/control/<text>')
