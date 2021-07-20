@@ -38,10 +38,10 @@ def mosquittoDo(topic, command):
 app = FlaskAPI(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
-@app.route('/debug',methods=['POST'])
+@app.route('/debug',methods=['GET','POST'])
 def debug():
     with open('SMS.json','w') as write_file:
-        write_file.write(json.dumps(request.json))
+        write_file.write(request.json)
     return 'OK'
 
 @app.route('/control/<text>')
