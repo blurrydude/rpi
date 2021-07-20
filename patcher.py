@@ -56,7 +56,7 @@ def doCheck():
         local_version = json.load(read_file)
 
     now = datetime.datetime.now()
-    if local_version[whatiuse] != repo_version[whatiuse] or (now.hour == 0 and now.minute == 0 and webserver is False and whitenoise is False):
+    if local_version[whatiuse] != repo_version[whatiuse]: # or (now.hour == 0 and now.minute == 0 and webserver is False and whitenoise is False):
         with open(local_version_file, "w") as write_file:
             write_file.write(repo_version)
         time.sleep(1)
