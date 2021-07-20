@@ -14,7 +14,7 @@ except:
 f = open('/home/pi/rpi/circuits.json')
 circuits = json.load(f)
 
-def sms(message):
+def sms(message, to):
     if twilled is False:
         return
     account_sid = 'AC26cbcaf937e606af51c6a384728a4e75' 
@@ -23,7 +23,7 @@ def sms(message):
     client.messages.create(  
         messaging_service_sid='MG1cf18075f26dc8ff965a5d2d1940dab5', 
         body=message,      
-        to='+19377166465' 
+        to=to 
     ) 
 
 def mosquittoDo(topic, command):
@@ -38,21 +38,25 @@ def mosquittoDo(topic, command):
 app = FlaskAPI(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
+allowed_senders = ["+19377893750","+19377166465"]
+
 @app.route('/debug',methods=['GET'])
 def debug():
     body = request.args.get("Body")
     sender = request.args.get("From")
-    if sender != "+19377166465":
-        sms(sender + " tried to send me the command: "+ body)
+    if sender not in allowed_senders:
+        sms(sender + " tried to send me the command: "+ body, sender)
         return 'bad'
-    return control("sms "+body)
+    return control("sms~"+sender+"~"+body)
 
 @app.route('/control/<text>')
 def control(text):
     command = text.lower()
     smst = False
     if "sms" in command:
-        command = command.replace("sms ","")
+        split = command.split('~')
+        command = split[2]
+        smssender = split[1]
         smst = True
     mosquittoDo("incoming/commands", command)
     com = "off"
@@ -91,7 +95,7 @@ def control(text):
                 command_list.append({"t":topic,"c":com})
                 text = text + "Turning "+c["label"]+" "+com+"\n"
     if smst is True:
-        sms(text)
+        sms(text,smssender)
     for cmd in command_list:
         mosquittoDo(cmd["t"],cmd["c"])
     return 'OK'
