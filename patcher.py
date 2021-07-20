@@ -14,6 +14,7 @@ try:
     from twilio.rest import Client
     twilled = True
 except:
+    os.system('pip install --yes twilio')
     twilled = False
 
 def sms(message):
