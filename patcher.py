@@ -18,7 +18,7 @@ try:
     twilled = True
     print('we have twilio')
 except:
-    os.system('pip3 install --yes twilio')
+    os.system('pip3 install twilio')
     twilled = False
     print('we do not have twilio')
 
