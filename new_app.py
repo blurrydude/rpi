@@ -40,7 +40,13 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/debug',methods=['GET','POST'])
 def debug():
-    data = request.args.get('Body')
+    try:
+        data = request.args.get('Body')
+    except:
+        try:
+            data = request.form.get('Body')
+        except:
+            data = "could not retrieve body..."
     sms('echo: '+data)
     return 'OK'
 
