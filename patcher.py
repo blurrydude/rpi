@@ -123,9 +123,12 @@ def doCheck():
     print('local: '+local_version[whatiuse]+' repo: '+repo_version[whatiuse])
     now = datetime.datetime.now()
     if webserver is True and local_version["command_center"] != repo_version["command_center"]:
-            sms('building command center on '+myname+' because version updated from '+local_version["command_center"]+' to '+repo_version["command_center"])
-            os.system('cd /home/pi/rpi/command-center && sudo ng build && sudo mv /home/pi/rpi/command-center/dist/command-center/* /var/www/idkline.com/public_html')
-            sms('built command center')
+        with open(local_version_file, "w") as write_file:
+            write_file.write(json.dumps(repo_version))
+            print('updated local version file')
+        sms('building command center on '+myname+' because version updated from '+local_version["command_center"]+' to '+repo_version["command_center"])
+        os.system('cd /home/pi/rpi/command-center && sudo ng build && sudo mv /home/pi/rpi/command-center/dist/command-center/* /var/www/idkline.com/public_html')
+        sms('built command center')
 
     if local_version[whatiuse] != repo_version[whatiuse] or (now.hour == 0 and now.minute == 0 and webserver is False and whitenoise is False):
         with open(local_version_file, "w") as write_file:
