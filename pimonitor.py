@@ -6,7 +6,7 @@ import paho.mqtt.client as mqtt
 import json
 
 running = True
-f = open('circuits.json')
+f = open('/home/pi/rpi/circuits.json')
 circuits = json.load(f)
 
 client = mqtt.Client()
