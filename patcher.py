@@ -122,15 +122,16 @@ def doCheck():
 
     print('local: '+local_version[whatiuse]+' repo: '+repo_version[whatiuse])
     now = datetime.datetime.now()
-    if local_version[whatiuse] != repo_version[whatiuse] or (now.hour == 0 and now.minute == 0 and webserver is False and whitenoise is False):
+    if local_version[whatiuse] != repo_version[whatiuse] or (now.hour == 0 and now.minute == 0 and webserver is False and whitenoise is False) or (webserver is True and local_version["command_center"] != repo_version["command_center"]):
         with open(local_version_file, "w") as write_file:
             write_file.write(json.dumps(repo_version))
             print('updated local version file')
         time.sleep(1)
         if webserver is True:
-            print('copying app')
+            print('copying apps')
             os.system('sudo cp /home/pi/rpi/new_app.py /var/www/api/app.py && sudo systemctl restart flaskrest.service')
-            sms('restarting flask on '+myname+' because '+whatiuse+' updated from '+local_version[whatiuse]+' to '+repo_version[whatiuse])
+            os.system('cd /home/pi/rpi/command-center && sudo ng build && sudo mv /home/pi/rpi/command-center/dist/command-center/* /var/www/idkline.com/public_html')
+            sms('restarting flask and apache2 on '+myname+' because '+whatiuse+' updated from '+local_version[whatiuse]+' to '+repo_version[whatiuse])
         if webserver is False:
             mosquittoDo("pi/"+myname+"/status",myname + " "+str(myip).split(' ')[0].replace("b'","")+" restarting at "+datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
             os.system('sudo reboot now')
