@@ -15,3 +15,8 @@ sudo apt-get install git python3-pip -y
 sudo pip3 install adafruit-circuitpython-neopixel && pip3 install --force-reinstall adafruit-blinka
 
 sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
+
+sudo npm cache clean -f
+sudo npm install -g n
+sudo n stable
+sudo npm install -g @angular/cli
