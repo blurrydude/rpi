@@ -140,9 +140,15 @@ def doCheck():
             os.system('sudo cp /home/pi/rpi/new_app.py /var/www/api/app.py && sudo systemctl restart flaskrest.service')
             sms('restarting flask on '+myname+' because '+whatiuse+' updated from '+local_version[whatiuse]+' to '+repo_version[whatiuse])
         if webserver is False:
-            mosquittoDo("pi/"+myname+"/status",myname + " "+str(myip).split(' ')[0].replace("b'","")+" restarting at "+datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
+            try:
+                mosquittoDo("pi/"+myname+"/status",myname + " "+str(myip).split(' ')[0].replace("b'","")+" restarting at "+datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
+            except:
+                print('nada')
             os.system('sudo reboot now')
-            sms('restarting '+myname+' because '+whatiuse+' updated from '+local_version[whatiuse]+' to '+repo_version[whatiuse])
+            try:
+                sms('restarting '+myname+' because '+whatiuse+' updated from '+local_version[whatiuse]+' to '+repo_version[whatiuse])
+            except:
+                print('neine')
             exit()
         
 
