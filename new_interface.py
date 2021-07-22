@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 import time
-time.sleep(15)
+time.sleep(30)
 import tkinter as tk
 import json
 dev = False
