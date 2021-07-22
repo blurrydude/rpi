@@ -1,5 +1,4 @@
-import time
-time.sleep(120)
+#! /usr/bin/env python3
 import tkinter as tk
 import json
 dev = False
