@@ -1,0 +1,66 @@
+{
+    "main": {
+        "labels": [
+            {
+                "text": "Main Menu", "bg": "black", "fg": "white",
+                "fontname": "Times", "fontsize": 16, "sticky": "nesw",
+                "row": 0, "col": 1, "padx": 5, "pady": 5
+            }
+        ],
+        "buttons": [
+            {
+                "text": "Settings", "func": "screen", "target":"settings",
+                "height": 2, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 1, "col": 0, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Zones", "func": "screen", "target":"zones",
+                "height": 2, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 1, "col": 2, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Modes", "func": "screen", "target":"zones",
+                "height": 2, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 2, "col": 2, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Circuits", "func": "screen", "target":"zones",
+                "height": 2, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 3, "col": 2, "padx": 5, "pady": 5
+            }
+        ]
+    },
+    "settings": {
+        "labels": [
+            {
+                "text": "Settings", "bg": "black", "fg": "white",
+                "fontname": "Times", "fontsize": 16, "sticky": "nesw",
+                "row": 0, "col": 1, "padx": 5, "pady": 5
+            }
+        ],
+        "buttons": [
+            {
+                "text": "Main Menu", "func": "screen", "target":"main",
+                "height": 1, "fontname": "Times", "fontsize": 20,
+                "bg": "orange", "fg": "white", "sticky": "nesw",
+                "row": 0, "col": 0, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Quit", "func": "exit", "target":"",
+                "height": 2, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 1, "col": 0, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Reload Config", "func": "reload", "target":"",
+                "height": 2, "fontname": "Times", "fontsize": 24,
+                "bg": "goldenrod", "fg": "white", "sticky": "nesw",
+                "row": 1, "col": 2, "padx": 5, "pady": 5
+            }
+        ]
+    }
+}
