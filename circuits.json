@@ -141,5 +141,11 @@
     "address": "shelly1pm-68C63AFB6BD5", "relay":"0", "label":"Bench Fan",
     "onModes": [],
     "offModes":["Alert"],
-    "zones":["All", "Ventilation", "Down Stairs"]}
+    "zones":["All", "Ventilation", "Down Stairs"]}, 
+
+    {"notes":"192.168.1.174 - Deck light",
+    "address": "shelly1pm-C82B961DE020", "relay":"0", "label":"Deck Light",
+    "onModes": [],
+    "offModes":["Alert"],
+    "zones":["All", "Exterior", "Deck"]}
 ]

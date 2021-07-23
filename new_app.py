@@ -112,11 +112,11 @@ def control(text):
         smssender = split[1]
         smst = True
     mosquittoDo("pi/"+myname+"/command", command)
-    com = "on"
+    com = "off"
     command_list = []
     text = ""
-    if "off" in command:
-        com = "off"
+    if " on" in command:
+        com = "on"
     if "zone" in command or "area" in command or "all of the" in command:
         for ci in range(0,len(circuits)):
             c = circuits[ci]
