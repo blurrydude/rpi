@@ -1,8 +1,11 @@
 #! /usr/bin/env python3
 import tkinter as tk
 import json
+import requests
 
 class SmartScreen:
+    global current_func
+    global current_mode
     def __init__(self):
         self.buttons = []
         self.labels = []
@@ -21,6 +24,12 @@ class SmartScreen:
             switchToScreen("main")
         if "exit" in button.func:
             exit()
+        if "toggle" in button.func:
+            com = "turn "
+            if current_func == "zone":
+                com = com + " zone "
+            com = com + button.func.replace("toggle","") + " " + current_target.lower()
+            sendCommand(com)
     def hide(self):
         for button in self.buttons:
             button.hide()
@@ -115,24 +124,95 @@ def loadConfig():
             label = SmartLabel(labelconfig)
             screen.labels.append(label)
         screens[screenname] = screen
+    
+    circuit_screen = SmartScreen()
+    #circuit_screen.labels.append(SmartLabel({
+    #            "text": "Circuits", "bg": "black", "fg": "white",
+    #            "fontname": "Times", "fontsize": 16, "sticky": "nesw",
+    #            "row": 0, "col": 1, "padx": 5, "pady": 5
+    #        }))
+    circuit_screen.buttons.append(SmartButton(circuit_screen, 
+            {
+                "text": "Main Menu", "func": "screen", "target":"main",
+                "height": 1, "fontname": "Times", "fontsize": 20,
+                "bg": "orange", "fg": "white", "sticky": "nesw",
+                "row": 0, "col": 0, "padx": 5, "pady": 5
+            }))
+    r = 0
+    c = 1
+    i = 0
+    for circuit in circuits:
+        circuit_screen.buttons.append(SmartButton(circuit_screen, 
+            {
+                "text": circuit["label"], "func": "circuit", "target":circuit["label"],
+                "height": 1, "fontname": "Times", "fontsize": 20,
+                "bg": "darkgreen", "fg": "white", "sticky": "nesw",
+                "row": r, "col": c, "padx": 5, "pady": 5
+            }))
+        i = i + 1
+        if c < 2:
+            c = c + 1
+        else:
+            c = 0
+            r = r + 1
+    screens["circuits"] = circuit_screen
+    toggle_screen = SmartScreen()
+    toggle_screen.buttons.append(SmartButton(toggle_screen, {
+                "text": "Cancel", "func": "screen", "target":"main",
+                "height": 2, "fontname": "Times", "fontsize": 20,
+                "bg": "orange", "fg": "white", "sticky": "nesw",
+                "row": 0, "col": 1, "padx": 5, "pady": 5
+            }))
+    toggle_screen.buttons.append(SmartButton(toggle_screen, {
+                "text": "ON", "func": "toggleon", "target":"",
+                "height": 4, "fontname": "Times", "fontsize": 20,
+                "bg": "darkgreen", "fg": "white", "sticky": "nesw",
+                "row": 1, "col": 1, "padx": 5, "pady": 5
+            }))
+    toggle_screen.buttons.append(SmartButton(toggle_screen, {
+                "text": "OFF", "func": "toggleoff", "target":"",
+                "height": 4, "fontname": "Times", "fontsize": 20,
+                "bg": "darkred", "fg": "white", "sticky": "nesw",
+                "row": 2, "col": 1, "padx": 5, "pady": 5
+            }))
+    screens["toggle"] = toggle_screen
 
 def switchToScreen(target):
     global current_screen
-    print("switchToScreen"+target)
+    print("switchToScreen "+target)
     if current_screen != "":
         screens[current_screen].hide()
     screens[target].draw()
     current_screen = target
 
 def toggleCircuit(target):
-    print("toggleCircuit"+target)
+    global current_func
+    global current_target
+    print("toggleCircuit "+target)
+    current_func = "circuit"
+    current_target = target
+    switchToScreen("toggle")
 
 def setMode(target):
-    print("setMode"+target)
+    print("setMode "+target)
+    sendCommand('set mode '+target)
 
 def setZone(target):
-    print("setZone"+target)
+    global current_func
+    global current_target
+    print("setZone "+target)
+    current_func = "zone"
+    current_target = target
+    switchToScreen("toggle")
 
+def sendCommand(command):
+    print("sending command: "+command)
+    r =requests.get('https://api.idkline.com/control/'+command)
+    print(str(r.status_code))
+    switchToScreen("main")
+
+current_func = ""
+current_target = ""
 circuits = []
 config = {}
 screens = None

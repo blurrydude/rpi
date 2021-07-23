@@ -21,14 +21,174 @@
                 "row": 1, "col": 2, "padx": 5, "pady": 5
             },
             {
-                "text": "Modes", "func": "screen", "target":"zones",
+                "text": "Modes", "func": "screen", "target":"modes",
                 "height": 2, "fontname": "Times", "fontsize": 24,
                 "bg": "darkblue", "fg": "white", "sticky": "nesw",
                 "row": 2, "col": 2, "padx": 5, "pady": 5
             },
             {
-                "text": "Circuits", "func": "screen", "target":"zones",
+                "text": "Circuits", "func": "screen", "target":"circuits",
                 "height": 2, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 3, "col": 2, "padx": 5, "pady": 5
+            }
+        ]
+    },
+    "zones": {
+        "labels": [
+            {
+                "text": "Zones", "bg": "black", "fg": "white",
+                "fontname": "Times", "fontsize": 16, "sticky": "nesw",
+                "row": 0, "col": 1, "padx": 5, "pady": 5
+            }
+        ],
+        "buttons": [
+            {
+                "text": "Main Menu", "func": "screen", "target":"main",
+                "height": 1, "fontname": "Times", "fontsize": 20,
+                "bg": "orange", "fg": "white", "sticky": "nesw",
+                "row": 0, "col": 0, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Up Stairs", "func": "zone", "target":"Up Stairs",
+                "height": 2, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 1, "col": 0, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Down Stairs", "func": "zone", "target":"Down Stairs",
+                "height": 2, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 1, "col": 1, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Exterior", "func": "zone", "target":"Exterior",
+                "height": 2, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 1, "col": 2, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Garage", "func": "zone", "target":"Garage",
+                "height": 2, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 2, "col": 0, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Master Bath", "func": "zone", "target":"Master Bath",
+                "height": 2, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 2, "col": 1, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Guest Bath", "func": "zone", "target":"Guest Bathroom",
+                "height": 2, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 2, "col": 2, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Kitchen", "func": "zone", "target":"Kitchen",
+                "height": 2, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 3, "col": 0, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Dining Room", "func": "zone", "target":"Dining Room",
+                "height": 2, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 3, "col": 1, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Living Room", "func": "zone", "target":"Living Room",
+                "height": 2, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 3, "col": 2, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Office", "func": "zone", "target":"Office",
+                "height": 2, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 4, "col": 0, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Game Room", "func": "zone", "target":"Game Room",
+                "height": 2, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 4, "col": 1, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Laundry Room", "func": "zone", "target":"Laundry Room",
+                "height": 2, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 4, "col": 2, "padx": 5, "pady": 5
+            }
+        ]
+    },
+    "modes": {
+        "labels": [
+            {
+                "text": "Modes", "bg": "black", "fg": "white",
+                "fontname": "Times", "fontsize": 16, "sticky": "nesw",
+                "row": 0, "col": 1, "padx": 5, "pady": 5
+            }
+        ],
+        "buttons": [
+            {
+                "text": "Main Menu", "func": "screen", "target":"main",
+                "height": 1, "fontname": "Times", "fontsize": 20,
+                "bg": "orange", "fg": "white", "sticky": "nesw",
+                "row": 0, "col": 0, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Morning", "func": "mode", "target":"Morning",
+                "height": 3, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 1, "col": 0, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Lunch", "func": "mode", "target":"Lunch",
+                "height": 3, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 1, "col": 1, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Dinner", "func": "mode", "target":"Dinner",
+                "height": 3, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 1, "col": 2, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Day", "func": "mode", "target":"Day",
+                "height": 3, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 2, "col": 0, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Evening", "func": "mode", "target":"Evening",
+                "height": 3, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 2, "col": 1, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Night", "func": "mode", "target":"Night",
+                "height": 3, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 2, "col": 2, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Alert", "func": "mode", "target":"Alert",
+                "height": 3, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 3, "col": 0, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Shower", "func": "mode", "target":"Shower",
+                "height": 3, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 3, "col": 1, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Dark", "func": "mode", "target":"Dark",
+                "height": 3, "fontname": "Times", "fontsize": 24,
                 "bg": "darkblue", "fg": "white", "sticky": "nesw",
                 "row": 3, "col": 2, "padx": 5, "pady": 5
             }
