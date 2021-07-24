@@ -187,7 +187,7 @@
     "address": "shelly1pm-68C63AFB6BD5", "relay":"0", "label":"Bench Fan",
     "onModes": [],
     "offModes":["Alert"],
-    "zones":["All", "Ventilation", "Down Stairs"],
+    "zones":["All", "Ventilation", "Garage"],
     "onTimes":["01:00"],
     "offTimes":["03:00"]}, 
 

@@ -194,6 +194,41 @@
             }
         ]
     },
+    "circuits" : {
+        "labels": [
+            {
+                "text": "Circuits by Zone", "bg": "black", "fg": "white",
+                "fontname": "Times", "fontsize": 16, "sticky": "nesw",
+                "row": 0, "col": 1, "padx": 5, "pady": 5
+            }
+        ],
+        "buttons": [
+            {
+                "text": "Main Menu", "func": "screen", "target":"main",
+                "height": 1, "fontname": "Times", "fontsize": 20,
+                "bg": "orange", "fg": "white", "sticky": "nesw",
+                "row": 1, "col": 1, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Up Stairs", "func": "screen", "target":"upstairs",
+                "height": 3, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 2, "col": 1, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Down Stairs", "func": "screen", "target":"downstairs",
+                "height": 3, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 3, "col": 1, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Garage", "func": "screen", "target":"garage",
+                "height": 3, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 4, "col": 1, "padx": 5, "pady": 5
+            }
+        ]
+    },
     "settings": {
         "labels": [
             {

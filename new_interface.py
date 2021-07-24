@@ -125,37 +125,40 @@ def loadConfig():
             screen.labels.append(label)
         screens[screenname] = screen
     
-    circuit_screen = SmartScreen()
     #circuit_screen.labels.append(SmartLabel({
     #            "text": "Circuits", "bg": "black", "fg": "white",
     #            "fontname": "Times", "fontsize": 16, "sticky": "nesw",
     #            "row": 0, "col": 1, "padx": 5, "pady": 5
     #        }))
-    circuit_screen.buttons.append(SmartButton(circuit_screen, 
-            {
-                "text": "Main Menu", "func": "screen", "target":"main",
-                "height": 1, "fontname": "Times", "fontsize": 20,
-                "bg": "orange", "fg": "white", "sticky": "nesw",
-                "row": 0, "col": 0, "padx": 5, "pady": 5
-            }))
-    r = 0
-    c = 1
-    i = 0
+    r = {}
+    c = {}
     for circuit in circuits:
-        circuit_screen.buttons.append(SmartButton(circuit_screen, 
-            {
-                "text": circuit["label"], "func": "circuit", "target":circuit["label"],
-                "height": 1, "fontname": "Times", "fontsize": 20,
-                "bg": "darkgreen", "fg": "white", "sticky": "nesw",
-                "row": r, "col": c, "padx": 5, "pady": 5
-            }))
-        i = i + 1
-        if c < 2:
-            c = c + 1
+        lbl = circuit["label"]
+        for zone in circuit["zones"]:
+            id = zone.lower().replace(" ","")
+            if id not in screens.keys():
+                screens[id] = SmartScreen()
+                screens[id].buttons.append(SmartButton(screens[id], 
+                {
+                    "text": "Back", "func": "screen", "target":"circuits",
+                    "height": 2, "fontname": "Times", "fontsize": 20,
+                    "bg": "orange", "fg": "white", "sticky": "nesw",
+                    "row": 0, "col": 0, "padx": 5, "pady": 5
+                }))
+                r[id] = 0
+                c[id] = 1
+            screens[id].buttons.append(SmartButton(screens[id], 
+                {
+                    "text": lbl, "func": "circuit", "target":lbl,
+                    "height": 2, "fontname": "Times", "fontsize": 20,
+                    "bg": "darkgreen", "fg": "white", "sticky": "nesw",
+                    "row": r[id], "col": c[id], "padx": 5, "pady": 5
+                }))
+        if c[id] < 2:
+            c[id] = c[id] + 1
         else:
-            c = 0
-            r = r + 1
-    screens["circuits"] = circuit_screen
+            c[id] = 0
+            r[id] = r[id] + 1
     toggle_screen = SmartScreen()
     toggle_screen.buttons.append(SmartButton(toggle_screen, {
                 "text": "Cancel", "func": "screen", "target":"main",
