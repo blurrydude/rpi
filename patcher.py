@@ -99,6 +99,8 @@ def sms(message):
 
 def doCheck():
     os.system('cd /home/pi/rpi && git pull --all')
+    if myname == "mosquitto":
+        os.system('cd /home/pi/rpi && sudo python3 new_automation.py')
     time.sleep(9)
     repo_version_file = '/home/pi/rpi/version.json'
     local_version_file = '/home/pi/version.json'
