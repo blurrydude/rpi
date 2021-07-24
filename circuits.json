@@ -173,7 +173,7 @@
     "offModes":["Dark", "Night", "Day"],
     "zones":["All", "Garage"],
     "onTimes":["05:15","11:00","17:00"],
-    "offTimes":["09:30","14:00","23:05"]}, 
+    "offTimes":["09:30","14:00","23:07"]}, 
 
     {"notes":"192.168.1.241 - Stairway Lights",
     "address": "shellyswitch25-8CAAB561DDCF", "relay":"1", "label":"Stairway",
