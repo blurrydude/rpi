@@ -141,7 +141,7 @@
     "offModes":["Dark", "Night", "Evening", "Day"],
     "zones":["All", "Kitchen", "Counter", "Down Stairs"],
     "onTimes":["05:00","16:00", "22:00"],
-    "offTimes":["08:30","21:00", "1:00"]}, 
+    "offTimes":["08:30","21:00", "01:00"]}, 
 
     {"notes":"192.168.1.245 - Bar Lights",
     "address": "shellyswitch25-8CAAB55F4553", "relay":"1", "label":"Bar",
