@@ -14,6 +14,7 @@ def loadConfig():
 
 def doCheck():
     now = datetime.now().strftime("%H:%M")
+    print('do check: '+now)
     for circuit in circuits:
         for ontime in circuit["onTimes"]:
             if ontime == now:
