@@ -15,12 +15,6 @@
                 "row": 1, "col": 0, "padx": 5, "pady": 5
             },
             {
-                "text": "Schedule", "func": "screen", "target":"schedule",
-                "height": 2, "fontname": "Times", "fontsize": 24,
-                "bg": "darkblue", "fg": "white", "sticky": "nesw",
-                "row": 2, "col": 0, "padx": 5, "pady": 5
-            },
-            {
                 "text": "Status", "func": "screen", "target":"status",
                 "height": 2, "fontname": "Times", "fontsize": 24,
                 "bg": "darkblue", "fg": "white", "sticky": "nesw",
