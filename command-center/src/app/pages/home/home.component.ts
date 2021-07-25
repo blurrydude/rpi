@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { concat } from 'rxjs';
 import { StatusService } from "../../services/status.service";
 
 @Component({
@@ -6,10 +7,12 @@ import { StatusService } from "../../services/status.service";
   templateUrl: './home.component.html'
 })
 export class HomeComponent {
-    //thing: object;
+    status: Array<string>;
     constructor(private httpMessageService: StatusService) { 
       this.httpMessageService.getStatus().toPromise().then(msg => {
-        console.log(msg);
+        for(var k in msg) {
+          this.status.push(k + ": " + msg[k] + " W")
+        }
       });
     }
     
