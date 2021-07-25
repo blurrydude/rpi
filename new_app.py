@@ -102,6 +102,26 @@ def states():
             continue
     return states
 
+@app.route('/powerstates',methods=['GET'])
+def states():
+    dirname = '/home/pi'
+    
+    ext = ('.state')
+    states = {}
+    for f in os.listdir(dirname):
+        if f.endswith(ext):
+            s = f.split('/')
+            a = s[len(s)-1].split('.')[0].split('_')
+            address = a[0]
+            relay = a[1]
+            for circuit in circuits:
+                if circuit["address"] == address and circuit["relay"] == relay:
+                    x = open(dirname+'/'+address+'_'+relay+'_power.state')
+                    states[circuit["label"]] = x.read()
+        else:
+            continue
+    return states
+
 @app.route('/control/<text>')
 def control(text):
     command = text.lower()
