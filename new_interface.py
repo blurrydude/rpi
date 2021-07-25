@@ -206,28 +206,41 @@ def loadConfig():
 def refreshStatusDetail():
     global status
     global power
-    
+    js =requests.get('https://api.idkline.com/states').text
+    status = json.loads(js)
+    js =requests.get('https://api.idkline.com/powerstates').text
+    power = json.loads(js)
 
 def switchToScreen(target):
     global current_screen
     print("switchToScreen "+target)
-    js =requests.get('https://api.idkline.com/states').text
-    rs = json.loads(js)
+    refreshStatusDetail()
     if current_screen != "":
         screens[current_screen].hide()
     if target == "status":
-        j =requests.get('https://api.idkline.com/powerstates').text
-        r = json.loads(j)
         w = 0
-        for key in r.keys():
-            p = round(float(r[key]))
+        for key in power.keys():
+            p = round(float(power[key]))
             w = w + p
         screens["status"].labels[1].text = "Power: "+str(w)+" W"
         screens["status"].hide()
+        r = len(screens["status"].labels)
+        while len(screens["status"].labels) < len(circuits)+2:
+            screens["status"].labels.append(SmartLabel({
+                "text": "", "bg": "black", "fg": "white",
+                "fontname": "Times", "fontsize": 12, "sticky": "nesw",
+                "row": r, "col": 1, "padx": 5, "pady": 5
+            }))
+            r = r + 1
+        i = 2
+        for circuit in circuits:
+            if circuit["label"] in status.keys() and circuit["label"] in power.keys():
+                screens["status"].labels[i].text = circuit["label"] + "(" + status[circuit["label"]] + "): " + power[circuit["label"]] + " W"
+                i = i + 1
     if target != "zones":
         for button in screens[target].buttons:
-            if button.text in rs.keys():
-                if rs[button.text] == "on":
+            if button.text in status.keys():
+                if status[button.text] == "on":
                     button.bg = "darkgreen"
                 else:
                     button.bg = "darkred"
