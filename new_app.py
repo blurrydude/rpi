@@ -103,7 +103,7 @@ def states():
     return states
 
 @app.route('/powerstates',methods=['GET'])
-def states():
+def powerstates():
     dirname = '/home/pi'
     
     ext = ('.state')
