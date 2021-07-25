@@ -109,26 +109,6 @@ def loadConfig():
     except:
         print("could not check hosts")
 
-    try:
-        hostfile = open("/etc/xdg/lxsession/LXDE-pi/autostart")
-        hosts = hostfile.read()
-        if "new_interface" not in hosts:
-            hosts = hosts + "\n@sudo python3 /home/pi/rpi/new_interface.py\n"
-            with open("/etc/xdg/lxsession/LXDE-pi/autostart","w") as write_file:
-                write_file.write(hosts)
-    except:
-        print("could not check LXDE-pi/autostart")
-
-    try:
-        hostfile = open("/etc/xdg/lxsession/LXDE/autostart")
-        hosts = hostfile.read()
-        if "new_interface" not in hosts:
-            hosts = hosts + "\n@sudo python3 /home/pi/rpi/new_interface.py\n"
-            with open("/etc/xdg/lxsession/LXDE/autostart","w") as write_file:
-                write_file.write(hosts)
-    except:
-        print("could not check LXDE/autostart")
-
     if screens is not None:
         for scrn in screens.keys():
             s = screens[scrn]
