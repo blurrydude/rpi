@@ -213,5 +213,13 @@
     "offModes":["Alert"],
     "zones":["All", "Garage", "Storage"],
     "onTimes":[],
+    "offTimes":[]}, 
+
+    {"notes":"192.168.1.178 - Deck Fountain",
+    "address": "shelly1pm-C82B961DD818", "relay":"0", "label":"Deck Fountain",
+    "onModes": [],
+    "offModes":["Alert"],
+    "zones":["All", "Exterior", "Deck"],
+    "onTimes":[],
     "offTimes":[]}
 ]
