@@ -199,7 +199,7 @@ def loadConfig():
             }))
     screens["status"].labels.append(SmartLabel({
                 "text": "Power: 0 W", "bg": "black", "fg": "white",
-                "fontname": "Times", "fontsize": 32, "sticky": "nesw",
+                "fontname": "Times", "fontsize": 24, "sticky": "nesw",
                 "row": 2, "col": 1, "padx": 5, "pady": 5
             }))
 
