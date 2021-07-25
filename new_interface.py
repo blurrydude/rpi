@@ -224,7 +224,7 @@ def switchToScreen(target):
             w = w + p
         screens["status"].labels[1].text = "Power: "+str(w)+" W"
         screens["status"].hide()
-        r = len(screens["status"].labels)
+        r = len(screens["status"].labels)+1
         c = (r-2)%3
         while len(screens["status"].labels) < len(circuits)+3:
             screens["status"].labels.append(SmartLabel({
@@ -237,7 +237,7 @@ def switchToScreen(target):
                 r = r + 1
             else:
                 c = c + 1
-        i = 3
+        i = 2
         for circuit in circuits:
             if circuit["label"] in status.keys() and circuit["label"] in power.keys():
                 screens["status"].labels[i].text = circuit["label"] + " (" + status[circuit["label"]] + "): " + power[circuit["label"]] + " W"
