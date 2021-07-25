@@ -159,26 +159,32 @@ def loadConfig():
         else:
             c[id] = 0
             r[id] = r[id] + 1
-    toggle_screen = SmartScreen()
-    toggle_screen.buttons.append(SmartButton(toggle_screen, {
+
+    screens["toggle"] = SmartScreen()
+    screens["toggle"].labels.append(SmartLabel({
+                "text": "TOGGLE", "bg": "black", "fg": "white",
+                "fontname": "Times", "fontsize": 16, "sticky": "nesw",
+                "row": 0, "col": 1, "padx": 5, "pady": 5
+            }))
+    screens["toggle"].buttons.append(SmartButton(screens["toggle"], {
                 "text": "Cancel", "func": "screen", "target":"main",
                 "height": 2, "fontname": "Times", "fontsize": 20,
                 "bg": "orange", "fg": "white", "sticky": "nesw",
                 "row": 0, "col": 1, "padx": 5, "pady": 5
             }))
-    toggle_screen.buttons.append(SmartButton(toggle_screen, {
+    screens["toggle"].buttons.append(SmartButton(screens["toggle"], {
                 "text": "ON", "func": "toggleon", "target":"",
                 "height": 4, "fontname": "Times", "fontsize": 20,
                 "bg": "darkgreen", "fg": "white", "sticky": "nesw",
                 "row": 1, "col": 1, "padx": 5, "pady": 5
             }))
-    toggle_screen.buttons.append(SmartButton(toggle_screen, {
+    screens["toggle"].buttons.append(SmartButton(screens["toggle"], {
                 "text": "OFF", "func": "toggleoff", "target":"",
                 "height": 4, "fontname": "Times", "fontsize": 20,
                 "bg": "darkred", "fg": "white", "sticky": "nesw",
                 "row": 2, "col": 1, "padx": 5, "pady": 5
             }))
-    screens["toggle"] = toggle_screen
+
     screens["status"] = SmartScreen()
     screens["status"].buttons.append(SmartButton(screens["status"],{
                 "text": "Main Menu", "func": "screen", "target":"main",
@@ -200,6 +206,8 @@ def loadConfig():
 def switchToScreen(target):
     global current_screen
     print("switchToScreen "+target)
+    js =requests.get('https://api.idkline.com/states').text
+    rs = json.loads(js)
     if current_screen != "":
         screens[current_screen].hide()
     if target == "status":
@@ -211,6 +219,14 @@ def switchToScreen(target):
             w = w + p
         screens["status"].labels[1].text = "Power: "+str(w)+" W"
         screens["status"].hide()
+    if target != "zones":
+        for button in screens[target].buttons:
+            if button.text in rs.keys():
+                if rs[button.text] == "on":
+                    button.bg = "darkgreen"
+                else:
+                    button.bg = "darkred"
+            
     screens[target].draw()
     current_screen = target
 
@@ -220,6 +236,17 @@ def toggleCircuit(target):
     print("toggleCircuit "+target)
     current_func = "circuit"
     current_target = target
+    j =requests.get('https://api.idkline.com/states').text
+    r = json.loads(j)
+    if target in r.keys():
+        com = "turn off " + target.lower()
+        if r[target] == "off":
+            com = "turn on " + target.lower()
+        sendCommand(com)
+        return
+    else:
+        screens["toggle"].labels[0].text = target
+    screens["toggle"].hide()
     switchToScreen("toggle")
 
 def setMode(target):
