@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { StatusService } from "../../services/status.service";
 
 @Component({
   selector: 'home',
   templateUrl: './home.component.html'
 })
 export class HomeComponent {
-    thing: string;
-    constructor() { this.thing = 'Processing'; }
+    //thing: object;
+    constructor(private httpMessageService: StatusService) { 
+      this.httpMessageService.getStatus().toPromise().then(msg => {
+        console.log(msg);
+      });
+    }
     
 }
