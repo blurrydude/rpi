@@ -1,4 +1,5 @@
 #! /usr/bin/env python3
+from os import write
 import tkinter as tk
 import json
 import requests
@@ -97,6 +98,36 @@ def loadConfig():
     global circuits
     global config
     global screens
+
+    try:
+        hostfile = open("/etc/hosts")
+        hosts = hostfile.read()
+        if "api.idkline.com" not in hosts:
+            hosts = hosts + "\n192.168.1.23\tapi.idkline.com\n"
+            with open("/etc/hosts","w") as write_file:
+                write_file.write(hosts)
+    except:
+        print("could not check hosts")
+
+    try:
+        hostfile = open("/etc/xdg/lxsession/LXDE-pi/autostart")
+        hosts = hostfile.read()
+        if "new_interface" not in hosts:
+            hosts = hosts + "\n@sudo python3 /home/pi/rpi/new_interface.py\n"
+            with open("/etc/xdg/lxsession/LXDE-pi/autostart","w") as write_file:
+                write_file.write(hosts)
+    except:
+        print("could not check LXDE-pi/autostart")
+
+    try:
+        hostfile = open("/etc/xdg/lxsession/LXDE/autostart")
+        hosts = hostfile.read()
+        if "new_interface" not in hosts:
+            hosts = hosts + "\n@sudo python3 /home/pi/rpi/new_interface.py\n"
+            with open("/etc/xdg/lxsession/LXDE/autostart","w") as write_file:
+                write_file.write(hosts)
+    except:
+        print("could not check LXDE/autostart")
 
     if screens is not None:
         for scrn in screens.keys():
