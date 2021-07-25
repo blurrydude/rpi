@@ -14,13 +14,14 @@ def loadConfig():
 
 def doCheck():
     now = datetime.now().strftime("%H:%M")
+    day = datetime.now().strftime("%a").lower()
     print('do check: '+now)
     for circuit in circuits:
         for ontime in circuit["onTimes"]:
-            if ontime == now:
+            if now in ontime and day in ontime:
                 sendCommand("turn " + circuit["label"] + " on")
-        for ontime in circuit["offTimes"]:
-            if ontime == now:
+        for offtime in circuit["offTimes"]:
+            if now in offtime and day in offtime:
                 sendCommand("turn " + circuit["label"] + " off")
 
 circuits = []

@@ -179,12 +179,38 @@ def loadConfig():
                 "row": 2, "col": 1, "padx": 5, "pady": 5
             }))
     screens["toggle"] = toggle_screen
+    screens["status"] = SmartScreen()
+    screens["status"].buttons.append(SmartButton(screens["status"],{
+                "text": "Main Menu", "func": "screen", "target":"main",
+                "height": 1, "fontname": "Times", "fontsize": 20,
+                "bg": "orange", "fg": "white", "sticky": "nesw",
+                "row": 1, "col": 1, "padx": 5, "pady": 5
+            }))
+    screens["status"].labels.append(SmartLabel({
+                "text": "Status", "bg": "black", "fg": "white",
+                "fontname": "Times", "fontsize": 16, "sticky": "nesw",
+                "row": 0, "col": 1, "padx": 5, "pady": 5
+            }))
+    screens["status"].labels.append(SmartLabel({
+                "text": "Power: 0 W", "bg": "black", "fg": "white",
+                "fontname": "Times", "fontsize": 32, "sticky": "nesw",
+                "row": 2, "col": 1, "padx": 5, "pady": 5
+            }))
 
 def switchToScreen(target):
     global current_screen
     print("switchToScreen "+target)
     if current_screen != "":
         screens[current_screen].hide()
+    if target == "status":
+        j =requests.get('https://api.idkline.com/powerstates').text
+        r = json.loads(j)
+        w = 0
+        for key in r.keys():
+            p = round(float(r[key]))
+            w = w + p
+        screens["status"].labels[1].text = "Power: "+str(w)+" W"
+        screens["status"].hide()
     screens[target].draw()
     current_screen = target
 
