@@ -203,6 +203,11 @@ def loadConfig():
                 "row": 2, "col": 1, "padx": 5, "pady": 5
             }))
 
+def refreshStatusDetail():
+    global status
+    global power
+    
+
 def switchToScreen(target):
     global current_screen
     print("switchToScreen "+target)
@@ -271,6 +276,8 @@ current_func = ""
 current_target = ""
 circuits = []
 config = {}
+status = {}
+power = {}
 screens = None
 modes = ["Morning", "Day", "Lunch", "Day", "Dinner", "Evening", "Shower", "Night", "Dark", "Alert"]
 current_mode = "Dark"
