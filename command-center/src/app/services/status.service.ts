@@ -38,16 +38,7 @@ export class StatusService {
   }
 
   public getStatus() {
-    return this.http.get(this.baseurl+"states", this.options)
-      .pipe(
-        catchError(err => {
-          return this.handleError(err);
-        })
-      );
-  }
-
-  public getPowerStatus() {
-    return this.http.get(this.baseurl+"powerstates", this.options)
+    return this.http.get(this.baseurl+"webstates", this.options)
       .pipe(
         catchError(err => {
           return this.handleError(err);

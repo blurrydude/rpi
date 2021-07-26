@@ -13,13 +13,13 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-2" *ngFor="let circuitstatus of powerstatus | keyvalue">
+      <div class="col-md-2" *ngFor="let circuitstatus of status | keyvalue">
         <div class="card text-center my-2">
-          <div class="card-header">
+          <div class="card-header" [ngClass]="{'bg-success':circuitstatus.value['state'] == 'on'}">
             <h5>{{circuitstatus.key}}</h5>
           </div>
           <div class="card-body">
-            {{circuitstatus.value}}
+            {{circuitstatus.value["power"]}}
           </div>
         </div>
       </div>

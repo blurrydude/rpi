@@ -122,20 +122,8 @@ def states():
             for circuit in circuits:
                 if circuit["address"] == address and circuit["relay"] == relay:
                     x = open(dirname+'/'+address+'_'+relay+'.state')
-                    states[circuit["label"]] = {"state":x.read(),"power":0}
-        else:
-            continue
-
-    for f in os.listdir(dirname):
-        if f.endswith(ext):
-            s = f.split('/')
-            a = s[len(s)-1].split('.')[0].split('_')
-            address = a[0]
-            relay = a[1]
-            for circuit in circuits:
-                if circuit["address"] == address and circuit["relay"] == relay:
-                    x = open(dirname+'/'+address+'_'+relay+'_power.state')
-                    states[circuit["label"]]["power"] = int(x.read())
+                    y = open(dirname+'/'+address+'_'+relay+'_power.state')
+                    states[circuit["label"]] = {"state":x.read(),"power":int(y.read())}
         else:
             continue
     
