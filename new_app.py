@@ -109,6 +109,7 @@ def states():
 
 @app.route('/webstates',methods=['GET'])
 def webstates():
+    reloadCircuits()
     dirname = '/home/pi'
     
     ext = ('.state')
@@ -123,7 +124,7 @@ def webstates():
                 if circuit["address"] == address and circuit["relay"] == relay:
                     x = open(dirname+'/'+address+'_'+relay+'.state')
                     y = open(dirname+'/'+address+'_'+relay+'_power.state')
-                    states[circuit["label"]] = {"state":x.read(),"power":int(y.read())}
+                    states[circuit["label"]] = {"state":x.read(),"power":float(y.read())}
         else:
             continue
     
