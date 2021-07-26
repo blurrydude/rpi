@@ -13,7 +13,7 @@ class SmartScreen:
         self.buttons = []
         self.labels = []
     def onclick(self, button):
-        print(button.text)
+        #print(button.text)
         if "screen" in button.func:
             switchToScreen(button.target)
         if "circuit" in button.func:
@@ -100,16 +100,6 @@ def loadConfig():
     global circuits
     global config
     global screens
-
-    try:
-        hostfile = open("/etc/hosts")
-        hosts = hostfile.read()
-        if "api.idkline.com" not in hosts:
-            hosts = hosts + "\n192.168.1.23\tapi.idkline.com\n"
-            with open("/etc/hosts","w") as write_file:
-                write_file.write(hosts)
-    except:
-        print("could not check hosts")
 
     if screens is not None:
         for scrn in screens.keys():
@@ -226,7 +216,7 @@ def refreshStatusDetail():
 
 def switchToScreen(target):
     global current_screen
-    print("switchToScreen "+target)
+    #print("switchToScreen "+target)
     refreshStatusDetail()
     if current_screen != "":
         screens[current_screen].hide()
@@ -269,7 +259,7 @@ def switchToScreen(target):
 def toggleCircuit(target):
     global current_func
     global current_target
-    print("toggleCircuit "+target)
+    #print("toggleCircuit "+target)
     current_func = "circuit"
     current_target = target
     j =requests.get('https://api.idkline.com/states').text
@@ -286,21 +276,21 @@ def toggleCircuit(target):
     switchToScreen("toggle")
 
 def setMode(target):
-    print("setMode "+target)
+    #print("setMode "+target)
     sendCommand('set mode '+target)
 
 def setZone(target):
     global current_func
     global current_target
-    print("setZone "+target)
+    #print("setZone "+target)
     current_func = "zone"
     current_target = target
     switchToScreen("toggle")
 
 def sendCommand(command):
-    print("sending command: "+command)
+    #print("sending command: "+command)
     r =requests.get('https://api.idkline.com/control/'+command)
-    print(str(r.status_code))
+    #print(str(r.status_code))
     switchToScreen("main")
 
 
