@@ -22,6 +22,11 @@ f = open('/home/pi/config.json')
 config = json.load(f)
 retries = 0
 
+def reloadCircuits():
+    global circuits
+    f = open('/home/pi/rpi/circuits.json')
+    circuits = json.load(f)
+
 def log(message):
     with open('/home/pi/SMS.log','a') as write_file:
         write_file.write(message+'\n')
@@ -102,6 +107,40 @@ def states():
             continue
     return states
 
+@app.route('/webstates',methods=['GET'])
+def states():
+    dirname = '/home/pi'
+    
+    ext = ('.state')
+    states = {}
+    for f in os.listdir(dirname):
+        if f.endswith(ext):
+            s = f.split('/')
+            a = s[len(s)-1].split('.')[0].split('_')
+            address = a[0]
+            relay = a[1]
+            for circuit in circuits:
+                if circuit["address"] == address and circuit["relay"] == relay:
+                    x = open(dirname+'/'+address+'_'+relay+'.state')
+                    states[circuit["label"]] = {"state":x.read(),"power":0}
+        else:
+            continue
+
+    for f in os.listdir(dirname):
+        if f.endswith(ext):
+            s = f.split('/')
+            a = s[len(s)-1].split('.')[0].split('_')
+            address = a[0]
+            relay = a[1]
+            for circuit in circuits:
+                if circuit["address"] == address and circuit["relay"] == relay:
+                    x = open(dirname+'/'+address+'_'+relay+'_power.state')
+                    states[circuit["label"]]["power"] = int(x.read())
+        else:
+            continue
+    
+    return states
+
 @app.route('/powerstates',methods=['GET'])
 def powerstates():
     dirname = '/home/pi'
@@ -124,6 +163,7 @@ def powerstates():
 
 @app.route('/control/<text>')
 def control(text):
+    reloadCircuits()
     command = text.lower()
     smst = False
     if "sms" in command:
@@ -179,6 +219,15 @@ def control(text):
     for cmd in command_list:
         mosquittoDo(cmd["t"],cmd["c"])
     return 'OK'
+
+@app.route('/circuitinfo/<circuitlabel>')
+def circuitinfo(circuitlabel):
+    reloadCircuits()
+    for circuit in circuits:
+        if circuit["label"] == circuitlabel:
+            return circuit
+    return None
+    
 
 if __name__ == '__main__':
     app.run(debug=False, port=8080, host='192.168.1.23')
