@@ -129,11 +129,6 @@ def doCheck():
     os.system('cd /home/pi/rpi && git pull --all')
     if myname == "mosquitto":
         os.system('cd /home/pi/rpi && sudo python3 new_automation.py')
-    if whatiuse == "new_interface":
-        check = findProcessIdByName("python3")
-        print(str(len(check)))
-        if len(check) <= 1:
-            os.system('sudo python3 /home/pi/rpi/new_interface.py &')
     time.sleep(9)
     repo_version_file = '/home/pi/rpi/version.json'
     local_version_file = '/home/pi/version.json'
