@@ -7,6 +7,12 @@ import socket
 import json
 import sys
 import subprocess
+try:
+    import psutil
+except:
+    os.system('pip3 install psutil')
+    import psutil
+
 
 myname = socket.gethostname()
 myip = subprocess.check_output(['hostname', '-I'])
@@ -37,7 +43,12 @@ lookup = {
     "rpi4-web-server": "app",
     "whitenoisepi": "command_whitenoise",
     "addresspi": "mqtt_rgb",
-    "windowpi": "mqtt_rgb"
+    "windowpi": "mqtt_rgb",
+    "garagecontrolpi": "new_interface",
+    "livingroompi": "new_interface",
+    "sunroompi": "new_interface",
+    "raspberrypi": "new_interface",
+    "hallwaypi": "new_interface"
 }
 
 whatiuse = "command_light"
@@ -59,6 +70,23 @@ else:
             whatiuse = "command_garage"
     except:
         whatiuse = "command_light"
+
+def findProcessIdByName(processName):
+    '''
+    Get a list of all the PIDs of a all the running process whose name contains
+    the given string processName
+    '''
+    listOfProcessObjects = []
+    #Iterate over the all the running process
+    for proc in psutil.process_iter():
+       try:
+           pinfo = proc.as_dict(attrs=['pid', 'name', 'create_time'])
+           # Check if process name contains the given name string.
+           if processName.lower() in pinfo['name'].lower() :
+               listOfProcessObjects.append(pinfo)
+       except (psutil.NoSuchProcess, psutil.AccessDenied , psutil.ZombieProcess) :
+           pass
+    return listOfProcessObjects
 
 def mosquittoDo(topic, command):
     global received
@@ -101,6 +129,9 @@ def doCheck():
     os.system('cd /home/pi/rpi && git pull --all')
     if myname == "mosquitto":
         os.system('cd /home/pi/rpi && sudo python3 new_automation.py')
+    if whatiuse == "new_interface":
+        check = findProcessIdByName("python3")
+        print(check)
     time.sleep(9)
     repo_version_file = '/home/pi/rpi/version.json'
     local_version_file = '/home/pi/version.json'
