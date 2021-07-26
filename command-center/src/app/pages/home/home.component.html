@@ -1,6 +1,18 @@
 <div class="row">
   <div class="offset-1 col-md-10">
     <div class="row">
+      <div class="col-md-2" *ngFor="let pistat of pistatus | keyvalue">
+        <div class="card text-center my-2">
+          <div class="card-header">
+            <h5>{{pistat.key}}</h5>
+          </div>
+          <div class="card-body">
+            {{pistat.value}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-2" *ngFor="let circuitstatus of status | keyvalue">
         <div class="card text-center my-2">
           <div class="card-header">

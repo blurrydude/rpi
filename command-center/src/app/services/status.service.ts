@@ -46,6 +46,15 @@ export class StatusService {
       );
   }
 
+  public getPiStatus() {
+    return this.http.get(this.baseurl+"pistates", this.options)
+      .pipe(
+        catchError(err => {
+          return this.handleError(err);
+        })
+      );
+  }
+
   // public getLoansByCompany(companyNumber: string) {
   //   this.options.params = new HttpParams({ fromString: "?companyId=" + companyNumber });
   //   return this.http.get<LoanMessage[]>(this.byCompanyUrl, this.options)
