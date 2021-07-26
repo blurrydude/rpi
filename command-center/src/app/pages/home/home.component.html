@@ -7,13 +7,13 @@
             <h5>{{pistat.key}}</h5>
           </div>
           <div class="card-body">
-            {{pistat.value}}
+            {{pistat.value['heartbeat']}}
           </div>
         </div>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-2" *ngFor="let circuitstatus of status | keyvalue">
+      <div class="col-md-2" *ngFor="let circuitstatus of powerstatus | keyvalue">
         <div class="card text-center my-2">
           <div class="card-header">
             <h5>{{circuitstatus.key}}</h5>
