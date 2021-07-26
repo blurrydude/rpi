@@ -15,7 +15,7 @@
     <div class="row">
       <div class="col-md-2" *ngFor="let circuitstatus of status | keyvalue">
         <div class="card text-center my-2">
-          <div class="card-header" [ngClass]="{'bg-success':circuitstatus.value['state'] == 'on'}">
+          <div class="card-header" [ngClass]="{'bg-success text-light':circuitstatus.value['state'] == 'on','bg-danger text-light':circuitstatus.value['state'] == 'off'}">
             <h5>{{circuitstatus.key}}</h5>
           </div>
           <div class="card-body">
