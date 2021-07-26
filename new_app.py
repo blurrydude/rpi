@@ -108,7 +108,7 @@ def states():
     return states
 
 @app.route('/webstates',methods=['GET'])
-def states():
+def webstates():
     dirname = '/home/pi'
     
     ext = ('.state')
