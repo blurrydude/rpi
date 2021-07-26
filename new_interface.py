@@ -303,6 +303,7 @@ def sendCommand(command):
     print(str(r.status_code))
     switchToScreen("main")
 
+
 current_func = ""
 current_target = ""
 circuits = []
@@ -314,19 +315,20 @@ modes = ["Morning", "Day", "Lunch", "Day", "Dinner", "Evening", "Shower", "Night
 current_mode = "Dark"
 current_screen = ""
 
-window = tk.Tk()
-width = window.winfo_screenwidth()
-height = window.winfo_screenheight()
+if __name__ == '__main__':
+    window = tk.Tk()
+    width = window.winfo_screenwidth()
+    height = window.winfo_screenheight()
 
-window.attributes("-fullscreen", 1)
-window.geometry(str(width)+"x"+str(height))
-#window.geometry("800x500")
-window.configure(bg='black')
-window.columnconfigure(0, minsize=width/3)
-window.columnconfigure(1, minsize=width/3)
-window.columnconfigure(2, minsize=width/3)
+    window.attributes("-fullscreen", 1)
+    window.geometry(str(width)+"x"+str(height))
+    #window.geometry("800x500")
+    window.configure(bg='black')
+    window.columnconfigure(0, minsize=width/3)
+    window.columnconfigure(1, minsize=width/3)
+    window.columnconfigure(2, minsize=width/3)
 
-loadConfig()
-switchToScreen("main")
+    loadConfig()
+    switchToScreen("main")
 
-window.mainloop()
+    window.mainloop()
