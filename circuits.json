@@ -195,7 +195,7 @@
     "address": "shelly1pm-C82B961DE020", "relay":"0", "label":"Deck Light",
     "onModes": ["Alert"],
     "offModes":[],
-    "zones":["All", "Exterior", "Deck"],
+    "zones":["All", "Exterior"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:19:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:22:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:22:30"]}, 
 
@@ -203,7 +203,7 @@
     "address": "shelly1pm-C82B961DD0EF", "relay":"0", "label":"Laundry Room",
     "onModes": ["Alert"],
     "offModes":[],
-    "zones":["All", "Garage", "Laundry"],
+    "zones":["All", "Garage"],
     "onTimes":[],
     "offTimes":[]}, 
 
@@ -219,7 +219,7 @@
     "address": "shelly1pm-C82B961DD818", "relay":"0", "label":"Deck Fountain",
     "onModes": [],
     "offModes":["Alert"],
-    "zones":["All", "Exterior", "Deck"],
+    "zones":["All", "Exterior"],
     "onTimes":[],
     "offTimes":[]}
 ]
