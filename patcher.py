@@ -47,7 +47,7 @@ lookup = {
     "garagecontrolpi": "new_interface",
     "livingroompi": "new_interface",
     "sunroompi": "new_interface",
-    "raspberrypi": "new_interface",
+    "counterpi": "new_interface",
     "hallwaypi": "new_interface"
 }
 
