@@ -45,9 +45,9 @@ lookup = {
     "addresspi": "mqtt_rgb",
     "windowpi": "mqtt_rgb",
     "garagecontrolpi": "new_interface",
-    "livingroompi": "new_interface",
-    "sunroompi": "new_interface",
-    "counterpi": "new_interface",
+    "kitchenpi": "new_interface",
+    "dayroompi": "new_interface",
+    "tablepi": "new_interface",
     "hallwaypi": "new_interface"
 }
 
