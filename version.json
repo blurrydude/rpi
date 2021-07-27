@@ -4,6 +4,6 @@
     "mqtt_rgb": "0.1.5",
     "command_whitenoise": "0.1.4",
     "new_interface": "0.1.5",
-    "app": "1.2.4",
+    "app": "1.2.5",
     "command_center": "0.1.5"
 }
