@@ -245,5 +245,13 @@
     "offModes":["Dark", "Night", "Day"],
     "zones":["Exterior", "Deck"],
     "onTimes":[],
+    "offTimes":[]}, 
+
+    {"notes":"192.168.1.184 - Whole House Fan",
+    "address": "shelly1pm-84CCA89FBB9A", "relay":"0", "label":"Whole House Fan",
+    "onModes": [],
+    "offModes":[],
+    "zones":["Ventilation"],
+    "onTimes":[],
     "offTimes":[]}
 ]

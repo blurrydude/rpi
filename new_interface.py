@@ -203,7 +203,7 @@ def loadConfig():
     screens["status"].labels.append(SmartLabel({
                 "text": "Power: 0 W", "bg": "black", "fg": "white",
                 "fontname": "Times", "fontsize": 24, "sticky": "nesw",
-                "row": 2, "col": 1, "padx": 5, "pady": 5
+                "row": 0, "col": 2, "padx": 5, "pady": 5
             }))
 
 def refreshStatusDetail():
@@ -231,12 +231,12 @@ def switchToScreen(target):
         screens["status"].labels[1].text = "Power: "+str(w)+" W"
         screens["status"].hide()
         r = len(screens["status"].labels)
-        c = (r-2)%3
-        while len(screens["status"].labels) < len(circuits)+3:
+        c = 0 #(r-2)%3
+        while len(screens["status"].labels) < len(circuits)+2:
             screens["status"].labels.append(SmartLabel({
                 "text": "", "bg": "black", "fg": "white",
                 "fontname": "Times", "fontsize": 12, "sticky": "nesw",
-                "row": r+1, "col": c, "padx": 5, "pady": 5
+                "row": r, "col": c, "padx": 5, "pady": 5
             }))
             if c == 2:
                 c = 0
