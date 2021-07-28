@@ -216,16 +216,16 @@
                 "row": 1, "col": 1, "padx": 5, "pady": 5
             },
             {
-                "text": "Up Stairs", "func": "screen", "target":"upstairs",
-                "height": 2, "fontname": "Times", "fontsize": 24,
-                "bg": "darkblue", "fg": "white", "sticky": "nesw",
-                "row": 2, "col": 2, "padx": 5, "pady": 5
-            },
-            {
                 "text": "Down Stairs", "func": "screen", "target":"downstairs",
                 "height": 2, "fontname": "Times", "fontsize": 24,
                 "bg": "darkblue", "fg": "white", "sticky": "nesw",
                 "row": 2, "col": 0, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Up Stairs", "func": "screen", "target":"upstairs",
+                "height": 2, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 2, "col": 2, "padx": 5, "pady": 5
             },
             {
                 "text": "Garage", "func": "screen", "target":"garage",
@@ -243,7 +243,7 @@
                 "text": "Ventilation", "func": "screen", "target":"ventilation",
                 "height": 2, "fontname": "Times", "fontsize": 24,
                 "bg": "darkblue", "fg": "white", "sticky": "nesw",
-                "row": 3, "col": 0, "padx": 5, "pady": 5
+                "row": 4, "col": 0, "padx": 5, "pady": 5
             }
         ]
     },
