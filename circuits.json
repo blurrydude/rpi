@@ -3,7 +3,7 @@
     "address": "shellyswitch25-8CAAB55F44D7", "relay":"0", "label":"Bedroom Lamp", 
     "onModes": ["Shower", "Evening", "Alert"],
     "offModes":["Dark", "Night", "Day"],
-    "zones":["All", "Master Bedroom", "Up Stairs"],
+    "zones":["Master Bedroom", "Up Stairs"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30"]},
 
@@ -11,7 +11,7 @@
     "address": "shellyswitch25-8CAAB561DDCF", "relay":"0", "label":"Master Bath",
     "onModes": ["Morning", "Shower", "Evening", "Alert"],
     "offModes":["Dark", "Night"],
-    "zones":["All", "Master Bath", "Up Stairs"],
+    "zones":["Master Bath", "Up Stairs"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30"]}, 
 
@@ -19,7 +19,7 @@
     "address": "shellyswitch25-8CAAB55F402F", "relay":"1", "label":"Shower Fan",
     "onModes": ["Shower"],
     "offModes":["Dark", "Night", "Alert"],
-    "zones":["All", "Master Bath", "Up Stairs"],
+    "zones":["Master Bath", "Up Stairs"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30", "Mon,Tue,Wed,Thu,Fri,Sat,Sun:22:00"]}, 
 
@@ -27,7 +27,7 @@
     "address": "shellyswitch25-8CAAB55F402F", "relay":"0", "label":"Hallway",
     "onModes": ["Morning", "Lunch", "Dinner", "Alert"],
     "offModes":["Dark", "Night", "Day", "Evening"],
-    "zones":["All", "Hallway", "Up Stairs"],
+    "zones":["Hallway", "Up Stairs"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:20:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30", "Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:15"]}, 
 
@@ -35,7 +35,7 @@
     "address": "shellyswitch25-8CAAB561DDED", "relay":"0", "label":"Guest Bathroom",
     "onModes": ["Alert"],
     "offModes":["Dark", "Night"],
-    "zones":["All", "Guest Bathroom", "Up Stairs"],
+    "zones":["Guest Bathroom", "Up Stairs"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30", "Mon,Tue,Wed,Thu,Fri,Sat,Sun:23:00"]}, 
 
@@ -43,7 +43,7 @@
     "address": "shellyswitch25-8CAAB55F44D7", "relay":"1", "label":"Library Lamp",
     "onModes": ["Alert", "Evening"],
     "offModes":["Dark", "Night"],
-    "zones":["All", "Library", "Up Stairs"],
+    "zones":["Library", "Up Stairs"],
     "onTimes":[],
     "offTimes":[]}, 
 
@@ -51,7 +51,7 @@
     "address": "shellyswitch25-8CAAB55F4553", "relay":"0", "label":"Gym Lamp",
     "onModes": ["Morning", "Evening", "Alert"],
     "offModes":["Dark", "Lunch", "Night"],
-    "zones":["All", "Gym", "Up Stairs"],
+    "zones":["Gym", "Up Stairs"],
     "onTimes":[],
     "offTimes":[]}, 
 
@@ -67,7 +67,7 @@
     "address": "shelly1pm-68C63AFB315A", "relay":"0", "label":"Livingroom Lamp",
     "onModes": ["Evening", "Alert"],
     "offModes":["Dark", "Night", "Day"],
-    "zones":["All", "Living Room", "Down Stairs"],
+    "zones":["Living Room", "Down Stairs"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:45","Mon,Tue,Wed,Thu,Fri,Sat,Sun:19:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30", "Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:30"]}, 
 
@@ -75,7 +75,7 @@
     "address": "shelly1pm-84CCA8A11963",      "relay":"0", "label":"Lamp post",
     "onModes": ["Evening", "Night", "Alert"],
     "offModes":["Morning", "Dark", "Lunch", "Day"],
-    "zones":["All", "Front Yard", "Exterior"],
+    "zones":["Front Yard", "Exterior"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:19:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:08:30"]}, 
 
@@ -83,7 +83,7 @@
     "address": "shellyswitch25-8CAAB55F44D6", "relay":"0", "label":"Porch",
     "onModes": ["Evening", "Night", "Alert"],
     "offModes":["Morning", "Dark", "Lunch", "Day"],
-    "zones":["All", "Front Yard", "Exterior"],
+    "zones":["Front Yard", "Exterior"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:19:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:08:30"]}, 
 
@@ -91,7 +91,7 @@
     "address": "shelly1pm-8CAAB574C489",      "relay":"0", "label":"Fireplace",
     "onModes": ["Evening", "Alert", "Dinner"],
     "offModes":["Dark", "Night", "Day"],
-    "zones":["All", "Living Room", "Down Stairs"],
+    "zones":["Living Room", "Down Stairs"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:18:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30", "Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:15"]}, 
 
@@ -99,7 +99,7 @@
     "address": "shellyswitch25-8CAAB55F44D6", "relay":"1", "label":"Dining Room",
     "onModes": ["Morning", "Lunch", "Alert", "Dinner"],
     "offModes":["Dark", "Night", "Evening", "Day"],
-    "zones":["All", "Dining Room", "Down Stairs"],
+    "zones":["Dining Room", "Down Stairs"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:06:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:18:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:30"]}, 
 
@@ -107,7 +107,7 @@
     "address": "shelly1pm-C82B961DD3B1",      "relay":"0", "label":"Game Room",
     "onModes": ["Morning", "Evening", "Alert", "Dinner"],
     "offModes":["Dark", "Night", "Day"],
-    "zones":["All", "Game Room", "Down Stairs"],
+    "zones":["Game Room", "Down Stairs"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:45","Mon,Tue,Wed,Thu,Fri,Sat,Sun:18:30"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30", "Mon,Tue,Wed,Thu,Fri,Sat,Sun:23:00"]}, 
 
@@ -115,7 +115,7 @@
     "address": "shelly1pm-68C63AFB726B", "relay":"0", "label":"Game Tables",
     "onModes": ["Morning", "Evening", "Alert"],
     "offModes":["Dark", "Night", "Day"],
-    "zones":["All", "Game Room", "Down Stairs"],
+    "zones":["Game Room", "Down Stairs"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:19:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:30"]}, 
 
@@ -123,7 +123,7 @@
     "address": "shellyswitch25-8CAAB55F405D", "relay":"1", "label":"Kitchen",
     "onModes": ["Morning", "Lunch", "Alert", "Dinner"],
     "offModes":["Dark", "Evening", "Night", "Day"],
-    "zones":["All", "Kitchen", "Down Stairs"],
+    "zones":["Kitchen", "Down Stairs"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:16:30"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:20:00", "Mon,Tue,Wed,Thu,Fri,Sat,Sun:23:00"]}, 
 
@@ -131,7 +131,7 @@
     "address": "shelly1pm-F4CFA2747F54", "relay":"0", "label":"Coffee Station",
     "onModes": ["Morning", "Lunch", "Dinner", "Evening", "Night", "Alert"],
     "offModes":["Dark", "Day"],
-    "zones":["All", "Kitchen", "Counter", "Down Stairs"],
+    "zones":["Kitchen", "Counter", "Down Stairs"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:16:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:09:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:01:00"]}, 
 
@@ -139,7 +139,7 @@
     "address": "shelly1pm-68C63AFB6B0A", "relay":"0", "label":"Under Cabinet",
     "onModes": ["Morning", "Lunch", "Dinner", "Alert"],
     "offModes":["Dark", "Night", "Evening", "Day"],
-    "zones":["All", "Kitchen", "Counter", "Down Stairs"],
+    "zones":["Kitchen", "Counter", "Down Stairs"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:16:00", "Mon,Tue,Wed,Thu,Fri,Sat,Sun:22:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:08:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:00", "Mon,Tue,Wed,Thu,Fri,Sat,Sun:01:00"]}, 
 
@@ -147,7 +147,7 @@
     "address": "shellyswitch25-8CAAB55F4553", "relay":"1", "label":"Bar",
     "onModes": ["Morning", "Lunch", "Dinner", "Evening", "Alert"],
     "offModes":["Dark", "Night", "Day"],
-    "zones":["All", "Kitchen", "Down Stairs"],
+    "zones":["Kitchen", "Down Stairs"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:17:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:30"]}, 
 
@@ -155,7 +155,7 @@
     "address": "shellyswitch25-8CAAB55F405D", "relay":"0", "label":"Day Room Fan",
     "onModes": [],
     "offModes":["Alert"],
-    "zones":["All", "Ventilation", "Down Stairs"],
+    "zones":["Ventilation", "Down Stairs"],
     "onTimes":[],
     "offTimes":[]}, 
 
@@ -163,7 +163,7 @@
     "address": "shellyswitch25-8CAAB55F3B3F", "relay":"0", "label":"Day Room Lights",
     "onModes": ["Morning", "Lunch", "Dinner", "Evening", "Alert"],
     "offModes":["Dark", "Night", "Day"],
-    "zones":["All", "Down Stairs"],
+    "zones":["Down Stairs"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:19:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:30"]}, 
 
@@ -171,7 +171,7 @@
     "address": "shellyswitch25-8CAAB561DDED", "relay":"1", "label":"Garage Lights",
     "onModes": ["Morning", "Lunch", "Evening", "Alert"],
     "offModes":["Dark", "Night", "Day"],
-    "zones":["All", "Garage"],
+    "zones":["Garage"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:11:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:17:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:09:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:14:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:23:10"]}, 
 
@@ -179,7 +179,7 @@
     "address": "shellyswitch25-8CAAB561DDCF", "relay":"1", "label":"Stairway",
     "onModes": ["Morning", "Lunch", "Dinner", "Night", "Alert", "Day"],
     "offModes":["Dark", "Evening", "Night"],
-    "zones":["All", "Garage"],
+    "zones":["Garage"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:09:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:14:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:23:05"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:11:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:17:00"]}, 
 
@@ -187,7 +187,7 @@
     "address": "shelly1pm-68C63AFB6BD5", "relay":"0", "label":"Bench Fan",
     "onModes": [],
     "offModes":["Alert"],
-    "zones":["All", "Ventilation", "Garage"],
+    "zones":["Ventilation", "Garage"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:01:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:03:00"]}, 
 
@@ -195,7 +195,7 @@
     "address": "shelly1pm-C82B961DE020", "relay":"0", "label":"Deck Light",
     "onModes": ["Alert"],
     "offModes":[],
-    "zones":["All", "Exterior"],
+    "zones":["Exterior", "Deck"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:19:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:22:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:22:30"]}, 
 
@@ -203,7 +203,7 @@
     "address": "shelly1pm-C82B961DD0EF", "relay":"0", "label":"Laundry Room",
     "onModes": ["Alert"],
     "offModes":[],
-    "zones":["All", "Garage"],
+    "zones":["Garage"],
     "onTimes":[],
     "offTimes":[]}, 
 
@@ -211,7 +211,7 @@
     "address": "shelly1pm-C82B961DE189", "relay":"0", "label":"Storage Room",
     "onModes": ["Alert"],
     "offModes":[],
-    "zones":["All", "Garage", "Storage"],
+    "zones":["Garage", "Storage"],
     "onTimes":[],
     "offTimes":[]}, 
 
@@ -219,7 +219,7 @@
     "address": "shelly1pm-C82B961DD818", "relay":"0", "label":"Deck Fountain",
     "onModes": [],
     "offModes":["Alert"],
-    "zones":["All", "Exterior"],
+    "zones":["Exterior", "Deck"],
     "onTimes":[],
     "offTimes":[]}, 
 
@@ -227,7 +227,7 @@
     "address": "shelly1pm-8CAAB55F83AA", "relay":"0", "label":"Circulating Fan",
     "onModes": [],
     "offModes":["Alert"],
-    "zones":["All", "Ventilation"],
+    "zones":["Ventilation"],
     "onTimes":[],
     "offTimes":[]}
 ]
