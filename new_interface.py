@@ -110,10 +110,10 @@ def loadConfig():
                 l.hide()
             screens[scrn] = None
 
-    f = open('circuits.json')
+    f = open('/home/pi/rpi/circuits.json')
     circuits = json.load(f)
 
-    cf = open('interface_config.json')
+    cf = open('/home/pi/rpi/interface_config.json')
     config = json.load(cf)
 
     screens = {}
