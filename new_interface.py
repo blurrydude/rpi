@@ -157,11 +157,11 @@ def loadConfig():
                     "bg": "darkgreen", "fg": "white", "sticky": "nesw",
                     "row": r[id], "col": c[id], "padx": 5, "pady": 5
                 }))
-        if c[id] < 2:
-            c[id] = c[id] + 1
-        else:
-            c[id] = 0
-            r[id] = r[id] + 1
+            if c[id] < 2:
+                c[id] = c[id] + 1
+            else:
+                c[id] = 0
+                r[id] = r[id] + 1
 
     screens["toggle"] = SmartScreen()
     screens["toggle"].labels.append(SmartLabel({
