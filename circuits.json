@@ -159,13 +159,13 @@
     "onTimes":[],
     "offTimes":[]}, 
 
-    {"notes":"192.168.1.244 - Day Room Lights",
-    "address": "shellyswitch25-8CAAB55F3B3F", "relay":"0", "label":"Day Room Lights",
-    "onModes": ["Morning", "Lunch", "Dinner", "Evening", "Alert"],
+    {"notes":"192.168.1.244 - Day Room Fireplace",
+    "address": "shellyswitch25-8CAAB55F3B3F", "relay":"0", "label":"Day Room Fireplace",
+    "onModes": ["Alert"],
     "offModes":["Dark", "Night", "Day"],
-    "zones":["Down Stairs"],
-    "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:19:00"],
-    "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:30"]}, 
+    "zones":["Down Stairs", "Day Room"],
+    "onTimes":[],
+    "offTimes":[]}, 
 
     {"notes":"192.168.1.240 - Garage Lights",
     "address": "shellyswitch25-8CAAB561DDED", "relay":"1", "label":"Garage Lights",
@@ -229,5 +229,13 @@
     "offModes":["Alert"],
     "zones":["Ventilation"],
     "onTimes":[],
-    "offTimes":[]}
+    "offTimes":[]}, 
+
+    {"notes":"192.168.1.182 - Day Room Light",
+    "address": "shelly1pm-8CAAB55F8173", "relay":"0", "label":"Day Room Light",
+    "onModes": ["Morning", "Lunch", "Dinner", "Evening", "Alert"],
+    "offModes":["Dark", "Night", "Day"],
+    "zones":["Down Stairs", "Day Room"],
+    "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:19:00"],
+    "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:30"]}
 ]
