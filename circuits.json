@@ -221,5 +221,13 @@
     "offModes":["Alert"],
     "zones":["All", "Exterior"],
     "onTimes":[],
+    "offTimes":[]}, 
+
+    {"notes":"192.168.1.181 - Circulating Fan",
+    "address": "shelly1pm-8CAAB55F83AA", "relay":"0", "label":"Circulating Fan",
+    "onModes": [],
+    "offModes":["Alert"],
+    "zones":["All", "Ventilation"],
+    "onTimes":[],
     "offTimes":[]}
 ]

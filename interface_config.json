@@ -238,6 +238,12 @@
                 "height": 2, "fontname": "Times", "fontsize": 24,
                 "bg": "darkblue", "fg": "white", "sticky": "nesw",
                 "row": 5, "col": 1, "padx": 5, "pady": 5
+            },
+            {
+                "text": "Ventilation", "func": "screen", "target":"ventilation",
+                "height": 2, "fontname": "Times", "fontsize": 24,
+                "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                "row": 5, "col": 1, "padx": 5, "pady": 5
             }
         ]
     },
