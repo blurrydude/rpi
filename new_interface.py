@@ -209,10 +209,13 @@ def loadConfig():
 def refreshStatusDetail():
     global status
     global power
-    js =requests.get('https://api.idkline.com/states').text
-    status = json.loads(js)
-    js =requests.get('https://api.idkline.com/powerstates').text
-    power = json.loads(js)
+    try:
+        js =requests.get('https://api.idkline.com/states').text
+        status = json.loads(js)
+        js =requests.get('https://api.idkline.com/powerstates').text
+        power = json.loads(js)
+    except:
+        print('failed to get status')
 
 def switchToScreen(target):
     global current_screen
@@ -260,20 +263,23 @@ def toggleCircuit(target):
     global current_func
     global current_target
     #print("toggleCircuit "+target)
-    current_func = "circuit"
-    current_target = target
-    j =requests.get('https://api.idkline.com/states').text
-    r = json.loads(j)
-    if target in r.keys():
-        com = "turn off " + target.lower()
-        if r[target] == "off":
-            com = "turn on " + target.lower()
-        sendCommand(com)
-        return
-    else:
-        screens["toggle"].labels[0].text = target
-    screens["toggle"].hide()
-    switchToScreen("toggle")
+    try:
+        current_func = "circuit"
+        current_target = target
+        j =requests.get('https://api.idkline.com/states').text
+        r = json.loads(j)
+        if target in r.keys():
+            com = "turn off " + target.lower()
+            if r[target] == "off":
+                com = "turn on " + target.lower()
+            sendCommand(com)
+            return
+        else:
+            screens["toggle"].labels[0].text = target
+        screens["toggle"].hide()
+        switchToScreen("toggle")
+    except:
+        print('failed to make request')
 
 def setMode(target):
     #print("setMode "+target)
@@ -289,9 +295,12 @@ def setZone(target):
 
 def sendCommand(command):
     #print("sending command: "+command)
-    r =requests.get('https://api.idkline.com/control/'+command)
-    #print(str(r.status_code))
-    switchToScreen("main")
+    try:
+        r =requests.get('https://api.idkline.com/control/'+command)
+        #print(str(r.status_code))
+        switchToScreen("main")
+    except:
+        print('failed to send command')
 
 
 current_func = ""
