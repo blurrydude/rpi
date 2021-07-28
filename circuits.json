@@ -237,5 +237,13 @@
     "offModes":["Dark", "Night", "Day"],
     "zones":["Down Stairs", "Day Room"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:19:00"],
-    "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:30"]}
+    "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:30"]}, 
+
+    {"notes":"192.168.1.183 - Deck Rail",
+    "address": "shelly1pm-84CCA89FC0FD", "relay":"0", "label":"Deck Rail",
+    "onModes": ["Evening", "Alert"],
+    "offModes":["Dark", "Night", "Day"],
+    "zones":["Exterior", "Deck"],
+    "onTimes":[],
+    "offTimes":[]}
 ]
