@@ -9,7 +9,7 @@ def sendCommand(command):
 
 def loadConfig():
     global circuits
-    f = open('circuits.json')
+    f = open('/home/pi/rpi/circuits.json')
     circuits = json.load(f)
 
 def doCheck():
