@@ -76,7 +76,7 @@
     "onModes": ["Evening", "Night", "Alert"],
     "offModes":["Morning", "Dark", "Lunch", "Day"],
     "zones":["Front Yard", "Exterior"],
-    "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:19:00"],
+    "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:20:30"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:08:30"]}, 
 
     {"notes":"192.168.1.243 - Porch Light",
