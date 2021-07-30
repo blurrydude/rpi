@@ -235,7 +235,7 @@ def thermosettings(room):
     return json.load(f)
 
 @app.route('/thermoset/<data>')
-def thermosettings(data):
+def thermoset(data):
     s = data.split(':')
     room = s[0]
     temp_high = float(s[1])
