@@ -220,13 +220,23 @@ def circuitinfo(circuitlabel):
 @app.route('/reportreadings/<message>')
 def reportreadings(message):
     split = message.split(':')
-    with open("/home/pi/"+split[0]+"_temperature.json","w") as write_file:
-        write_file.write('{"temperature":'+split[1]+', "humidity":'+split[2]+'}')
+    room = split[0]
+    temp = split[1]
+    hum = split[2]
+    f = "/home/pi/temperatures.json"
+    j = open(f)
+    readings = json.load(j)
+    readings[room] = {
+        "temperature": temp,
+        "humidity": hum
+    }
+    with open(f,"w") as write_file:
+        write_file.write(json.dumps(readings))
     return 'OK'
 
-@app.route('/getreadings/<room>')
+@app.route('/getreadings')
 def getreadings(room):
-    f = open("/home/pi/"+room+"_temperature.json")
+    f = open("/home/pi/temperatures.json")
     return json.load(f)
 
 @app.route('/thermosettings/<room>')

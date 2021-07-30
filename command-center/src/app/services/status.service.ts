@@ -55,8 +55,8 @@ export class StatusService {
       );
   }
 
-  public getHallwayReadings() {
-    return this.http.get(this.baseurl+"getreadings/hallway", this.options)
+  public getReadings() {
+    return this.http.get(this.baseurl+"getreadings", this.options)
       .pipe(
         catchError(err => {
           return this.handleError(err);

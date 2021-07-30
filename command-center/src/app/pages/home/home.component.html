@@ -1,14 +1,14 @@
 <div class="row">
   <div class="offset-3 col-md-10">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-2" *ngFor="let reading of readings | keyvalue">
         <div class="card text-center my-2">
           <div class="card-header">
-            <h5>Second Floor Thermostat</h5>
+            <h5>{{reading.key}}</h5>
           </div>
           <div class="card-body">
-            <span>{{hallway['temperature']}}&deg;F</span><br/>
-            <span>{{hallway['humidity']}}%</span>
+            {{reading.value['temperature']}}&deg;F<br/>
+            {{reading.value['humidity']}}
           </div>
         </div>
       </div>
