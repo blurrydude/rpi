@@ -32,6 +32,9 @@ ac_state = False
 fan_state = False
 whf_state = False
 
+low = GPIO.HIGH
+high = GPIO.LOW
+
 def read_sensor():
     global temperature
     global humidity
@@ -46,9 +49,9 @@ def read_sensor():
 
 def set_circuit(circuit_pin, state):
     if state is True:
-        GPIO.output(circuit_pin, GPIO.HIGH)
+        GPIO.output(circuit_pin, high)
     else:
-        GPIO.output(circuit_pin, GPIO.LOW)
+        GPIO.output(circuit_pin, low)
 
 def heat_off():
     global heat_state
@@ -102,9 +105,9 @@ def fan_on():
     report("fan on")
 
 def halt():
-    GPIO.output(heat, GPIO.LOW)
-    GPIO.output(ac, GPIO.LOW)
-    GPIO.output(fan, GPIO.LOW)
+    GPIO.output(heat, low)
+    GPIO.output(ac, low)
+    GPIO.output(fan, low)
 
 def cycle():
     global failed_reads
@@ -131,6 +134,12 @@ def cycle():
     if round(temperature) < temperature_low_setting:
         warm_up()
         return
+    
+    if heat_state is True:
+        heat_off()
+    
+    if ac_state is True:
+        ac_off()
 
     if air_circulation_minutes > 0 and datetime.now() > last_circulation + timedelta(minutes=air_circulation_minutes):
         start_circulation = datetime.now()
@@ -201,7 +210,7 @@ def report_readings():
         print(str(r.status_code))
     except:
         print('failed to send readings')
-
+print("*\n*\n*\nbegin")
 halt()
 while True:
     cycle()
