@@ -227,7 +227,7 @@ def load_settings():
 def report_readings():
     print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
     try:
-        r =requests.get('https://api.idkline.com/reportreadings/{0:0.1f}:{1:0.1f}'.format(temperature, humidity))
+        r =requests.get('https://api.idkline.com/reportreadings/hallway:{0:0.1f}:{1:0.1f}'.format(temperature, humidity))
         print(str(r.status_code))
     except:
         print('failed to send readings')

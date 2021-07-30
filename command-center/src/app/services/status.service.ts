@@ -55,6 +55,15 @@ export class StatusService {
       );
   }
 
+  public getHallwayReadings() {
+    return this.http.get(this.baseurl+"getreadings/hallway", this.options)
+      .pipe(
+        catchError(err => {
+          return this.handleError(err);
+        })
+      );
+  }
+
   // public getLoansByCompany(companyNumber: string) {
   //   this.options.params = new HttpParams({ fromString: "?companyId=" + companyNumber });
   //   return this.http.get<LoanMessage[]>(this.byCompanyUrl, this.options)

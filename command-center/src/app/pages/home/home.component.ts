@@ -8,12 +8,17 @@ import { StatusService } from "../../services/status.service";
 export class HomeComponent {
     @Output() status: object = {};
     @Output() pistatus: object = {};
+    @Output() hallway: object = {};
+    
     constructor(private httpMessageService: StatusService) { 
       this.httpMessageService.getStatus().toPromise().then(msg => {
         this.status = msg;
       });
       this.httpMessageService.getPiStatus().toPromise().then(msg => {
         this.pistatus = msg;
+      });
+      this.httpMessageService.getHallwayReadings().toPromise().then(msg => {
+        this.hallway = msg;
       });
     }
     
