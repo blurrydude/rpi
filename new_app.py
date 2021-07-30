@@ -227,12 +227,12 @@ def reportreadings(message):
 @app.route('/getreadings/<room>')
 def getreadings(room):
     f = open("/home/pi/"+room+"_temperature.json")
-    return f.read()
+    return json.load(f)
 
-@app.route('/thermosettings')
-def thermosettings():
-    f = open("/home/pi/thermosettings.json")
-    return f.read()
+@app.route('/thermosettings/<room>')
+def thermosettings(room):
+    f = open("/home/pi/"+room+"_thermosettings.json")
+    return json.load(f)
     
 
 if __name__ == '__main__':
