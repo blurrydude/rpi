@@ -56,6 +56,7 @@ def heat_off():
         last_circulation = datetime.now()
     set_circuit(heat, False)
     heat_state = False
+    report("heat off")
 
 def ac_off():
     global ac_state
@@ -64,6 +65,7 @@ def ac_off():
         last_circulation = datetime.now()
     set_circuit(ac, False)
     ac_state = False
+    report("ac off")
 
 def fan_off():
     global fan_state
@@ -72,6 +74,7 @@ def fan_off():
         last_circulation = datetime.now()
     set_circuit(fan, False)
     fan_state = False
+    report("fan off")
 
 def heat_on():
     global heat_state
@@ -79,6 +82,7 @@ def heat_on():
         return
     set_circuit(heat, True)
     heat_state = True
+    report("heat on")
 
 def ac_on():
     global ac_state
@@ -86,6 +90,7 @@ def ac_on():
         return
     set_circuit(ac, True)
     ac_state = True
+    report("ac on")
 
 def fan_on():
     global fan_state
@@ -93,6 +98,7 @@ def fan_on():
         return
     set_circuit(fan, True)
     fan_state = True
+    report("fan on")
 
 def halt():
     GPIO.output(heat, GPIO.LOW)
@@ -114,6 +120,8 @@ def cycle():
 
     if temperature is None:
         halt()
+    
+    report_readings()
     
     if round(temperature) > temperature_high_setting:
         cool_down()
@@ -143,6 +151,43 @@ def circulate_air(minutes, use_whf):
     fan_on()
     if use_whf is True:
         whf_state = True
-        # send whf on command
+        report("whf on")
+        sendCommand('turn on whole house fan')
     time.sleep(60*minutes)
+    if whf_state is True and use_whf is True:
+        whf_state = False
+        report("whf off")
+        sendCommand('turn off whole house fan')
+    fan_off()
+
+def sendCommand(command):
+    print("sending command: "+command)
+    try:
+        r =requests.get('https://api.idkline.com/control/'+command)
+        print(str(r.status_code))
+    except:
+        print('failed to send command')
+
+def report(message):
+    print(message)
+    #TODO: send to api
+
+def load_settings():
+    global failed_read_halt_limit
+    global temperature_high_setting
+    global temperature_low_setting
+    global humidity_setting
+    global air_circulation_minutes
+    global humidity_circulation_minutes
     
+    failed_read_halt_limit = 10
+    temperature_high_setting = 73
+    temperature_low_setting = 69
+    humidity_setting = 50
+    air_circulation_minutes = 30
+    humidity_circulation_minutes = 10
+    #TODO: get this from api
+
+def report_readings():
+    print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
+    #TODO: send to api
