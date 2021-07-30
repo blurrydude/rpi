@@ -230,7 +230,7 @@ def getreadings():
     return f.read()
 
 @app.route('/thermosettings')
-def getreadings():
+def thermosettings():
     f = open("/home/pi/thermosettings.json")
     return f.read()
     
