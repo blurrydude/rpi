@@ -227,8 +227,8 @@ def reportreadings(message):
     f = "/home/pi/temperatures.json"
     j = open(f)
     readings = json.load(j)
-    f = open("/home/pi/"+room+"_thermosettings.json")
-    settings = json.load(f)
+    f2 = open("/home/pi/"+room+"_thermosettings.json")
+    settings = json.load(f2)
     readings[room] = {
         "timestamp": datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
         "temperature": temp,
