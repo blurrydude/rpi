@@ -15,6 +15,7 @@ client = mqtt.Client()
 def on_message(client, userdata, message):
     global running
     result = json.loads(str(message.payload.decode("utf-8")))
+    print(result)
     # {
     # "motion": true,
     # "timestamp": 1627686399,
