@@ -235,7 +235,7 @@ def reportreadings(message):
     return 'OK'
 
 @app.route('/getreadings')
-def getreadings(room):
+def getreadings():
     f = open("/home/pi/temperatures.json")
     return json.load(f)
 
