@@ -10,6 +10,8 @@ GPIO.setup(26, GPIO.OUT)
 GPIO.setup(20, GPIO.OUT)
 GPIO.setup(21, GPIO.OUT)
 
+room = "hallway"
+
 failed_read_halt_limit = 10
 temperature_high_setting = 73
 temperature_low_setting = 69
@@ -210,7 +212,7 @@ def load_settings():
     global stage_cooldown_minutes
 
     try:
-        r =requests.get('https://api.idkline.com/thermosettings')
+        r =requests.get('https://api.idkline.com/thermosettings/'+room)
         j = r.text
         s = json.loads(j)
         failed_read_halt_limit = s["failed_read_halt_limit"]
@@ -227,7 +229,7 @@ def load_settings():
 def report_readings():
     print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
     try:
-        r =requests.get('https://api.idkline.com/reportreadings/hallway:{0:0.1f}:{1:0.1f}'.format(temperature, humidity))
+        r =requests.get('https://api.idkline.com/reportreadings/'+room+':{0:0.1f}:{1:0.1f}'.format(temperature, humidity))
         print(str(r.status_code))
     except:
         print('failed to send readings')
