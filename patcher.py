@@ -151,7 +151,6 @@ def doCheck():
                 write_file.write(json.dumps(repo_version))
                 print('error loading. created local version file')
 
-    print('local: '+local_version[whatiuse]+' repo: '+repo_version[whatiuse])
     if webserver is True:
         print('local command_center: '+local_version["command_center"]+' repo command_center: '+repo_version["command_center"])
         if local_version["command_center"] != repo_version["command_center"]:
