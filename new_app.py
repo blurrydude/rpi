@@ -216,6 +216,23 @@ def circuitinfo(circuitlabel):
         if circuit["label"] == circuitlabel:
             return circuit
     return None
+
+@app.route('/reportreadings/<message>')
+def reportreadings(message):
+    split = message.split(':')
+    with open("/home/pi/temperature.json","w") as write_file:
+        write_file.write('{"temperature":'+split[0]+', "humidity":'+split[1]+'}')
+    return 'OK'
+
+@app.route('/getreadings')
+def getreadings():
+    f = open("/home/pi/temperature.json")
+    return f.read()
+
+@app.route('/thermosettings')
+def getreadings():
+    f = open("/home/pi/thermosettings.json")
+    return f.read()
     
 
 if __name__ == '__main__':

@@ -2,6 +2,7 @@ import Adafruit_DHT
 import RPi.GPIO as GPIO
 import time
 import requests
+import json
 from datetime import datetime, timedelta
 
 GPIO.setmode(GPIO.BCM)
@@ -180,18 +181,28 @@ def load_settings():
     global air_circulation_minutes
     global humidity_circulation_minutes
 
-    failed_read_halt_limit = 10
-    temperature_high_setting = 73
-    temperature_low_setting = 69
-    humidity_setting = 50
-    air_circulation_minutes = 30
-    humidity_circulation_minutes = 10
-    #TODO: get this from api
+    try:
+        r =requests.get('https://api.idkline.com/thermosettings')
+        j = r.text
+        s = json.loads(j)
+        failed_read_halt_limit = s["failed_read_halt_limit"]
+        temperature_high_setting = s["temperature_high_setting"]
+        temperature_low_setting = s["temperature_low_setting"]
+        humidity_setting = s["humidity_setting"]
+        air_circulation_minutes = s["air_circulation_minutes"]
+        humidity_circulation_minutes = s["humidity_circulation_minutes"]
+    except:
+        print('failed to get thermosettings')
 
 def report_readings():
     print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
-    #TODO: send to api
+    try:
+        r =requests.get('https://api.idkline.com/reportreadings/{0:0.1f}:{1:0.1f}'.format(temperature, humidity))
+        print(str(r.status_code))
+    except:
+        print('failed to send readings')
 
+halt()
 while True:
     cycle()
     time.sleep(10)
