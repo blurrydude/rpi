@@ -45,7 +45,7 @@ if __name__ == "__main__":
     client.on_message = on_message
     client.connect('192.168.1.22')
     for sensor in sensors:
-        topic = 'shellies/'+sensor["address"]+'/relay/'+sensor["address"]+'/status'
+        topic = 'shellies/'+sensor["address"]+'/status'
         print('subscribing to '+topic)
         client.subscribe(topic)
     client.loop_start()
