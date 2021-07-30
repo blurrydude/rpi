@@ -148,7 +148,7 @@ def cycle():
 def cool_down():
     if ac_state is True:
         return
-    if round(humidity) > humidity_setting and humidity_circulation_minutes > 0:
+    if round(humidity) > humidity_setting and humidity_setting > 0:
         circulate_air(humidity_circulation_minutes, True)
     ac_on()
 
