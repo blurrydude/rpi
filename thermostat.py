@@ -13,7 +13,7 @@ GPIO.setup(26, GPIO.OUT)
 GPIO.setup(20, GPIO.OUT)
 GPIO.setup(21, GPIO.OUT)
 
-room = myname.replace("-thermopi","")
+room = myname.replace("thermopi","")
 
 failed_read_halt_limit = 10
 temperature_high_setting = 73
