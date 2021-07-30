@@ -234,5 +234,8 @@ def report_readings():
 print("*\n*\n*\nbegin")
 halt()
 while True:
-    cycle()
+    try:
+        cycle()
+    except:
+        print("BAD CYCLE!!!")
     time.sleep(10)
