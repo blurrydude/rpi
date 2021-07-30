@@ -179,7 +179,7 @@ def load_settings():
     global humidity_setting
     global air_circulation_minutes
     global humidity_circulation_minutes
-    
+
     failed_read_halt_limit = 10
     temperature_high_setting = 73
     temperature_low_setting = 69
@@ -191,3 +191,7 @@ def load_settings():
 def report_readings():
     print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
     #TODO: send to api
+
+while True:
+    cycle()
+    time.sleep(10)
