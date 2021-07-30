@@ -162,7 +162,7 @@ def doCheck():
             os.system('cd /home/pi/rpi/command-center && sudo ng build && sudo mv /home/pi/rpi/command-center/dist/command-center/* /var/www/idkline.com/public_html')
             sms('built command center')
 
-    if local_version[whatiuse] != repo_version[whatiuse]:
+    if whatiuse not in local_version.keys() or local_version[whatiuse] != repo_version[whatiuse]:
         with open(local_version_file, "w") as write_file:
             write_file.write(json.dumps(repo_version))
             print('updated local version file')
