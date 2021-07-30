@@ -16,12 +16,15 @@ temperature_low_setting = 69
 humidity_setting = 50
 air_circulation_minutes = 30
 humidity_circulation_minutes = 10
+stage_limit_minutes = 15
+stage_cooldown_minutes = 5
 
 temperature = None
 humidity = None
 failed_reads = 0
 last_circulation = datetime.now()
-start_circulation = datetime.now()
+start_stage = datetime.now() - timedelta(minutes=30)
+delay_stage = datetime.now()
 
 heat = 26
 ac = 20
@@ -126,6 +129,10 @@ def cycle():
         halt()
     
     report_readings()
+
+    if delay_stage > datetime.now():
+        print("delayed")
+        return
     
     if round(temperature) > temperature_high_setting:
         cool_down()
@@ -146,15 +153,25 @@ def cycle():
         circulate_air(humidity_circulation_minutes, False)
 
 def cool_down():
+    global start_stage
+    global delay_stage
     if ac_state is True:
+        if start_stage < datetime.now() - timedelta(minutes=stage_limit_minutes):
+            delay_stage = datetime.now() + timedelta(minutes=stage_cooldown_minutes)
         return
     if round(humidity) > humidity_setting and humidity_setting > 0:
         circulate_air(humidity_circulation_minutes, True)
+    start_stage = datetime.now()
     ac_on()
 
 def warm_up():
+    global start_stage
+    global delay_stage
     if heat_state is True:
+        if start_stage < datetime.now() - timedelta(minutes=stage_limit_minutes):
+            delay_stage = datetime.now() + timedelta(minutes=stage_cooldown_minutes)
         return
+    start_stage = datetime.now()
     heat_on()
 
 def circulate_air(minutes, use_whf):
@@ -189,6 +206,8 @@ def load_settings():
     global humidity_setting
     global air_circulation_minutes
     global humidity_circulation_minutes
+    global stage_limit_minutes
+    global stage_cooldown_minutes
 
     try:
         r =requests.get('https://api.idkline.com/thermosettings')
@@ -200,6 +219,8 @@ def load_settings():
         humidity_setting = s["humidity_setting"]
         air_circulation_minutes = s["air_circulation_minutes"]
         humidity_circulation_minutes = s["humidity_circulation_minutes"]
+        stage_limit_minutes = s["stage_limit_minutes"]
+        stage_cooldown_minutes = s["stage_cooldown_minutes"]
     except:
         print('failed to get thermosettings')
 
