@@ -6,8 +6,8 @@ import json
 import requests
 
 running = True
-f = open('motionsensors.json')
-#f = open('/home/pi/rpi/motionsensors.json')
+#f = open('motionsensors.json')
+f = open('/home/pi/rpi/motionsensors.json')
 sensors = json.load(f)
 
 client = mqtt.Client()
