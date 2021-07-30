@@ -7,6 +7,7 @@ import json
 import sys
 import socket
 import os
+from datetime import datetime
 
 myname = socket.gethostname()
 twilled = False
@@ -229,6 +230,7 @@ def reportreadings(message):
     f = open("/home/pi/"+room+"_thermosettings.json")
     settings = json.load(f)
     readings[room] = {
+        "timestamp": datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
         "temperature": temp,
         "humidity": hum,
         "settings": settings
