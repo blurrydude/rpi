@@ -20,6 +20,7 @@ air_circulation_minutes = 30
 humidity_circulation_minutes = 10
 stage_limit_minutes = 15
 stage_cooldown_minutes = 5
+use_whole_house_fan = False
 
 temperature = None
 humidity = None
@@ -160,6 +161,7 @@ def cool_down():
     if ac_state is True:
         if start_stage < datetime.now() - timedelta(minutes=stage_limit_minutes):
             delay_stage = datetime.now() + timedelta(minutes=stage_cooldown_minutes)
+            ac_off()
         return
     if round(humidity) > humidity_setting and humidity_setting > 0:
         circulate_air(humidity_circulation_minutes, True)
@@ -172,18 +174,19 @@ def warm_up():
     if heat_state is True:
         if start_stage < datetime.now() - timedelta(minutes=stage_limit_minutes):
             delay_stage = datetime.now() + timedelta(minutes=stage_cooldown_minutes)
+            heat_off()
         return
     start_stage = datetime.now()
     heat_on()
 
 def circulate_air(minutes, use_whf):
     fan_on()
-    if use_whf is True:
+    if use_whf is True and use_whole_house_fan is True:
         whf_state = True
         report("whf on")
         sendCommand('turn on whole house fan')
     time.sleep(60*minutes)
-    if whf_state is True and use_whf is True:
+    if whf_state is True and use_whf is True and use_whole_house_fan is True:
         whf_state = False
         report("whf off")
         sendCommand('turn off whole house fan')
@@ -210,6 +213,7 @@ def load_settings():
     global humidity_circulation_minutes
     global stage_limit_minutes
     global stage_cooldown_minutes
+    global use_whole_house_fan
 
     try:
         r =requests.get('https://api.idkline.com/thermosettings/'+room)
@@ -223,6 +227,7 @@ def load_settings():
         humidity_circulation_minutes = s["humidity_circulation_minutes"]
         stage_limit_minutes = s["stage_limit_minutes"]
         stage_cooldown_minutes = s["stage_cooldown_minutes"]
+        use_whole_house_fan = s["use_whole_house_fan"]
     except:
         print('failed to get thermosettings')
 

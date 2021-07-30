@@ -233,6 +233,19 @@ def getreadings(room):
 def thermosettings(room):
     f = open("/home/pi/"+room+"_thermosettings.json")
     return json.load(f)
+
+@app.route('/thermoset/<data>')
+def thermosettings(data):
+    s = data.split(':')
+    room = s[0]
+    temp_high = float(s[1])
+    temp_low = float(s[2])
+    f = open("/home/pi/"+room+"_thermosettings.json")
+    settings = json.load(f)
+    settings["temperature_high_setting"] = temp_high
+    settings["temperature_low_setting"] = temp_low
+    with open("/home/pi/"+room+"_thermosettings.json","w") as write_file:
+        write_file.write(json.dumps(settings))
     
 
 if __name__ == '__main__':
