@@ -226,9 +226,12 @@ def reportreadings(message):
     f = "/home/pi/temperatures.json"
     j = open(f)
     readings = json.load(j)
+    f = open("/home/pi/"+room+"_thermosettings.json")
+    settings = json.load(f)
     readings[room] = {
         "temperature": temp,
-        "humidity": hum
+        "humidity": hum,
+        "settings": settings
     }
     with open(f,"w") as write_file:
         write_file.write(json.dumps(readings))

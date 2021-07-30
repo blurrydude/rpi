@@ -7,8 +7,19 @@
             <h5>{{reading.key}}</h5>
           </div>
           <div class="card-body">
-            {{reading.value['temperature']}}&deg;F<br/>
-            {{reading.value['humidity']}}
+            <div class="row">
+              <div class="col-md-6">
+                <h5>Readings</h5>
+                {{reading.value['temperature']}}&deg;F<br/>
+                {{reading.value['humidity']}}
+              </div>
+              <div class="col-md-6">
+                <h5>Settings</h5>
+                High: {{reading.value['settings']['temperature_high_setting']}}&deg;F<br/>
+                Low: {{reading.value['settings']['temperature_low_setting']}}&deg;F<br/>
+                Humidity Limit: {{reading.value['settings']['humidity_setting']}}%
+              </div>
+            </div>
           </div>
         </div>
       </div>
