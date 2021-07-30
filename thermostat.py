@@ -4,13 +4,16 @@ import time
 import requests
 import json
 from datetime import datetime, timedelta
+import socket
+
+myname = socket.gethostname()
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(26, GPIO.OUT)
 GPIO.setup(20, GPIO.OUT)
 GPIO.setup(21, GPIO.OUT)
 
-room = "hallway"
+room = myname.replace("-thermopi","")
 
 failed_read_halt_limit = 10
 temperature_high_setting = 73
