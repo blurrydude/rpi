@@ -15,13 +15,13 @@ export class HomeComponent {
     }
 
     public load(httpMessageService: StatusService) {
+      setTimeout(()=>{this.load(httpMessageService)},5000);
       this.httpMessageService.getStatus().toPromise().then(msg => {
         this.status = msg;
         this.httpMessageService.getPiStatus().toPromise().then(smsg => {
           this.pistatus = smsg;
           this.httpMessageService.getReadings().toPromise().then(rmsg => {
             this.readings = rmsg;
-            setTimeout(()=>{this.load(httpMessageService)},5000);
           });
         });
       });
