@@ -3,11 +3,8 @@ import time
 time.sleep(15)
 import paho.mqtt.client as mqtt
 import json
-import requests
 
 running = True
-fs = open('/home/pi/rpi/motionsensors.json')
-sensors = json.load(fs)
 f = open('/home/pi/rpi/circuits.json')
 circuits = json.load(f)
 
@@ -15,31 +12,6 @@ client = mqtt.Client()
 
 def on_message(client, userdata, message):
     global running
-    if "status" in message.topic:
-        result = json.loads(str(message.payload.decode("utf-8")))
-        print(result)
-        # {
-        # "motion": true,
-        # "timestamp": 1627686399,
-        # "active": true,
-        # "vibration": false,
-        # "lux": 0,
-        # "bat": 94
-        # }
-        if result["motion"] is True:
-            for sensor in sensors:
-                if sensor["address"] in message.topic:
-                    for circuit in circuits:
-                        if circuit["label"].lower() == sensor["activate_light"]:
-                            topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]
-                            mosquittoDo(topic,"on")
-        if result["motion"] is False:
-            for sensor in sensors:
-                if sensor["address"] in message.topic and sensor["auto_off"] is True:
-                    for circuit in circuits:
-                        if circuit["label"].lower() == sensor["activate_light"]:
-                            topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]
-                            mosquittoDo(topic,"off")
     result = str(message.payload.decode("utf-8"))
     #print("Received: "+result)
     bits = message.topic.split('/')
@@ -54,26 +26,6 @@ def on_message(client, userdata, message):
             print(address + " " + relay + " " + result)
             write_file.write(result)
     #print(check)
-    
-def sendCommand(command):
-    print("sending command: "+command)
-    try:
-        r =requests.get('https://api.idkline.com/control/'+command)
-        print(str(r.status_code))
-    except:
-        print('failed to send command')
-
-def mosquittoDo(topic, command):
-    global received
-    global result
-    try:
-        client = mqtt.Client()
-        client.connect("192.168.1.22")
-        client.publish(topic,command)
-        client.disconnect()
-    except:
-        print('failed')
-    return 'OK'
 
 if __name__ == "__main__":
     client.on_message = on_message
@@ -89,10 +41,6 @@ if __name__ == "__main__":
             topic = 'shellies/'+circuit["address"]+'/relay/'+str(i)+'/power'
             print('subscribing to '+topic)
             client.subscribe(topic)
-    for sensor in sensors:
-        topic = 'shellies/'+sensor["address"]+'/status'
-        print('subscribing to '+topic)
-        client.subscribe(topic)
     client.loop_start()
     while running is True:
         time.sleep(1)
