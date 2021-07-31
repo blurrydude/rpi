@@ -129,7 +129,7 @@ def log(message):
     if type(message) is not string:
         message = json.dumps(message)
     timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-    logfiledate = datetime.now().strftime("%Y%m%d")
+    logfiledate = datetime.now().strftime("%Y%m%d%H")
     logfile = "/home/pi/system_monitor_log_"+logfiledate+".txt"
     entry = timestamp + ": " + message + "\n"
     print(entry)
