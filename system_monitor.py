@@ -71,7 +71,7 @@ def handleCircuitMessage(topic, text):
         with open("/home/pi/"+address+"_"+relay+"_power.state", "w") as write_file:
             log(address + " " + relay + " " + text)
             write_file.write(text)
-    else:
+    elif "on" in text or "off" in text: # TODO: do this better
         with open("/home/pi/"+address+"_"+relay+".state", "w") as write_file:
             log(address + " " + relay + " " + text)
             write_file.write(text)
