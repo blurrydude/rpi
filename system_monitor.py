@@ -12,13 +12,18 @@ def loadCircuits():
     global circuits
     f = open('/home/pi/rpi/circuits.json')
     circuits = json.load(f)
+    print('circuits')
+    print(circuits)
 
 def loadMotionSensors():
     global motionSensors
     f = open('/home/pi/rpi/motionsensors.json')
     motionSensors = json.load(f)
+    print('motionSensors')
+    print(motionSensors)
 
 def initializeMqtt():
+    print('initializeMqtt')
     client.on_message = on_message
     client.connect('192.168.1.22')
     client.subscribe('shellies/#')
@@ -30,7 +35,7 @@ def stopMqtt():
     client.disconnect()
 
 def loop():
-    time.sleep(1)
+    time.sleep(0.1)
 
 def on_message(client, userdata, message):
     try:
