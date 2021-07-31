@@ -1,4 +1,5 @@
 #! /usr/bin/env python3
+import string
 import time
 time.sleep(30)
 import paho.mqtt.client as mqtt
@@ -125,6 +126,8 @@ def mosquittoDo(topic, command):
     return 'OK'
 
 def log(message):
+    if type(message) is not string:
+        message = json.dumps(message)
     timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     logfiledate = datetime.now().strftime("%Y%m%d")
     logfile = "/home/pi/system_monitor_log_"+logfiledate+".txt"
