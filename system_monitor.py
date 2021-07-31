@@ -141,8 +141,9 @@ def mosquittoDo(topic, command):
     global received
     global result
     try:
-        client.publish(topic,command)
+        data = client.publish(topic,command)
         log("sent command "+topic+" "+command)
+        log(data)
     except Exception as err:
         log(err)
     return 'OK'
