@@ -143,7 +143,7 @@ def mosquittoDo(topic, command):
     try:
         data = client.publish(topic,command)
         log("sent command "+topic+" "+command)
-        log(data)
+        log("published: "+str(data.is_published()))
     except Exception as err:
         log(err)
     return 'OK'
