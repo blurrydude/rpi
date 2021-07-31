@@ -54,14 +54,18 @@ def handleMessage(topic, text):
     #log("handle message: "+topic+" : "+text)
     for circuit in circuits:
         if circuit["address"] in topic and "relay/"+circuit["relay"] in topic:
-            handleCircuitMessage(topic, text)
-            return
+            if handleCircuitMessage(topic, text) is True:
+                return
     for sensor in motionSensors:
         if sensor["address"] in topic:
-            handleMotionSensorMessage(sensor, text)
-            return
+            if handleMotionSensorMessage(sensor, text) is True:
+                return
     if "pi/" in topic:
-        handlePiMessage(text)
+        if handlePiMessage(text) is True:
+            return
+    log("unhandled message:")
+    log("\t\t"+topic)
+    log("\t\t"+text)
 
 def handleCircuitMessage(topic, text):
     bits = topic.split('/')
@@ -71,38 +75,40 @@ def handleCircuitMessage(topic, text):
         with open("/home/pi/"+address+"_"+relay+"_power.state", "w") as write_file:
             log(address + " " + relay + " " + text)
             write_file.write(text)
-    elif "on" in text or "off" in text: # TODO: do this better
+            return True
+    elif "energy" not in topic: # TODO: do this better
         with open("/home/pi/"+address+"_"+relay+".state", "w") as write_file:
             log(address + " " + relay + " " + text)
             write_file.write(text)
+            return True
+    return False
 
-def handleMotionSensorMessage(circuit, text):
+def handleMotionSensorMessage(sensor, text):
     log("handle motion")
-    log(circuit)
+    log(sensor)
     log(text)
     data = json.loads(text)
     if data["motion"] is True:
         log("motion detected")
-        for sensor in motionSensors:
-            if sensor["address"] in topic:
-                log("address in topic")
-                for circuit in circuits:
-                    if circuit["label"].lower() == sensor["activate_light"]:
-                        log("label in activate_light")
-                        topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]
-                        mosquittoDo(topic,"on")
+        for circuit in circuits:
+            if circuit["label"].lower() == sensor["activate_light"]:
+                log("label in activate_light")
+                topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]
+                mosquittoDo(topic,"on")
+                return True
     if data["motion"] is False:
         log("motion stopped")
-        for sensor in motionSensors:
-            if sensor["address"] in topic and sensor["auto_off"] is True:
-                for circuit in circuits:
-                    if circuit["label"].lower() == sensor["activate_light"]:
-                        topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]
-                        mosquittoDo(topic,"off")
+        if sensor["auto_off"] is True:
+            for circuit in circuits:
+                if circuit["label"].lower() == sensor["activate_light"]:
+                    topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]
+                    mosquittoDo(topic,"off")
+                    return True
+    return False
 
 def handlePiMessage(text):
     if "alive at" not in text:
-        return
+        return True
     s = text.replace(", ", "_").replace("-", "_").replace("alive at ", "").split(" ")
     name = s[0]
     ip = s[1]
@@ -117,6 +123,7 @@ def handlePiMessage(text):
     }
     with open("/home/pi/pistates.json", "w") as write_file:
         write_file.write(json.dumps(pi))
+    return True
 
 def mosquittoDo(topic, command):
     global received
