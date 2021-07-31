@@ -4,6 +4,7 @@ time.sleep(30)
 import paho.mqtt.client as mqtt
 import json
 from datetime import datetime
+import os
 
 running = True
 client = mqtt.Client()
@@ -126,9 +127,16 @@ def mosquittoDo(topic, command):
 def log(message):
     timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     logfiledate = datetime.now().strftime("%Y%m%d")
+    logfile = "/home/pi/system_monitor_log_"+logfiledate+".txt"
     entry = timestamp + ": " + message + "\n"
     print(entry)
-    with open("/home/pi/system_monitor_log_"+logfiledate+".txt", "a") as write_file:
+
+    if os.path.exists(logfile):
+        append_write = 'a' # append if already exists
+    else:
+        append_write = 'w' # make a new file if not
+
+    with open(logfile, append_write) as write_file:
         write_file.write(entry)
 
 if __name__ == "__main__":
