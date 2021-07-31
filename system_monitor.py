@@ -141,7 +141,12 @@ def mosquittoDo(topic, command):
     global received
     global result
     try:
+        retries = 5
         data = client.publish(topic,command)
+        while data.is_published() is False and retries > 0:
+            data = client.publish(topic,command)
+            time.sleep(0.5)
+            retries = retries - 1
         log("sent command "+topic+" "+command)
         log("published: "+str(data.is_published()))
     except Exception as err:
