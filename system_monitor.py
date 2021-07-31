@@ -33,8 +33,14 @@ def loop():
     time.sleep(1)
 
 def on_message(client, userdata, message):
-    topic = message.topic
-    text = str(message.payload.decode("utf-8"))
+    try:
+        topic = message.topic
+        text = str(message.payload.decode("utf-8"))
+        handleMessage(topic, text)
+    except:
+        print('bad')
+
+def handleMessage(topic, text):
     for circuit in circuits:
         if circuit["address"] in topic and "relay/"+circuit["relay"] in topic:
             handleCircuitMessage(topic, text)

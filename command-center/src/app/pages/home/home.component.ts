@@ -11,14 +11,19 @@ export class HomeComponent {
     @Output() readings: object = {};
     
     constructor(private httpMessageService: StatusService) { 
+      this.load(httpMessageService)
+    }
+
+    public load(httpMessageService: StatusService) {
       this.httpMessageService.getStatus().toPromise().then(msg => {
         this.status = msg;
-      });
-      this.httpMessageService.getPiStatus().toPromise().then(msg => {
-        this.pistatus = msg;
-      });
-      this.httpMessageService.getReadings().toPromise().then(msg => {
-        this.readings = msg;
+        this.httpMessageService.getPiStatus().toPromise().then(smsg => {
+          this.pistatus = smsg;
+          this.httpMessageService.getReadings().toPromise().then(rmsg => {
+            this.readings = rmsg;
+            setTimeout(()=>{this.load(httpMessageService)},2000);
+          });
+        });
       });
     }
     
