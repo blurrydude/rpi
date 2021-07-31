@@ -31,7 +31,7 @@ def on_message(client, userdata, message):
     if result["motion"] is False:
         for sensor in sensors:
             if sensor["address"] in message.topic and sensor["auto_off"] is True:
-                sendCommand("turn of "+sensor["activate_light"])
+                sendCommand("turn off "+sensor["activate_light"])
     
     
 def sendCommand(command):
