@@ -3,6 +3,7 @@ import time
 time.sleep(30)
 import paho.mqtt.client as mqtt
 import json
+from datetime import datetime
 
 running = True
 client = mqtt.Client()
@@ -13,18 +14,18 @@ def loadCircuits():
     global circuits
     f = open('/home/pi/rpi/circuits.json')
     circuits = json.load(f)
-    print('circuits')
-    print(circuits)
+    log('circuits')
+    log(circuits)
 
 def loadMotionSensors():
     global motionSensors
     f = open('/home/pi/rpi/motionsensors.json')
     motionSensors = json.load(f)
-    print('motionSensors')
-    print(motionSensors)
+    log('motionSensors')
+    log(motionSensors)
 
 def initializeMqtt():
-    print('initializeMqtt')
+    log('initializeMqtt')
     client.on_message = on_message
     client.connect('192.168.1.22')
     client.subscribe('shellies/#')
@@ -43,11 +44,12 @@ def on_message(client, userdata, message):
         topic = message.topic
         text = str(message.payload.decode("utf-8"))
         handleMessage(topic, text)
-    except:
-        print('bad')
+    except Exception as err:
+        log(err)
+
 
 def handleMessage(topic, text):
-    print("handle message: "+topic+" : "+text)
+    log("handle message: "+topic+" : "+text)
     for circuit in circuits:
         if circuit["address"] in topic and "relay/"+circuit["relay"] in topic:
             handleCircuitMessage(topic, text)
@@ -65,27 +67,27 @@ def handleCircuitMessage(topic, text):
     relay = bits[3]
     if "power" in topic:
         with open("/home/pi/"+address+"_"+relay+"_power.state", "w") as write_file:
-            print(address + " " + relay + " " + text)
+            log(address + " " + relay + " " + text)
             write_file.write(text)
     else:
         with open("/home/pi/"+address+"_"+relay+".state", "w") as write_file:
-            print(address + " " + relay + " " + text)
+            log(address + " " + relay + " " + text)
             write_file.write(text)
 
 def handleMotionSensorMessage(circuit, text):
     data = json.loads(text)
     if data["motion"] is True:
-        print("motion detected")
+        log("motion detected")
         for sensor in motionSensors:
             if sensor["address"] in topic:
-                print("address in topic")
+                log("address in topic")
                 for circuit in circuits:
                     if circuit["label"].lower() == sensor["activate_light"]:
-                        print("label in activate_light")
+                        log("label in activate_light")
                         topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]
                         mosquittoDo(topic,"on")
     if data["motion"] is False:
-        print("motion stopped")
+        log("motion stopped")
         for sensor in motionSensors:
             if sensor["address"] in topic and sensor["auto_off"] is True:
                 for circuit in circuits:
@@ -100,7 +102,7 @@ def handlePiMessage(text):
     name = s[0]
     ip = s[1]
     ts = s[2]
-    print(name+" "+ip+" "+ts)
+    log(name+" "+ip+" "+ts)
     f = open("/home/pi/pistates.json")
     pi = json.load(f)
     pi[name] = {
@@ -116,10 +118,18 @@ def mosquittoDo(topic, command):
     global result
     try:
         client.publish(topic,command)
-        print("sent command "+topic+" "+command)
+        log("sent command "+topic+" "+command)
     except:
-        print('failed')
+        log('failed')
     return 'OK'
+
+def log(message):
+    timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+    logfiledate = datetime.now().strftime("%Y%m%d")
+    entry = timestamp + ": " + message + "\n"
+    print(entry)
+    with open("/home/pi/system_monitor_log_"+logfiledate+".txt", "a") as write_file:
+        write_file.write(entry)
 
 if __name__ == "__main__":
     loadCircuits()
