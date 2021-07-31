@@ -33,6 +33,14 @@ class SmartScreen:
                 com = com + " zone "
             com = com + button.func.replace("toggle","") + " " + current_target.lower()
             sendCommand(com)
+        if "increase_low_temp" in button.func:
+            increase_low_temp(button.target)
+        if "increase_high_temp" in button.func:
+            increase_high_temp(button.target)
+        if "decrease_low_temp" in button.func:
+            decrease_low_temp(button.target)
+        if "decrease_high_temp" in button.func:
+            decrease_high_temp(button.target)
     def hide(self):
         for button in self.buttons:
             button.hide()
@@ -135,6 +143,163 @@ def loadConfig():
             screen.labels.append(label)
         screens[screenname] = screen
     
+    buildCircuitScreens()
+
+    buildToggleScreen()
+
+    buildStatusScreen()
+
+    buildThermostatScreen()
+
+def buildThermostatScreen():
+    global screens
+    readings = getReadings()
+    screens["thermostats"] = SmartScreen()
+    screens["thermostats"].buttons.append(SmartButton(screens["thermostats"],{
+                "text": "Main Menu", "func": "screen", "target":"main",
+                "height": 1, "fontname": "Times", "fontsize": 20,
+                "bg": "orange", "fg": "white", "sticky": "nesw",
+                "row": 1, "col": 1, "padx": 5, "pady": 5
+            }))
+    screens["thermostats"].labels.append(SmartLabel({
+                "text": "Thermostats", "bg": "black", "fg": "white",
+                "fontname": "Times", "fontsize": 16, "sticky": "nesw",
+                "row": 0, "col": 1, "padx": 5, "pady": 5
+            }))
+    row = 2
+    for room in readings.keys():
+        screens["thermostats"].buttons.append(SmartButton(screens["thermostats"],{
+                    "text": room, "func": "screen", "target":room.lower()+"thermostat",
+                    "height": 2, "fontname": "Times", "fontsize": 24,
+                    "bg": "darkgreen", "fg": "white", "sticky": "nesw",
+                    "row": row, "col": 1, "padx": 5, "pady": 5
+                }))
+        row = row + 1
+        screens[room+"thermostat"] = SmartScreen()
+        screens[room+"thermostat"].buttons.append(SmartButton(screens[room+"thermostat"],{
+                    "text": "Back", "func": "screen", "target":"thermostats",
+                    "height": 1, "fontname": "Times", "fontsize": 20,
+                    "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                    "row": 1, "col": 1, "padx": 5, "pady": 5
+                }))
+        screens[room+"thermostat"].buttons.append(SmartButton(screens[room+"thermostat"],{
+                    "text": "Increase", "func": "increase_low_temp", "target":room,
+                    "height": 1, "fontname": "Times", "fontsize": 20,
+                    "bg": "darkred", "fg": "white", "sticky": "nesw",
+                    "row": 2, "col": 0, "padx": 5, "pady": 5
+                }))
+        screens[room+"thermostat"].buttons.append(SmartButton(screens[room+"thermostat"],{
+                    "text": "Decrease", "func": "decrease_low_temp", "target":room,
+                    "height": 1, "fontname": "Times", "fontsize": 20,
+                    "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                    "row": 4, "col": 0, "padx": 5, "pady": 5
+                }))
+        screens[room+"thermostat"].buttons.append(SmartButton(screens[room+"thermostat"],{
+                    "text": "Increase", "func": "increase_high_temp", "target":room,
+                    "height": 1, "fontname": "Times", "fontsize": 20,
+                    "bg": "darkred", "fg": "white", "sticky": "nesw",
+                    "row": 2, "col": 2, "padx": 5, "pady": 5
+                }))
+        screens[room+"thermostat"].buttons.append(SmartButton(screens[room+"thermostat"],{
+                    "text": "Decrease", "func": "decrease_high_temp", "target":room,
+                    "height": 1, "fontname": "Times", "fontsize": 20,
+                    "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                    "row": 4, "col": 2, "padx": 5, "pady": 5
+                }))
+        screens[room+"thermostat"].labels.append(SmartLabel({
+                    "text": "Heat When Below", "bg": "black", "fg": "white",
+                    "fontname": "Times", "fontsize": 12, "sticky": "nesw",
+                    "row": 1, "col": 0, "padx": 5, "pady": 5
+                }))
+        screens[room+"thermostat"].labels.append(SmartLabel({
+                    "text": "Thermostat", "bg": "black", "fg": "white",
+                    "fontname": "Times", "fontsize": 16, "sticky": "nesw",
+                    "row": 0, "col": 1, "padx": 5, "pady": 5
+                }))
+        screens[room+"thermostat"].labels.append(SmartLabel({
+                    "text": "Cool When Above", "bg": "black", "fg": "white",
+                    "fontname": "Times", "fontsize": 12, "sticky": "nesw",
+                    "row": 1, "col": 2, "padx": 5, "pady": 5
+                }))
+        screens[room+"thermostat"].labels.append(SmartLabel({
+                    "text": "0 F", "bg": "black", "fg": "blue",
+                    "fontname": "Times", "fontsize": 24, "sticky": "nesw",
+                    "row": 3, "col": 0, "padx": 5, "pady": 5
+                }))
+        screens[room+"thermostat"].labels.append(SmartLabel({
+                    "text": "0 F", "bg": "black", "fg": "white",
+                    "fontname": "Times", "fontsize": 42, "sticky": "nesw",
+                    "row": 3, "col": 1, "padx": 5, "pady": 5
+                }))
+        screens[room+"thermostat"].labels.append(SmartLabel({
+                    "text": "0 F", "bg": "black", "fg": "red",
+                    "fontname": "Times", "fontsize": 24, "sticky": "nesw",
+                    "row": 3, "col": 2, "padx": 5, "pady": 5
+                }))
+
+def buildWorkingScreen():
+    global screens
+    screens["working"] = SmartScreen()
+    screens["working"].labels.append(SmartLabel({
+                "text": "please wait...", "bg": "black", "fg": "white",
+                "fontname": "Times", "fontsize": 12, "sticky": "nesw",
+                "row": 0, "col": 1, "padx": 5, "pady": 5
+            }))
+    screens["working"].labels.append(SmartLabel({
+                "text": "Working", "bg": "black", "fg": "white",
+                "fontname": "Times", "fontsize": 36, "sticky": "nesw",
+                "row": 0, "col": 2, "padx": 5, "pady": 5
+            }))
+
+def buildStatusScreen():
+    global screens
+    screens["status"] = SmartScreen()
+    screens["status"].buttons.append(SmartButton(screens["status"],{
+                "text": "Main Menu", "func": "screen", "target":"main",
+                "height": 1, "fontname": "Times", "fontsize": 20,
+                "bg": "orange", "fg": "white", "sticky": "nesw",
+                "row": 1, "col": 1, "padx": 5, "pady": 5
+            }))
+    screens["status"].labels.append(SmartLabel({
+                "text": "Status", "bg": "black", "fg": "white",
+                "fontname": "Times", "fontsize": 16, "sticky": "nesw",
+                "row": 0, "col": 1, "padx": 5, "pady": 5
+            }))
+    screens["status"].labels.append(SmartLabel({
+                "text": "Power: 0 W", "bg": "black", "fg": "white",
+                "fontname": "Times", "fontsize": 24, "sticky": "nesw",
+                "row": 0, "col": 2, "padx": 5, "pady": 5
+            }))
+
+def buildToggleScreen():
+    global screens
+    screens["toggle"] = SmartScreen()
+    screens["toggle"].labels.append(SmartLabel({
+                "text": "TOGGLE", "bg": "black", "fg": "white",
+                "fontname": "Times", "fontsize": 16, "sticky": "nesw",
+                "row": 0, "col": 1, "padx": 5, "pady": 5
+            }))
+    screens["toggle"].buttons.append(SmartButton(screens["toggle"], {
+                "text": "Cancel", "func": "screen", "target":"main",
+                "height": 2, "fontname": "Times", "fontsize": 20,
+                "bg": "orange", "fg": "white", "sticky": "nesw",
+                "row": 0, "col": 1, "padx": 5, "pady": 5
+            }))
+    screens["toggle"].buttons.append(SmartButton(screens["toggle"], {
+                "text": "ON", "func": "toggleon", "target":"",
+                "height": 4, "fontname": "Times", "fontsize": 20,
+                "bg": "darkgreen", "fg": "white", "sticky": "nesw",
+                "row": 1, "col": 1, "padx": 5, "pady": 5
+            }))
+    screens["toggle"].buttons.append(SmartButton(screens["toggle"], {
+                "text": "OFF", "func": "toggleoff", "target":"",
+                "height": 4, "fontname": "Times", "fontsize": 20,
+                "bg": "darkred", "fg": "white", "sticky": "nesw",
+                "row": 2, "col": 1, "padx": 5, "pady": 5
+            }))
+
+def buildCircuitScreens():
+    global screens
     #circuit_screen.labels.append(SmartLabel({
     #            "text": "Circuits", "bg": "black", "fg": "white",
     #            "fontname": "Times", "fontsize": 16, "sticky": "nesw",
@@ -169,49 +334,6 @@ def loadConfig():
             else:
                 c[id] = 0
                 r[id] = r[id] + 1
-
-    screens["toggle"] = SmartScreen()
-    screens["toggle"].labels.append(SmartLabel({
-                "text": "TOGGLE", "bg": "black", "fg": "white",
-                "fontname": "Times", "fontsize": 16, "sticky": "nesw",
-                "row": 0, "col": 1, "padx": 5, "pady": 5
-            }))
-    screens["toggle"].buttons.append(SmartButton(screens["toggle"], {
-                "text": "Cancel", "func": "screen", "target":"main",
-                "height": 2, "fontname": "Times", "fontsize": 20,
-                "bg": "orange", "fg": "white", "sticky": "nesw",
-                "row": 0, "col": 1, "padx": 5, "pady": 5
-            }))
-    screens["toggle"].buttons.append(SmartButton(screens["toggle"], {
-                "text": "ON", "func": "toggleon", "target":"",
-                "height": 4, "fontname": "Times", "fontsize": 20,
-                "bg": "darkgreen", "fg": "white", "sticky": "nesw",
-                "row": 1, "col": 1, "padx": 5, "pady": 5
-            }))
-    screens["toggle"].buttons.append(SmartButton(screens["toggle"], {
-                "text": "OFF", "func": "toggleoff", "target":"",
-                "height": 4, "fontname": "Times", "fontsize": 20,
-                "bg": "darkred", "fg": "white", "sticky": "nesw",
-                "row": 2, "col": 1, "padx": 5, "pady": 5
-            }))
-
-    screens["status"] = SmartScreen()
-    screens["status"].buttons.append(SmartButton(screens["status"],{
-                "text": "Main Menu", "func": "screen", "target":"main",
-                "height": 1, "fontname": "Times", "fontsize": 20,
-                "bg": "orange", "fg": "white", "sticky": "nesw",
-                "row": 1, "col": 1, "padx": 5, "pady": 5
-            }))
-    screens["status"].labels.append(SmartLabel({
-                "text": "Status", "bg": "black", "fg": "white",
-                "fontname": "Times", "fontsize": 16, "sticky": "nesw",
-                "row": 0, "col": 1, "padx": 5, "pady": 5
-            }))
-    screens["status"].labels.append(SmartLabel({
-                "text": "Power: 0 W", "bg": "black", "fg": "white",
-                "fontname": "Times", "fontsize": 24, "sticky": "nesw",
-                "row": 0, "col": 2, "padx": 5, "pady": 5
-            }))
 
 def refreshStatusDetail():
     global status
@@ -262,6 +384,14 @@ def switchToScreen(target):
                     button.bg = "darkgreen"
                 else:
                     button.bg = "darkred"
+    if "thermostat" in target and target != "thermostats":
+        readings = getReadings()
+        for room in readings.keys():
+            reading = readings[room]
+            screens[room+"thermostat"].labels[1].text = room + " thermostat"
+            screens[room+"thermostat"].labels[4].text = str(reading["temperature"]) + " F"
+            screens[room+"thermostat"].labels[3].text = str(reading["settings"]["temperature_low_setting"]) + " F"
+            screens[room+"thermostat"].labels[5].text = str(reading["settings"]["temperature_high_setting"]) + " F"
             
     screens[target].draw()
     current_screen = target
@@ -300,6 +430,14 @@ def setZone(target):
     current_target = target
     switchToScreen("toggle")
 
+def getReadings():
+    try:
+        r =requests.get('https://api.idkline.com/getreadings')
+        data = json.loads(r.text)
+        return data
+    except:
+        return None
+
 def sendCommand(command):
     #print("sending command: "+command)
     try:
@@ -309,6 +447,59 @@ def sendCommand(command):
     except:
         print('failed to send command')
 
+def increase_low_temp(room):
+    #print("sending command: "+command)
+    low = round(float(screens[room+"thermostat"].labels[3].text.replace(" F","")))
+    high = round(float(screens[room+"thermostat"].labels[5].text.replace(" F","")))
+    low = low + 1
+    request = 'https://api.idkline.com/thermoset/'+room+':'+str(low)+':'+str(high)
+    try:
+        r =requests.get(request)
+        switchToScreen("working")
+        time.sleep(2)
+    except:
+        print('failed to send command: '+request)
+    switchToScreen(room+"thermostat")
+
+def increase_high_temp(room):
+    #print("sending command: "+command)
+    low = round(float(screens[room+"thermostat"].labels[3].text.replace(" F","")))
+    high = round(float(screens[room+"thermostat"].labels[5].text.replace(" F","")))
+    high = high + 1
+    request = 'https://api.idkline.com/thermoset/'+room+':'+str(low)+':'+str(high)
+    try:
+        r =requests.get(request)
+        switchToScreen("working")
+        time.sleep(2)
+    except:
+        print('failed to send command: '+request)
+    switchToScreen(room+"thermostat")
+
+def decrease_low_temp(room):
+    low = round(float(screens[room+"thermostat"].labels[3].text.replace(" F","")))
+    high = round(float(screens[room+"thermostat"].labels[5].text.replace(" F","")))
+    low = low - 1
+    request = 'https://api.idkline.com/thermoset/'+room+':'+str(low)+':'+str(high)
+    try:
+        r =requests.get(request)
+        switchToScreen("working")
+        time.sleep(2)
+    except:
+        print('failed to send command: '+request)
+    switchToScreen(room+"thermostat")
+
+def decrease_high_temp(room):
+    low = round(float(screens[room+"thermostat"].labels[3].text.replace(" F","")))
+    high = round(float(screens[room+"thermostat"].labels[5].text.replace(" F","")))
+    high = high - 1
+    request = 'https://api.idkline.com/thermoset/'+room+':'+str(low)+':'+str(high)
+    try:
+        r =requests.get(request)
+        switchToScreen("working")
+        time.sleep(2)
+    except:
+        print('failed to send command: '+request)
+    switchToScreen(room+"thermostat")
 
 current_func = ""
 current_target = ""
