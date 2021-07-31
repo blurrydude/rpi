@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 import time
-#time.sleep(60)
+time.sleep(60)
 from os import write
 import tkinter as tk
 import json
@@ -457,10 +457,11 @@ def increase_low_temp(room):
         # switchToScreen("working")
         r =requests.get(request)
         screens[room+"thermostat"].labels[3].text = str(low) + " F"
-        time.sleep(0.5)
+        screens[room+"thermostat"].draw()
+        # time.sleep(3)
     except:
         print('failed to send command: '+request)
-    switchToScreen(room+"thermostat")
+    # switchToScreen(room+"thermostat")
 
 def increase_high_temp(room):
     #print("sending command: "+command)
@@ -472,10 +473,11 @@ def increase_high_temp(room):
         # switchToScreen("working")
         r =requests.get(request)
         screens[room+"thermostat"].labels[5].text = str(high) + " F"
-        time.sleep(0.5)
+        screens[room+"thermostat"].draw()
+        # time.sleep(3)
     except:
         print('failed to send command: '+request)
-    switchToScreen(room+"thermostat")
+    # switchToScreen(room+"thermostat")
 
 def decrease_low_temp(room):
     low = round(float(screens[room+"thermostat"].labels[3].text.replace(" F","")))
@@ -486,10 +488,11 @@ def decrease_low_temp(room):
         # switchToScreen("working")
         r =requests.get(request)
         screens[room+"thermostat"].labels[3].text = str(low) + " F"
-        time.sleep(0.5)
+        screens[room+"thermostat"].draw()
+        # time.sleep(3)
     except:
         print('failed to send command: '+request)
-    switchToScreen(room+"thermostat")
+    # switchToScreen(room+"thermostat")
 
 def decrease_high_temp(room):
     low = round(float(screens[room+"thermostat"].labels[3].text.replace(" F","")))
@@ -500,10 +503,11 @@ def decrease_high_temp(room):
         # switchToScreen("working")
         r =requests.get(request)
         screens[room+"thermostat"].labels[5].text = str(high) + " F"
-        time.sleep(0.5)
+        screens[room+"thermostat"].draw()
+        # time.sleep(3)
     except:
         print('failed to send command: '+request)
-    switchToScreen(room+"thermostat")
+    # switchToScreen(room+"thermostat")
 
 current_func = ""
 current_target = ""
