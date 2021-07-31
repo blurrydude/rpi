@@ -51,7 +51,7 @@ def on_message(client, userdata, message):
 
 
 def handleMessage(topic, text):
-    log("handle message: "+topic+" : "+text)
+    #log("handle message: "+topic+" : "+text)
     for circuit in circuits:
         if circuit["address"] in topic and "relay/"+circuit["relay"] in topic:
             handleCircuitMessage(topic, text)
