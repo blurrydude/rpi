@@ -121,8 +121,8 @@ def mosquittoDo(topic, command):
     try:
         client.publish(topic,command)
         log("sent command "+topic+" "+command)
-    except:
-        log('failed')
+    except Exception as err:
+        log(err)
     return 'OK'
 
 def log(message):
