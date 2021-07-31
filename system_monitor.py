@@ -82,12 +82,12 @@ def handleCircuitMessage(topic, text):
     relay = bits[3]
     if "power" in topic:
         with open("/home/pi/"+address+"_"+relay+"_power.state", "w") as write_file:
-            log(address + " " + relay + " " + text)
+            #log(address + " " + relay + " " + text)
             write_file.write(text)
             return True
     elif "energy" not in topic: # TODO: do this better
         with open("/home/pi/"+address+"_"+relay+".state", "w") as write_file:
-            log(address + " " + relay + " " + text)
+            #log(address + " " + relay + " " + text)
             write_file.write(text)
             return True
     return False
