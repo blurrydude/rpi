@@ -29,11 +29,17 @@ def on_message(client, userdata, message):
         if result["motion"] is True:
             for sensor in sensors:
                 if sensor["address"] in message.topic:
-                    sendCommand("turn on "+sensor["activate_light"])
+                    for circuit in circuits:
+                        if circuit["label"].lower() == sensor["activate_light"]:
+                            topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]
+                            mosquittoDo(topic,"on")
         if result["motion"] is False:
             for sensor in sensors:
                 if sensor["address"] in message.topic and sensor["auto_off"] is True:
-                    sendCommand("turn off "+sensor["activate_light"])
+                    for circuit in circuits:
+                        if circuit["label"].lower() == sensor["activate_light"]:
+                            topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]
+                            mosquittoDo(topic,"off")
     result = str(message.payload.decode("utf-8"))
     #print("Received: "+result)
     bits = message.topic.split('/')
@@ -56,6 +62,18 @@ def sendCommand(command):
         print(str(r.status_code))
     except:
         print('failed to send command')
+
+def mosquittoDo(topic, command):
+    global received
+    global result
+    try:
+        client = mqtt.Client()
+        client.connect("192.168.1.22")
+        client.publish(topic,command)
+        client.disconnect()
+    except:
+        print('failed')
+    return 'OK'
 
 if __name__ == "__main__":
     client.on_message = on_message
