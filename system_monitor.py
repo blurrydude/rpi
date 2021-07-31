@@ -11,7 +11,7 @@ running = True
 client = mqtt.Client()
 circuits = None
 motionSensors = None
-ignore_from_shelly = ["temperature", "temperature_f", "overtemperature", "input", "energy"]
+ignore_from_shelly = ["temperature", "temperature_f", "overtemperature", "input", "energy","online"]
 
 def loadCircuits():
     global circuits
@@ -57,6 +57,10 @@ def on_message(client, userdata, message):
 
 def handleMessage(topic, text):
     #log("handle message: "+topic+" : "+text)
+    if "shellies" in topic:
+        for tword in ignore_from_shelly:
+            if tword in topic:
+                return
     for circuit in circuits:
         if circuit["address"] in topic and "relay/"+circuit["relay"] in topic:
             if handleCircuitMessage(topic, text) is True:
@@ -68,10 +72,6 @@ def handleMessage(topic, text):
     if "pi/" in topic:
         if handlePiMessage(text) is True:
             return
-    if "shellies" in topic:
-        for tword in ignore_from_shelly:
-            if tword in topic:
-                return
     log("unhandled message:")
     log(topic)
     log(text)
