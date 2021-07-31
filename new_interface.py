@@ -452,7 +452,7 @@ def increase_low_temp(room):
     low = round(float(screens[room+"thermostat"].labels[3].text.replace(" F","")))
     high = round(float(screens[room+"thermostat"].labels[5].text.replace(" F","")))
     low = low + 1
-    request = 'https://api.idkline.com/thermoset/'+room+':'+str(low)+':'+str(high)
+    request = 'https://api.idkline.com/thermoset/'+room+'-'+str(low)+'-'+str(high)
     try:
         r =requests.get(request)
         switchToScreen("working")
@@ -466,7 +466,7 @@ def increase_high_temp(room):
     low = round(float(screens[room+"thermostat"].labels[3].text.replace(" F","")))
     high = round(float(screens[room+"thermostat"].labels[5].text.replace(" F","")))
     high = high + 1
-    request = 'https://api.idkline.com/thermoset/'+room+':'+str(low)+':'+str(high)
+    request = 'https://api.idkline.com/thermoset/'+room+'-'+str(low)+'-'+str(high)
     try:
         r =requests.get(request)
         switchToScreen("working")
@@ -479,7 +479,7 @@ def decrease_low_temp(room):
     low = round(float(screens[room+"thermostat"].labels[3].text.replace(" F","")))
     high = round(float(screens[room+"thermostat"].labels[5].text.replace(" F","")))
     low = low - 1
-    request = 'https://api.idkline.com/thermoset/'+room+':'+str(low)+':'+str(high)
+    request = 'https://api.idkline.com/thermoset/'+room+'-'+str(low)+'-'+str(high)
     try:
         r =requests.get(request)
         switchToScreen("working")
@@ -492,7 +492,7 @@ def decrease_high_temp(room):
     low = round(float(screens[room+"thermostat"].labels[3].text.replace(" F","")))
     high = round(float(screens[room+"thermostat"].labels[5].text.replace(" F","")))
     high = high - 1
-    request = 'https://api.idkline.com/thermoset/'+room+':'+str(low)+':'+str(high)
+    request = 'https://api.idkline.com/thermoset/'+room+'-'+str(low)+'-'+str(high)
     try:
         r =requests.get(request)
         switchToScreen("working")
