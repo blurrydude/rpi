@@ -253,8 +253,8 @@ def thermosettings(room):
 def thermoset(data):
     s = data.split('-')
     room = s[0]
-    temp_high = int(s[1])
-    temp_low = int(s[2])
+    temp_low = int(s[1])
+    temp_high = int(s[2])
     f = open("/home/pi/"+room+"_thermosettings.json")
     settings = json.load(f)
     settings["temperature_high_setting"] = temp_high
