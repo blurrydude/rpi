@@ -454,9 +454,10 @@ def increase_low_temp(room):
     low = low + 1
     request = 'https://api.idkline.com/thermoset/'+room+'-'+str(low)+'-'+str(high)
     try:
-        switchToScreen("working")
+        # switchToScreen("working")
         r =requests.get(request)
-        time.sleep(2)
+        screens[room+"thermostat"].labels[3].text = str(low) + " F"
+        time.sleep(0.5)
     except:
         print('failed to send command: '+request)
     switchToScreen(room+"thermostat")
@@ -468,9 +469,10 @@ def increase_high_temp(room):
     high = high + 1
     request = 'https://api.idkline.com/thermoset/'+room+'-'+str(low)+'-'+str(high)
     try:
-        switchToScreen("working")
+        # switchToScreen("working")
         r =requests.get(request)
-        time.sleep(2)
+        screens[room+"thermostat"].labels[5].text = str(high) + " F"
+        time.sleep(0.5)
     except:
         print('failed to send command: '+request)
     switchToScreen(room+"thermostat")
@@ -481,9 +483,10 @@ def decrease_low_temp(room):
     low = low - 1
     request = 'https://api.idkline.com/thermoset/'+room+'-'+str(low)+'-'+str(high)
     try:
-        switchToScreen("working")
+        # switchToScreen("working")
         r =requests.get(request)
-        time.sleep(2)
+        screens[room+"thermostat"].labels[3].text = str(low) + " F"
+        time.sleep(0.5)
     except:
         print('failed to send command: '+request)
     switchToScreen(room+"thermostat")
@@ -494,9 +497,10 @@ def decrease_high_temp(room):
     high = high - 1
     request = 'https://api.idkline.com/thermoset/'+room+'-'+str(low)+'-'+str(high)
     try:
-        switchToScreen("working")
+        # switchToScreen("working")
         r =requests.get(request)
-        time.sleep(2)
+        screens[room+"thermostat"].labels[5].text = str(high) + " F"
+        time.sleep(0.5)
     except:
         print('failed to send command: '+request)
     switchToScreen(room+"thermostat")
