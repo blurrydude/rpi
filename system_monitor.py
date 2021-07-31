@@ -77,6 +77,9 @@ def handleCircuitMessage(topic, text):
             write_file.write(text)
 
 def handleMotionSensorMessage(circuit, text):
+    log("handle motion")
+    log(circuit)
+    log(text)
     data = json.loads(text)
     if data["motion"] is True:
         log("motion detected")
