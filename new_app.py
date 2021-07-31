@@ -261,6 +261,7 @@ def thermoset(data):
     settings["temperature_low_setting"] = temp_low
     with open("/home/pi/"+room+"_thermosettings.json","w") as write_file:
         write_file.write(json.dumps(settings))
+    return 'OK'
     
 
 if __name__ == '__main__':
