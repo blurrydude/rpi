@@ -46,6 +46,10 @@ def on_message(client, userdata, message):
     try:
         topic = message.topic
         text = str(message.payload.decode("utf-8"))
+        if "motion" in topic:
+            log("MOTION")
+            log(topic)
+            log(text)
         handleMessage(topic, text)
     except Exception as err:
         log(err)
