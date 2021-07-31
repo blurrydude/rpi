@@ -123,6 +123,7 @@ def mosquittoDo(topic, command):
 if __name__ == "__main__":
     loadCircuits()
     loadMotionSensors()
+    initializeMqtt()
     while running is True:
         loop()
     stopMqtt()
