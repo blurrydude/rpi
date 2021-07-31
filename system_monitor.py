@@ -100,8 +100,8 @@ def handleMotionSensorMessage(sensor, text):
     if data["motion"] is True:
         log("motion detected")
         for circuit in circuits:
-            if circuit["label"].lower() == sensor["activate_light"]:
-                log("label in activate_light")
+            if circuit["label"] == sensor["activate"]:
+                log("activate: "+circuit["label"])
                 topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]
                 mosquittoDo(topic,"on")
                 return True
@@ -109,7 +109,8 @@ def handleMotionSensorMessage(sensor, text):
         log("motion stopped")
         if sensor["auto_off"] is True:
             for circuit in circuits:
-                if circuit["label"].lower() == sensor["activate_light"]:
+                if circuit["label"] == sensor["activate"]:
+                    log("deactivate: "+circuit["label"])
                     topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]
                     mosquittoDo(topic,"off")
                     return True
