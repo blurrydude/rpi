@@ -22,7 +22,7 @@ def initializeMqtt():
     client.on_message = on_message
     client.connect('192.168.1.22')
     client.subscribe('shellies/#')
-    #client.subscribe('pi/#')
+    client.subscribe('pi/#')
     client.loop_start()
 
 def stopMqtt():
@@ -41,6 +41,7 @@ def on_message(client, userdata, message):
         print('bad')
 
 def handleMessage(topic, text):
+    print("handle message: "+topic+" : "+text)
     for circuit in circuits:
         if circuit["address"] in topic and "relay/"+circuit["relay"] in topic:
             handleCircuitMessage(topic, text)
