@@ -107,7 +107,7 @@ def handlePiMessage(text):
     name = s[0]
     ip = s[1]
     ts = s[2]
-    log(name+" "+ip+" "+ts)
+    #log(name+" "+ip+" "+ts)
     f = open("/home/pi/pistates.json")
     pi = json.load(f)
     pi[name] = {
