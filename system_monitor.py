@@ -6,6 +6,7 @@ import paho.mqtt.client as mqtt
 import json
 from datetime import datetime
 import os
+import requests
 
 running = True
 client = mqtt.Client()
@@ -103,8 +104,9 @@ def handleMotionSensorMessage(sensor, text):
             if circuit["label"] == sensor["activate"]:
                 log("activate: "+circuit["label"]+" @ "+circuit["address"])
                 log(circuit)
-                topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]
-                mosquittoDo(topic,"on")
+                # topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]
+                # mosquittoDo(topic,"on")
+                sendCommand("turn on "+circuit["label"].lower())
                 return True
     if data["motion"] is False:
         log("motion stopped")
@@ -113,8 +115,9 @@ def handleMotionSensorMessage(sensor, text):
                 if circuit["label"] == sensor["activate"]:
                     log("deactivate: "+circuit["label"]+" @ "+circuit["address"])
                     log(circuit)
-                    topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]
-                    mosquittoDo(topic,"off")
+                    # topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]
+                    # mosquittoDo(topic,"off")
+                    sendCommand("turn off "+circuit["label"].lower())
                     return True
     return False
 
@@ -136,6 +139,14 @@ def handlePiMessage(text):
     with open("/home/pi/pistates.json", "w") as write_file:
         write_file.write(json.dumps(pi))
     return True
+
+def sendCommand(command):
+    log("sending command: "+command)
+    try:
+        r =requests.get('https://api.idkline.com/control/'+command)
+        log(str(r.status_code))
+    except:
+        log('failed to send command')
 
 def mosquittoDo(topic, command):
     global received
