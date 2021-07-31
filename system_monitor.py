@@ -11,7 +11,7 @@ running = True
 client = mqtt.Client()
 circuits = None
 motionSensors = None
-ignore_from_shelly = ["temperature", "temperature_f", "overtemperature", "input"]
+ignore_from_shelly = ["temperature", "temperature_f", "overtemperature", "input", "energy"]
 
 def loadCircuits():
     global circuits
