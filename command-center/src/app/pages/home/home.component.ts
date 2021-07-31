@@ -21,7 +21,7 @@ export class HomeComponent {
           this.pistatus = smsg;
           this.httpMessageService.getReadings().toPromise().then(rmsg => {
             this.readings = rmsg;
-            setTimeout(()=>{this.load(httpMessageService)},2000);
+            setTimeout(()=>{this.load(httpMessageService)},5000);
           });
         });
       });
