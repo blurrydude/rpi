@@ -12,6 +12,7 @@ running = True
 client = mqtt.Client()
 circuits = None
 motionSensors = None
+doorSensors = None
 ignore_from_shelly = ["temperature", "temperature_f", "overtemperature", "input", "energy","online","announce"]
 
 def loadCircuits():
@@ -27,6 +28,13 @@ def loadMotionSensors():
     motionSensors = json.load(f)
     log('motionSensors')
     log(motionSensors)
+
+def loadDoorSensors():
+    global doorSensors
+    f = open('/home/pi/rpi/doorsensors.json')
+    doorSensors = json.load(f)
+    log('doorSensors')
+    log(doorSensors)
 
 def initializeMqtt():
     log('initializeMqtt')
@@ -70,12 +78,20 @@ def handleMessage(topic, text):
         if sensor["address"] in topic:
             if handleMotionSensorMessage(sensor, text) is True:
                 return
+    for sensor in doorSensors:
+        if sensor["address"] in topic:
+            if handleDoorSensorMessage(sensor, text) is True:
+                return
     if "pi/" in topic:
         if handlePiMessage(text) is True:
             return
     log("unhandled message:")
     log(topic)
     log(text)
+
+def handleDoorSensorMessage(sensor, text):
+    log(text)
+    data = json.loads(text)
 
 def handleCircuitMessage(topic, text):
     bits = topic.split('/')
