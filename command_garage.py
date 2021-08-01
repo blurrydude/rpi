@@ -41,9 +41,9 @@ def on_message(client, userdata, message):
     bits = result.split(':')
     addy = int(bits[0])
     if addy == 0:
-        door = "garage"
+        door = "Garage"
     else:
-        door = "shop"
+        door = "Shop"
     if bits[1] == '1':
         check = openDoor(addy)
         if check is True:

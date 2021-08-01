@@ -210,10 +210,13 @@ def log(message):
     with open(logfile, append_write) as write_file:
         write_file.write(entry)
 
-if __name__ == "__main__":
+def loadAll():
     loadCircuits()
     loadMotionSensors()
     loadDoorSensors()
+
+if __name__ == "__main__":
+    loadAll()
     initializeMqtt()
     while running is True:
         loop()
