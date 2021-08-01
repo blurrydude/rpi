@@ -275,7 +275,7 @@ def report_readings():
         print('failed to send readings')
 print("*\n*\n*\nbegin")
 halt()
-time.sleep(10)
+time.sleep(60)
 circulate_air(2, False)
 while True:
     try:
