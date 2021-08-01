@@ -205,19 +205,23 @@ def control(text):
         if "open" in command and shop_door == "closed":
             command_list.append({"t":"pi/baydoorpi/commands","c":"1:1"})
             text = text + "opening shop door\n"
+            with open('/home/pi/Shop_door.state','w') as write_file:
+                write_file.write("open")
         if ("close" in command or "shut" in command) and shop_door == "open":
             command_list.append({"t":"pi/baydoorpi/commands","c":"1:0"})
             text = text + "closing shop door\n"
+            with open('/home/pi/Shop_door.state','w') as write_file:
+                write_file.write("closed")
     elif "garage door" in command:
         if "open" in command and garage_door == "closed":
             command_list.append({"t":"pi/baydoorpi/commands","c":"0:1"})
             text = text + "opening garage door\n"
-            with open('/home/pi/garage_door.state','w') as write_file:
+            with open('/home/pi/Garage_door.state','w') as write_file:
                 write_file.write("open")
         if ("close" in command or "shut" in command) and garage_door == "open":
             command_list.append({"t":"pi/baydoorpi/commands","c":"0:0"})
             text = text + "closing garage door\n"
-            with open('/home/pi/garage_door.state','w') as write_file:
+            with open('/home/pi/Garage_door.state','w') as write_file:
                 write_file.write("closed")
     elif "status" in command:
         text = text + "Yeah, I'm alive\n"
