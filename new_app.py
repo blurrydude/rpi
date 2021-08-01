@@ -201,19 +201,19 @@ def control(text):
                 command_list.append({"t":topic,"c":com})
                 text = text + c["label"]+" "+com+"\n"
     elif "shop door" in command:
-        if "open" in command and shop_door is "closed":
+        if "open" in command and shop_door == "closed":
             command_list.append({"t":"pi/baydoorpi/commands","c":"1:1"})
             text = text + "opening shop door\n"
-        if ("close" in command or "shut" in command) and shop_door is "open":
+        if ("close" in command or "shut" in command) and shop_door == "open":
             command_list.append({"t":"pi/baydoorpi/commands","c":"1:0"})
             text = text + "closing shop door\n"
     elif "garage door" in command:
-        if "open" in command and garage_door is "closed":
+        if "open" in command and garage_door == "closed":
             command_list.append({"t":"pi/baydoorpi/commands","c":"0:1"})
             text = text + "opening garage door\n"
             with open('/home/pi/garage_door.state','w') as write_file:
                 write_file.write("open")
-        if ("close" in command or "shut" in command) and garage_door is "open":
+        if ("close" in command or "shut" in command) and garage_door == "open":
             command_list.append({"t":"pi/baydoorpi/commands","c":"0:0"})
             text = text + "closing garage door\n"
             with open('/home/pi/garage_door.state','w') as write_file:
