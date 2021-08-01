@@ -153,8 +153,9 @@ def powerstates():
 
 @app.route('/control/<text>')
 def control(text):
-    shop_door = open('/home/pi/shop_door.state').read().replace("\n","")
-    garage_door = open('/home/pi/garage_door.state').read().replace("\n","")
+    log("incoming text: "+text)
+    shop_door = open('/home/pi/Shop_door.state').read().replace("\n","")
+    garage_door = open('/home/pi/Garage_door.state').read().replace("\n","")
     reloadCircuits()
     command = text.lower()
     smst = False
