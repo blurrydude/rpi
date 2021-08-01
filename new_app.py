@@ -256,7 +256,7 @@ def getdoors():
             s = f.split('/')
             a = s[len(s)-1].split('.')[0].split('_door')
             label = a[0]
-            states[label] = open(f).read().replace("\n","")
+            states[label] = open(dirname+"/"+label+"_door.state").read().replace("\n","")
         else:
             continue
     return states
