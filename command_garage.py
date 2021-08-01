@@ -44,6 +44,7 @@ def on_message(client, userdata, message):
         door = "Garage"
     else:
         door = "Shop"
+    # TODO: remove checks and sendReport when additional sensors arrive
     if bits[1] == '1':
         check = openDoor(addy)
         if check is True:
