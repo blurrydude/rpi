@@ -261,11 +261,10 @@ def reportreadings(message):
     room = split[0]
     temp = split[1]
     hum = split[2]
-    room = split[3]
-    cooling = split[4]
-    circulation = split[5]
-    heating = split[6]
-    whf = split[7]
+    cooling = split[3]
+    circulation = split[4]
+    heating = split[5]
+    whf = split[6]
     f = "/home/pi/temperatures.json"
     j = open(f)
     readings = json.load(j)
