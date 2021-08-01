@@ -92,6 +92,10 @@ def handleMessage(topic, text):
 def handleDoorSensorMessage(sensor, text):
     log(text)
     data = json.loads(text)
+    if data["state"] == "open":
+        sendCommand(sensor["open_command"])
+    if data["state"] == "closed":
+        sendCommand(sensor["close_command"])
 
 def handleCircuitMessage(topic, text):
     bits = topic.split('/')
@@ -200,6 +204,7 @@ def log(message):
 if __name__ == "__main__":
     loadCircuits()
     loadMotionSensors()
+    loadDoorSensors()
     initializeMqtt()
     while running is True:
         loop()
