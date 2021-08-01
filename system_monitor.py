@@ -8,6 +8,7 @@ from datetime import datetime
 import os
 import requests
 
+file_logging = False
 running = True
 client = mqtt.Client()
 circuits = None
@@ -201,14 +202,14 @@ def log(message):
     logfile = "/home/pi/system_monitor_log_"+logfiledate+".txt"
     entry = timestamp + ": " + message + "\n"
     print(entry)
+    if file_logging is True:
+        if os.path.exists(logfile):
+            append_write = 'a' # append if already exists
+        else:
+            append_write = 'w' # make a new file if not
 
-    if os.path.exists(logfile):
-        append_write = 'a' # append if already exists
-    else:
-        append_write = 'w' # make a new file if not
-
-    with open(logfile, append_write) as write_file:
-        write_file.write(entry)
+        with open(logfile, append_write) as write_file:
+            write_file.write(entry)
 
 def loadAll():
     loadCircuits()
