@@ -153,6 +153,8 @@ def powerstates():
 
 @app.route('/control/<text>')
 def control(text):
+    shop_door = open('home/pi/shop_door.state').read()
+    garage_door = open('home/pi/garage_door.state').read()
     reloadCircuits()
     command = text.lower()
     smst = False
@@ -199,8 +201,23 @@ def control(text):
                 command_list.append({"t":topic,"c":com})
                 text = text + c["label"]+" "+com+"\n"
     elif "shop door" in command:
-        command_list.append({"t":"pi/baydoorpi/commands","c":"1:0"})
-        text = text + "opening shop door\n"
+        if "open" in command and shop_door is "closed":
+            command_list.append({"t":"pi/baydoorpi/commands","c":"1:1"})
+            text = text + "opening shop door\n"
+        if ("close" in command or "shut" in command) and shop_door is "open":
+            command_list.append({"t":"pi/baydoorpi/commands","c":"1:0"})
+            text = text + "closing shop door\n"
+    elif "garage door" in command:
+        if "open" in command and garage_door is "closed":
+            command_list.append({"t":"pi/baydoorpi/commands","c":"0:1"})
+            text = text + "opening garage door\n"
+            with open('/home/pi/garage_door.state','w') as write_file:
+                write_file.write("open")
+        if ("close" in command or "shut" in command) and garage_door is "open":
+            command_list.append({"t":"pi/baydoorpi/commands","c":"0:0"})
+            text = text + "closing garage door\n"
+            with open('/home/pi/garage_door.state','w') as write_file:
+                write_file.write("closed")
     elif "status" in command:
         text = text + "Yeah, I'm alive\n"
     log(text)
@@ -217,6 +234,26 @@ def circuitinfo(circuitlabel):
         if circuit["label"] == circuitlabel:
             return circuit
     return None
+
+@app.route('/reportdoor/<data>')
+def reportdoor(data):
+    split = data.split('-')
+    door = split[0]
+    state = split[1]
+    f = "/home/pi/"+door+"_door.state"
+    with open(f,"w") as write_file:
+        write_file.write(state)
+    return 'OK'
+
+@app.route('/getdoors')
+def getdoors():
+    f1 = "/home/pi/garage_door.state"
+    f2 = "/home/pi/shop_door.state"
+    data = {
+        "garage": open(f1).read(),
+        "shop": open(f2).read()
+    }
+    return data
 
 @app.route('/reportreadings/<message>')
 def reportreadings(message):

@@ -9,6 +9,7 @@ export class HomeComponent {
     @Output() status: object = {};
     @Output() pistatus: object = {};
     @Output() readings: object = {};
+    @Output() doors: object = {};
     
     constructor(private httpMessageService: StatusService) { 
       this.load(httpMessageService)
@@ -22,6 +23,9 @@ export class HomeComponent {
           this.pistatus = smsg;
           this.httpMessageService.getReadings().toPromise().then(rmsg => {
             this.readings = rmsg;
+            this.httpMessageService.getDoors().toPromise().then(dmsg => {
+              this.doors = dmsg;
+            });
           });
         });
       });

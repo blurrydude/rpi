@@ -5,6 +5,7 @@ import paho.mqtt.client as mqtt
 import pifacedigitalio as p
 import subprocess
 import socket
+import requests
 
 myname = socket.gethostname()
 myip = subprocess.check_output(['hostname', '-I'])
@@ -21,7 +22,7 @@ def openDoor(bay):
     time.sleep(1)
     p.digital_write(bay,0)
     dooropen[bay] = True
-    return 'OK'
+    return True
 
 def closeDoor(bay):
     global dooropen
@@ -31,7 +32,7 @@ def closeDoor(bay):
     time.sleep(1)
     p.digital_write(bay,0)
     dooropen[bay] = False
-    return 'OK'
+    return True
 
 def on_message(client, userdata, message):
     global running
@@ -39,11 +40,25 @@ def on_message(client, userdata, message):
     #print("Received: "+result)
     bits = result.split(':')
     addy = int(bits[0])
+    if addy == 0:
+        door = "garage"
+    else:
+        door = "shop"
     if bits[1] == '1':
         check = openDoor(addy)
+        if check is True:
+            sendReport(door,"open")
     else:
         check = closeDoor(addy)
+        if check is True:
+            sendReport(door,"closed")
     #print(check)
+
+def sendReport(door, state):
+    try:
+        r =requests.get('https://api.idkline.com/reportdoor/'+door+"-"+state)
+    except:
+        print('failed to send command')
 
 if __name__ == "__main__":
     p.init()

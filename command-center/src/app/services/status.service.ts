@@ -64,6 +64,15 @@ export class StatusService {
       );
   }
 
+  public getDoors() {
+    return this.http.get(this.baseurl+"getdoors", this.options)
+      .pipe(
+        catchError(err => {
+          return this.handleError(err);
+        })
+      );
+  }
+
   // public getLoansByCompany(companyNumber: string) {
   //   this.options.params = new HttpParams({ fromString: "?companyId=" + companyNumber });
   //   return this.http.get<LoanMessage[]>(this.byCompanyUrl, this.options)

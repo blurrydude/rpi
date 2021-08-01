@@ -26,6 +26,18 @@
       </div>
     </div>
     <div class="row">
+      <div class="col-md-6" *ngFor="let door of doors | keyvalue">
+        <div class="card text-center my-2">
+          <div class="card-header">
+            <h5>{{door.key}}</h5>
+          </div>
+          <div class="card-body">
+            <h4>{{door.value}}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-2" *ngFor="let pistat of pistatus | keyvalue">
         <div class="card text-center my-2">
           <div class="card-header">
