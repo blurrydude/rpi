@@ -247,13 +247,19 @@ def reportdoor(data):
 
 @app.route('/getdoors')
 def getdoors():
-    f1 = "/home/pi/garage_door.state"
-    f2 = "/home/pi/shop_door.state"
-    data = {
-        "garage": open(f1).read().replace("\n",""),
-        "shop": open(f2).read().replace("\n","")
-    }
-    return data
+    dirname = '/home/pi'
+    
+    ext = ('_door.state')
+    states = {}
+    for f in os.listdir(dirname):
+        if f.endswith(ext):
+            s = f.split('/')
+            a = s[len(s)-1].split('.')[0].split('_door')
+            label = a[0]
+            states[label] = open(f).read().replace("\n","")
+        else:
+            continue
+    return states
 
 @app.route('/reportreadings/<message>')
 def reportreadings(message):

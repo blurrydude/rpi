@@ -94,9 +94,15 @@ def handleMessage(topic, text):
 def handleDoorSensorMessage(sensor, text):
     if text == "open":
         sendCommand(sensor["open_command"])
+        f = "/home/pi/"+sensor["label"]+"_door.state"
+        with open(f,"w") as write_file:
+            write_file.write("open")
         return True
     if text == "close":
         sendCommand(sensor["close_command"])
+        f = "/home/pi/"+sensor["label"]+"_door.state"
+        with open(f,"w") as write_file:
+            write_file.write("closed")
         return True
     return False
 

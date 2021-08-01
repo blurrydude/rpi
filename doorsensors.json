@@ -1,3 +1,3 @@
 [
-    {"room":"Laundry Room", "address":"shellydw2-AA866A", "open_command":"turn on laundry room light", "close_command":"turn off laundry room light"}
+    {"label":"Laundry Room", "address":"shellydw2-AA866A", "open_command":"turn on laundry room light", "close_command":"turn off laundry room light"}
 ]
