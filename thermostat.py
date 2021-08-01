@@ -249,7 +249,13 @@ def load_settings():
         print('failed to get thermosettings')
 
 def report_readings():
-    print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
+    hum = humidity
+    temp = temperature
+    #print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
+    if humidity == None:
+        hum = 0
+    if temperature == None:
+        temp = 0
     cool = "off"
     if ac_state is True:
         cool = "on"
@@ -263,7 +269,7 @@ def report_readings():
     if whf_state is True:
         w = "on"
     try:
-        r =requests.get('https://api.idkline.com/reportreadings/'+room+':{0:0.1f}:{1:0.1f}:{2}:{3}:{4}:{5}'.format(temperature, humidity,cool,circ,h,w))
+        r =requests.get('https://api.idkline.com/reportreadings/'+room+':{0:0.1f}:{1:0.1f}:{2}:{3}:{4}:{5}'.format(temp, hum,cool,circ,h,w))
         print(str(r.status_code))
     except:
         print('failed to send readings')
