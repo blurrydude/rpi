@@ -95,7 +95,7 @@ def handleDoorSensorMessage(sensor, text):
     if text == "open":
         sendCommand(sensor["open_command"])
         return True
-    if text == "closed":
+    if text == "close":
         sendCommand(sensor["close_command"])
         return True
     return False
