@@ -33,6 +33,7 @@ circulate_until = datetime.now() + timedelta(minutes=1)
 circulating = False
 start_stage = datetime.now() - timedelta(minutes=1)
 delay_stage = datetime.now()
+has_circulated = False
 
 heat = 26
 ac = 20
@@ -167,13 +168,15 @@ def cycle():
 def cool_down():
     global start_stage
     global delay_stage
+    global has_circulated
     if ac_state is True:
         if start_stage < datetime.now() - timedelta(minutes=stage_limit_minutes):
             delay_stage = datetime.now() + timedelta(minutes=stage_cooldown_minutes)
             ac_off()
         return
-    if round(humidity) > humidity_setting and humidity_setting > 0:
+    if round(humidity) > humidity_setting and humidity_setting > 0 and has_circulated is False:
         circulate_air(humidity_circulation_minutes, True)
+    has_circulated = False
     start_stage = datetime.now()
     ac_on()
 
@@ -203,12 +206,14 @@ def circulate_air(minutes, use_whf):
 def stop_circulating():
     global whf_state
     global circulating
+    global has_circulated
     if whf_state is True and use_whole_house_fan is True:
         whf_state = False
         report()
         sendCommand('turn off whole house fan')
     fan_off()
     circulating = False
+    has_circulated = True
 
 def sendCommand(command):
     print("sending command: "+command)
