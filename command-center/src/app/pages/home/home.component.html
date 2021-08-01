@@ -10,6 +10,10 @@
         <div class="card text-center my-2">
           <div class="card-header">
             <h5>{{reading.key}}</h5>
+            <i class="fa fa-fire" [ngShow]="reading.value['report']['heating']=='on'"></i>
+            <i class="fa fa-snowflake" [ngShow]="reading.value['report']['cooling']=='on'"></i>
+            <i class="fa fa-fan" [ngShow]="reading.value['report']['circulataion']=='on'"></i>
+            <i class="fa fa-home" [ngShow]="reading.value['report']['whf']=='on'"></i>
           </div>
           <div class="card-body">
             <div class="row">
