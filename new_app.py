@@ -299,6 +299,24 @@ def thermoset(data):
     with open("/home/pi/"+room+"_thermosettings.json","w") as write_file:
         write_file.write(json.dumps(settings))
     return 'OK'
+
+@app.route('/thermoreport/<data>')
+def thermoreport(data):
+    s = data.split('-')
+    room = s[0]
+    cooling = s[1]
+    circulation = s[2]
+    heating = s[3]
+    whf = s[4]
+    
+    with open("/home/pi/"+room+"_thermoreport.json","w") as write_file:
+        write_file.write(json.dumps({
+            "cooling": cooling,
+            "circulation": circulation,
+            "heating": heating,
+            "whf": whf
+        }))
+    return 'OK'
     
 
 if __name__ == '__main__':

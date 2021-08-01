@@ -69,7 +69,7 @@ def heat_off():
         last_circulation = datetime.now()
     set_circuit(heat, False)
     heat_state = False
-    report("heat off")
+    report()
 
 def ac_off():
     global ac_state
@@ -78,7 +78,7 @@ def ac_off():
         last_circulation = datetime.now()
     set_circuit(ac, False)
     ac_state = False
-    report("ac off")
+    report()
 
 def fan_off():
     global fan_state
@@ -87,7 +87,7 @@ def fan_off():
         last_circulation = datetime.now()
     set_circuit(fan, False)
     fan_state = False
-    report("fan off")
+    report()
 
 def heat_on():
     global heat_state
@@ -95,7 +95,7 @@ def heat_on():
         return
     set_circuit(heat, True)
     heat_state = True
-    report("heat on")
+    report()
 
 def ac_on():
     global ac_state
@@ -103,7 +103,7 @@ def ac_on():
         return
     set_circuit(ac, True)
     ac_state = True
-    report("ac on")
+    report()
 
 def fan_on():
     global fan_state
@@ -111,7 +111,7 @@ def fan_on():
         return
     set_circuit(fan, True)
     fan_state = True
-    report("fan on")
+    report()
 
 def halt():
     GPIO.output(heat, low)
@@ -186,12 +186,12 @@ def circulate_air(minutes, use_whf):
     fan_on()
     if use_whf is True and use_whole_house_fan is True:
         whf_state = True
-        report("whf on")
+        report()
         sendCommand('turn on whole house fan')
     time.sleep(60*minutes)
     if whf_state is True and use_whf is True and use_whole_house_fan is True:
         whf_state = False
-        report("whf off")
+        report()
         sendCommand('turn off whole house fan')
     fan_off()
 
@@ -203,9 +203,25 @@ def sendCommand(command):
     except:
         print('failed to send command')
 
-def report(message):
-    print(message)
-    #TODO: send to api
+def report():
+    print("sending report")
+    try:
+        cool = "off"
+        if ac_state is True:
+            cool = "on"
+        circ = "off"
+        if fan_state is True:
+            circ = "on"
+        h = "off"
+        if heat_state is True:
+            h = "on"
+        w = "off"
+        if whf_state is True:
+            w = "on"
+        r =requests.get('https://api.idkline.com/thermoreport/'+room+'-'+cool+'-'+circ+'-'+h+'-'+w)
+        print(str(r.status_code))
+    except:
+        print('failed to send command')
 
 def load_settings():
     global failed_read_halt_limit
