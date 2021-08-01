@@ -29,7 +29,9 @@ temperature = None
 humidity = None
 failed_reads = 0
 last_circulation = datetime.now()
-start_stage = datetime.now() - timedelta(minutes=30)
+circulate_until = datetime.now() + timedelta(minutes=1)
+circulating = False
+start_stage = datetime.now() - timedelta(minutes=1)
 delay_stage = datetime.now()
 
 heat = 26
@@ -121,7 +123,6 @@ def halt():
 def cycle():
     global failed_reads
     global last_circulation
-    global start_circulation
 
     load_settings()
 
@@ -135,6 +136,12 @@ def cycle():
         halt()
     
     report_readings()
+
+    if circulating is True:
+        if datetime.now() > circulate_until:
+            stop_circulating()
+        else:
+            return
 
     if delay_stage > datetime.now():
         print("delayed")
@@ -155,7 +162,6 @@ def cycle():
         ac_off()
 
     if air_circulation_minutes > 0 and datetime.now() > last_circulation + timedelta(minutes=air_circulation_minutes):
-        start_circulation = datetime.now()
         circulate_air(humidity_circulation_minutes, False)
 
 def cool_down():
@@ -183,17 +189,26 @@ def warm_up():
     heat_on()
 
 def circulate_air(minutes, use_whf):
+    global whf_state
+    global circulate_until
+    global circulating
     fan_on()
     if use_whf is True and use_whole_house_fan is True:
         whf_state = True
         report()
         sendCommand('turn on whole house fan')
-    time.sleep(60*minutes)
-    if whf_state is True and use_whf is True and use_whole_house_fan is True:
+    circulate_until = datetime.now() + timedelta(minutes=minutes)
+    circulating = True
+
+def stop_circulating():
+    global whf_state
+    global circulating
+    if whf_state is True and use_whole_house_fan is True:
         whf_state = False
         report()
         sendCommand('turn off whole house fan')
     fan_off()
+    circulating = False
 
 def sendCommand(command):
     print("sending command: "+command)
