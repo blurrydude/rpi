@@ -261,19 +261,25 @@ def reportreadings(message):
     room = split[0]
     temp = split[1]
     hum = split[2]
+    room = split[3]
+    cooling = split[4]
+    circulation = split[5]
+    heating = split[6]
+    whf = split[7]
     f = "/home/pi/temperatures.json"
     j = open(f)
     readings = json.load(j)
     f2 = open("/home/pi/"+room+"_thermosettings.json")
     settings = json.load(f2)
-    f3 = open("/home/pi/"+room+"_thermoreport.json")
-    report = json.load(f3)
     readings[room] = {
         "timestamp": datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
         "temperature": temp,
         "humidity": hum,
         "settings": settings,
-        "report": report
+        "cooling": cooling,
+        "circulation": circulation,
+        "heating": heating,
+        "whf": whf
     }
     with open(f,"w") as write_file:
         write_file.write(json.dumps(readings))

@@ -204,24 +204,7 @@ def sendCommand(command):
         print('failed to send command')
 
 def report():
-    print("sending report")
-    try:
-        cool = "off"
-        if ac_state is True:
-            cool = "on"
-        circ = "off"
-        if fan_state is True:
-            circ = "on"
-        h = "off"
-        if heat_state is True:
-            h = "on"
-        w = "off"
-        if whf_state is True:
-            w = "on"
-        r =requests.get('https://api.idkline.com/thermoreport/'+room+'-'+cool+'-'+circ+'-'+h+'-'+w)
-        print(str(r.status_code))
-    except:
-        print('failed to send command')
+    report_readings()
 
 def load_settings():
     global failed_read_halt_limit
@@ -252,10 +235,21 @@ def load_settings():
 
 def report_readings():
     print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
+    cool = "off"
+    if ac_state is True:
+        cool = "on"
+    circ = "off"
+    if fan_state is True:
+        circ = "on"
+    h = "off"
+    if heat_state is True:
+        h = "on"
+    w = "off"
+    if whf_state is True:
+        w = "on"
     try:
-        r =requests.get('https://api.idkline.com/reportreadings/'+room+':{0:0.1f}:{1:0.1f}'.format(temperature, humidity))
+        r =requests.get('https://api.idkline.com/reportreadings/'+room+':{0:0.1f}:{1:0.1f}:{2}:{3}:{4}:{5}'.format(temperature, humidity,cool,circ,h,w))
         print(str(r.status_code))
-        report()
     except:
         print('failed to send readings')
 print("*\n*\n*\nbegin")
