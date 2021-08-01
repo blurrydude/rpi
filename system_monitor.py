@@ -80,6 +80,8 @@ def handleMessage(topic, text):
                 return
     for sensor in doorSensors:
         if sensor["address"] in topic:
+            if "state" not in topic:
+                return
             if handleDoorSensorMessage(sensor, text) is True:
                 return
     if "pi/" in topic:
