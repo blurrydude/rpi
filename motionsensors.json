@@ -2,5 +2,5 @@
     {"room":"Guest Bathroom","activate":"Guest Bathroom","address":"shellymotionsensor-60A423BECB98","auto_off":true},
     {"room":"Master Bathroom","activate":"Master Bathroom","address":"shellymotionsensor-60A42386DDE2","auto_off":true},
     {"room":"Kitchen","activate":"Kitchen","address":"shellymotionsensor-60A42386E5BA","auto_off":true},
-    {"room":"Garage","activate":"Garage","address":"shellymotionsensor-60A423872550","auto_off":true}
+    {"room":"Garage","activate":"Garage Lights","address":"shellymotionsensor-60A423872550","auto_off":true}
 ]
