@@ -153,8 +153,8 @@ def powerstates():
 
 @app.route('/control/<text>')
 def control(text):
-    shop_door = open('home/pi/shop_door.state').read()
-    garage_door = open('home/pi/garage_door.state').read()
+    shop_door = open('home/pi/shop_door.state').read().replace("\n","")
+    garage_door = open('home/pi/garage_door.state').read().replace("\n","")
     reloadCircuits()
     command = text.lower()
     smst = False
@@ -250,8 +250,8 @@ def getdoors():
     f1 = "/home/pi/garage_door.state"
     f2 = "/home/pi/shop_door.state"
     data = {
-        "garage": open(f1).read(),
-        "shop": open(f2).read()
+        "garage": open(f1).read().replace("\n",""),
+        "shop": open(f2).read().replace("\n","")
     }
     return data
 
