@@ -10,10 +10,10 @@
         <div class="card text-center my-2">
           <div class="card-header">
             <h5>{{reading.key}}</h5>
-            <i class="fa fa-fire" [ngShow]="reading.value['heating']=='on'"></i>
-            <i class="fa fa-snowflake" [ngShow]="reading.value['cooling']=='on'"></i>
-            <i class="fa fa-fan" [ngShow]="reading.value['circulataion']=='on'"></i>
-            <i class="fa fa-home" [ngShow]="reading.value['whf']=='on'"></i>
+            <span [ngClass]="{'text-muted':reading.value['heating']=='off','text-danger':reading.value['heating']=='on'}"><i class="fa fa-2x fa-fire"></i></span>&nbsp;&middot;&nbsp;
+            <span [ngClass]="{'text-muted':reading.value['cooling']=='off','text-info':reading.value['cooling']=='on'}"><i class="fas fa-2x fa-snowflake"></i></span>&nbsp;&middot;&nbsp;
+            <span [ngClass]="{'text-muted':reading.value['circulation']=='off','text-success':reading.value['circulation']=='on'}"><i class="fa fa-2x fa-wind"></i></span>&nbsp;&middot;&nbsp;
+            <span [ngClass]="{'text-muted':reading.value['whf']=='off','text-dark':reading.value['whf']=='on'}"><i class="fa fa-2x fa-fan"></i></span>
           </div>
           <div class="card-body">
             <div class="row">
