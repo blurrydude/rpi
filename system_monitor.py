@@ -90,11 +90,9 @@ def handleMessage(topic, text):
     log(text)
 
 def handleDoorSensorMessage(sensor, text):
-    log(text)
-    data = json.loads(text)
-    if data["state"] == "open":
+    if text == "open":
         sendCommand(sensor["open_command"])
-    if data["state"] == "closed":
+    if text == "closed":
         sendCommand(sensor["close_command"])
 
 def handleCircuitMessage(topic, text):
