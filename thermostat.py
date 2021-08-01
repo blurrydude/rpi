@@ -117,9 +117,19 @@ def fan_on():
     report()
 
 def halt():
+    global fan_state
+    global heat_state
+    global ac_state
+    global whf_state
     GPIO.output(heat, low)
     GPIO.output(ac, low)
     GPIO.output(fan, low)
+    sendCommand('turn off whole house fan')
+    fan_state = False
+    heat_state = False
+    ac_state = False
+    whf_state = False
+    report()
 
 def cycle():
     global failed_reads
