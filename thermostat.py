@@ -243,6 +243,7 @@ def report_readings():
         print('failed to send readings')
 print("*\n*\n*\nbegin")
 halt()
+circulate_air(2, False)
 while True:
     try:
         cycle()
