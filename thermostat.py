@@ -79,7 +79,6 @@ def read_sensor():
             time.sleep(1)
     if temperature is not None:
         temperature = temperature * 9/5.0 + 32
-        failed_reads = 0
 
     if humidity is not None and temperature is not None:
         print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
@@ -89,6 +88,8 @@ def read_sensor():
     
     if temperature is None:
         log("sensor failed")
+    
+    failed_reads = 0
 
 def set_circuit(circuit_pin, state):
     if state is True:
