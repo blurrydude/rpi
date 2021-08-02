@@ -303,7 +303,7 @@ def report():
         status = "delayed"
     if temperature is None or temperature == 0:
         status = "sensor_fail"
-    log('report: {0:0.1f} F {1:0.1f}% AC:{2} Fan:{3} Heat:{4} WHF:{5} Status:{6}'.format(temp, hum,cool,circ,h,w,status))
+    log('report: {0:0.1f} F {1:0.1f}% AC:{2} Fan:{3} Heat:{4} WHF:{5} Status:{6} Last Start:{7} Last Circ:{8}'.format(temp, hum,cool,circ,h,w,status,start_stage.strftime("%m/%d/%Y, %H:%M:%S"),last_circulation.strftime("%m/%d/%Y, %H:%M:%S")))
     report_readings()
 
 def load_settings():
@@ -362,7 +362,7 @@ def report_readings():
         status = "sensor_fail"
     try:
         r =requests.get('https://api.idkline.com/reportreadings/'+room+':{0:0.1f}:{1:0.1f}:{2}:{3}:{4}:{5}:{6}:{7}:{8}'.format(temp, hum,cool,circ,h,w,status,start_stage.strftime("%m/%d/%Y, %H:%M:%S"),last_circulation.strftime("%m/%d/%Y, %H:%M:%S")))
-        print(str(r.status_code))
+        print("report response: "+str(r.status_code))
     except:
         print('failed to send readings')
         log('failed to send readings')
