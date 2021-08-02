@@ -5,7 +5,9 @@ import requests
 import json
 from datetime import datetime, timedelta
 import socket
+import os
 
+file_logging = True
 myname = socket.gethostname()
 
 GPIO.setmode(GPIO.BCM)
@@ -47,17 +49,46 @@ whf_state = False
 low = GPIO.HIGH
 high = GPIO.LOW
 
+def log(message):
+    if type(message) is not type(""):
+        message = json.dumps(message)
+    timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+    logfiledate = datetime.now().strftime("%Y%m%d%H")
+    logfile = "/home/pi/thermostat_"+logfiledate+".log"
+    entry = timestamp + ": " + message + "\n"
+    print(entry)
+    if file_logging is True:
+        if os.path.exists(logfile):
+            append_write = 'a' # append if already exists
+        else:
+            append_write = 'w' # make a new file if not
+
+        with open(logfile, append_write) as write_file:
+            write_file.write(entry)
+
 def read_sensor():
     global temperature
     global humidity
+    global failed_reads
+
     humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.AM2302, 4)
-    temperature = temperature * 9/5.0 + 32
+    while temperature is None and failed_reads < failed_read_halt_limit:
+        humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.AM2302, 4)
+        if temperature is None:
+            failed_reads = failed_reads + 1
+            time.sleep(1)
+    if temperature is not None:
+        temperature = temperature * 9/5.0 + 32
+        failed_reads = 0
 
     if humidity is not None and temperature is not None:
         print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
     
     if humidity is None:
         humidity = 0
+    
+    if temperature is None:
+        log("sensor failed")
 
 def set_circuit(circuit_pin, state):
     if state is True:
@@ -132,16 +163,11 @@ def halt():
     report()
 
 def cycle():
-    global failed_reads
     global last_circulation
 
     load_settings()
 
-    while temperature is None and failed_reads < failed_read_halt_limit:
-        read_sensor()
-        if temperature is None:
-            failed_reads = failed_reads + 1
-            time.sleep(1)
+    read_sensor()
 
     if temperature is None:
         halt()
