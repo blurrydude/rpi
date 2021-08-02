@@ -277,6 +277,8 @@ def reportreadings(message):
     heating = split[5]
     whf = split[6]
     status = split[7]
+    last_stage_start = split[8]
+    last_circulation = split[9]
     f = "/home/pi/temperatures.json"
     j = open(f)
     readings = json.load(j)
@@ -291,7 +293,9 @@ def reportreadings(message):
         "circulation": circulation,
         "heating": heating,
         "whf": whf,
-        "status":status
+        "status":status,
+        "last_stage_start":last_stage_start,
+        "last_circulation":last_circulation
     }
     with open(f,"w") as write_file:
         write_file.write(json.dumps(readings))
