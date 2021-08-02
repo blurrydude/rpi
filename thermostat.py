@@ -100,6 +100,7 @@ def set_circuit(circuit_pin, state):
 def heat_off():
     global heat_state
     global last_circulation
+    log("heat_off")
     if heat_state is True:
         last_circulation = datetime.now()
     set_circuit(heat, False)
@@ -109,6 +110,7 @@ def heat_off():
 def ac_off():
     global ac_state
     global last_circulation
+    log("ac_off")
     if ac_state is True:
         last_circulation = datetime.now()
     set_circuit(ac, False)
@@ -118,6 +120,7 @@ def ac_off():
 def fan_off():
     global fan_state
     global last_circulation
+    log("fan_off")
     if fan_state is True:
         last_circulation = datetime.now()
     set_circuit(fan, False)
@@ -126,6 +129,7 @@ def fan_off():
 
 def heat_on():
     global heat_state
+    log("heat_on")
     if ac_state is True or fan_state is True:
         return
     set_circuit(heat, True)
@@ -134,6 +138,7 @@ def heat_on():
 
 def ac_on():
     global ac_state
+    log("ac_on")
     if heat_state is True or fan_state is True:
         return
     set_circuit(ac, True)
@@ -142,10 +147,25 @@ def ac_on():
 
 def fan_on():
     global fan_state
+    log("fan_on")
     if ac_state is True or heat_state is True:
         return
     set_circuit(fan, True)
     fan_state = True
+    report()
+
+def whf_on():
+    global whf_state
+    log("whf_on")
+    whf_state = True
+    sendCommand('turn on whole house fan')
+    report()
+
+def whf_off():
+    global whf_state
+    log("whf_off")
+    whf_state = False
+    sendCommand('turn off whole house fan')
     report()
 
 def halt():
@@ -153,6 +173,7 @@ def halt():
     global heat_state
     global ac_state
     global whf_state
+    log("halt")
     GPIO.output(heat, low)
     GPIO.output(ac, low)
     GPIO.output(fan, low)
@@ -235,9 +256,7 @@ def circulate_air(minutes, use_whf):
     global circulating
     fan_on()
     if use_whf is True and use_whole_house_fan is True:
-        whf_state = True
-        report()
-        sendCommand('turn on whole house fan')
+        whf_on()
     circulate_until = datetime.now() + timedelta(minutes=minutes)
     circulating = True
 
@@ -246,9 +265,7 @@ def stop_circulating():
     global circulating
     global has_circulated
     if whf_state is True and use_whole_house_fan is True:
-        whf_state = False
-        report()
-        sendCommand('turn off whole house fan')
+        whf_off()
     fan_off()
     circulating = False
     has_circulated = True
@@ -262,6 +279,26 @@ def sendCommand(command):
         print('failed to send command')
 
 def report():
+    hum = humidity
+    temp = temperature
+    #print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
+    if humidity == None:
+        hum = 0
+    if temperature == None:
+        temp = 0
+    cool = "off"
+    if ac_state is True:
+        cool = "on"
+    circ = "off"
+    if fan_state is True:
+        circ = "on"
+    h = "off"
+    if heat_state is True:
+        h = "on"
+    w = "off"
+    if whf_state is True:
+        w = "on"
+    log('report: {0:0.1f} F {1:0.1f}% AC:{2} Fan:{3} Heat:{4} WHF:{5}'.format(temp, hum,cool,circ,h,w))
     report_readings()
 
 def load_settings():
@@ -288,8 +325,10 @@ def load_settings():
         stage_limit_minutes = s["stage_limit_minutes"]
         stage_cooldown_minutes = s["stage_cooldown_minutes"]
         use_whole_house_fan = s["use_whole_house_fan"]
+        log("loaded thermosettings.json")
     except:
         print('failed to get thermosettings')
+        log("failed to load thermosettings.json")
 
 def report_readings():
     hum = humidity
@@ -316,10 +355,13 @@ def report_readings():
         print(str(r.status_code))
     except:
         print('failed to send readings')
+        log('failed to send readings')
 print("*\n*\n*\nbegin")
+log("*\n*\n*\nbegin power-on self-test")
 halt()
 time.sleep(60)
 circulate_air(2, False)
+log("*\n*\n*\nbegin cycling")
 while True:
     try:
         cycle()
