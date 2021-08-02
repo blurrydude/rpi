@@ -298,7 +298,12 @@ def report():
     w = "off"
     if whf_state is True:
         w = "on"
-    log('report: {0:0.1f} F {1:0.1f}% AC:{2} Fan:{3} Heat:{4} WHF:{5}'.format(temp, hum,cool,circ,h,w))
+    status = "normal"
+    if delay_stage is True:
+        status = "delayed"
+    if temperature is None or temperature == 0:
+        status = "sensor_fail"
+    log('report: {0:0.1f} F {1:0.1f}% AC:{2} Fan:{3} Heat:{4} WHF:{5} Status:{6}'.format(temp, hum,cool,circ,h,w,status))
     report_readings()
 
 def load_settings():
@@ -350,8 +355,13 @@ def report_readings():
     w = "off"
     if whf_state is True:
         w = "on"
+    status = "normal"
+    if delay_stage is True:
+        status = "delayed"
+    if temperature is None or temperature == 0:
+        status = "sensor_fail"
     try:
-        r =requests.get('https://api.idkline.com/reportreadings/'+room+':{0:0.1f}:{1:0.1f}:{2}:{3}:{4}:{5}'.format(temp, hum,cool,circ,h,w))
+        r =requests.get('https://api.idkline.com/reportreadings/'+room+':{0:0.1f}:{1:0.1f}:{2}:{3}:{4}:{5}:{6}'.format(temp, hum,cool,circ,h,w,status))
         print(str(r.status_code))
     except:
         print('failed to send readings')
