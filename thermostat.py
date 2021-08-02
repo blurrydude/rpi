@@ -361,7 +361,7 @@ def report_readings():
     if temperature is None or temperature == 0:
         status = "sensor_fail"
     try:
-        r =requests.get('https://api.idkline.com/reportreadings/'+room+':{0:0.1f}:{1:0.1f}:{2}:{3}:{4}:{5}:{6}:{7}:{8}'.format(temp, hum,cool,circ,h,w,status,start_stage.strftime("%m/%d/%Y, %H-%M-%S"),last_circulation.strftime("%m/%d/%Y, %H-%M-%S")))
+        r =requests.get('https://api.idkline.com/reportreadings/'+room+':{0:0.1f}:{1:0.1f}:{2}:{3}:{4}:{5}:{6}:{7}:{8}'.format(temp, hum,cool,circ,h,w,status,start_stage.strftime("%m~%d~%Y, %H-%M-%S"),last_circulation.strftime("%m~%d~%Y, %H-%M-%S")))
         print("report response: "+str(r.status_code))
     except:
         print('failed to send readings')
