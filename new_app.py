@@ -276,7 +276,7 @@ def reportreadings(message):
     circulation = split[4]
     heating = split[5]
     whf = split[6]
-    status = split[6]
+    status = split[7]
     f = "/home/pi/temperatures.json"
     j = open(f)
     readings = json.load(j)
