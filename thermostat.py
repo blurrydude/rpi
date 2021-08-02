@@ -172,6 +172,7 @@ def cycle():
 
     if temperature is None:
         halt()
+        return
     
     report_readings()
 
