@@ -122,12 +122,12 @@ def gettoken():
         with open("/home/pi/users.json","w") as write_file:
             json.dump(users,fp=write_file)
     r = request.get_json(force=True)
-    return r
     username = r["username"]
     passhash = r["passhash"]
     check_user = None
     if username in users.keys():
         check_user = users[username]
+    return check_user
     if check_user is None:
         return {"auth":"invalid"}
     check_hash = md5hash(check_user["password"])
