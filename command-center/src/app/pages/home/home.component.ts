@@ -17,7 +17,7 @@ export class HomeComponent {
     }
 
     public load(httpMessageService: StatusService) {
-      setTimeout(()=>{this.load(httpMessageService)},5000);
+      setTimeout(()=>{this.load(httpMessageService)},10000);
       this.httpMessageService.getStatus().toPromise().then(msg => {
         this.status = msg;
         this.totalPower = 0.0;

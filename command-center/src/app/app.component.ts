@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
+import {Md5} from 'ts-md5/dist/md5';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgForm } from '@angular/forms';
+import { StatusService } from './services/status.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +10,35 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  @Input() @Output() user: string = "";
+  @Input() @Output() pass: string = "";
+  @Output() auth: string = "";
+
+  constructor(private modalService: NgbModal, private httpMessageService: StatusService) {}
+
   title = 'command-center';
+
+  public login(f: NgForm) {
+    console.log(f.value.user);
+    console.log(f.value.pass);
+    console.log(Md5.hashStr(f.value.pass));
+    this.httpMessageService.getToken(f.value.user, Md5.hashStr(f.value.pass)).toPromise().then(msg => {
+      for (const [k, v] of Object.entries(msg)) {
+        if(k == "auth") {
+          this.auth = v;
+        }
+      }
+      if(this.auth == "invalid") {
+        // do something
+        this.auth = "";
+        return;
+      }
+      this.modalService.dismissAll();
+    });
+  }
+
+  public launch_login(content: any) {
+    console.log("launch login");
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+  }
 }

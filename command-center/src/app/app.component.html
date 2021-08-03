@@ -1,7 +1,24 @@
 
+<ng-template #content let-modal>
+        <div class="modal-header">
+          <h5 class="modal-title">Login</h5> <button type="button" class="btn btn-dark close" (click)="modal.dismiss('Cross click')"> <span>×</span> </button>
+        </div>
+        <div class="modal-body">
+          <form #f="ngForm" (ngSubmit)="login(f)" novalidate>
+            <small>User</small><br/>
+            <input type="text" class="form-control" ngModel name="user"/><br/>
+            <small>Pass</small><br/>
+            <input type="password" class="form-control" ngModel name="pass"/><br/>
+            <button class="btn btn-primary">Log In</button>
+          </form>
+        </div>
+        <div class="modal-footer"> <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Close</button> </div>
+</ng-template>
+
 <div class="navbar navbar-dark bg-dark">
   <div class="container d-flex justify-content-between">
     <a href="#" class="navbar-brand d-flex align-items-center"><i class="fa d-inline fa-sitemap mr-2"></i>&nbsp;<strong>My House</strong> </a>
+    <button *ngIf="auth == ''" class="btn btn-dark" (click)="launch_login(content)"><i class="fa d-inline fa-user mr-2"></i>&nbsp;<strong>Log In</strong> </button>
   </div>
 </div>
 <router-outlet></router-outlet>
@@ -22,16 +39,3 @@
     </div>
   </div>
 </footer>
-<div class="modal" id="code-snippet-modal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Code Snippet</h5> <button type="button" class="close" data-dismiss="modal"> <span>×</span> </button>
-      </div>
-      <div class="modal-body">
-        <p>This feature is coming soon... Please check back.<br></p>
-      </div>
-      <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> </div>
-    </div>
-  </div>
-</div>

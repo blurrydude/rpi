@@ -22,7 +22,8 @@ export class StatusService {
   };
 
   constructor(private http: HttpClient) {
-    this.baseurl = "https://api.idkline.com/"
+    // this.baseurl = "https://api.idkline.com/"
+    this.baseurl = "http://localhost:8080/"
     // this.baseurl = environment.loansRequestService;
     // this.byCompanyUrl = environment.loansInformationByCompany;
     // this.byIdUrl = environment.loansInformationById;
@@ -66,6 +67,15 @@ export class StatusService {
 
   public getDoors() {
     return this.http.get(this.baseurl+"getdoors", this.options)
+      .pipe(
+        catchError(err => {
+          return this.handleError(err);
+        })
+      );
+  }
+
+  public getToken(username: string, passhash: string) {
+    return this.http.post(this.baseurl+"gettoken", {"username":username, "passhash":passhash},this.options)
       .pipe(
         catchError(err => {
           return this.handleError(err);

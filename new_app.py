@@ -11,6 +11,7 @@ from datetime import datetime
 import base64
 import hashlib
 
+dev = True
 file_logging = True
 myname = socket.gethostname()
 twilled = False
@@ -20,9 +21,12 @@ try:
 except:
     twilled = False
 
-f = open('/home/pi/rpi/circuits.json')
+homepath = "/home/pi"
+if dev is True:
+    homepath = "/home/ian/"
+f = open(homepath+'rpi/circuits.json')
 circuits = json.load(f)
-f = open('/home/pi/config.json')
+f = open(homepath+'config.json')
 config = json.load(f)
 retries = 0
 
@@ -38,7 +42,7 @@ def md5hash(message):
 
 def reloadCircuits():
     global circuits
-    f = open('/home/pi/rpi/circuits.json')
+    f = open(homepath+'rpi/circuits.json')
     circuits = json.load(f)
 
 def log(message):
@@ -46,7 +50,7 @@ def log(message):
         message = json.dumps(message)
     timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     logfiledate = datetime.now().strftime("%Y%m%d%H")
-    logfile = "/home/pi/app_"+logfiledate+".log"
+    logfile = homepath+"app_"+logfiledate+".log"
     entry = timestamp + ": " + message + "\n"
     print(entry)
     if file_logging is True:
@@ -102,8 +106,10 @@ nouns = ["badgers","clowns","fruit","vegetables","crates","pillows","boats","pan
 
 allowed_senders = ["+19377893750","+19377166465"]
 
-def checktoken(username, token):
-    f = open("/home/pi/users.json")
+def checktoken(request):
+    username = request.headers["user"]
+    token = request.headers["auth"]
+    f = open(homepath+"users.json")
     users = json.load(f)
     if username in users.keys():
         check_token = md5hash(username+":"+users[username]["password"]+datetime.now().strftime('%Y%m%d%H'))+md5hash(username+":"+datetime.now().strftime('%Y%m%d%H'))
@@ -113,13 +119,13 @@ def checktoken(username, token):
 @app.route('/gettoken',methods={"POST"})
 def gettoken():
     try:
-        f = open("/home/pi/users.json")
+        f = open(homepath+"users.json")
         users = json.load(f)
     except:
         users = {
             "0000":{"password":"I hate regulatory badgers"}
         }
-        with open("/home/pi/users.json","w") as write_file:
+        with open(homepath+"users.json","w") as write_file:
             json.dump(users,fp=write_file)
     r = request.get_json(force=True)
     username = r["username"]
@@ -136,9 +142,9 @@ def gettoken():
 
 @app.route('/testtoken',methods={"GET"})
 def testtoken():
-    if checktoken(request.headers["auth"]) is True:
-        return 'OK'
-    return 'BAD'
+    if checktoken(request) is not True:
+        return 'UNAUTHORIZED'
+    return 'OK'
 
 @app.route('/debug',methods=['GET'])
 def debug():
@@ -154,13 +160,13 @@ def debug():
 
 @app.route('/pistates',methods=['GET'])
 def pistates():
-    f = open('/home/pi/pistates.json')
+    f = open(homepath+'pistates.json')
     states = json.load(f)
     return states
 
 @app.route('/states',methods=['GET'])
 def states():
-    dirname = '/home/pi'
+    dirname = homepath
     
     ext = ('.state')
     states = {}
@@ -181,7 +187,7 @@ def states():
 @app.route('/webstates',methods=['GET'])
 def webstates():
     reloadCircuits()
-    dirname = '/home/pi'
+    dirname = homepath
     
     ext = ('.state')
     states = {}
@@ -203,7 +209,7 @@ def webstates():
 
 @app.route('/powerstates',methods=['GET'])
 def powerstates():
-    dirname = '/home/pi'
+    dirname = homepath
     
     ext = ('.state')
     states = {}
@@ -221,11 +227,17 @@ def powerstates():
             continue
     return states
 
+@app.route('/webcontrol/<text>')
+def webcontrol(text):
+    if checktoken(request) is not True:
+        return 'UNAUTHORIZED'
+    return control(text)
+
 @app.route('/control/<text>')
 def control(text):
     log("incoming text: "+text)
-    shop_door = open('/home/pi/Shop_door.state').read().replace("\n","")
-    garage_door = open('/home/pi/Garage_door.state').read().replace("\n","")
+    shop_door = open(homepath+'Shop_door.state').read().replace("\n","")
+    garage_door = open(homepath+'Garage_door.state').read().replace("\n","")
     reloadCircuits()
     command = text.lower()
     smst = False
@@ -275,23 +287,23 @@ def control(text):
         if "open" in command and shop_door == "closed":
             command_list.append({"t":"pi/baydoorpi/commands","c":"1:1"})
             text = text + "opening shop door\n"
-            with open('/home/pi/Shop_door.state','w') as write_file:
+            with open(homepath+'Shop_door.state','w') as write_file:
                 write_file.write("open")
         if ("close" in command or "shut" in command) and shop_door == "open":
             command_list.append({"t":"pi/baydoorpi/commands","c":"1:0"})
             text = text + "closing shop door\n"
-            with open('/home/pi/Shop_door.state','w') as write_file:
+            with open(homepath+'Shop_door.state','w') as write_file:
                 write_file.write("closed")
     elif "garage door" in command:
         if "open" in command and garage_door == "closed":
             command_list.append({"t":"pi/baydoorpi/commands","c":"0:1"})
             text = text + "opening garage door\n"
-            with open('/home/pi/Garage_door.state','w') as write_file:
+            with open(homepath+'Garage_door.state','w') as write_file:
                 write_file.write("open")
         if ("close" in command or "shut" in command) and garage_door == "open":
             command_list.append({"t":"pi/baydoorpi/commands","c":"0:0"})
             text = text + "closing garage door\n"
-            with open('/home/pi/Garage_door.state','w') as write_file:
+            with open(homepath+'Garage_door.state','w') as write_file:
                 write_file.write("closed")
     elif "status" in command:
         text = text + "Yeah, I'm alive\n"
@@ -315,14 +327,14 @@ def reportdoor(data):
     split = data.split('-')
     door = split[0]
     state = split[1]
-    f = "/home/pi/"+door+"_door.state"
+    f = homepath+""+door+"_door.state"
     with open(f,"w") as write_file:
         write_file.write(state)
     return 'OK'
 
 @app.route('/getdoors')
 def getdoors():
-    dirname = '/home/pi'
+    dirname = homepath
     
     ext = ('_door.state')
     states = {}
@@ -350,12 +362,12 @@ def reportreadings(message):
     last_stage_start = split[8].replace("-",":").replace("~","/")
     last_circulation = split[9].replace("-",":").replace("~","/")
     try:
-        f = "/home/pi/temperatures.json"
+        f = homepath+"temperatures.json"
         j = open(f)
     except:
         j = "{}"
     readings = json.load(j)
-    f2 = open("/home/pi/"+room+"_thermosettings.json")
+    f2 = open(homepath+""+room+"_thermosettings.json")
     settings = json.load(f2)
     readings[room] = {
         "timestamp": datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
@@ -376,12 +388,12 @@ def reportreadings(message):
 
 @app.route('/getreadings')
 def getreadings():
-    f = open("/home/pi/temperatures.json")
+    f = open(homepath+"temperatures.json")
     return json.load(f)
 
 @app.route('/thermosettings/<room>')
 def thermosettings(room):
-    f = open("/home/pi/"+room+"_thermosettings.json")
+    f = open(homepath+""+room+"_thermosettings.json")
     return json.load(f)
 
 @app.route('/thermoset/<data>')
@@ -390,11 +402,11 @@ def thermoset(data):
     room = s[0]
     temp_low = int(s[1])
     temp_high = int(s[2])
-    f = open("/home/pi/"+room+"_thermosettings.json")
+    f = open(homepath+""+room+"_thermosettings.json")
     settings = json.load(f)
     settings["temperature_high_setting"] = temp_high
     settings["temperature_low_setting"] = temp_low
-    with open("/home/pi/"+room+"_thermosettings.json","w") as write_file:
+    with open(homepath+""+room+"_thermosettings.json","w") as write_file:
         write_file.write(json.dumps(settings))
     return 'OK'
 
@@ -407,7 +419,7 @@ def thermoreport(data):
     heating = s[3]
     whf = s[4]
     
-    with open("/home/pi/"+room+"_thermoreport.json","w") as write_file:
+    with open(homepath+""+room+"_thermoreport.json","w") as write_file:
         write_file.write(json.dumps({
             "cooling": cooling,
             "circulation": circulation,
@@ -418,5 +430,8 @@ def thermoreport(data):
     
 
 if __name__ == '__main__':
-    app.run(debug=False, port=8080, host='192.168.1.23')
+    if dev is False:
+        app.run(debug=False, port=8080, host='192.168.1.23')
+    else:
+        app.run(debug=True, port=8080, host='127.0.0.1')
 
