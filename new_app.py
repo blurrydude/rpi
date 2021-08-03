@@ -9,6 +9,7 @@ import socket
 import os
 from datetime import datetime
 import base64
+import hashlib
 
 file_logging = True
 myname = socket.gethostname()
@@ -24,6 +25,16 @@ circuits = json.load(f)
 f = open('/home/pi/config.json')
 config = json.load(f)
 retries = 0
+
+def b64(message):
+    message_bytes = message.encode('ascii')
+    base64_bytes = base64.b64encode(message_bytes)
+    return base64_bytes.decode('ascii')
+
+def md5hash(message):
+    message_bytes = message.encode('ascii')
+    base64_bytes = hashlib.md5(message_bytes)
+    return base64_bytes.hexdigest()
 
 def reloadCircuits():
     global circuits
@@ -90,6 +101,41 @@ adjectives = ["plastic","glass","stone","wooden","organic","regular","medium","l
 nouns = ["badgers","clowns","fruit","vegetables","crates","pillows","boats","pants","wheels","aardvarks","nighties","amoeba","cars","cathedrals","spoons","albums"]
 
 allowed_senders = ["+19377893750","+19377166465"]
+
+def checktoken(username, token):
+    f = open("/home/pi/users.json")
+    users = json.load(f)
+    if username in users.keys():
+        check_token = md5hash(username+":"+users[username]["password"]+datetime.now().strftime('%Y%m%d'))
+        return token == check_token
+    return False
+
+@app.route('/gettoken',methods={"POST"})
+def gettoken():
+    try:
+        f = open("/home/pi/users.json")
+        users = json.load(f)
+    except:
+        users = {
+            "0000":"I hate regulatory badgers"
+        }
+    r = request.json
+    username = r["username"]
+    passhash = r["passhash"]
+    check_user = None
+    if username in users.keys():
+        check_user = users[username]
+    if check_user is None:
+        return {"auth":"invalid"}
+    check_hash = md5hash(check_user["password"])
+    if passhash == check_hash:
+        return {"auth":md5hash(username+":"+check_user["password"]+datetime.now().strftime('%Y%m%d'))}
+
+@app.route('/testtoken',methods={"GET"})
+def testtoken():
+    if checktoken(request.headers["auth"]) is True:
+        return 'OK'
+    return 'BAD'
 
 @app.route('/debug',methods=['GET'])
 def debug():
@@ -324,30 +370,6 @@ def reportreadings(message):
     with open(f,"w") as write_file:
         write_file.write(json.dumps(readings))
     return 'OK'
-
-@app.route('/gettoken',methods={"POST"})
-def gettoken():
-    f = open("/home/pi/users.json")
-    users = json.load(f)
-    r = request.json
-    username = r["username"]
-    passhash = r["passhash"]
-    check_user = None
-    if username in users.keys():
-        check_user = users[username]
-    if check_user is None:
-        return 'BAD'
-    check_hash = base64.b64encode(check_user["password"])
-    if passhash == check_hash:
-        return base64.b64encode(username+":"+check_user["password"]+datetime.now().strftime('%Y%m%d'))
-
-def checktoken(username, token):
-    f = open("/home/pi/users.json")
-    users = json.load(f)
-    if username in users.keys():
-        check_token = base64.b64encode(username+":"+users[username]["password"]+datetime.now().strftime('%Y%m%d'))
-        return token == check_token
-    return False
 
 @app.route('/getreadings')
 def getreadings():
