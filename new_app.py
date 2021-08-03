@@ -8,6 +8,7 @@ import sys
 import socket
 import os
 from datetime import datetime
+import base64
 
 file_logging = True
 myname = socket.gethostname()
@@ -317,6 +318,30 @@ def reportreadings(message):
     with open(f,"w") as write_file:
         write_file.write(json.dumps(readings))
     return 'OK'
+
+@app.route('/gettoken',methods={"POST"})
+def gettoken():
+    f = open("/home/pi/users.json")
+    users = json.load(f)
+    r = request.json
+    username = r["username"]
+    passhash = r["passhash"]
+    check_user = None
+    if username in users.keys():
+        check_user = users[username]
+    if check_user is None:
+        return 'BAD'
+    check_hash = base64.b64encode(check_user["password"])
+    if passhash == check_hash:
+        return base64.b64encode(username+":"+check_user["password"]+datetime.now().strftime('%Y%m%d'))
+
+def checktoken(username, token):
+    f = open("/home/pi/users.json")
+    users = json.load(f)
+    if username in users.keys():
+        check_token = base64.b64encode(username+":"+users[username]["password"]+datetime.now().strftime('%Y%m%d'))
+        return token == check_token
+    return False
 
 @app.route('/getreadings')
 def getreadings():

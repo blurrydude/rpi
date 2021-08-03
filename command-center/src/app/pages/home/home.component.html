@@ -7,8 +7,8 @@
     </div>
     <div class="row">
       <div class="col-md-6" *ngFor="let reading of readings | keyvalue">
-        <div class="card text-center my-2">
-          <div class="card-header">
+        <div class="card my-2">
+          <div class="card-header text-center">
             <h5>{{reading.key}}</h5>
             <span [ngClass]="{'text-muted':reading.value['heating']=='off','text-danger':reading.value['heating']=='on'}"><i class="fa fa-2x fa-fire"></i></span>&nbsp;&middot;&nbsp;
             <span [ngClass]="{'text-muted':reading.value['cooling']=='off','text-info':reading.value['cooling']=='on'}"><i class="fas fa-2x fa-snowflake"></i></span>&nbsp;&middot;&nbsp;
@@ -18,24 +18,26 @@
           <div class="card-body">
             <div class="row">
               <div class="col-md-6">
-                <h5>Readings</h5>
+                <h5 class="text-center">Readings</h5>
                 <div class="row">
-                  <div class="col-6"><small>Temp:</small></div><div class="col-6">{{reading.value['temperature']}}&deg;F</div>
+                  <div class="col-6 text-end"><small>Temperature:</small></div><div class="col-6 fw-bold">{{reading.value['temperature']}}&deg;F</div>
+                  <div class="col-6 text-end"><small>Humidity:</small></div><div class="col-6 fw-bold">{{reading.value['humidity']}}%</div>
+                  <div class="col-6 text-end"><small>Cycle Status:</small></div><div class="col-6 fw-bold">{{reading.value['status']}}</div>
+                  <div class="col-12 text-center border-top mt-1"><small>Timestamp:</small><br/><span class="fw-bold">{{reading.value['timestamp']}}</span></div>
+                  <div class="col-12 text-center"><small>Cycle Started:</small><br/><span class="fw-bold">{{reading.value['last_stage_start']}}</span></div>
+                  <div class="col-12 text-center"><small>Last Cycle Ended:</small><br/><span class="fw-bold">{{reading.value['last_circulation']}}</span></div>
                 </div>
-                Hum: {{reading.value['humidity']}}%<br/>
-                Time: {{reading.value['timestamp']}}<br/>
-                Cycle Status: {{reading.value['status']}}<br/>
-                Last Cycle Started: {{reading.value['last_stage_start']}}<br/>
-                Last Circulation: {{reading.value['last_circulation']}}
               </div>
               <div class="col-md-6">
-                <h5>Settings</h5>
-                High: {{reading.value['settings']['temperature_high_setting']}}&deg;F<br/>
-                Low: {{reading.value['settings']['temperature_low_setting']}}&deg;F<br/>
-                Humidity Limit: {{reading.value['settings']['humidity_setting']}}%<br/>
-                Stage Limit: {{reading.value['settings']['stage_limit_minutes']}} minutes<br/>
-                Stage Cooldown: {{reading.value['settings']['stage_cooldown_minutes']}} minutes<br/>
-                Air Circ Min Delay: {{reading.value['settings']['air_circulation_minutes']}} minutes
+                <h5 class="text-center">Settings</h5>
+                <div class="row">
+                <div class="col-6 text-end"><small>High:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['temperature_high_setting']}}&deg;F</div>
+                <div class="col-6 text-end"><small>Low:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['temperature_low_setting']}}&deg;F</div>
+                <div class="col-6 text-end"><small>Humidity Limit:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['humidity_setting']}}%</div>
+                <div class="col-6 text-end"><small>Stage Limit:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['stage_limit_minutes']}} minutes</div>
+                <div class="col-6 text-end"><small>Stage Cooldown:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['stage_cooldown_minutes']}} minutes</div>
+                <div class="col-6 text-end"><small>Air Circ Min Delay:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['air_circulation_minutes']}} minutes</div>
+              </div>
               </div>
             </div>
           </div>
