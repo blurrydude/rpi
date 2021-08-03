@@ -4,7 +4,7 @@
     "mqtt_rgb": "0.1.5",
     "command_whitenoise": "0.1.4",
     "new_interface": "0.2.6",
-    "app": "1.6.4",
+    "app": "1.6.5",
     "command_center": "0.4.3",
     "thermostat": "0.2.0"
 }

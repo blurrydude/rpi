@@ -9,6 +9,7 @@ import socket
 import os
 from datetime import datetime
 
+file_logging = True
 myname = socket.gethostname()
 twilled = False
 try:
@@ -29,8 +30,21 @@ def reloadCircuits():
     circuits = json.load(f)
 
 def log(message):
-    with open('/home/pi/SMS.log','a') as write_file:
-        write_file.write(message+'\n')
+    if type(message) is not type(""):
+        message = json.dumps(message)
+    timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+    logfiledate = datetime.now().strftime("%Y%m%d%H")
+    logfile = "/home/pi/app_"+logfiledate+".log"
+    entry = timestamp + ": " + message + "\n"
+    print(entry)
+    if file_logging is True:
+        if os.path.exists(logfile):
+            append_write = 'a' # append if already exists
+        else:
+            append_write = 'w' # make a new file if not
+
+        with open(logfile, append_write) as write_file:
+            write_file.write(entry)
 
 def sms(message, to):
     global retries
@@ -46,8 +60,8 @@ def sms(message, to):
             to=to 
         )
         retries = 0 
-    except:
-        log("Unexpected error:" + sys.exc_info()[0])
+    except Exception as err:
+        log("Unexpected error")
         if retries < 4:
             retries = retries + 1
             time.sleep(1)
@@ -279,8 +293,11 @@ def reportreadings(message):
     status = split[7]
     last_stage_start = split[8].replace("-",":").replace("~","/")
     last_circulation = split[9].replace("-",":").replace("~","/")
-    f = "/home/pi/temperatures.json"
-    j = open(f)
+    try:
+        f = "/home/pi/temperatures.json"
+        j = open(f)
+    except:
+        j = "{}"
     readings = json.load(j)
     f2 = open("/home/pi/"+room+"_thermosettings.json")
     settings = json.load(f2)
