@@ -135,7 +135,7 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:16:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:09:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:01:00"]}, 
 
-    {"notes":"192.168.1.x - Under Cabinet Lights",
+    {"notes":"192.168.1.123",
     "address": "shelly1pm-68C63AFB6B0A", "relay":"0", "label":"Under Cabinet",
     "onModes": ["Morning", "Lunch", "Dinner", "Alert"],
     "offModes":["Dark", "Night", "Evening", "Day"],
