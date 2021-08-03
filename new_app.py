@@ -117,8 +117,10 @@ def gettoken():
         users = json.load(f)
     except:
         users = {
-            "0000":"I hate regulatory badgers"
+            "0000":{"pasword":"I hate regulatory badgers"}
         }
+        with open("/home/pi/users.json","w") as write_file:
+            json.dump(users,fp=write_file)
     r = request.json
     username = r["username"]
     passhash = r["passhash"]
