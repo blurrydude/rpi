@@ -121,7 +121,7 @@ def gettoken():
         }
         with open("/home/pi/users.json","w") as write_file:
             json.dump(users,fp=write_file)
-    r = request.json
+    r = request.args
     username = r["username"]
     passhash = r["passhash"]
     check_user = None
