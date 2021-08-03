@@ -40,7 +40,7 @@ def loadDoorSensors():
 def initializeMqtt():
     log('initializeMqtt')
     client.on_message = on_message
-    client.connect('192.168.1.22')
+    client.connect('192.168.1.200')
     client.subscribe('shellies/#')
     client.subscribe('pi/#')
     client.loop_start()

@@ -29,7 +29,7 @@ def on_message(client, userdata, message):
 
 if __name__ == "__main__":
     client.on_message = on_message
-    client.connect('192.168.1.22')
+    client.connect('192.168.1.200')
     for circuit in circuits:
         relays = 1
         if "shellyswitch25" in circuit["address"]:

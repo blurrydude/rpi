@@ -1,5 +1,5 @@
 [
-    {"notes":"192.168.1.61 - Bedroom Lamp Outlet",
+    {"notes":"192.168.1.101", 
     "address": "shellyswitch25-8CAAB55F44D7", "relay":"0", "label":"Bedroom Lamp", 
     "onModes": ["Shower", "Evening", "Alert"],
     "offModes":["Dark", "Night", "Day"],
@@ -7,7 +7,7 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30"]},
 
-    {"notes":"192.168.1.241 - Master Bath Lights",
+    {"notes":"192.168.1.117",
     "address": "shellyswitch25-8CAAB561DDCF", "relay":"0", "label":"Master Bath",
     "onModes": ["Morning", "Shower", "Evening", "Alert"],
     "offModes":["Dark", "Night"],
@@ -15,7 +15,7 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30"]}, 
 
-    {"notes":"192.168.1.239 - Master Bath Vent Fan",
+    {"notes":"192.168.1.116",
     "address": "shellyswitch25-8CAAB55F402F", "relay":"1", "label":"Shower Fan",
     "onModes": ["Shower"],
     "offModes":["Dark", "Night", "Alert"],
@@ -23,7 +23,7 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30", "Mon,Tue,Wed,Thu,Fri,Sat,Sun:22:00"]}, 
 
-    {"notes":"192.168.1.239 - Hallway",
+    {"notes":"192.168.1.116",
     "address": "shellyswitch25-8CAAB55F402F", "relay":"0", "label":"Hallway",
     "onModes": ["Morning", "Lunch", "Dinner", "Alert"],
     "offModes":["Dark", "Night", "Day", "Evening"],
@@ -31,7 +31,7 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:20:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30", "Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:15"]}, 
 
-    {"notes":"192.168.1.240 - Bathroom Lights and Fan",
+    {"notes":"192.168.1.122",
     "address": "shellyswitch25-8CAAB561DDED", "relay":"0", "label":"Guest Bathroom",
     "onModes": ["Alert"],
     "offModes":["Dark", "Night"],
@@ -39,7 +39,7 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30", "Mon,Tue,Wed,Thu,Fri,Sat,Sun:23:00"]}, 
 
-    {"notes":"192.168.1.61 - Library Lamp Outlet",
+    {"notes":"192.168.1.101",
     "address": "shellyswitch25-8CAAB55F44D7", "relay":"1", "label":"Library Lamp",
     "onModes": ["Alert", "Evening"],
     "offModes":["Dark", "Night"],
@@ -47,7 +47,7 @@
     "onTimes":[],
     "offTimes":[]}, 
 
-    {"notes":"192.168.1.245 - Gym Lamp Outlet",
+    {"notes":"192.168.1.121",
     "address": "shellyswitch25-8CAAB55F4553", "relay":"0", "label":"Gym Lamp",
     "onModes": ["Morning", "Evening", "Alert"],
     "offModes":["Dark", "Lunch", "Night"],
@@ -55,15 +55,15 @@
     "onTimes":[],
     "offTimes":[]}, 
 
-    {"notes":"192.168.1.244 - Living Room TV",
-    "address": "shelly1pm-68C63AFB315A", "relay":"0", "label":"Livingroom TV",
+    {"notes":"192.168.1.120",
+    "address": "shelly1pm-68C63AFB315A", "relay":"1", "label":"Livingroom TV",
     "onModes": [],
     "offModes":[],
     "zones":[],
     "onTimes":[],
     "offTimes":[]}, 
 
-    {"notes":"192.168.1.x - Living Room Lamp",
+    {"notes":"192.168.1.104",
     "address": "shelly1pm-68C63AFB315A", "relay":"0", "label":"Livingroom Lamp",
     "onModes": ["Evening", "Alert"],
     "offModes":["Dark", "Night", "Day"],
@@ -71,7 +71,7 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:45","Mon,Tue,Wed,Thu,Fri,Sat,Sun:19:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30", "Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:30"]}, 
 
-    {"notes":"192.168.1.62 - Lamp Post and Driveway",
+    {"notes":"192.168.1.102",
     "address": "shelly1pm-84CCA8A11963",      "relay":"0", "label":"Lamp post",
     "onModes": ["Evening", "Night", "Alert"],
     "offModes":["Morning", "Dark", "Lunch", "Day"],
@@ -79,7 +79,7 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:20:35"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:08:30"]}, 
 
-    {"notes":"192.168.1.243 - Porch Light",
+    {"notes":"192.168.1.119",
     "address": "shellyswitch25-8CAAB55F44D6", "relay":"0", "label":"Porch",
     "onModes": ["Evening", "Night", "Alert"],
     "offModes":["Morning", "Dark", "Lunch", "Day"],
@@ -87,7 +87,7 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:35"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:08:30"]}, 
 
-    {"notes":"192.168.1.60 - Fireplace Lights",
+    {"notes":"192.168.1.100",
     "address": "shelly1pm-8CAAB574C489",      "relay":"0", "label":"Fireplace",
     "onModes": ["Evening", "Alert", "Dinner"],
     "offModes":["Dark", "Night", "Day"],
@@ -95,7 +95,7 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:18:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30", "Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:15"]}, 
 
-    {"notes":"192.168.1.243 - Dining Room Light",
+    {"notes":"192.168.1.119",
     "address": "shellyswitch25-8CAAB55F44D6", "relay":"1", "label":"Dining Room",
     "onModes": ["Morning", "Lunch", "Alert", "Dinner"],
     "offModes":["Dark", "Night", "Evening", "Day"],
@@ -103,7 +103,7 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:06:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:18:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:30"]}, 
 
-    {"notes":"192.168.1.165 - Game Room Lights",
+    {"notes":"192.168.1.103",
     "address": "shelly1pm-C82B961DD3B1",      "relay":"0", "label":"Game Room",
     "onModes": ["Morning", "Evening", "Alert", "Dinner"],
     "offModes":["Dark", "Night", "Day"],
@@ -111,7 +111,7 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:45","Mon,Tue,Wed,Thu,Fri,Sat,Sun:18:30"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30", "Mon,Tue,Wed,Thu,Fri,Sat,Sun:23:00"]}, 
 
-    {"notes":"192.168.1.x - Game Tables",
+    {"notes":"192.168.1.105",
     "address": "shelly1pm-68C63AFB726B", "relay":"0", "label":"Game Tables",
     "onModes": ["Morning", "Evening", "Alert"],
     "offModes":["Dark", "Night", "Day"],
@@ -119,7 +119,7 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:19:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:30"]}, 
 
-    {"notes":"192.168.1.242 - Kitchen Lights",
+    {"notes":"192.168.1.118",
     "address": "shellyswitch25-8CAAB55F405D", "relay":"1", "label":"Kitchen",
     "onModes": ["Morning", "Lunch", "Alert", "Dinner"],
     "offModes":["Dark", "Evening", "Night", "Day"],
@@ -127,7 +127,7 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:16:30"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:20:00", "Mon,Tue,Wed,Thu,Fri,Sat,Sun:23:00"]}, 
 
-    {"notes":"192.168.1.x - Coffee Station",
+    {"notes":"192.168.1.106",
     "address": "shelly1pm-F4CFA2747F54", "relay":"0", "label":"Coffee Station",
     "onModes": ["Morning", "Lunch", "Dinner", "Evening", "Night", "Alert"],
     "offModes":["Dark", "Day"],
@@ -143,7 +143,7 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:16:00", "Mon,Tue,Wed,Thu,Fri,Sat,Sun:22:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:08:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:00", "Mon,Tue,Wed,Thu,Fri,Sat,Sun:01:00"]}, 
 
-    {"notes":"192.168.1.245 - Bar Lights",
+    {"notes":"192.168.1.121",
     "address": "shellyswitch25-8CAAB55F4553", "relay":"1", "label":"Bar",
     "onModes": ["Morning", "Lunch", "Dinner", "Evening", "Alert"],
     "offModes":["Dark", "Night", "Day"],
@@ -151,7 +151,7 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:17:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:30"]}, 
 
-    {"notes":"192.168.1.242 - Day Room Fan",
+    {"notes":"192.168.1.118",
     "address": "shellyswitch25-8CAAB55F405D", "relay":"0", "label":"Day Room Fan",
     "onModes": [],
     "offModes":["Alert"],
@@ -159,7 +159,7 @@
     "onTimes":[],
     "offTimes":[]}, 
 
-    {"notes":"192.168.1.244 - Day Room Fireplace",
+    {"notes":"192.168.1.120",
     "address": "shellyswitch25-8CAAB55F3B3F", "relay":"0", "label":"Day Room Fireplace",
     "onModes": ["Alert"],
     "offModes":["Dark", "Night", "Day"],
@@ -167,7 +167,7 @@
     "onTimes":[],
     "offTimes":[]}, 
 
-    {"notes":"192.168.1.240 - Garage Lights",
+    {"notes":"192.168.1.122",
     "address": "shellyswitch25-8CAAB561DDED", "relay":"1", "label":"Garage Lights",
     "onModes": ["Morning", "Lunch", "Evening", "Alert"],
     "offModes":["Dark", "Night", "Day"],
@@ -175,7 +175,7 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:11:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:17:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:09:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:14:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:23:10"]}, 
 
-    {"notes":"192.168.1.241 - Stairway Lights",
+    {"notes":"192.168.1.117",
     "address": "shellyswitch25-8CAAB561DDCF", "relay":"1", "label":"Stairway",
     "onModes": ["Morning", "Lunch", "Dinner", "Night", "Alert", "Day"],
     "offModes":["Dark", "Evening", "Night"],
@@ -183,7 +183,7 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:09:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:14:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:23:05"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:11:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:17:00"]}, 
 
-    {"notes":"192.168.1.170 - Bench Fan",
+    {"notes":"192.168.1.107",
     "address": "shelly1pm-68C63AFB6BD5", "relay":"0", "label":"Bench Fan",
     "onModes": [],
     "offModes":["Alert"],
@@ -191,7 +191,7 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:01:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:03:00"]}, 
 
-    {"notes":"192.168.1.174 - Deck light",
+    {"notes":"192.168.1.108",
     "address": "shelly1pm-C82B961DE020", "relay":"0", "label":"Deck Light",
     "onModes": ["Alert"],
     "offModes":[],
@@ -199,7 +199,7 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:19:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:22:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:22:30"]}, 
 
-    {"notes":"192.168.1.175 - Laundry Room",
+    {"notes":"192.168.1.109",
     "address": "shelly1pm-C82B961DD0EF", "relay":"0", "label":"Laundry Room",
     "onModes": ["Alert"],
     "offModes":[],
@@ -207,7 +207,7 @@
     "onTimes":[],
     "offTimes":[]}, 
 
-    {"notes":"192.168.1.176 - Storage Room",
+    {"notes":"192.168.1.110",
     "address": "shelly1pm-C82B961DE189", "relay":"0", "label":"Storage Room",
     "onModes": ["Alert"],
     "offModes":[],
@@ -215,7 +215,7 @@
     "onTimes":[],
     "offTimes":[]}, 
 
-    {"notes":"192.168.1.178 - Deck Fountain",
+    {"notes":"192.168.1.111",
     "address": "shelly1pm-C82B961DD818", "relay":"0", "label":"Deck Fountain",
     "onModes": [],
     "offModes":["Alert"],
@@ -223,7 +223,7 @@
     "onTimes":[],
     "offTimes":[]}, 
 
-    {"notes":"192.168.1.181 - Circulating Fan",
+    {"notes":"192.168.1.112",
     "address": "shelly1pm-8CAAB55F83AA", "relay":"0", "label":"Circulating Fan",
     "onModes": [],
     "offModes":["Alert"],
@@ -231,7 +231,7 @@
     "onTimes":[],
     "offTimes":[]}, 
 
-    {"notes":"192.168.1.182 - Day Room Light",
+    {"notes":"192.168.1.113",
     "address": "shelly1pm-8CAAB55F8173", "relay":"0", "label":"Day Room Light",
     "onModes": ["Morning", "Lunch", "Dinner", "Evening", "Alert"],
     "offModes":["Dark", "Night", "Day"],
@@ -239,7 +239,7 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:19:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:30"]}, 
 
-    {"notes":"192.168.1.183 - Deck Rail",
+    {"notes":"192.168.1.114",
     "address": "shelly1pm-84CCA89FC0FD", "relay":"0", "label":"Deck Rail",
     "onModes": ["Evening", "Alert"],
     "offModes":["Dark", "Night", "Day"],
@@ -247,11 +247,11 @@
     "onTimes":[],
     "offTimes":[]}, 
 
-    {"notes":"192.168.1.184 - Whole House Fan",
+    {"notes":"192.168.1.115",
     "address": "shelly1pm-84CCA89FBB9A", "relay":"0", "label":"Whole House Fan",
     "onModes": [],
     "offModes":[],
     "zones":["Ventilation"],
     "onTimes":[],
-    "offTimes":[]}
+    "offTimes":[]} 
 ]

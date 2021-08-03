@@ -64,7 +64,7 @@ def sendReport(door, state):
 if __name__ == "__main__":
     p.init()
     client.on_message = on_message
-    client.connect('192.168.1.22')
+    client.connect('192.168.1.200')
     topic = 'pi/' + myname + '/commands'
     #print('subscribing to '+topic)
     client.subscribe(topic)

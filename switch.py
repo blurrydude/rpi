@@ -9,7 +9,7 @@ from datetime import datetime
 myname = socket.gethostname()
 myip = subprocess.check_output(['hostname', '-I'])
 ############# CONFIG #############
-broker = "192.168.1.22"
+broker = "192.168.1.200"
 live = True
 ##################################
 last_press = 0

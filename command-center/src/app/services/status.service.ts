@@ -83,6 +83,20 @@ export class StatusService {
       );
   }
 
+  public sendCommand(command: string) {
+    let httpHeaders = new HttpHeaders()
+    httpHeaders.set('client_id', environment.wfsMulesoftClientId);
+    httpHeaders.set('client_secret', environment.wfsMulesoftClientSecret);
+
+    let opts = { headers: httpHeaders, params: new HttpParams() };
+    return this.http.get(this.baseurl+"getdoors", this.options)
+      .pipe(
+        catchError(err => {
+          return this.handleError(err);
+        })
+      );
+  }
+
   // public getLoansByCompany(companyNumber: string) {
   //   this.options.params = new HttpParams({ fromString: "?companyId=" + companyNumber });
   //   return this.http.get<LoanMessage[]>(this.byCompanyUrl, this.options)

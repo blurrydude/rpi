@@ -184,7 +184,7 @@ if __name__ == "__main__":
     if mqtt_enabled is True:
         try:
             client.on_message = on_message
-            client.connect('192.168.1.22')
+            client.connect('192.168.1.200')
         except:
             client = None
     if client is not None:

@@ -9,7 +9,7 @@ import os
 myname = socket.gethostname()
 myip = subprocess.check_output(["hostname","-I"])
 ############# CONFIG #############
-broker = "192.168.1.22"
+broker = "192.168.1.200"
 ##################################
 client = mqtt.Client()
 bad = 0
