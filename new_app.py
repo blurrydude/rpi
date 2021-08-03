@@ -117,7 +117,7 @@ def gettoken():
         users = json.load(f)
     except:
         users = {
-            "0000":{"pasword":"I hate regulatory badgers"}
+            "0000":{"password":"I hate regulatory badgers"}
         }
         with open("/home/pi/users.json","w") as write_file:
             json.dump(users,fp=write_file)
@@ -127,12 +127,12 @@ def gettoken():
     check_user = None
     if username in users.keys():
         check_user = users[username]
-    return check_user
     if check_user is None:
         return {"auth":"invalid"}
     check_hash = md5hash(check_user["password"])
     if passhash == check_hash:
         return {"auth":md5hash(username+":"+check_user["password"]+datetime.now().strftime('%Y%m%d'))}
+    return {"auth":"invalid"}
 
 @app.route('/testtoken',methods={"GET"})
 def testtoken():
