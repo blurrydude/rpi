@@ -106,7 +106,7 @@ def checktoken(username, token):
     f = open("/home/pi/users.json")
     users = json.load(f)
     if username in users.keys():
-        check_token = md5hash(username+":"+users[username]["password"]+datetime.now().strftime('%Y%m%d%H'))
+        check_token = md5hash(username+":"+users[username]["password"]+datetime.now().strftime('%Y%m%d%H'))+md5hash(username+":"+datetime.now().strftime('%Y%m%d%H'))
         return token == check_token
     return False
 
@@ -131,7 +131,7 @@ def gettoken():
         return {"auth":"invalid"}
     check_hash = md5hash(check_user["password"])
     if passhash == check_hash:
-        return {"auth":md5hash(username+":"+check_user["password"]+datetime.now().strftime('%Y%m%d%H'))}
+        return {"auth":md5hash(username+":"+check_user["password"]+datetime.now().strftime('%Y%m%d%H'))+md5hash(username+":"+datetime.now().strftime('%Y%m%d%H'))}
     return {"auth":"invalid"}
 
 @app.route('/testtoken',methods={"GET"})
