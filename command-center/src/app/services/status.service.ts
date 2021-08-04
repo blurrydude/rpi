@@ -22,8 +22,8 @@ export class StatusService {
   };
 
   constructor(private http: HttpClient) {
-    // this.baseurl = "https://api.idkline.com/"
-    this.baseurl = "http://localhost:8080/"
+    this.baseurl = "https://api.idkline.com/"
+    // this.baseurl = "http://localhost:8080/"
     // this.baseurl = environment.loansRequestService;
     // this.byCompanyUrl = environment.loansInformationByCompany;
     // this.byIdUrl = environment.loansInformationById;
