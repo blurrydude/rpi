@@ -431,7 +431,7 @@ def thermoreport(data):
 
 if __name__ == '__main__':
     if dev is False:
-        app.run(debug=False, port=8080, host='192.168.1.23')
+        app.run(debug=False, port=8080, host='192.168.1.201')
     else:
         app.run(debug=True, port=8080, host='127.0.0.1')
 
