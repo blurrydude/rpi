@@ -24,9 +24,9 @@ except:
 homepath = "/home/pi"
 if dev is True:
     homepath = "/home/ian/"
-f = open(homepath+'rpi/circuits.json')
+f = open(homepath+'/rpi/circuits.json')
 circuits = json.load(f)
-f = open(homepath+'config.json')
+f = open(homepath+'/config.json')
 config = json.load(f)
 retries = 0
 
@@ -42,7 +42,7 @@ def md5hash(message):
 
 def reloadCircuits():
     global circuits
-    f = open(homepath+'rpi/circuits.json')
+    f = open(homepath+'/rpi/circuits.json')
     circuits = json.load(f)
 
 def log(message):
@@ -160,7 +160,7 @@ def debug():
 
 @app.route('/pistates',methods=['GET'])
 def pistates():
-    f = open(homepath+'pistates.json')
+    f = open(homepath+'/pistates.json')
     states = json.load(f)
     return states
 
@@ -236,8 +236,8 @@ def webcontrol(text):
 @app.route('/control/<text>')
 def control(text):
     log("incoming text: "+text)
-    shop_door = open(homepath+'Shop_door.state').read().replace("\n","")
-    garage_door = open(homepath+'Garage_door.state').read().replace("\n","")
+    shop_door = open(homepath+'/Shop_door.state').read().replace("\n","")
+    garage_door = open(homepath+'/Garage_door.state').read().replace("\n","")
     reloadCircuits()
     command = text.lower()
     smst = False
@@ -287,23 +287,23 @@ def control(text):
         if "open" in command and shop_door == "closed":
             command_list.append({"t":"pi/baydoorpi/commands","c":"1:1"})
             text = text + "opening shop door\n"
-            with open(homepath+'Shop_door.state','w') as write_file:
+            with open(homepath+'/Shop_door.state','w') as write_file:
                 write_file.write("open")
         if ("close" in command or "shut" in command) and shop_door == "open":
             command_list.append({"t":"pi/baydoorpi/commands","c":"1:0"})
             text = text + "closing shop door\n"
-            with open(homepath+'Shop_door.state','w') as write_file:
+            with open(homepath+'/Shop_door.state','w') as write_file:
                 write_file.write("closed")
     elif "garage door" in command:
         if "open" in command and garage_door == "closed":
             command_list.append({"t":"pi/baydoorpi/commands","c":"0:1"})
             text = text + "opening garage door\n"
-            with open(homepath+'Garage_door.state','w') as write_file:
+            with open(homepath+'/Garage_door.state','w') as write_file:
                 write_file.write("open")
         if ("close" in command or "shut" in command) and garage_door == "open":
             command_list.append({"t":"pi/baydoorpi/commands","c":"0:0"})
             text = text + "closing garage door\n"
-            with open(homepath+'Garage_door.state','w') as write_file:
+            with open(homepath+'/Garage_door.state','w') as write_file:
                 write_file.write("closed")
     elif "status" in command:
         text = text + "Yeah, I'm alive\n"
