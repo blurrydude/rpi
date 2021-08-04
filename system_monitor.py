@@ -112,7 +112,8 @@ def handleCircuitMessage(topic, text):
     address = bits[1]
     relay = bits[3]
 
-    checkin(address)
+    if "command" not in topic:
+        checkin(address)
 
     if "power" in topic:
         with open("/home/pi/"+address+"_"+relay+"_power.state", "w") as write_file:
