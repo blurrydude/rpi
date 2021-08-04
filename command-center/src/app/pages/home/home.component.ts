@@ -9,6 +9,7 @@ export class HomeComponent {
     @Output() status: object = {};
     @Output() pistatus: object = {};
     @Output() readings: object = {};
+    @Output() checkins: object = {};
     @Output() doors: object = {};
     @Output() totalPower: number = 0.0;
     
@@ -41,6 +42,24 @@ export class HomeComponent {
             this.readings = rmsg;
             this.httpMessageService.getDoors().toPromise().then(dmsg => {
               this.doors = dmsg;
+              this.httpMessageService.getCheckins().toPromise().then(cmsg => {
+                this.checkins = cmsg;
+                for (const [k, v] of Object.entries(this.checkins)) {
+                  if(v["checkin"].contains("NONCOMM")) {
+                    v["class"] = "bg-danger"
+                    continue;
+                  }
+                  let s = v["checkin"].split(', ');
+                  let d = s[0].split('/');
+                  let t = s[1];
+                  let ms = Date.parse(d[2]+"-"+d[0]+"-"+d[1]+"T"+t+".000-04:00");
+                  let dt = new Date(ms);
+                  let n = new Date();
+                  let c = n.getTime() - ms;
+                  v["class"] = c > 150000 ? "bg-danger" : c < 0 ? "bg-info" : "bg-success";
+                  v["heartbeat"] = dt;
+                }
+              });
             });
           });
         });

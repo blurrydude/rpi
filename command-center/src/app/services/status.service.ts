@@ -74,6 +74,15 @@ export class StatusService {
       );
   }
 
+  public getCheckins() {
+    return this.http.get(this.baseurl+"checkins", this.options)
+      .pipe(
+        catchError(err => {
+          return this.handleError(err);
+        })
+      );
+  }
+
   public getToken(username: string, passhash: string) {
     return this.http.post(this.baseurl+"gettoken", {"username":username, "passhash":passhash},this.options)
       .pipe(
@@ -83,13 +92,13 @@ export class StatusService {
       );
   }
 
-  public sendCommand(command: string) {
+  public sendCommand(command: string, user: string, auth: string) {
     let httpHeaders = new HttpHeaders()
-    httpHeaders.set('client_id', environment.wfsMulesoftClientId);
-    httpHeaders.set('client_secret', environment.wfsMulesoftClientSecret);
+    httpHeaders.set('user', user);
+    httpHeaders.set('auth', auth);
 
     let opts = { headers: httpHeaders, params: new HttpParams() };
-    return this.http.get(this.baseurl+"getdoors", this.options)
+    return this.http.get(this.baseurl+"control/"+command, opts)
       .pipe(
         catchError(err => {
           return this.handleError(err);
