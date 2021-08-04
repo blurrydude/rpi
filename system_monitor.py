@@ -4,7 +4,7 @@ import time
 time.sleep(30)
 import paho.mqtt.client as mqtt
 import json
-from datetime import datetime
+from datetime import date, datetime
 import os
 import requests
 
@@ -111,6 +111,9 @@ def handleCircuitMessage(topic, text):
     bits = topic.split('/')
     address = bits[1]
     relay = bits[3]
+
+    checkin(address)
+
     if "power" in topic:
         with open("/home/pi/"+address+"_"+relay+"_power.state", "w") as write_file:
             #log(address + " " + relay + " " + text)
@@ -121,12 +124,25 @@ def handleCircuitMessage(topic, text):
             #log(address + " " + relay + " " + text)
             write_file.write(text)
             return True
+    
     return False
+
+def checkin(address):
+    f = "/home/pi/checkins.json"
+    checkins = {}
+    if os.path.exists(f):
+        checkins = json.load(open(f))
+    checkins[address] = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+    with open(f, "w") as write_file:
+        write_file.write(json.dumps(checkins))
 
 def handleMotionSensorMessage(sensor, text):
     log("handle motion")
     log(sensor)
     log(text)
+
+    checkin(sensor["address"])
+
     data = json.loads(text)
     if data["motion"] is True:
         log("motion detected")

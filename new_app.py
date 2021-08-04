@@ -164,6 +164,12 @@ def pistates():
     states = json.load(f)
     return states
 
+@app.route('/checkins',methods=['GET'])
+def checkins():
+    f = open(homepath+'/checkins.json')
+    checkins = json.load(f)
+    return checkins
+
 @app.route('/states',methods=['GET'])
 def states():
     dirname = homepath
