@@ -174,7 +174,7 @@ def checkins():
         if addy in checkins.keys():
             output[circuit["label"]] = checkins[addy]
         else:
-            output[circuit["label"]] = "NONCOMM"
+            output[circuit["label"]] = "NONCOMM: "+circuit["address"]+" @ "+circuit["notes"]
     return output
 
 @app.route('/states',methods=['GET'])
