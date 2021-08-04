@@ -168,7 +168,14 @@ def pistates():
 def checkins():
     f = open(homepath+'/checkins.json')
     checkins = json.load(f)
-    return checkins
+    output = {}
+    for circuit in circuits:
+        addy = circuit["address"]
+        if addy in checkins.keys():
+            output[circuit["label"]] = checkins[addy]
+        else:
+            output[circuit["label"]] = "NONCOMM"
+    return output
 
 @app.route('/states',methods=['GET'])
 def states():
