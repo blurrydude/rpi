@@ -45,19 +45,22 @@ export class HomeComponent {
               this.httpMessageService.getCheckins().toPromise().then(cmsg => {
                 this.checkins = cmsg;
                 for (const [k, v] of Object.entries(this.checkins)) {
-                  if(v["checkin"].contains("NONCOMM")) {
-                    v["class"] = "bg-danger"
-                    continue;
+                  for (const [sk, sv] of Object.entries(this.status)) {
+                    if(k != sk) continue;
+                    if(v.indexOf("NONCOMM") > -1) {
+                      sv["checkin"] = "NONCOMM"
+                      continue;
+                    }
+                    let s = v.split(', ');
+                    let d = s[0].split('/');
+                    let t = s[1];
+                    let ms = Date.parse(d[2]+"-"+d[0]+"-"+d[1]+"T"+t+".000-04:00");
+                    let dt = new Date(ms);
+                    let n = new Date();
+                    let c = n.getTime() - ms;
+                    sv["checkin"] = c > 150000 ? "MIA" : c < 0 ? "UNKNOWN" : "OK";
+                    sv["heartbeat"] = dt;
                   }
-                  let s = v["checkin"].split(', ');
-                  let d = s[0].split('/');
-                  let t = s[1];
-                  let ms = Date.parse(d[2]+"-"+d[0]+"-"+d[1]+"T"+t+".000-04:00");
-                  let dt = new Date(ms);
-                  let n = new Date();
-                  let c = n.getTime() - ms;
-                  v["class"] = c > 150000 ? "bg-danger" : c < 0 ? "bg-info" : "bg-success";
-                  v["heartbeat"] = dt;
                 }
               });
             });
