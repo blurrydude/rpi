@@ -50,7 +50,7 @@ def log(message):
         message = json.dumps(message)
     timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     logfiledate = datetime.now().strftime("%Y%m%d%H")
-    logfile = homepath+"app_"+logfiledate+".log"
+    logfile = homepath+"/app_"+logfiledate+".log"
     entry = timestamp + ": " + message + "\n"
     print(entry)
     if file_logging is True:
@@ -109,7 +109,7 @@ allowed_senders = ["+19377893750","+19377166465"]
 def checktoken(request):
     username = request.headers["user"]
     token = request.headers["auth"]
-    f = open(homepath+"users.json")
+    f = open(homepath+"/users.json")
     users = json.load(f)
     if username in users.keys():
         check_token = md5hash(username+":"+users[username]["password"]+datetime.now().strftime('%Y%m%d%H'))+md5hash(username+":"+datetime.now().strftime('%Y%m%d%H'))
@@ -119,13 +119,13 @@ def checktoken(request):
 @app.route('/gettoken',methods={"POST"})
 def gettoken():
     try:
-        f = open(homepath+"users.json")
+        f = open(homepath+"/users.json")
         users = json.load(f)
     except:
         users = {
             "0000":{"password":"I hate regulatory badgers"}
         }
-        with open(homepath+"users.json","w") as write_file:
+        with open(homepath+"/users.json","w") as write_file:
             json.dump(users,fp=write_file)
     r = request.get_json(force=True)
     username = r["username"]
@@ -327,7 +327,7 @@ def reportdoor(data):
     split = data.split('-')
     door = split[0]
     state = split[1]
-    f = homepath+""+door+"_door.state"
+    f = homepath+"/"+door+"_door.state"
     with open(f,"w") as write_file:
         write_file.write(state)
     return 'OK'
@@ -362,12 +362,12 @@ def reportreadings(message):
     last_stage_start = split[8].replace("-",":").replace("~","/")
     last_circulation = split[9].replace("-",":").replace("~","/")
     try:
-        f = homepath+"temperatures.json"
+        f = homepath+"/temperatures.json"
         j = open(f)
     except:
         j = "{}"
     readings = json.load(j)
-    f2 = open(homepath+""+room+"_thermosettings.json")
+    f2 = open(homepath+"/"+room+"_thermosettings.json")
     settings = json.load(f2)
     readings[room] = {
         "timestamp": datetime.now().strftime("%m/%d/%Y, %H:%M:%S"),
@@ -388,12 +388,12 @@ def reportreadings(message):
 
 @app.route('/getreadings')
 def getreadings():
-    f = open(homepath+"temperatures.json")
+    f = open(homepath+"/temperatures.json")
     return json.load(f)
 
 @app.route('/thermosettings/<room>')
 def thermosettings(room):
-    f = open(homepath+""+room+"_thermosettings.json")
+    f = open(homepath+"/"+room+"_thermosettings.json")
     return json.load(f)
 
 @app.route('/thermoset/<data>')
@@ -402,11 +402,11 @@ def thermoset(data):
     room = s[0]
     temp_low = int(s[1])
     temp_high = int(s[2])
-    f = open(homepath+""+room+"_thermosettings.json")
+    f = open(homepath+"/"+room+"_thermosettings.json")
     settings = json.load(f)
     settings["temperature_high_setting"] = temp_high
     settings["temperature_low_setting"] = temp_low
-    with open(homepath+""+room+"_thermosettings.json","w") as write_file:
+    with open(homepath+"/"+room+"_thermosettings.json","w") as write_file:
         write_file.write(json.dumps(settings))
     return 'OK'
 
@@ -419,7 +419,7 @@ def thermoreport(data):
     heating = s[3]
     whf = s[4]
     
-    with open(homepath+""+room+"_thermoreport.json","w") as write_file:
+    with open(homepath+"/"+room+"_thermoreport.json","w") as write_file:
         write_file.write(json.dumps({
             "cooling": cooling,
             "circulation": circulation,
