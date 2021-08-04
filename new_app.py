@@ -11,7 +11,7 @@ from datetime import datetime
 import base64
 import hashlib
 
-dev = True
+dev = False
 file_logging = True
 myname = socket.gethostname()
 twilled = False
