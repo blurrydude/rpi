@@ -8,7 +8,7 @@ from datetime import date, datetime
 import os
 import requests
 
-file_logging = False
+file_logging = True
 running = True
 client = mqtt.Client()
 circuits = None
