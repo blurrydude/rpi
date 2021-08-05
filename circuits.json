@@ -56,7 +56,7 @@
     "offTimes":[]}, 
 
     {"notes":"192.168.1.120",
-    "address": "shelly1pm-8CAAB55F3B3F", "relay":"1", "label":"Livingroom TV",
+    "address": "shellyswitch25-8CAAB55F3B3F", "relay":"1", "label":"Livingroom TV",
     "onModes": [],
     "offModes":[],
     "zones":[],
