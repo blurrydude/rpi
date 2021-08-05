@@ -2,5 +2,7 @@
     {"room":"Guest Bathroom","activate":"Guest Bathroom","address":"shellymotionsensor-60A423BECB98","auto_off":true,"notes":"192.168.1.150"},
     {"room":"Master Bathroom","activate":"Master Bath","address":"shellymotionsensor-60A42386DDE2","auto_off":true,"notes":"192.168.1.151"},
     {"room":"Kitchen","activate":"Kitchen","address":"shellymotionsensor-60A42386E5BA","auto_off":true,"notes":"192.168.1.152"},
-    {"room":"Garage","activate":"Garage Lights","address":"shellymotionsensor-60A423872550","auto_off":true,"notes":"192.168.1.153"}
+    {"room":"Garage","activate":"Garage Lights","address":"shellymotionsensor-60A423872550","auto_off":true,"notes":"192.168.1.153"},
+    {"room":"Storage Room","activate":"Storage Room","address":"shellymotionsensor-60A423976276","auto_off":true,"notes":"192.168.1.154"},
+    {"room":"Deck","activate":"Deck Fountain","address":"shellymotionsensor-60A4239A6298","auto_off":true,"notes":"192.168.1.155"}
 ]
