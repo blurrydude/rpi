@@ -48,7 +48,7 @@ export class HomeComponent {
                   for (const [sk, sv] of Object.entries(this.status)) {
                     if(k != sk) continue;
                     if(v.indexOf("NONCOMM") > -1) {
-                      sv["checkin"] = "NONCOMM"
+                      sv["checkin"] = "fas fa-tired"
                       continue;
                     }
                     let s = v.split(', ');
@@ -58,7 +58,7 @@ export class HomeComponent {
                     let dt = new Date(ms);
                     let n = new Date();
                     let c = n.getTime() - ms;
-                    sv["checkin"] = c > 150000 ? "MIA" : c < 0 ? "UNKNOWN" : "OK";
+                    sv["checkin"] = c > 150000 ? "fas fa-signal-slash" : c < 0 ? "far fa-question-circle" : "fas fa-signal";
                     sv["heartbeat"] = dt;
                   }
                 }

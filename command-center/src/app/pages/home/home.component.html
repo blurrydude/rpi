@@ -99,7 +99,7 @@
         <div class="card text-center my-2">
           <div class="card-header text-light" [ngClass]="{'bg-success':circuitstatus.value['state'] == 'on','bg-danger':circuitstatus.value['state'] == 'off'}">
             <h5>{{circuitstatus.key}}</h5>
-            <small>{{circuitstatus.value['checkin']}}</small>
+            <i [ngClass]="circuitstatus.value['checkin']"></i>
           </div>
           <div class="card-body">
             <span [ngClass]="{'fw-bold':circuitstatus.value['power'] > 0,'text-muted':circuitstatus.value['power'] == 0}">{{circuitstatus.value["power"] | number: '1.1-1'}} W</span>
