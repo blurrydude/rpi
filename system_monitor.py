@@ -144,29 +144,31 @@ def handleMotionSensorMessage(sensor, text):
 
     checkin(sensor["address"])
 
+    handled = False
     data = json.loads(text)
+    activates = sensor["activate"].split(',')
     if data["motion"] is True:
         log("motion detected")
         for circuit in circuits:
-            if circuit["label"] == sensor["activate"]:
+            if circuit["label"] in activates:
                 log("activate: "+circuit["label"]+" @ "+circuit["address"])
                 log(circuit)
                 # topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]
                 # mosquittoDo(topic,"on")
                 sendCommand("turn on "+circuit["label"].lower())
-                return True
+                handled =  True
     if data["motion"] is False:
         log("motion stopped")
         if sensor["auto_off"] is True:
             for circuit in circuits:
-                if circuit["label"] == sensor["activate"]:
+                if circuit["label"] in activates:
                     log("deactivate: "+circuit["label"]+" @ "+circuit["address"])
                     log(circuit)
                     # topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]
                     # mosquittoDo(topic,"off")
                     sendCommand("turn off "+circuit["label"].lower())
-                    return True
-    return False
+                    handled = True
+    return handled
 
 def handlePiMessage(text):
     if "alive at" not in text:

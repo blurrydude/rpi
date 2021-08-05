@@ -4,5 +4,5 @@
     {"room":"Kitchen","activate":"Kitchen","address":"shellymotionsensor-60A42386E5BA","auto_off":true,"notes":"192.168.1.152"},
     {"room":"Garage","activate":"Garage Lights","address":"shellymotionsensor-60A423872550","auto_off":true,"notes":"192.168.1.153"},
     {"room":"Storage Room","activate":"Storage Room","address":"shellymotionsensor-60A423976276","auto_off":true,"notes":"192.168.1.154"},
-    {"room":"Deck","activate":"Deck Fountain","address":"shellymotionsensor-60A4239A6298","auto_off":true,"notes":"192.168.1.155"}
+    {"room":"Deck","activate":"Deck Fountain,Deck Rail","address":"shellymotionsensor-60A4239A6298","auto_off":true,"notes":"192.168.1.155"}
 ]
