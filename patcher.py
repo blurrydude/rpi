@@ -166,7 +166,7 @@ def doCheck():
                 print('updated local version file')
             sms('restarting system_monitor on '+myname+' because version updated from '+local_version["system_monitor"]+' to '+repo_version["system_monitor"])
             os.system('cd /home/pi/rpi && sudo killall python3 && sudo python3 system_monitor.py')
-            sms('built command center')
+            sms('system_monitor restarted')
 
     if whatiuse not in local_version.keys() or local_version[whatiuse] != repo_version[whatiuse]:
         with open(local_version_file, "w") as write_file:
