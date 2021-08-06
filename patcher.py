@@ -49,7 +49,8 @@ lookup = {
     "dayroompi": "new_interface",
     "tablepi": "new_interface",
     "hallwaypi": "new_interface",
-    "thermopi": "thermostat"
+    "thermopi": "thermostat",
+    "rollerpi": "roller"
 }
 
 whatiuse = "command_light"
