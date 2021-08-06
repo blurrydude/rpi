@@ -53,7 +53,7 @@ def log(message):
     if type(message) is not type(""):
         message = json.dumps(message)
     timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-    logfiledate = datetime.now().strftime("%Y%m%d%H")
+    logfiledate = datetime.now().strftime("%Y%m%d")
     logfile = "/home/pi/thermostat_"+logfiledate+".log"
     entry = timestamp + ": " + message + "\n"
     print(entry)
