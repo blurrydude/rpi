@@ -330,7 +330,7 @@ def load_settings():
         stage_limit_minutes = s["stage_limit_minutes"]
         stage_cooldown_minutes = s["stage_cooldown_minutes"]
         use_whole_house_fan = s["use_whole_house_fan"]
-        log("loaded thermosettings.json")
+        #log("loaded thermosettings.json")
     except:
         print('failed to get thermosettings')
         log("failed to load thermosettings.json")
