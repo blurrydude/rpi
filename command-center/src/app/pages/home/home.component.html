@@ -8,7 +8,7 @@
       
       <div class="col-md-12">
         <div class="row">
-          <div class="col-md-2" *ngFor="let circuitstatus of status | keyvalue">
+          <div class="col-md-3 mx-2 my-1" *ngFor="let circuitstatus of status | keyvalue">
             <button class="btn btn-primary" *ngIf="circuitstatus.value['state'] == 'on'" (click)="command('turn off '+circuitstatus.key)">{{circuitstatus.key}}</button>
             <button class="btn btn-secondary" *ngIf="circuitstatus.value['state'] == 'off'" (click)="command('turn on '+circuitstatus.key)">{{circuitstatus.key}}</button>
           </div>
