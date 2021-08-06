@@ -50,7 +50,17 @@ def stopMqtt():
     client.disconnect()
 
 def loop():
-    time.sleep(0.1)
+    time.sleep(0.5)
+    now = datetime.now().strftime("%H:%M")
+    day = datetime.now().strftime("%a").lower()
+    for circuit in circuits:
+        for ontime in circuit["onTimes"]:
+            if now in ontime and day in ontime:
+                sendCommand("turn " + circuit["label"] + " on")
+        for offtime in circuit["offTimes"]:
+            if now in offtime and day in offtime:
+                sendCommand("turn " + circuit["label"] + " off")
+
 
 def on_message(client, userdata, message):
     try:
