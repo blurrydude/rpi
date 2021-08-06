@@ -10,6 +10,8 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class StatusService {
+  public auth: string = '';
+  public user: string = '';
   private baseurl: string;
   // private byCompanyUrl: string;
   // private triageDetailUrl: string;
@@ -92,13 +94,15 @@ export class StatusService {
       );
   }
 
-  public sendCommand(command: string, user: string, auth: string) {
-    let httpHeaders = new HttpHeaders()
-    httpHeaders.set('user', user);
-    httpHeaders.set('auth', auth);
+  public sendCommand(command: string) {
+    let httpHeaders = new HttpHeaders({
+      "user":this.user,
+      "auth":this.auth
+    });
 
     let opts = { headers: httpHeaders, params: new HttpParams() };
-    return this.http.get(this.baseurl+"control/"+command, opts)
+    console.log(opts)
+    return this.http.get(this.baseurl+"webcontrol/"+command, opts)
       .pipe(
         catchError(err => {
           return this.handleError(err);

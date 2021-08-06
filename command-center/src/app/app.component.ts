@@ -12,11 +12,8 @@ import { StatusService } from './services/status.service';
 export class AppComponent {
   @Input() @Output() user: string = "";
   @Input() @Output() pass: string = "";
-  @Output() auth: string = "";
 
-  constructor(private modalService: NgbModal, private httpMessageService: StatusService) {}
-
-  get Auth() { return this.auth; }
+  constructor(private modalService: NgbModal, public httpMessageService: StatusService) {}
 
   title = 'command-center';
 
@@ -27,14 +24,15 @@ export class AppComponent {
     this.httpMessageService.getToken(f.value.user, Md5.hashStr(f.value.pass)).toPromise().then(msg => {
       for (const [k, v] of Object.entries(msg)) {
         if(k == "auth") {
-          this.auth = v;
+          this.httpMessageService.auth = v;
         }
       }
-      if(this.auth == "invalid") {
+      if(this.httpMessageService.auth == "invalid") {
         // do something
-        this.auth = "";
+        this.httpMessageService.auth = "";
         return;
       }
+      this.httpMessageService.user = f.value.user;
       this.modalService.dismissAll();
     });
   }

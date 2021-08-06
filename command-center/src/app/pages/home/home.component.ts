@@ -13,8 +13,12 @@ export class HomeComponent {
     @Output() doors: object = {};
     @Output() totalPower: number = 0.0;
     
-    constructor(private httpMessageService: StatusService) { 
+    constructor(public httpMessageService: StatusService) { 
       this.load(httpMessageService)
+    }
+
+    public command(com: string) {
+      this.httpMessageService.sendCommand(com).toPromise().then(smsg => {});
     }
 
     public load(httpMessageService: StatusService) {
@@ -58,7 +62,7 @@ export class HomeComponent {
                     let dt = new Date(ms);
                     let n = new Date();
                     let c = n.getTime() - ms;
-                    sv["checkin"] = c > 150000 ? "fas fa-signal-slash" : c < 0 ? "far fa-question-circle" : "fas fa-signal";
+                    sv["checkin"] = c > 150000 ? "fas fa-dizzy" : c < 0 ? "far fa-question-circle" : "fas fa-signal";
                     sv["heartbeat"] = dt;
                   }
                 }
