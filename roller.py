@@ -63,6 +63,14 @@ def sendReport(door, state):
         print('failed to send command')
 
 if __name__ == "__main__":
+    input_state = GPIO.input(read_pins[0])
+    if input_state == 1:
+        close_roller(0)
+    else:
+        open_roller(0)
+        time.sleep(3)
+        close_roller(0)
+
     client.on_message = on_message
     client.connect('192.168.1.200')
     topic = 'pi/' + myname + '/commands'
