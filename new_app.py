@@ -296,6 +296,15 @@ def control(text):
                 topic = "shellies/"+c["address"]+"/relay/"+c["relay"]+"/command"
                 command_list.append({"t":topic,"c":com})
                 text = text + c["label"]+" "+com+"\n"
+
+    elif "shade" in command:
+        if "open" in command:
+            command_list.append({"t":"pi/rollerpi/commands","c":"0:1"})
+            text = text + "opening the shades\n"
+        else:
+            command_list.append({"t":"pi/rollerpi/commands","c":"0:0"})
+            text = text + "closing the shades\n"
+
     elif "shop door" in command:
         if "open" in command and shop_door == "closed":
             command_list.append({"t":"pi/baydoorpi/commands","c":"1:1"})
@@ -310,6 +319,7 @@ def control(text):
         if ("close" in command or "shut" in command) and garage_door == "open":
             command_list.append({"t":"pi/baydoorpi/commands","c":"0:0"})
             text = text + "closing garage door\n"
+
     elif "status" in command:
         text = text + "Yeah, I'm alive\n"
     log(text)
