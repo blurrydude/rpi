@@ -1,11 +1,36 @@
 import json
+from datetime import datetime
 
 class SmarterCircuitDevice:
     def __init__(self, data):
         self.mqtt_address = data["mqtt_address"]
         self.ip_address = data["ip_address"]
         self.name = data["name"]
-        self.last_message = 
+        if data["last_message"] is None or data["last_message"] == "":
+            self.last_message = None
+        else:
+            self.last_message = datetime.strptime(data["last_message"], "%m/%d/%Y, %H:%M:%S")
+    
+    def handleMessage(self, topic, message):
+        print(topic)
+        print(message)
+        self.last_message = datetime.now()
+
+class SmarterCircuitComponent(SmarterCircuitDevice):
+    def __init__(self, data):
+        SmarterCircuitDevice.__init__(self,data)
+        self.version = data["version"]
+    
+    def handleMessage(self, topic, message):
+        return super().handleMessage(topic, message)
+
+class SmarterCircuitServer(SmarterCircuitComponent):
+    def __init__(self, json_data):
+        data = json.loads(json_data)
+        SmarterCircuitComponent.__init__(self,data)
+    
+    def handleMessage(self, topic, message):
+        return super().handleMessage(topic, message)
 
 class SmarterCircuit(SmarterCircuitDevice):
     def __init__(self, json_data):
@@ -34,28 +59,46 @@ class SmarterCircuit(SmarterCircuitDevice):
             "relay_power": 0,
             "relay_energy": 0
         }
+    
+    def handleMessage(self, topic, message):
+        return super().handleMessage(topic, message)
 
-class SmarterCircuitControlPanel(SmarterCircuitDevice):
+class SmarterCircuitControlPanel(SmarterCircuitComponent):
     def __init__(self, json_data):
         data = json.loads(json_data)
-        SmarterCircuitDevice.__init__(self,data)
+        SmarterCircuitComponent.__init__(self,data)
+    
+    def handleMessage(self, topic, message):
+        return super().handleMessage(topic, message)
 
-class SmarterCircuitWebServer(SmarterCircuitDevice):
+class SmarterCircuitWebServer(SmarterCircuitServer):
     def __init__(self, json_data):
         data = json.loads(json_data)
-        SmarterCircuitDevice.__init__(self,data)
+        SmarterCircuitServer.__init__(self,data)
+    
+    def handleMessage(self, topic, message):
+        return super().handleMessage(topic, message)
 
-class SmarterCircuitRollerController(SmarterCircuitDevice):
+class SmarterCircuitRollerController(SmarterCircuitComponent):
     def __init__(self, json_data):
         data = json.loads(json_data)
-        SmarterCircuitDevice.__init__(self,data)
+        SmarterCircuitComponent.__init__(self,data)
+    
+    def handleMessage(self, topic, message):
+        return super().handleMessage(topic, message)
 
-class SmarterCircuitMQTTServer(SmarterCircuitDevice):
+class SmarterCircuitMQTTServer(SmarterCircuitServer):
     def __init__(self, json_data):
         data = json.loads(json_data)
-        SmarterCircuitDevice.__init__(self,data)
+        SmarterCircuitServer.__init__(self,data)
+    
+    def handleMessage(self, topic, message):
+        return super().handleMessage(topic, message)
 
-class SmarterCircuitThermostat(SmarterCircuitDevice):
+class SmarterCircuitThermostat(SmarterCircuitComponent):
     def __init__(self, json_data):
         data = json.loads(json_data)
-        SmarterCircuitDevice.__init__(self,data)
+        SmarterCircuitComponent.__init__(self,data)
+    
+    def handleMessage(self, topic, message):
+        return super().handleMessage(topic, message)
