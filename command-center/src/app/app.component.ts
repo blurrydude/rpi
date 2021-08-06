@@ -16,6 +16,8 @@ export class AppComponent {
 
   constructor(private modalService: NgbModal, private httpMessageService: StatusService) {}
 
+  get Auth() { return this.auth; }
+
   title = 'command-center';
 
   public login(f: NgForm) {
