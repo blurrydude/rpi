@@ -14,6 +14,9 @@ myip = subprocess.check_output(['hostname', '-I'])
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(12, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(16, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(20, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(21, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 kit = MotorKit(0x61)
 
