@@ -19,7 +19,7 @@ kit = MotorKit(0x61)
 
 running = True
 client = mqtt.Client()
-read_pins = [12] #,16,20,21]
+read_pins = [12,16,20]#,21]
 motors = [
     kit.motor1,
     kit.motor2,
