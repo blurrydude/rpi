@@ -29,7 +29,7 @@ motors = [
 
 def open_roller(addy):
     motors[addy].throttle = 1.0
-    time.sleep(5)
+    time.sleep(6)
     motors[addy].throttle = 0.0
 
 def close_roller(addy):
