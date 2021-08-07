@@ -8,9 +8,63 @@
       
       <div class="col-md-12">
         <div class="row">
+          <div class="col-md-3">
+            <button class="btn btn-primary mx-2 my-1 w-100" (click)="command('switch to dark mode')">DARK</button>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-primary mx-2 my-1 w-100" (click)="command('switch to morning mode')">Morning</button>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-primary mx-2 my-1 w-100" (click)="command('switch to lunch mode')">Lunch</button>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-primary mx-2 my-1 w-100" (click)="command('switch to day mode')">Day</button>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-primary mx-2 my-1 w-100" (click)="command('switch to dinner mode')">Dinner</button>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-primary mx-2 my-1 w-100" (click)="command('switch to evening mode')">Evening</button>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-primary mx-2 my-1 w-100" (click)="command('switch to night mode')">Night</button>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-primary mx-2 my-1 w-100" (click)="command('switch to alert mode')">ALERT</button>
+          </div>
+        </div>
+        <div class="row">
           <div class="col-md-4" *ngFor="let circuitstatus of status | keyvalue">
-            <button class="btn btn-primary mx-2 my-1" *ngIf="circuitstatus.value['state'] == 'on'" (click)="command('turn off '+circuitstatus.key)">{{circuitstatus.key}}</button>
-            <button class="btn btn-secondary mx-2 my-1" *ngIf="circuitstatus.value['state'] == 'off'" (click)="command('turn on '+circuitstatus.key)">{{circuitstatus.key}}</button>
+            <button class="btn btn-primary mx-2 my-1 w-100" *ngIf="circuitstatus.value['state'] == 'on'" (click)="command('turn off '+circuitstatus.key)">{{circuitstatus.key}}</button>
+            <button class="btn btn-secondary mx-2 my-1 w-100" *ngIf="circuitstatus.value['state'] == 'off'" (click)="command('turn on '+circuitstatus.key)">{{circuitstatus.key}}</button>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <button class="btn btn-primary mx-2 my-1 w-100" (click)="command('open the shades')">Open the Shades</button>
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-primary mx-2 my-1 w-100" (click)="command('open the first shade')">Open the First Shade</button>
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-primary mx-2 my-1 w-100" (click)="command('open the second shade')">Open the Second Shade</button>
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-primary mx-2 my-1 w-100" (click)="command('open the third shade')">Open the Third Shade</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <button class="btn btn-secondary mx-2 my-1 w-100" (click)="command('close the shades')">Close the Shades</button>
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-secondary mx-2 my-1 w-100" (click)="command('close the first shade')">Close the First Shade</button>
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-secondary mx-2 my-1 w-100" (click)="command('close the second shade')">Close the Second Shade</button>
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-secondary mx-2 my-1 w-100" (click)="command('close the third shade')">Close the Third Shade</button>
+            </div>
           </div>
         </div>
       </div>
