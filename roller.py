@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 import time
 time.sleep(15)
+import _thread
 import paho.mqtt.client as mqtt
 import subprocess
 import socket
@@ -26,18 +27,34 @@ motors = [
     kit.motor3,
     kit.motor4
 ]
+moving = [
+    False,
+    False,
+    False,
+    False
+]
 
 def open_roller(addy):
+    global moving
+    if moving[addy] is True:
+        return
+    moving[addy] = True
     motors[addy].throttle = 1.0
     time.sleep(6)
     motors[addy].throttle = 0.0
+    moving[addy] = False
 
 def close_roller(addy):
+    global moving
+    if moving[addy] is True:
+        return
+    moving[addy] = True
     input_state = GPIO.input(read_pins[addy])
     motors[addy].throttle = -1.0
     while input_state == 1:
         input_state = GPIO.input(read_pins[addy])
     motors[addy].throttle = 0.0
+    moving[addy] = False
 
 def on_message(client, userdata, message):
     global running
@@ -52,9 +69,9 @@ def on_message(client, userdata, message):
     if state == input_state:
         return
     if state == 0:
-        close_roller(addy)
+        _thread.start_new_thread(close_roller, (addy))
     else:
-        open_roller(addy)
+        _thread.start_new_thread(open_roller, (addy))
 
 def sendReport(door, state):
     try:
