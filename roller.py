@@ -76,9 +76,17 @@ def on_message(client, userdata, message):
     #print("Received: "+result)
     bits = result.split(':')
     addy = int(bits[0])
+    state = int(bits[1])
+    if addy >= len(read_pins):
+        for i in range(len(read_pins)):
+            set_state(i, state)
+            time.sleep(1)
+    else:
+        set_state(addy, state)
+
+def set_state(addy, state):
     if moving[addy] is True:
         return
-    state = int(bits[1])
     if addy >= len(read_pins):
         return
     input_state = GPIO.input(read_pins[addy])
