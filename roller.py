@@ -36,6 +36,12 @@ moving = [
     False,
     False
 ]
+labels = [
+    "First Shade",
+    "Second Shade",
+    "Third Shade",
+    "Curtain"
+]
 
 def open_roller(addy):
     global moving
@@ -46,6 +52,7 @@ def open_roller(addy):
     time.sleep(6)
     motors[addy].throttle = 0.0
     moving[addy] = False
+    sendReport(labels[addy], "open")
 
 def close_roller(addy):
     global moving
@@ -58,6 +65,7 @@ def close_roller(addy):
         input_state = GPIO.input(read_pins[addy])
     motors[addy].throttle = 0.0
     moving[addy] = False
+    sendReport(labels[addy], "closed")
 
 def on_message(client, userdata, message):
     global running
@@ -80,19 +88,22 @@ def on_message(client, userdata, message):
 
 def sendReport(door, state):
     try:
-        r =requests.get('https://api.idkline.com/reportdoor/'+door+"-"+state)
+        r =requests.get('https://api.idkline.com/reportroller/'+door+"-"+state)
     except:
         print('failed to send command')
 
-if __name__ == "__main__":
-    input_state = GPIO.input(read_pins[0])
+def power_on_self_test(addy):
+    input_state = GPIO.input(read_pins[addy])
     if input_state == 1:
-        close_roller(0)
+        close_roller(addy)
     else:
-        open_roller(0)
+        open_roller(addy)
         time.sleep(3)
-        close_roller(0)
+        close_roller(addy)
 
+if __name__ == "__main__":
+    for i in range(len(read_pins)):
+        _thread.start_new_thread(power_on_self_test, (i,))
     client.on_message = on_message
     client.connect('192.168.1.200')
     topic = 'pi/' + myname + '/commands'

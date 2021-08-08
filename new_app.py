@@ -377,6 +377,32 @@ def reportdoor(data):
         write_file.write(state)
     return 'OK'
 
+@app.route('/reportroller/<data>')
+def reportroller(data):
+    split = data.split('-')
+    roller = split[0]
+    state = split[1]
+    f = homepath+"/"+roller+"_roller.state"
+    with open(f,"w") as write_file:
+        write_file.write(state)
+    return 'OK'
+
+@app.route('/getrollers')
+def getrollers():
+    dirname = homepath
+    
+    ext = ('_roller.state')
+    states = {}
+    for f in os.listdir(dirname):
+        if f.endswith(ext):
+            s = f.split('/')
+            a = s[len(s)-1].split('.')[0].split('_roller')
+            label = a[0]
+            states[label] = open(dirname+"/"+label+"_roller.state").read().replace("\n","")
+        else:
+            continue
+    return states
+
 @app.route('/getdoors')
 def getdoors():
     dirname = homepath

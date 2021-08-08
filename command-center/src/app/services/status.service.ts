@@ -76,6 +76,15 @@ export class StatusService {
       );
   }
 
+  public getRollers() {
+    return this.http.get(this.baseurl+"getrollers", this.options)
+      .pipe(
+        catchError(err => {
+          return this.handleError(err);
+        })
+      );
+  }
+
   public getCheckins() {
     return this.http.get(this.baseurl+"checkins", this.options)
       .pipe(
