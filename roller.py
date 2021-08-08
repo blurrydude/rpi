@@ -62,7 +62,8 @@ def close_roller(addy):
     moving[addy] = True
     input_state = GPIO.input(read_pins[addy])
     motors[addy].throttle = -1.0
-    while input_state == 1:
+    start = time.time()
+    while input_state == 1 and time.time() - start < 10:
         input_state = GPIO.input(read_pins[addy])
     motors[addy].throttle = 0.0
     moving[addy] = False
