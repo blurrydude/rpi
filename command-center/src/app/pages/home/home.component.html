@@ -2,7 +2,7 @@
   <div class="offset-1 col-md-10">
 
     <div class="row mt-3 mb-2 text-center" *ngIf="httpMessageService.auth!=''">
-      <div class="col-md-12 bg-warning">
+      <div class="col-md-12 text-warning">
         <h3>Control</h3>
       </div>
       
@@ -70,7 +70,7 @@
       </div>
     </div>
 
-    <div class="row mt-3 mb-2 bg-info text-center">
+    <div class="row mt-3 mb-2 text-info text-center">
       <div class="col-md-12">
         <h3>Thermostats</h3>
       </div>
@@ -78,14 +78,14 @@
     <div class="row">
       <div class="col-md-6" *ngFor="let reading of readings | keyvalue">
         <div class="card my-2">
-          <div class="card-header text-center">
+          <div class="card-header bg-dark border-bottom text-center">
             <h5>{{reading.key}}</h5>
             <span [ngClass]="{'text-muted':reading.value['heating']=='off','text-danger':reading.value['heating']=='on'}"><i class="fa fa-2x fa-fire"></i></span>&nbsp;&middot;&nbsp;
             <span [ngClass]="{'text-muted':reading.value['cooling']=='off','text-info':reading.value['cooling']=='on'}"><i class="fas fa-2x fa-snowflake"></i></span>&nbsp;&middot;&nbsp;
             <span [ngClass]="{'text-muted':reading.value['circulation']=='off','text-success':reading.value['circulation']=='on'}"><i class="fa fa-2x fa-wind"></i></span>&nbsp;&middot;&nbsp;
             <span [ngClass]="{'text-muted':reading.value['whf']=='off','text-dark':reading.value['whf']=='on'}"><i class="fa fa-2x fa-fan"></i></span>
           </div>
-          <div class="card-body">
+          <div class="card-body bg-dark">
             <div class="row">
               <div class="col-md-6">
                 <h5 class="text-center">Readings</h5>
@@ -114,7 +114,7 @@
         </div>
       </div>
     </div>
-    <div class="row mt-3 mb-2 bg-danger text-center">
+    <div class="row mt-3 mb-2 text-danger text-center">
       <div class="col-md-12">
         <h3>Doors</h3>
       </div>
@@ -122,16 +122,16 @@
     <div class="row">
       <div class="col-md-6" *ngFor="let door of doors | keyvalue">
         <div class="card text-center my-2">
-          <div class="card-header">
+          <div class="card-header bg-dark border-bottom">
             <h5>{{door.key}} door</h5>
           </div>
-          <div class="card-body">
+          <div class="card-body bg-dark">
             <h4>{{door.value}}</h4>
           </div>
         </div>
       </div>
     </div>
-    <div class="row mt-3 mb-2 bg-danger text-center">
+    <div class="row mt-3 mb-2 text-danger text-center">
       <div class="col-md-12">
         <h3>Rollershades</h3>
       </div>
@@ -139,16 +139,16 @@
     <div class="row">
       <div class="col-md-6" *ngFor="let roller of rollers | keyvalue">
         <div class="card text-center my-2">
-          <div class="card-header">
+          <div class="card-header bg-dark border-bottom">
             <h5>{{roller.key}}</h5>
           </div>
-          <div class="card-body">
+          <div class="card-body bg-dark">
             <h4>{{roller.value}}</h4>
           </div>
         </div>
       </div>
     </div>
-    <div class="row mt-3 mb-2 bg-success text-center">
+    <div class="row mt-3 mb-2 text-success text-center">
       <div class="col-md-12">
         <h3>Raspberry Pies</h3>
       </div>
@@ -156,16 +156,16 @@
     <div class="row">
       <div class="col-md-2" *ngFor="let pistat of pistatus | keyvalue">
         <div class="card text-center my-2">
-          <div class="card-header text-light" [ngClass]="pistat.value['class']">
+          <div class="card-header bg-dark" [ngClass]="pistat.value['class']">
             <h5>{{pistat.key}}</h5>
           </div>
-          <div class="card-body">
+          <div class="card-body bg-dark">
             {{pistat.value['heartbeat'] | date:'short'}}
           </div>
         </div>
       </div>
     </div>
-    <div class="row mt-3 mb-2 bg-warning text-center">
+    <div class="row mt-3 mb-2 text-warning text-center">
       <div class="col-md-12">
         <h3>Circuits - {{totalPower | number: '1.1-1'}} W</h3>
       </div>
@@ -173,11 +173,11 @@
     <div class="row">
       <div class="col-md-2" *ngFor="let circuitstatus of status | keyvalue">
         <div class="card text-center my-2">
-          <div class="card-header text-light" [ngClass]="{'bg-success':circuitstatus.value['state'] == 'on','bg-danger':circuitstatus.value['state'] == 'off'}">
+          <div class="card-header bg-dark border-bottom" [ngClass]="{'text-info':circuitstatus.value['state'] == 'on','text-muted':circuitstatus.value['state'] == 'off'}">
             <h5>{{circuitstatus.key}}</h5>
             <i [ngClass]="circuitstatus.value['checkin']"></i>
           </div>
-          <div class="card-body">
+          <div class="card-body bg-dark">
             <span [ngClass]="{'fw-bold':circuitstatus.value['power'] > 0,'text-muted':circuitstatus.value['power'] == 0}">{{circuitstatus.value["power"] | number: '1.1-1'}} W</span>
           </div>
         </div>

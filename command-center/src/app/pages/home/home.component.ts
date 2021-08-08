@@ -15,15 +15,15 @@ export class HomeComponent {
     @Output() totalPower: number = 0.0;
     
     constructor(public httpMessageService: StatusService) { 
-      this.load(httpMessageService)
+      this.load(httpMessageService, true)
     }
 
     public command(com: string) {
-      this.httpMessageService.sendCommand(com).toPromise().then(smsg => {});
+      this.httpMessageService.sendCommand(com).toPromise().then(smsg => {this.load(this.httpMessageService,false)});
     }
 
-    public load(httpMessageService: StatusService) {
-      setTimeout(()=>{this.load(httpMessageService)},10000);
+    public load(httpMessageService: StatusService, main_loop: boolean) {
+      if(main_loop == true) setTimeout(()=>{this.load(httpMessageService, true)},10000);
       this.httpMessageService.getStatus().toPromise().then(msg => {
         this.status = msg;
         this.totalPower = 0.0;
@@ -40,7 +40,7 @@ export class HomeComponent {
             let dt = new Date(ms);
             let n = new Date();
             let c = n.getTime() - ms;
-            v["class"] = c > 150000 ? "bg-danger" : c < 0 ? "bg-info" : "bg-success";
+            v["class"] = c > 150000 ? "text-danger" : c < 0 ? "text-info" : "text-success";
             v["heartbeat"] = dt;
           }
           this.httpMessageService.getReadings().toPromise().then(rmsg => {
