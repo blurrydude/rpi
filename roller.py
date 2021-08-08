@@ -74,9 +74,9 @@ def on_message(client, userdata, message):
     if state == input_state:
         return
     if state == 0:
-        _thread.start_new_thread(close_roller, (addy))
+        _thread.start_new_thread(close_roller, (addy,))
     else:
-        _thread.start_new_thread(open_roller, (addy))
+        _thread.start_new_thread(open_roller, (addy,))
 
 def sendReport(door, state):
     try:
