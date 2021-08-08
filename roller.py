@@ -80,7 +80,7 @@ def on_message(client, userdata, message):
     if addy >= len(read_pins):
         for i in range(len(read_pins)):
             set_state(i, state)
-            time.sleep(1)
+            time.sleep(2)
     else:
         set_state(addy, state)
 
@@ -115,7 +115,7 @@ def power_on_self_test(addy):
 if __name__ == "__main__":
     for i in range(len(read_pins)):
         _thread.start_new_thread(power_on_self_test, (i,))
-        time.sleep(1)
+        time.sleep(2)
     client.on_message = on_message
     client.connect('192.168.1.200')
     topic = 'pi/' + myname + '/commands'
