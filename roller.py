@@ -15,12 +15,15 @@ myip = subprocess.check_output(['hostname', '-I'])
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(12, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(16, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(20, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(21, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 kit = MotorKit(0x61)
 
 running = True
 client = mqtt.Client()
-read_pins = [12] #,16,20,21]
+read_pins = [12,16,20]#,21]
 motors = [
     kit.motor1,
     kit.motor2,

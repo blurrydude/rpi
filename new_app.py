@@ -297,12 +297,38 @@ def control(text):
                 command_list.append({"t":topic,"c":com})
                 text = text + c["label"]+" "+com+"\n"
 
+
+    elif "first shade" in command:
+        if "open" in command:
+            command_list.append({"t":"pi/rollerpi/commands","c":"0:0"})
+            text = text + "opening the first shade\n"
+        else:
+            command_list.append({"t":"pi/rollerpi/commands","c":"0:1"})
+            text = text + "closing the first shade\n"
+    elif "second shade" in command:
+        if "open" in command:
+            command_list.append({"t":"pi/rollerpi/commands","c":"1:0"})
+            text = text + "opening the second shade\n"
+        else:
+            command_list.append({"t":"pi/rollerpi/commands","c":"1:1"})
+            text = text + "closing the second shade\n"
+    elif "third shade" in command:
+        if "open" in command:
+            command_list.append({"t":"pi/rollerpi/commands","c":"2:0"})
+            text = text + "opening the third shade\n"
+        else:
+            command_list.append({"t":"pi/rollerpi/commands","c":"2:1"})
+            text = text + "closing the third shade\n"
     elif "shade" in command:
         if "open" in command:
             command_list.append({"t":"pi/rollerpi/commands","c":"0:0"})
+            command_list.append({"t":"pi/rollerpi/commands","c":"1:0"})
+            command_list.append({"t":"pi/rollerpi/commands","c":"2:0"})
             text = text + "opening the shades\n"
         else:
             command_list.append({"t":"pi/rollerpi/commands","c":"0:1"})
+            command_list.append({"t":"pi/rollerpi/commands","c":"1:1"})
+            command_list.append({"t":"pi/rollerpi/commands","c":"2:1"})
             text = text + "closing the shades\n"
 
     elif "shop door" in command:
