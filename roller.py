@@ -106,6 +106,7 @@ def power_on_self_test(addy):
 if __name__ == "__main__":
     for i in range(len(read_pins)):
         _thread.start_new_thread(power_on_self_test, (i,))
+        time.sleep(0.5)
     client.on_message = on_message
     client.connect('192.168.1.200')
     topic = 'pi/' + myname + '/commands'
