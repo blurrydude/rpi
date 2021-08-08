@@ -119,6 +119,22 @@ export class StatusService {
       );
   }
 
+  public sendThermosettings(room: string, temp_low: number, temp_high: number, humidity: number, circ_min: number, hum_circ_min: number) {
+    let httpHeaders = new HttpHeaders({
+      "user":this.user,
+      "auth":this.auth
+    });
+
+    let opts = { headers: httpHeaders, params: new HttpParams() };
+    console.log(opts)
+    return this.http.get(this.baseurl+"webthermoset/"+room+"-"+temp_low+"-"+temp_high+"-"+humidity+"-"+circ_min+"-"+hum_circ_min, opts)
+      .pipe(
+        catchError(err => {
+          return this.handleError(err);
+        })
+      );
+  }
+
   // public getLoansByCompany(companyNumber: string) {
   //   this.options.params = new HttpParams({ fromString: "?companyId=" + companyNumber });
   //   return this.http.get<LoanMessage[]>(this.byCompanyUrl, this.options)

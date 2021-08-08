@@ -467,6 +467,12 @@ def thermosettings(room):
     f = open(homepath+"/"+room+"_thermosettings.json")
     return json.load(f)
 
+@app.route('/webthermoset/<data>')
+def webthermoset(data):
+    if checktoken(request) is not True:
+        return 'UNAUTHORIZED'
+    thermoset(data)
+
 @app.route('/thermoset/<data>')
 def thermoset(data):
     s = data.split('-')
@@ -477,6 +483,19 @@ def thermoset(data):
     settings = json.load(f)
     settings["temperature_high_setting"] = temp_high
     settings["temperature_low_setting"] = temp_low
+
+    if len(s) > 3:
+        humidity_setting = int(s[3])
+        settings["humidity_setting"] = humidity_setting
+
+    if len(s) > 4:
+        air_circulation_minutes = int(s[4])
+        settings["air_circulation_minutes"] = air_circulation_minutes
+
+    if len(s) > 5:
+        humidity_circulation_minutes = int(s[5])
+        settings["humidity_circulation_minutes"] = humidity_circulation_minutes
+
     with open(homepath+"/"+room+"_thermosettings.json","w") as write_file:
         write_file.write(json.dumps(settings))
     return 'OK'
