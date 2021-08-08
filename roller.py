@@ -52,7 +52,8 @@ def open_roller(addy):
     time.sleep(6)
     motors[addy].throttle = 0.0
     moving[addy] = False
-    sendReport(labels[addy], "open")
+    # when the roller is open, the shade is closed
+    sendReport(labels[addy], "closed")
 
 def close_roller(addy):
     global moving
@@ -65,7 +66,8 @@ def close_roller(addy):
         input_state = GPIO.input(read_pins[addy])
     motors[addy].throttle = 0.0
     moving[addy] = False
-    sendReport(labels[addy], "closed")
+    # when the roller is open, the shade is closed
+    sendReport(labels[addy], "open")
 
 def on_message(client, userdata, message):
     global running
