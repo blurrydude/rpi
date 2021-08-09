@@ -85,6 +85,15 @@ export class StatusService {
       );
   }
 
+  public getMotionSensors() {
+    return this.http.get(this.baseurl+"getmotionsensors", this.options)
+      .pipe(
+        catchError(err => {
+          return this.handleError(err);
+        })
+      );
+  }
+
   public getCheckins() {
     return this.http.get(this.baseurl+"checkins", this.options)
       .pipe(

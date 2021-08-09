@@ -10,7 +10,7 @@ export class HomeComponent {
     @Output() pistatus: object = {};
     @Output() readings: object = {};
     @Output() checkins: object = {};
-    @Output() shellies: object = {};
+    @Output() motionsensors: object = {};
     @Output() doors: object = {};
     @Output() rollers: object = {};
     @Output() totalPower: number = 0.0;
@@ -44,8 +44,8 @@ export class HomeComponent {
             v["class"] = c > 150000 ? "text-danger" : c < 0 ? "text-info" : "text-success";
             v["heartbeat"] = dt;
           }
-          this.httpMessageService.getShellies().toPromise().then(hmsg => {
-            this.shellies = hmsg;
+          this.httpMessageService.getMotionSensors().toPromise().then(hmsg => {
+            this.motionsensors = hmsg;
             this.httpMessageService.getReadings().toPromise().then(rmsg => {
               this.readings = rmsg;
               this.httpMessageService.getDoors().toPromise().then(dmsg => {
