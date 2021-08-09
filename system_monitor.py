@@ -6,6 +6,7 @@ import paho.mqtt.client as mqtt
 import json
 from datetime import date, datetime
 import os
+from os import path
 import requests
 
 file_logging = True
@@ -131,6 +132,8 @@ def on_message(client, userdata, message):
     try:
         topic = message.topic
         text = str(message.payload.decode("utf-8"))
+        if "shellies" in topic:
+            shelly_log(topic,text)
         if "motion" in topic:
             log("MOTION")
             log(topic)
@@ -139,6 +142,23 @@ def on_message(client, userdata, message):
     except Exception as err:
         log(err)
 
+def shelly_log(topic,text):
+    try:
+        if path.exists("/home/pi/shellies.json") == False:
+            with open("/home/pi/shellies.json","w") as write_file:
+                write_file.write("{}")
+        s = topic.split('/')
+        addy = s[1]
+        field = topic.replace("shellies/"+addy+"/","").replace("/","_")
+        f = open("/home/pi/shellies.json")
+        j = json.load(f)
+        if "{" in text:
+            text = json.loads(text)
+        j[addy][field] = text
+        with open("/home/pi/shellies.json","w") as write_file:
+            write_file.write(json.dumps(j))
+    except:
+        log("shelly_log failed")
 
 def handleMessage(topic, text):
     #log("handle message: "+topic+" : "+text)

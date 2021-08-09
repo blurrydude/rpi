@@ -509,6 +509,11 @@ def thermoreport(data):
             "whf": whf
         }))
     return 'OK'
+
+@app.route('/getshellies')
+def getshellies():
+    f = open(homepath+"/shellies.json")
+    return json.load(f)
     
 
 if __name__ == '__main__':
