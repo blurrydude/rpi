@@ -14,6 +14,8 @@ client = mqtt.Client()
 circuits = None
 motionSensors = None
 doorSensors = None
+timeCommands = None
+last_loop = time.time()
 ignore_from_shelly = ["temperature", "temperature_f", "overtemperature", "input", "energy","online","announce"]
 
 def loadCircuits():
@@ -22,6 +24,13 @@ def loadCircuits():
     circuits = json.load(f)
     log('circuits')
     log(circuits)
+
+def loadTimeCommands():
+    global timeCommands
+    f = open('/home/pi/rpi/timeCommands.json')
+    timeCommands = json.load(f)
+    log('timeCommands')
+    log(timeCommands)
 
 def loadMotionSensors():
     global motionSensors
@@ -50,17 +59,24 @@ def stopMqtt():
     client.disconnect()
 
 def loop():
+    global last_loop
     time.sleep(0.5)
-    now = datetime.now().strftime("%H:%M")
-    day = datetime.now().strftime("%a").lower()
-    for circuit in circuits:
-        for ontime in circuit["onTimes"]:
-            if now in ontime and day in ontime:
-                sendCommand("turn " + circuit["label"] + " on")
-        for offtime in circuit["offTimes"]:
-            if now in offtime and day in offtime:
-                sendCommand("turn " + circuit["label"] + " off")
-
+    if time.time() - last_loop >= 60:
+        loadTimeCommands()
+        last_loop = time.time()
+        now = datetime.now().strftime("%H:%M")
+        day = datetime.now().strftime("%a").lower()
+        for circuit in circuits:
+            for ontime in circuit["onTimes"]:
+                if now in ontime and day in ontime:
+                    sendCommand("turn " + circuit["label"] + " on")
+            for offtime in circuit["offTimes"]:
+                if now in offtime and day in offtime:
+                    sendCommand("turn " + circuit["label"] + " off")
+        
+        for tc in timeCommands:
+            if now in tc["days_time"] and day in tc["days_time"]:
+                sendCommand(tc["command"])
 
 def on_message(client, userdata, message):
     try:
