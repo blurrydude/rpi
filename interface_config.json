@@ -231,13 +231,13 @@
                 "text": "Open", "func": "shades", "target":"open",
                 "height": 3, "fontname": "Times", "fontsize": 24,
                 "bg": "darkblue", "fg": "white", "sticky": "nesw",
-                "row": 1, "col": 0, "padx": 5, "pady": 5
+                "row": 1, "col": 1, "padx": 5, "pady": 5
             },
             {
                 "text": "Close", "func": "shades", "target":"close",
                 "height": 3, "fontname": "Times", "fontsize": 24,
                 "bg": "darkblue", "fg": "white", "sticky": "nesw",
-                "row": 1, "col": 1, "padx": 5, "pady": 5
+                "row": 2, "col": 1, "padx": 5, "pady": 5
             }
         ]
     },
