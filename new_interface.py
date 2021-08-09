@@ -41,6 +41,8 @@ class SmartScreen:
             decrease_low_temp(button.target)
         if "decrease_high_temp" in button.func:
             decrease_high_temp(button.target)
+        if "shades" in button.func:
+            sendCommand(button.target + " the shades")
     def hide(self):
         for button in self.buttons:
             button.hide()
