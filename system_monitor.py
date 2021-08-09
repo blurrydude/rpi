@@ -16,6 +16,11 @@ motionSensors = None
 doorSensors = None
 timeCommands = None
 last_loop = time.time()
+last_day = ""
+sunrise = "08:00"
+sunset = "21:00"
+civil_twilight_end = "21:30"
+civil_twilight_begin = "07:30"
 ignore_from_shelly = ["temperature", "temperature_f", "overtemperature", "input", "energy","online","announce"]
 
 def loadCircuits():
@@ -60,12 +65,27 @@ def stopMqtt():
 
 def loop():
     global last_loop
+    global last_day
+    global sunrise
+    global sunset
+    global civil_twilight_end
+    global civil_twilight_begin
     time.sleep(0.5)
     if time.time() - last_loop >= 60:
         loadTimeCommands()
         last_loop = time.time()
         now = datetime.now().strftime("%H:%M")
         day = datetime.now().strftime("%a").lower()
+        
+        if day != last_day:
+            last_day = day
+            r = requests.get("https://api.sunrise-sunset.org/json?lat=39.68021508778703&lng=-84.17636552954109")
+            j = r.json()
+            sunrise = convert_suntime(j["results"]["sunrise"],False)
+            sunset = convert_suntime(j["results"]["sunset"],False)
+            civil_twilight_begin = convert_suntime(j["results"]["civil_twilight_begin"],False)
+            civil_twilight_end = convert_suntime(j["results"]["civil_twilight_end"],False)
+
         for circuit in circuits:
             for ontime in circuit["onTimes"]:
                 if now in ontime and day in ontime.lower():
@@ -75,8 +95,37 @@ def loop():
                     sendCommand("turn " + circuit["label"] + " off")
         
         for tc in timeCommands:
-            if now in tc["days_time"] and day in tc["days_time"].lower():
+            check = tc["days_time"].lower()
+            if day not in check:
+                continue
+            if now in check or (now == sunrise and "sunrise" in check) or (now == sunset and "sunset" in check) or (now == civil_twilight_end and "civil_twilight_end" in check) or (now == civil_twilight_begin and "civil_twilight_begin" in check):
                 sendCommand(tc["command"])
+
+def convert_suntime(jdata, winter):
+    a = jdata.split(' ')
+    s = a[0].split(":")
+    h = int(s[0])
+    if a[1] == "AM" and h == 12:
+        h = 0
+    if a[1] == "PM" and h != 12:
+        h = h + 12
+    if winter is True:
+        h = h - 5
+    else:
+        h = h - 4
+    if h < 0:
+        h = h + 24
+    if h == 24:
+        h = 0
+    m = int(s[1])
+    o = ""
+    if h < 10:
+        o = "0"
+    o = o + str(h) + ":"
+    if m < 10:
+        o = o + "0"
+    o = o + str(m)
+    return o
 
 def on_message(client, userdata, message):
     try:
