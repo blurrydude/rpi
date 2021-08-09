@@ -22,7 +22,7 @@ sunrise = "08:00"
 sunset = "21:00"
 civil_twilight_end = "21:30"
 civil_twilight_begin = "07:30"
-ignore_from_shelly = ["temperature", "temperature_f", "overtemperature", "input", "energy","online","announce"]
+ignore_from_shelly = ["temperature", "temperature_f", "overtemperature", "input", "energy","online","announce","voltage"]
 
 def loadCircuits():
     global circuits
@@ -152,9 +152,15 @@ def shelly_log(topic,text):
         field = topic.replace("shellies/"+addy+"/","").replace("/","_")
         f = open("/home/pi/shellies.json")
         j = json.load(f)
+        if addy not in j.keys():
+            j[addy] = {}
         if "{" in text:
-            text = json.loads(text)
-        j[addy][field] = text
+            try:
+                j[addy][field] = json.loads(text)
+            except:
+                j[addy][field] = text
+        else:
+            j[addy][field] = text
         with open("/home/pi/shellies.json","w") as write_file:
             write_file.write(json.dumps(j))
     except:
