@@ -68,14 +68,14 @@ def loop():
         day = datetime.now().strftime("%a").lower()
         for circuit in circuits:
             for ontime in circuit["onTimes"]:
-                if now in ontime and day in ontime:
+                if now in ontime and day in ontime.lower():
                     sendCommand("turn " + circuit["label"] + " on")
             for offtime in circuit["offTimes"]:
-                if now in offtime and day in offtime:
+                if now in offtime and day in offtime.lower():
                     sendCommand("turn " + circuit["label"] + " off")
         
         for tc in timeCommands:
-            if now in tc["days_time"] and day in tc["days_time"]:
+            if now in tc["days_time"] and day in tc["days_time"].lower():
                 sendCommand(tc["command"])
 
 def on_message(client, userdata, message):
