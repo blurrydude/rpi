@@ -6,5 +6,9 @@
     {
         "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:civil_twilight_begin",
         "command": "open the shades"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunset",
+        "command": "switch to evening mode"
     }
 ]
