@@ -202,8 +202,8 @@ def webstates():
     reloadCircuits()
     dirname = homepath
     
-    f = open(dirname+"/shellies.json")
-    shellies = json.load(f)
+    #f = open(dirname+"/shellies.json")
+    #shellies = json.load(f)
 
     ext = ('.state')
     states = {}
@@ -218,8 +218,8 @@ def webstates():
                     x = open(dirname+'/'+address+'_'+relay+'.state')
                     y = open(dirname+'/'+address+'_'+relay+'_power.state')
                     states[circuit["label"]] = {"state":x.read(),"power":float(y.read()),"address":address,"relay":relay}
-                    if address in shellies.keys():
-                        states[circuit["label"]]["shelly"] = shellies[address]
+                    #if address in shellies.keys():
+                    #    states[circuit["label"]]["shelly"] = shellies[address]
         else:
             continue
     
@@ -520,6 +520,17 @@ def getshellies():
     f = open(homepath+"/shellies.json")
     return json.load(f)
     
+
+@app.route('/getmotionsensors')
+def getmotion():
+    f1 = open(homepath+"/shellies.json")
+    shellies = json.load(f1)
+    f2 = open(homepath+"/rpi/motionsensors.json")
+    motionsensors = json.load(f2)
+    for sensor in motionsensors:
+        if sensor["address"] in shellies.keys():
+            sensor["shelly"] = shellies[sensor["address"]]
+    return motionsensors
 
 if __name__ == '__main__':
     if dev is False:

@@ -6,6 +6,9 @@
         <h3>Control</h3>
       </div>
       
+      <div class="col-md-12 text-muted">
+        <h4>Modes</h4>
+      </div>
       <div class="col-md-12">
         <div class="row">
           <div class="col-md-3">
@@ -33,10 +36,16 @@
             <button class="btn btn-primary mx-2 my-1 w-100" (click)="command('switch to alert mode')">ALERT</button>
           </div>
         </div>
+        <div class="col-md-12 text-muted">
+          <h4>Circuits</h4>
+        </div>
         <div class="row">
           <div class="col-md-4" *ngFor="let circuitstatus of status | keyvalue">
             <button class="btn btn-primary mx-2 my-1 w-100" *ngIf="circuitstatus.value['state'] == 'on'" (click)="command('turn off '+circuitstatus.key)">{{circuitstatus.key}}</button>
             <button class="btn btn-secondary mx-2 my-1 w-100" *ngIf="circuitstatus.value['state'] == 'off'" (click)="command('turn on '+circuitstatus.key)">{{circuitstatus.key}}</button>
+          </div>
+          <div class="col-md-12 text-muted">
+            <h4>Shade Control</h4>
           </div>
           <div class="row">
             <div class="col-md-3">
@@ -167,7 +176,7 @@
     </div>
     <div class="row mt-3 mb-2 text-warning text-center">
       <div class="col-md-12">
-        <h3>Circuits - {{totalPower | number: '1.1-1'}} W</h3>
+        <h3>Circuit States - {{totalPower | number: '1.1-1'}} W</h3>
       </div>
     </div>
     <div class="row">
@@ -183,5 +192,30 @@
         </div>
       </div>
     </div>
+
+    <div class="row mt-3 mb-2 text-warning text-center">
+      <div class="col-md-12">
+        <h3>Shellies</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3" *ngFor="let shelly of shellies | keyvalue">
+        <div class="card text-center my-2">
+          <div class="card-header bg-dark border-bottom">
+            <h5>{{shelly.key}}</h5>
+          </div>
+          <div class="card-body bg-dark">
+            <ul class="list-group">
+              <li class="list-group-item bg-dark text-info" *ngFor="let datum of shelly.value | keyvalue">
+                {{datum.key}}: 
+                <span>{{datum.value}}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 </div>
