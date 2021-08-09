@@ -214,7 +214,7 @@ def webstates():
                 if circuit["address"] == address and circuit["relay"] == relay:
                     x = open(dirname+'/'+address+'_'+relay+'.state')
                     y = open(dirname+'/'+address+'_'+relay+'_power.state')
-                    states[circuit["label"]] = {"state":x.read(),"power":float(y.read())}
+                    states[circuit["label"]] = {"state":x.read(),"power":float(y.read()),"address":address,"relay":relay}
         else:
             continue
     
