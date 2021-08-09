@@ -202,6 +202,9 @@ def webstates():
     reloadCircuits()
     dirname = homepath
     
+    f = open(dirname+"/shellies.json")
+    shellies = json.load(f)
+
     ext = ('.state')
     states = {}
     for f in os.listdir(dirname):
@@ -215,6 +218,8 @@ def webstates():
                     x = open(dirname+'/'+address+'_'+relay+'.state')
                     y = open(dirname+'/'+address+'_'+relay+'_power.state')
                     states[circuit["label"]] = {"state":x.read(),"power":float(y.read()),"address":address,"relay":relay}
+                    if address in shellies.keys():
+                        states[circuit["label"]]["shelly"] = shellies[address]
         else:
             continue
     
