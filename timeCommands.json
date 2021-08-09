@@ -1,10 +1,10 @@
 [
     {
-        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:21:30",
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunset",
         "command": "close the shades"
     },
     {
-        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:07:30",
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:civil_twilight_begin",
         "command": "open the shades"
     }
 ]
