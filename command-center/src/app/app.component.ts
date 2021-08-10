@@ -18,7 +18,7 @@ export class AppComponent {
   title = 'command-center';
 
   public login(f: NgForm) {
-    this.httpMessageService.getToken(f.value.user+'', Md5.hashStr(f.value.pass+'')).toPromise().then(msg => {
+    this.httpMessageService.getToken(f.value.user, Md5.hashStr(f.value.pass)).toPromise().then(msg => {
       for (const [k, v] of Object.entries(msg)) {
         if(k == "auth") {
           this.httpMessageService.auth = v;

@@ -6,9 +6,9 @@
         <div class="modal-body bg-dark text-info">
           <form #f="ngForm" (ngSubmit)="login(f)" novalidate>
             <small>User</small><br/>
-            <input type="number" class="form-control bg-dark text-info" ngModel name="user"/><br/>
+            <input type="text" class="form-control bg-dark text-info" ngModel name="user"/><br/>
             <small>Pass</small><br/>
-            <input type="number" class="form-control bg-dark text-info" ngModel name="pass"/><br/>
+            <input type="password" class="form-control bg-dark text-info" ngModel name="pass"/><br/>
             <button class="btn btn-primary">Log In</button>
           </form>
         </div>
