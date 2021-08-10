@@ -123,6 +123,28 @@
         </div>
       </div>
     </div>
+
+    <div class="row mt-3 mb-2 text-warning text-center">
+      <div class="col-md-12">
+        <h3>Motion</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3" *ngFor="let sensor of motionsensors | keyvalue">
+        <div class="card text-center my-2">
+          <div class="card-header bg-dark border-bottom">
+            <h5>{{sensor.value["room"]}}</h5>
+          </div>
+          <div class="card-body bg-dark">
+            {{(sensor.value["shelly"]["status"]["timestamp"]*1000)+14400000 | date : 'MM/dd/YY HH:mm'}}<br/>
+            {{sensor.value["shelly"]["status"]["bat"]}}% battery<br/>
+            {{sensor.value["shelly"]["status"]["lux"]}} lux<br/>
+            <span *ngIf="sensor.value['shelly']['status']['motion']===true">MOTION</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="row mt-3 mb-2 text-danger text-center">
       <div class="col-md-12">
         <h3>Doors</h3>
@@ -140,6 +162,7 @@
         </div>
       </div>
     </div>
+
     <div class="row mt-3 mb-2 text-danger text-center">
       <div class="col-md-12">
         <h3>Rollershades</h3>
@@ -157,6 +180,7 @@
         </div>
       </div>
     </div>
+
     <div class="row mt-3 mb-2 text-success text-center">
       <div class="col-md-12">
         <h3>Raspberry Pies</h3>
@@ -192,28 +216,6 @@
         </div>
       </div>
     </div>
-
-    <div class="row mt-3 mb-2 text-warning text-center">
-      <div class="col-md-12">
-        <h3>Motion</h3>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3" *ngFor="let sensor of motionsensors | keyvalue">
-        <div class="card text-center my-2">
-          <div class="card-header bg-dark border-bottom">
-            <h5>{{sensor.value["room"]}}</h5>
-          </div>
-          <div class="card-body bg-dark">
-            {{(sensor.value["shelly"]["status"]["timestamp"]*1000)+14400000 | date : 'MM/dd/YY HH:mm'}}<br/>
-            {{sensor.value["shelly"]["status"]["bat"]}}% battery<br/>
-            {{sensor.value["shelly"]["status"]["lux"]}} lux<br/>
-            <span *ngIf="sensor.value['shelly']['status']['motion']===true">MOTION</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
 
   </div>
 </div>
