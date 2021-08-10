@@ -185,7 +185,7 @@ def on_message(client, userdata, message):
             log(text)
         handleMessage(topic, text)
     except Exception as err:
-        log(err)
+        log("Unexpected error in on_message: "+str(err))
 
 def shelly_log(topic,text):
     try:
@@ -374,7 +374,7 @@ def mosquittoDo(topic, command):
         log("sent command "+topic+" "+command)
         log("published: "+str(data.is_published()))
     except Exception as err:
-        log(err)
+        log("Unexpected error in mosquittoDo: "+str(err))
     return 'OK'
 
 def log(message):
