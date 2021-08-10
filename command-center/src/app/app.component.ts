@@ -18,10 +18,7 @@ export class AppComponent {
   title = 'command-center';
 
   public login(f: NgForm) {
-    console.log(f.value.user);
-    console.log(f.value.pass);
-    console.log(Md5.hashStr(f.value.pass));
-    this.httpMessageService.getToken(f.value.user, Md5.hashStr(f.value.pass)).toPromise().then(msg => {
+    this.httpMessageService.getToken(f.value.user+'', Md5.hashStr(f.value.pass+'')).toPromise().then(msg => {
       for (const [k, v] of Object.entries(msg)) {
         if(k == "auth") {
           this.httpMessageService.auth = v;
@@ -29,6 +26,7 @@ export class AppComponent {
       }
       if(this.httpMessageService.auth == "invalid") {
         // do something
+        console.log("no no, bad dog");
         this.httpMessageService.auth = "";
         return;
       }
