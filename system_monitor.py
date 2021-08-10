@@ -397,6 +397,7 @@ def log(message):
 def loadAll():
     loadCircuits()
     loadMotionSensors()
+    loadTHSensors()
     loadDoorSensors()
 
 if __name__ == "__main__":
