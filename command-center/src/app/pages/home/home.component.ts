@@ -46,7 +46,6 @@ export class HomeComponent {
             v["heartbeat"] = dt;
           }
           this.httpMessageService.getSysMonLog().toPromise().then(lmsg => {
-            console.log(lmsg);
             this.sysmonlog = lmsg;
             this.httpMessageService.getMotionSensors().toPromise().then(hmsg => {
               this.motionsensors = hmsg;

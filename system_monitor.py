@@ -136,7 +136,7 @@ def snapshot():
                 label = a[0]
                 snap["shades"][label] = open("/home/pi/"+label+"_roller.state").read().replace("\n","")
         timestamp = datetime.now().strftime("%Y%m%d%H%M")
-        with open("/home/pi/rpi/snapshots/"+timestamp+".json") as write_file:
+        with open("/home/pi/rpi/snapshots/"+timestamp+".json","w") as write_file:
             write_file.write(json.dumps(snap))
     except Exception as e:
         log("snapshot failed: "+str(e))

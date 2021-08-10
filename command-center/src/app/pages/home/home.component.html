@@ -227,7 +227,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-body bg-dark">
-            <pre>{{sysmonlog}}</pre>
+            <p *ngFor="let line of sysmonlog | keyvalue">{{line.value}}</p>
           </div>
         </div>
       </div>
