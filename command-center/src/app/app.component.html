@@ -21,8 +21,9 @@
     <button *ngIf="httpMessageService.auth == ''" class="btn btn-dark" (click)="launch_login(content)"><i class="fa d-inline fa-user mr-2"></i>&nbsp;<strong>Log In</strong> </button>
   </div>
 </div>
+<div class="container">
 <router-outlet></router-outlet>
-
+</div>
 <footer class="text-muted py-5">
   <div class="container">
     <p class="float-right">
