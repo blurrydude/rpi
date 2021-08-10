@@ -77,7 +77,7 @@ def sms(message, to):
         )
         retries = 0 
     except Exception as err:
-        log("Unexpected error")
+        log("Unexpected error: "+str(err))
         if retries < 4:
             retries = retries + 1
             time.sleep(1)
@@ -534,6 +534,13 @@ def getmotion():
 def getsysmonlog():
     logfiledate = datetime.now().strftime("%Y%m%d%H")
     logfile = "/home/pi/system_monitor_log_"+logfiledate+".txt"
+    f = open(logfile)
+    return [f.read()]
+
+@app.route('/getapilog')
+def getapilog():
+    logfiledate = datetime.now().strftime("%Y%m%d%H")
+    logfile = homepath+"/app_"+logfiledate+".log"
     f = open(logfile)
     return [f.read()]
 
