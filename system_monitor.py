@@ -129,12 +129,18 @@ def snapshot():
                 s = f.split('/')
                 a = s[len(s)-1].split('.')[0].split('_door')
                 label = a[0]
-                snap["doors"][label] = open("/home/pi/"+label+"_door.state").read().replace("\n","")
+                try:
+                    snap["doors"][label] = open("/home/pi/"+label+"_door.state").read().replace("\n","")
+                except Exception as e:
+                    log("snapshot failed doors: "+str(e))
             if f.endswith("_roller.state"):
                 s = f.split('/')
                 a = s[len(s)-1].split('.')[0].split('_roller')
                 label = a[0]
-                snap["shades"][label] = open("/home/pi/"+label+"_roller.state").read().replace("\n","")
+                try:
+                    snap["shades"][label] = open("/home/pi/"+label+"_roller.state").read().replace("\n","")
+                except Exception as e:
+                    log("snapshot failed shades: "+str(e))
         timestamp = datetime.now().strftime("%Y%m%d%H%M")
         with open("/home/pi/rpi/snapshots/"+timestamp+".json","w") as write_file:
             write_file.write(json.dumps(snap))
