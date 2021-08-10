@@ -530,6 +530,8 @@ def getmotion():
     for sensor in motionsensors:
         if sensor["address"] in shellies.keys():
             sensor["shelly"] = shellies[sensor["address"]]
+        else:
+            sensor["shelly"] = {"status":{"bat":0,"lux":0,"timestamp":0,"motion":False}}
     return motionsensors
 
 @app.route('/getsysmonlog')
