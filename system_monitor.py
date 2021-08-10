@@ -236,6 +236,7 @@ def handleMessage(topic, text):
     log(text)
 
 def handleTHMessage(topic, text):
+    log("handleTHMessage: "+topic+" "+text)
     s = topic.split('/')
     addy = s[1]
     label = ""
