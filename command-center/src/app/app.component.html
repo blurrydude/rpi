@@ -1,18 +1,18 @@
 
 <ng-template #content let-modal>
-        <div class="modal-header">
+        <div class="modal-header bg-dark text-info">
           <h5 class="modal-title">Login</h5> <button type="button" class="btn btn-dark close" (click)="modal.dismiss('Cross click')"> <span>×</span> </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body bg-dark text-info">
           <form #f="ngForm" (ngSubmit)="login(f)" novalidate>
             <small>User</small><br/>
-            <input type="text" class="form-control" ngModel name="user"/><br/>
+            <input type="number" class="form-control bg-dark text-info" ngModel name="user"/><br/>
             <small>Pass</small><br/>
-            <input type="password" class="form-control" ngModel name="pass"/><br/>
+            <input type="number" class="form-control bg-dark text-info" ngModel name="pass"/><br/>
             <button class="btn btn-primary">Log In</button>
           </form>
         </div>
-        <div class="modal-footer"> <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Close</button> </div>
+        <div class="modal-footer bg-dark text-info"> <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Close</button> </div>
 </ng-template>
 
 <div class="navbar navbar-dark bg-dark">
