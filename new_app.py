@@ -544,6 +544,18 @@ def getapilog():
     f = open(logfile)
     return [f.read()]
 
+@app.route('/getsysmonlog/<logfiledate>')
+def getsysmonlog(logfiledate):
+    logfile = "/home/pi/system_monitor_log_"+logfiledate+".txt"
+    f = open(logfile)
+    return [f.read()]
+
+@app.route('/getapilog/<logfiledate>')
+def getapilog(logfiledate):
+    logfile = homepath+"/app_"+logfiledate+".log"
+    f = open(logfile)
+    return [f.read()]
+
 @app.route('/notify/<data>')
 def notify(data):
     sms(data,"+19377166465")
