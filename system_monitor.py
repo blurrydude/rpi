@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 import string
 import time
-#time.sleep(60)
+time.sleep(30)
 import paho.mqtt.client as mqtt
 import json
 from datetime import date, datetime
