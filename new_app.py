@@ -536,6 +536,13 @@ def getmotion():
             sensor["shelly"] = shellies[sensor["address"]]
     return motionsensors
 
+@app.route('/getsysmonlog')
+def getsysmonlog():
+    logfiledate = datetime.now().strftime("%Y%m%d%H")
+    logfile = "/home/pi/system_monitor_log_"+logfiledate+".txt"
+    f = open(logfile)
+    return f.read()
+
 if __name__ == '__main__':
     if dev is False:
         app.run(debug=False, port=8080, host='192.168.1.201')
