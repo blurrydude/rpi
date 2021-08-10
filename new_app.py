@@ -67,6 +67,7 @@ def sms(message, to):
     if twilled is False:
         return
     try:
+        log("sms: "+message)
         account_sid = config["account_sid"]
         auth_token = config["auth_token"] 
         client = Client(account_sid, auth_token)
@@ -75,7 +76,8 @@ def sms(message, to):
             body=message,      
             to=to 
         )
-        retries = 0 
+        retries = 0
+        log("sms success")
     except Exception as err:
         log("Unexpected error: "+str(err))
         if retries < 4:
