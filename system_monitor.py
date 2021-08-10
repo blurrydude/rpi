@@ -302,10 +302,6 @@ def checkin(address):
         write_file.write(json.dumps(checkins))
 
 def handleMotionSensorMessage(sensor, text):
-    log("handle motion")
-    log(sensor)
-    log(text)
-
     checkin(sensor["address"])
 
     handled = False
@@ -316,7 +312,6 @@ def handleMotionSensorMessage(sensor, text):
         for circuit in circuits:
             if circuit["label"] in activates:
                 log("activate: "+circuit["label"]+" @ "+circuit["address"])
-                log(circuit)
                 # topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]
                 # mosquittoDo(topic,"on")
                 sendCommand("turn on "+circuit["label"].lower())
@@ -327,7 +322,6 @@ def handleMotionSensorMessage(sensor, text):
             for circuit in circuits:
                 if circuit["label"] in activates:
                     log("deactivate: "+circuit["label"]+" @ "+circuit["address"])
-                    log(circuit)
                     # topic = "shellies/"+circuit["address"]+"/relay/"+circuit["relay"]
                     # mosquittoDo(topic,"off")
                     sendCommand("turn off "+circuit["label"].lower())
