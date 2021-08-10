@@ -7,6 +7,6 @@
     "app": "1.9.9",
     "command_center": "1.0.2",
     "thermostat": "0.2.2",
-    "system_monitor" : "0.0.5",
+    "system_monitor" : "0.0.6",
     "roller": "0.0.3"
 }
