@@ -6,7 +6,7 @@ import paho.mqtt.client as mqtt
 import json
 from datetime import date, datetime
 import os
-from os import path
+from os import path, read
 import requests
 
 file_logging = True
@@ -101,6 +101,37 @@ def loop():
                 continue
             if now in check or (now == sunrise and "sunrise" in check) or (now == sunset and "sunset" in check) or (now == civil_twilight_end and "civil_twilight_end" in check) or (now == civil_twilight_begin and "civil_twilight_begin" in check):
                 sendCommand(tc["command"])
+        #TODO: thread this later
+        snapshot()
+
+def snapshot():
+    try:
+        snap = {
+            "thermostats":{},
+            "shellies":{},
+            "doors":{},
+            "shades":{}
+        }
+        tf = open("/home/pi/temperatures.json")
+        snap["thermostats"] = json.load(tf)
+        sf = open("/home/pi/shellies.json")
+        snap["shellies"] = json.load(sf)
+        for f in os.listdir("/home/pi"):
+            if f.endswith("_door.state"):
+                s = f.split('/')
+                a = s[len(s)-1].split('.')[0].split('_door')
+                label = a[0]
+                snap["doors"][label] = open("/home/pi/"+label+"_door.state").read().replace("\n","")
+            if f.endswith("_roller.state"):
+                s = f.split('/')
+                a = s[len(s)-1].split('.')[0].split('_roller')
+                label = a[0]
+                snap["shades"][label] = open("/home/pi/"+label+"_roller.state").read().replace("\n","")
+        timestamp = datetime.now().strftime("%Y%m%d%H%M")
+        with open("/home/pi/rpi/snapshots/"+timestamp+".json") as write_file:
+            write_file.write(json.dumps(snap))
+    except:
+        log("snapshot failed")
 
 def convert_suntime(jdata, winter):
     a = jdata.split(' ')
