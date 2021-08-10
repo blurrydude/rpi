@@ -98,12 +98,6 @@ def mosquittoDo(topic, command):
 app = FlaskAPI(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
-pronouns = ["I","We","They"]
-spronouns = ["He","She","It"]
-verb = ["love","hate","like","despise","admire","loathe","adore","tolerate","own","consume","paint","draw","sketch","build","sculpt","summon"]
-adjectives = ["plastic","glass","stone","wooden","organic","regular","medium","large","small","irregular","moronic","beautiful","terrifying","regulatory"]
-nouns = ["badgers","clowns","fruit","vegetables","crates","pillows","boats","pants","wheels","aardvarks","nighties","amoeba","cars","cathedrals","spoons","albums"]
-
 allowed_senders = ["+19377893750","+19377166465"]
 
 def checktoken(request):
@@ -542,6 +536,11 @@ def getsysmonlog():
     logfile = "/home/pi/system_monitor_log_"+logfiledate+".txt"
     f = open(logfile)
     return [f.read()]
+
+@app.route('/notify/<data>')
+def notify(data):
+    sms(data,"+19377166465")
+    return 'OK'
 
 if __name__ == '__main__':
     if dev is False:
