@@ -92,7 +92,7 @@
             <span [ngClass]="{'text-muted':reading.value['heating']=='off','text-danger':reading.value['heating']=='on'}"><i class="fa fa-2x fa-fire"></i></span>&nbsp;&middot;&nbsp;
             <span [ngClass]="{'text-muted':reading.value['cooling']=='off','text-info':reading.value['cooling']=='on'}"><i class="fas fa-2x fa-snowflake"></i></span>&nbsp;&middot;&nbsp;
             <span [ngClass]="{'text-muted':reading.value['circulation']=='off','text-success':reading.value['circulation']=='on'}"><i class="fa fa-2x fa-wind"></i></span>&nbsp;&middot;&nbsp;
-            <span [ngClass]="{'text-muted':reading.value['whf']=='off','text-dark':reading.value['whf']=='on'}"><i class="fa fa-2x fa-fan"></i></span>
+            <span [ngClass]="{'text-muted':reading.value['whf']=='off','text-light':reading.value['whf']=='on'}"><i class="fa fa-2x fa-fan"></i></span>
           </div>
           <div class="card-body bg-dark">
             <div class="row">
@@ -131,8 +131,8 @@
     </div>
     <div class="row">
       <div class="col-md-3" *ngFor="let sensor of motionsensors | keyvalue">
-        <div class="card text-center my-2">
-          <div class="card-header bg-dark border-bottom">
+        <div class="card text-center my-2" [ngClass]="{'border-danger':sensor.value['shelly']['status']['motion']===true}">
+          <div class="card-header bg-dark border-bottom" [ngClass]="{'text-danger':sensor.value['shelly']['status']['bat']<40,'text-warning':sensor.value['shelly']['status']['bat']<50}">
             <h5>{{sensor.value["room"]}}</h5>
           </div>
           <div class="card-body bg-dark">
@@ -221,7 +221,6 @@
     <div class="row mt-3 mb-2 text-warning text-center">
       <div class="col-md-12">
         <h3>System Monitor Log</h3>
-        <button class="btn btn-dark" (click)="getLogs()">Load Log</button>
       </div>
     </div>
     <div class="row">
