@@ -460,7 +460,7 @@ def getreadings():
     return json.load(f)
 
 @app.route('/getpassivereadings')
-def getreadings():
+def getpassivereadings():
     f = open(homepath+"/passivetemperatures.json")
     return json.load(f)
 
