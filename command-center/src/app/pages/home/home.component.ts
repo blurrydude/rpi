@@ -33,7 +33,7 @@ export class HomeComponent {
 
     public getApiLogs() {
       this.httpMessageService.getApiLog().toPromise().then(lmsg => {
-        this.sysmonlog = lmsg;
+        this.apilog = lmsg;
       });
     }
 
