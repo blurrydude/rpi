@@ -15,6 +15,7 @@ client = mqtt.Client()
 circuits = None
 motionSensors = None
 doorSensors = None
+thsensors = None
 timeCommands = None
 last_loop = time.time()
 last_day = ""
@@ -30,6 +31,13 @@ def loadCircuits():
     circuits = json.load(f)
     log('circuits')
     log(circuits)
+
+def loadTHSensors():
+    global thsensors
+    f = open('/home/pi/rpi/thsensors.json')
+    thsensors = json.load(f)
+    log('thsensors')
+    log(thsensors)
 
 def loadTimeCommands():
     global timeCommands
@@ -220,9 +228,32 @@ def handleMessage(topic, text):
     if "pi/" in topic:
         if handlePiMessage(text) is True:
             return
+    if "shellyht" in topic:
+        if handleTHMessage(text) is True:
+            return
     log("unhandled message:")
     log(topic)
     log(text)
+
+def handleTHMessage(topic, text):
+    s = topic.split('/')
+    addy = s[1]
+    label = ""
+    for ths in thsensors:
+        if ths["address"] == addy:
+            label = ths["label"]
+    if os.path.exists("/home/pi/passivetemperatures.json"):
+        f = open("/home/pi/passivetemperatures.json")
+        data = json.load(f)
+    else:
+        data = {}
+    timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+    data[addy]["label"] = label
+    data[addy]["timestamp"] = timestamp
+    if "temperature" in topic:
+        data[addy]["temperature"] = text
+    if "humidity" in topic:
+        data[addy]["humidity"] = text
 
 def handleDoorSensorMessage(sensor, text):
     if text == "open":

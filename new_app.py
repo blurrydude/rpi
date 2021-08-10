@@ -459,6 +459,11 @@ def getreadings():
     f = open(homepath+"/temperatures.json")
     return json.load(f)
 
+@app.route('/getpassivereadings')
+def getreadings():
+    f = open(homepath+"/passivetemperatures.json")
+    return json.load(f)
+
 @app.route('/thermosettings/<room>')
 def thermosettings(room):
     f = open(homepath+"/"+room+"_thermosettings.json")
@@ -520,7 +525,6 @@ def getshellies():
     f = open(homepath+"/shellies.json")
     return json.load(f)
     
-
 @app.route('/getmotionsensors')
 def getmotion():
     f1 = open(homepath+"/shellies.json")
