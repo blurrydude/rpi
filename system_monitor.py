@@ -207,6 +207,9 @@ def shelly_log(topic,text):
 
 def handleMessage(topic, text):
     #log("handle message: "+topic+" : "+text)
+    if "shellyht" in topic:
+        if handleTHMessage(text) is True:
+            return
     if "shellies" in topic:
         for tword in ignore_from_shelly:
             if tword in topic:
@@ -227,9 +230,6 @@ def handleMessage(topic, text):
                 return
     if "pi/" in topic:
         if handlePiMessage(text) is True:
-            return
-    if "shellyht" in topic:
-        if handleTHMessage(text) is True:
             return
     log("unhandled message:")
     log(topic)
