@@ -214,7 +214,7 @@ def shelly_log(topic,text):
 def handleMessage(topic, text):
     #log("handle message: "+topic+" : "+text)
     if "shellyht" in topic:
-        if handleTHMessage(text) is True:
+        if handleTHMessage(topic, text) is True:
             return
     if "shellies" in topic:
         for tword in ignore_from_shelly:
@@ -235,7 +235,7 @@ def handleMessage(topic, text):
             if handleDoorSensorMessage(sensor, text) is True:
                 return
     if "pi/" in topic:
-        if handlePiMessage(topic, text) is True:
+        if handlePiMessage(text) is True:
             return
     log("unhandled message:")
     log(topic)
