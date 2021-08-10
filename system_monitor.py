@@ -43,8 +43,8 @@ def loadTimeCommands():
     global timeCommands
     f = open('/home/pi/rpi/timeCommands.json')
     timeCommands = json.load(f)
-    log('timeCommands')
-    log(timeCommands)
+    #log('timeCommands')
+    #log(timeCommands)
 
 def loadMotionSensors():
     global motionSensors
@@ -138,8 +138,8 @@ def snapshot():
         timestamp = datetime.now().strftime("%Y%m%d%H%M")
         with open("/home/pi/rpi/snapshots/"+timestamp+".json") as write_file:
             write_file.write(json.dumps(snap))
-    except:
-        log("snapshot failed")
+    except Exception as e:
+        log("snapshot failed: "+str(e))
 
 def convert_suntime(jdata, winter):
     a = jdata.split(' ')
