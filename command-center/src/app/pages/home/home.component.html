@@ -221,6 +221,7 @@
     <div class="row mt-3 mb-2 text-warning text-center">
       <div class="col-md-12">
         <h3>System Monitor Log</h3>
+        <button class="btn btn-dark" (click)="getLogs()">Load Log</button>
       </div>
     </div>
     <div class="row">
@@ -230,6 +231,7 @@
             <p *ngFor="let line of sysmonlog | keyvalue">{{line.value}}</p>
           </div>
         </div>
+        <button class="btn btn-dark" (click)="getLogs()">Load Log</button>
       </div>
     </div>
 

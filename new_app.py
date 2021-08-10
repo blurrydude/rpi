@@ -541,7 +541,7 @@ def getsysmonlog():
     logfiledate = datetime.now().strftime("%Y%m%d%H")
     logfile = "/home/pi/system_monitor_log_"+logfiledate+".txt"
     f = open(logfile)
-    return f.read().split('\n')
+    return [f.read()]
 
 if __name__ == '__main__':
     if dev is False:
