@@ -208,8 +208,8 @@ def shelly_log(topic,text):
             j[addy][field] = text
         with open("/home/pi/shellies.json","w") as write_file:
             write_file.write(json.dumps(j))
-    except:
-        log("shelly_log failed")
+    except Exception as err:
+        log("Unexpected error in shelly_log: "+str(err))
 
 def handleMessage(topic, text):
     #log("handle message: "+topic+" : "+text)
