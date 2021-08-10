@@ -112,6 +112,15 @@ export class StatusService {
       );
   }
 
+  public getSysMonLog() {
+    return this.http.get(this.baseurl+"getsysmonlog", this.options)
+      .pipe(
+        catchError(err => {
+          return this.handleError(err);
+        })
+      );
+  }
+
   public getToken(username: string, passhash: string) {
     return this.http.post(this.baseurl+"gettoken", {"username":username, "passhash":passhash},this.options)
       .pipe(
@@ -241,7 +250,7 @@ export class StatusService {
       // The backend returned an unsuccessful response code.
       console.error(
         `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
+        `body was:`,error);
     }
     // Return an observable with a user-facing error message.
     return throwError(
