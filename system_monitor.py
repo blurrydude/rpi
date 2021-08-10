@@ -235,7 +235,7 @@ def handleMessage(topic, text):
             if handleDoorSensorMessage(sensor, text) is True:
                 return
     if "pi/" in topic:
-        if handlePiMessage(text) is True:
+        if handlePiMessage(topic, text) is True:
             return
     log("unhandled message:")
     log(topic)
