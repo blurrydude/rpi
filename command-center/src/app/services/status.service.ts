@@ -121,6 +121,15 @@ export class StatusService {
       );
   }
 
+  public getApiLog() {
+    return this.http.get(this.baseurl+"getapilog", this.options)
+      .pipe(
+        catchError(err => {
+          return this.handleError(err);
+        })
+      );
+  }
+
   public getToken(username: string, passhash: string) {
     return this.http.post(this.baseurl+"gettoken", {"username":username, "passhash":passhash},this.options)
       .pipe(
@@ -161,7 +170,7 @@ export class StatusService {
         })
       );
   }
-  
+
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred.

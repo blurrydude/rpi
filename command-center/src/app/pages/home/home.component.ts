@@ -15,6 +15,7 @@ export class HomeComponent {
     @Output() rollers: object = {};
     @Output() totalPower: number = 0.0;
     @Output() sysmonlog: any = [];
+    @Output() apilog: any = [];
     
     constructor(public httpMessageService: StatusService) { 
       this.load(httpMessageService, true)
@@ -26,6 +27,12 @@ export class HomeComponent {
 
     public getLogs() {
       this.httpMessageService.getSysMonLog().toPromise().then(lmsg => {
+        this.sysmonlog = lmsg;
+      });
+    }
+
+    public getApiLogs() {
+      this.httpMessageService.getApiLog().toPromise().then(lmsg => {
         this.sysmonlog = lmsg;
       });
     }
