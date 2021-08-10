@@ -14,7 +14,7 @@ export class HomeComponent {
     @Output() doors: object = {};
     @Output() rollers: object = {};
     @Output() totalPower: number = 0.0;
-    @Output() sysmonlog: string = '';
+    @Output() sysmonlog: any = [];
     
     constructor(public httpMessageService: StatusService) { 
       this.load(httpMessageService, true)
@@ -47,7 +47,7 @@ export class HomeComponent {
           }
           this.httpMessageService.getSysMonLog().toPromise().then(lmsg => {
             console.log(lmsg);
-            this.sysmonlog = lmsg+'';
+            this.sysmonlog = lmsg;
             this.httpMessageService.getMotionSensors().toPromise().then(hmsg => {
               this.motionsensors = hmsg;
               this.httpMessageService.getReadings().toPromise().then(rmsg => {
