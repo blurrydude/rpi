@@ -275,17 +275,22 @@ def control(text):
                     command_list.append({"t":topic,"c":com})
                     text = text + c["label"]+" "+com+"\n"
     elif "mode" in command:
+        detected_mode = None
         for ci in range(0,len(circuits)):
             c = circuits[ci]
             com = None
             for m in c["onModes"]:
                 if m.lower() in command:
+                    detected_mode = m.lower()
                     com = "on"
             for m in c["offModes"]:
                 if m.lower() in command:
+                    detected_mode = m.lower()
                     com = "off"
             if com is None:
                 continue
+            with open("/home/pi/mode.txt","w") as write_file:
+                write_file.write(detected_mode)
             topic = "shellies/"+c["address"]+"/relay/"+c["relay"]+"/command"
             command_list.append({"t":topic,"c":com})
             text = text + c["label"]+" "+com+"\n"
@@ -449,6 +454,11 @@ def reportreadings(message):
     with open(f,"w") as write_file:
         write_file.write(json.dumps(readings))
     return 'OK'
+
+@app.route('/getmode')
+def getreadings():
+    f = open(homepath+"/mode.txt")
+    return {"mode":f.read()}
 
 @app.route('/getreadings')
 def getreadings():
