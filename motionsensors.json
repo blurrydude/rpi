@@ -8,7 +8,10 @@
         "address":"shellymotionsensor-60A423BECB98",
         "auto_off":true,
         "notes":"192.168.1.150",
-        "mode_commands": {}
+        "mode_commands": {},
+        "dark": [],
+        "alert": [],
+        "midnight": []
     },
     {
         "room":"Master Bathroom",
@@ -20,7 +23,10 @@
         "auto_off":true,
         "notes":"192.168.1.151",
         "mode_commands": {
-            "night": [{ "start": "turn on shower fan", "stop": "turn off shower fan" }]
+            "night": [{ "start": "turn on shower fan", "stop": "turn off shower fan" }],
+            "dark": [],
+            "alert": [],
+            "midnight": []
         }
     },
     {
@@ -37,7 +43,10 @@
         "notes":"192.168.1.152",
         "mode_commands": {
             "night": [{ "start": "turn on under cabinet", "stop": "turn off under cabinet" }],
-            "day": [{ "start": "turn on kitchen", "stop": "turn off kitchen" }]
+            "day": [{ "start": "turn on kitchen", "stop": "turn off kitchen" }],
+            "dark": [],
+            "alert": [],
+            "midnight": []
         }
     },
     {
@@ -49,7 +58,11 @@
         "address":"shellymotionsensor-60A423872550",
         "auto_off":true,
         "notes":"192.168.1.153",
-        "mode_commands": {}
+        "mode_commands": {
+            "dark": [],
+            "alert": [],
+            "midnight": []
+        }
     },
     {
         "room":"Game Room",
@@ -60,7 +73,11 @@
         "address":"shellymotionsensor-60A423976276",
         "auto_off":true,
         "notes":"192.168.1.154",
-        "mode_commands": {}
+        "mode_commands": {
+            "dark": [],
+            "alert": [],
+            "midnight": []
+        }
     },
     {
         "room":"Deck",
@@ -73,7 +90,10 @@
         "notes":"192.168.1.155",
         "mode_commands": {
             "night": [{ "start": "turn on the deck rail", "stop": "turn off the deck rail" },{ "start": "turn on the deck light", "stop": "turn off the deck light" },{ "start": "turn on the day room light", "stop": "turn off the day room light" }],
-            "evening": [{ "start": "turn on the deck rail", "stop": "turn off the deck rail" },{ "start": "turn on the deck fountain", "stop": "turn off the deck fountain" }]
+            "evening": [{ "start": "turn on the deck rail", "stop": "turn off the deck rail" },{ "start": "turn on the deck fountain", "stop": "turn off the deck fountain" }],
+            "dark": [],
+            "alert": [],
+            "midnight": [{ "start": "turn on the deck rail", "stop": "turn off the deck rail" },{ "start": "turn on the deck light", "stop": "turn off the deck light" }]
         }
     }
 ]

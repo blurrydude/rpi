@@ -12,6 +12,14 @@
         "command": "switch to evening mode"
     },
     {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:00:00",
+        "command": "switch to midnight mode"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:04:30",
+        "command": "switch to night mode"
+    },
+    {
         "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:05:15",
         "command": "switch to morning mode"
     }
