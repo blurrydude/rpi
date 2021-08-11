@@ -319,15 +319,21 @@ def checkin(address):
     f = "/home/pi/checkins.json"
     checkins = {}
     if os.path.exists(f):
-        checkins = json.load(open(f))
+        try:
+            checkins = json.load(open(f))
+        except:
+            checkins = {}
     checkins[address] = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     with open(f, "w") as write_file:
         write_file.write(json.dumps(checkins))
 
 def handleMotionSensorMessage(sensor, text):
     checkin(sensor["address"])
-    f = open("/home/pi/mode.txt")
-    mode = f.read().replace("\n","")
+    try:
+        f = open("/home/pi/mode.txt")
+        mode = f.read().replace("\n","")
+    except:
+        mode = "default"
     data = json.loads(text)
     if data["motion"] is True:
         log("motion started")
@@ -351,8 +357,11 @@ def handlePiMessage(text):
     ip = s[1]
     ts = s[2]
     #log(name+" "+ip+" "+ts)
-    f = open("/home/pi/pistates.json")
-    pi = json.load(f)
+    try:
+        f = open("/home/pi/pistates.json")
+        pi = json.load(f)
+    except:
+        pi = {}
     pi[name] = {
         "name": name,
         "ip": ip,
