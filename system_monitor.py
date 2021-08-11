@@ -177,8 +177,6 @@ def on_message(client, userdata, message):
     try:
         topic = message.topic
         text = str(message.payload.decode("utf-8"))
-        if "shellies" in topic:
-            shelly_log(topic,text)
         if "motion" in topic:
             log("MOTION")
             log(topic)
@@ -217,6 +215,7 @@ def shelly_log(topic,text):
 def handleMessage(topic, text):
     #log("handle message: "+topic+" : "+text)
     if "shellyht" in topic:
+        shelly_log(topic,text)
         if handleTHMessage(topic, text) is True:
             return
     if "shellies" in topic:
@@ -226,16 +225,19 @@ def handleMessage(topic, text):
     for circuit in circuits:
         if circuit["address"] in topic and "relay/"+circuit["relay"] in topic:
             if handleCircuitMessage(topic, text) is True:
+                shelly_log(topic,text)
                 return
     for sensor in motionSensors:
         if sensor["address"] in topic:
             if handleMotionSensorMessage(sensor, text) is True:
+                shelly_log(topic,text)
                 return
     for sensor in doorSensors:
         if sensor["address"] in topic:
             if "state" not in topic:
                 return
             if handleDoorSensorMessage(sensor, text) is True:
+                shelly_log(topic,text)
                 return
     if "pi/" in topic:
         if handlePiMessage(text) is True:
