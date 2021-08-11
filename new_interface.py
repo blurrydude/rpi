@@ -394,7 +394,11 @@ def switchToScreen(target):
             screens[room+"thermostat"].labels[4].text = str(reading["temperature"]) + " F"
             screens[room+"thermostat"].labels[3].text = str(reading["settings"]["temperature_low_setting"]) + " F"
             screens[room+"thermostat"].labels[5].text = str(reading["settings"]["temperature_high_setting"]) + " F"
-            
+    if "modes" in target:
+        mode = getMode()
+        screens["modes"].labels[0].text = mode['mode'].upper()
+
+
     screens[target].draw()
     current_screen = target
 
@@ -439,6 +443,14 @@ def getReadings():
         return data
     except:
         return None
+
+def getMode():
+    try:
+        r =requests.get('https://api.idkline.com/getmode')
+        data = json.loads(r.text)
+        return data
+    except:
+        return "modes"
 
 def sendCommand(command):
     #print("sending command: "+command)

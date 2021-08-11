@@ -458,7 +458,7 @@ def reportreadings(message):
 @app.route('/getmode')
 def getmode():
     f = open(homepath+"/mode.txt")
-    return {"mode":f.read()}
+    return [f.read()]
 
 @app.route('/getreadings')
 def getreadings():
