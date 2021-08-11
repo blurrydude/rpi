@@ -256,8 +256,11 @@ def handleTHMessage(topic, text):
             if ths["address"] == addy:
                 label = ths["label"]
         if os.path.exists("/home/pi/passivetemperatures.json"):
-            f = open("/home/pi/passivetemperatures.json")
-            data = json.load(f)
+            try:
+                f = open("/home/pi/passivetemperatures.json")
+                data = json.load(f)
+            except:
+                data = {}
         else:
             data = {}
         timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
@@ -267,6 +270,8 @@ def handleTHMessage(topic, text):
             data[addy]["temperature"] = text
         if "humidity" in topic:
             data[addy]["humidity"] = text
+        with open("/home/pi/passivetemperatures.json","w") as write_file:
+            write_file.write(json.dumps(data))
     except Exception as err:
         log("Unexpected error in handleTHMessage: "+str(err))
     return True
