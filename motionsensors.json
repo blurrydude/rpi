@@ -52,17 +52,15 @@
         "mode_commands": {}
     },
     {
-        "room":"Storage Room",
+        "room":"Game Room",
         "default_commands": [{
-            "start":"Storage Room",
-            "stop":"app"
+            "start":"turn on game room",
+            "stop":"turn off game room"
         }],
         "address":"shellymotionsensor-60A423976276",
         "auto_off":true,
         "notes":"192.168.1.154",
-        "mode_commands": {
-            "night": []
-        }
+        "mode_commands": {}
     },
     {
         "room":"Deck",
