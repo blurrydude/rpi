@@ -248,24 +248,27 @@ def handleMessage(topic, text):
 
 def handleTHMessage(topic, text):
     log("handleTHMessage: "+topic+" "+text)
-    s = topic.split('/')
-    addy = s[1]
-    label = ""
-    for ths in thsensors:
-        if ths["address"] == addy:
-            label = ths["label"]
-    if os.path.exists("/home/pi/passivetemperatures.json"):
-        f = open("/home/pi/passivetemperatures.json")
-        data = json.load(f)
-    else:
-        data = {}
-    timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-    data[addy]["label"] = label
-    data[addy]["timestamp"] = timestamp
-    if "temperature" in topic:
-        data[addy]["temperature"] = text
-    if "humidity" in topic:
-        data[addy]["humidity"] = text
+    try:
+        s = topic.split('/')
+        addy = s[1]
+        label = ""
+        for ths in thsensors:
+            if ths["address"] == addy:
+                label = ths["label"]
+        if os.path.exists("/home/pi/passivetemperatures.json"):
+            f = open("/home/pi/passivetemperatures.json")
+            data = json.load(f)
+        else:
+            data = {}
+        timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+        data[addy]["label"] = label
+        data[addy]["timestamp"] = timestamp
+        if "temperature" in topic:
+            data[addy]["temperature"] = text
+        if "humidity" in topic:
+            data[addy]["humidity"] = text
+    except Exception as err:
+        log("Unexpected error in handleTHMessage: "+str(err))
 
 def handleDoorSensorMessage(sensor, text):
     if text == "open":
