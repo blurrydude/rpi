@@ -18,6 +18,9 @@ export class HomeComponent {
     @Output() sysmonlog: any = [];
     @Output() apilog: any = [];
     @Output() mode: any = [];
+    @Output() fast: boolean = false;
+    @Output() live: boolean = false;
+    firstLoad: boolean = true;
     
     constructor(public httpMessageService: StatusService) { 
       this.load(httpMessageService, true)
@@ -40,8 +43,9 @@ export class HomeComponent {
     }
 
     public load(httpMessageService: StatusService, main_loop: boolean) {
-      if(main_loop == true) setTimeout(()=>{this.load(httpMessageService, true)},15000);
-
+      if(main_loop == true) setTimeout(()=>{this.load(httpMessageService, true)},this.fast?5000:15000);
+      if(this.live == false && this.firstLoad == false) return;
+      if(this.firstLoad == true) this.firstLoad = false;
       this.httpMessageService.getMode().toPromise().then(mmsg => {
         this.mode = mmsg;
       });
