@@ -269,6 +269,7 @@ def handleTHMessage(topic, text):
             data[addy]["humidity"] = text
     except Exception as err:
         log("Unexpected error in handleTHMessage: "+str(err))
+    return True
 
 def handleDoorSensorMessage(sensor, text):
     if text == "open":
