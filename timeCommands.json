@@ -10,5 +10,9 @@
     {
         "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunset",
         "command": "switch to evening mode"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:05:15",
+        "command": "switch to morning mode"
     }
 ]
