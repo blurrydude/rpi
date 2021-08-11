@@ -195,8 +195,11 @@ def shelly_log(topic,text):
         s = topic.split('/')
         addy = s[1]
         field = topic.replace("shellies/"+addy+"/","").replace("/","_")
-        f = open("/home/pi/shellies.json")
-        j = json.load(f)
+        try:
+            f = open("/home/pi/shellies.json")
+            j = json.load(f)
+        except:
+            j = {}
         if addy not in j.keys():
             j[addy] = {}
         if "{" in text:
