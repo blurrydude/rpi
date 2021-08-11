@@ -1,6 +1,12 @@
 <div class="row">
   <div class="col-md-10">
 
+    <div class="row mt-3 mb-2 text-muted text-center">
+      <div class="col-md-12">
+        <h3>Mode: {{mode['mode']}}</h3>
+      </div>
+    </div>
+
     <div class="row mt-3 mb-2 text-center" *ngIf="httpMessageService.auth!=''">
       <div class="col-md-12 text-warning">
         <h3>Control</h3>

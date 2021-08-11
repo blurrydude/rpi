@@ -17,6 +17,7 @@ export class HomeComponent {
     @Output() totalPower: number = 0.0;
     @Output() sysmonlog: any = [];
     @Output() apilog: any = [];
+    @Output() mode: object = {};
     
     constructor(public httpMessageService: StatusService) { 
       this.load(httpMessageService, true)
@@ -41,6 +42,9 @@ export class HomeComponent {
     public load(httpMessageService: StatusService, main_loop: boolean) {
       if(main_loop == true) setTimeout(()=>{this.load(httpMessageService, true)},15000);
 
+      this.httpMessageService.getMode().toPromise().then(mmsg => {
+        this.mode = mmsg;
+      });
       this.httpMessageService.getMotionSensors().toPromise().then(hmsg => {
         this.motionsensors = hmsg;
       });

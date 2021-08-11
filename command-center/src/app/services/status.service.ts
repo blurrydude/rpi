@@ -85,6 +85,15 @@ export class StatusService {
       );
   }
 
+  public getMode() {
+    return this.http.get(this.baseurl+"getmode", this.options)
+      .pipe(
+        catchError(err => {
+          return this.handleError(err);
+        })
+      );
+  }
+
   public getRollers() {
     return this.http.get(this.baseurl+"getrollers", this.options)
       .pipe(
