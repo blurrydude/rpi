@@ -58,6 +58,15 @@ export class StatusService {
       );
   }
 
+  public getPassiveReadings() {
+    return this.http.get(this.baseurl+"getpassivereadings", this.options)
+      .pipe(
+        catchError(err => {
+          return this.handleError(err);
+        })
+      );
+  }
+
   public getReadings() {
     return this.http.get(this.baseurl+"getreadings", this.options)
       .pipe(

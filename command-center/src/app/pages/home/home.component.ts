@@ -11,6 +11,7 @@ export class HomeComponent {
     @Output() readings: object = {};
     @Output() checkins: object = {};
     @Output() motionsensors: object = {};
+    @Output() thsensors: object = {};
     @Output() doors: object = {};
     @Output() rollers: object = {};
     @Output() totalPower: number = 0.0;
@@ -45,6 +46,9 @@ export class HomeComponent {
       });
       this.httpMessageService.getReadings().toPromise().then(rmsg => {
         this.readings = rmsg;
+      });
+      this.httpMessageService.getPassiveReadings().toPromise().then(rmsg => {
+        this.thsensors = rmsg;
       });
       this.httpMessageService.getDoors().toPromise().then(dmsg => {
         this.doors = dmsg;

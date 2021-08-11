@@ -126,6 +126,25 @@
 
     <div class="row mt-3 mb-2 text-warning text-center">
       <div class="col-md-12">
+        <h3>Temperature Humidity Sensors</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3" *ngFor="let sensor of thsensors | keyvalue">
+        <div class="card text-center my-2">
+          <div class="card-header bg-dark border-bottom text-light">
+            <h5>{{sensor.value["label"]}}</h5>
+            <small>{{sensor.value["timestamp"]}}</small>
+          </div>
+          <div class="card-body bg-dark text-light">
+            {{sensor.value["temperature"]}}&deg;F&nbsp;&middot;&nbsp;{{sensor.value["humidity"]}}%
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-2 text-warning text-center">
+      <div class="col-md-12">
         <h3>Motion</h3>
       </div>
     </div>
