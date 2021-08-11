@@ -20,6 +20,7 @@ export class HomeComponent {
     @Output() mode: any = [];
     @Output() fast: boolean = false;
     @Output() live: boolean = false;
+    @Output() local: boolean = true;
     firstLoad: boolean = true;
     
     constructor(public httpMessageService: StatusService) { 

@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-10">
+  <div class="col-md-12">
 
     <div class="row mt-3 mb-2 text-muted">
       <div class="col-md-10">
@@ -13,6 +13,10 @@
         <div class="form-group form-check">
           <input type="checkbox" class="form-check-input" id="liveswitch" [(ngModel)]="live"/>
           <label class="form-check-label" for="liveswitch">Live</label>
+        </div>
+        <div class="form-group form-check">
+          <input type="checkbox" class="form-check-input" id="localswitch" [(ngModel)]="local"/>
+          <label class="form-check-label" for="localswitch">Local</label>
         </div>
       </div>
     </div>
@@ -90,6 +94,32 @@
             <div class="col-md-3">
               <button class="btn btn-secondary mx-2 my-1 w-100" (click)="command('close the third shade')">Close the Third Shade</button>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-2 text-success text-center">
+      <div class="col-md-12">
+        <h3>Video Feeds</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header bg-dark text-muted text-center">Game Room</div>
+          <div class="card-body bg-dark">
+            <img class="img-fluid" src="http://192.168.0.200/videostream.cgi?username=viewer&password=viewer" *ngIf="local"/>
+            <img class="img-fluid" src="http://idkline.com:401/videostream.cgi?username=viewer&password=viewer" *ngIf="!local"/>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header bg-dark text-muted text-center">Exterior Front</div>
+          <div class="card-body bg-dark">
+            <img class="img-fluid" src="http://192.168.0.201/videostream.cgi?username=viewer&password=viewer" *ngIf="local"/>
+            <img class="img-fluid" src="http://idkline.com:402/videostream.cgi?username=viewer&password=viewer" *ngIf="!local"/>
           </div>
         </div>
       </div>
