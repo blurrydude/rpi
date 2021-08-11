@@ -116,12 +116,15 @@ def snapshot():
     try:
         snap = {
             "thermostats":{},
+            "thsensors":{},
             "shellies":{},
             "doors":{},
             "shades":{}
         }
         tf = open("/home/pi/temperatures.json")
         snap["thermostats"] = json.load(tf)
+        ptf = open("/home/pi/passivetemperatures.json")
+        snap["thsensors"] = json.load(ptf)
         sf = open("/home/pi/shellies.json")
         snap["shellies"] = json.load(sf)
         for f in os.listdir("/home/pi"):
