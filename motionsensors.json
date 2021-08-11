@@ -1,8 +1,81 @@
 [
-    {"room":"Guest Bathroom","activate":"Guest Bathroom","address":"shellymotionsensor-60A423BECB98","auto_off":true,"notes":"192.168.1.150"},
-    {"room":"Master Bathroom","activate":"Master Bath","address":"shellymotionsensor-60A42386DDE2","auto_off":true,"notes":"192.168.1.151"},
-    {"room":"Kitchen","activate":"Kitchen,Under Cabinet","address":"shellymotionsensor-60A42386E5BA","auto_off":true,"notes":"192.168.1.152"},
-    {"room":"Garage","activate":"Garage Lights","address":"shellymotionsensor-60A423872550","auto_off":true,"notes":"192.168.1.153"},
-    {"room":"Storage Room","activate":"Storage Room","address":"shellymotionsensor-60A423976276","auto_off":true,"notes":"192.168.1.154"},
-    {"room":"Deck","activate":"Deck Fountain,Deck Rail","address":"shellymotionsensor-60A4239A6298","auto_off":true,"notes":"192.168.1.155"}
+    {
+        "room":"Guest Bathroom",
+        "default_commands": [{
+            "start":"turn on guest bathroom",
+            "stop":"turn off guest bathroom"
+        }],
+        "address":"shellymotionsensor-60A423BECB98",
+        "auto_off":true,
+        "notes":"192.168.1.150",
+        "mode_commands": {}
+    },
+    {
+        "room":"Master Bathroom",
+        "default_commands": [{
+            "start":"turn on master bath",
+            "stop":"turn off master bath"
+        }],
+        "address":"shellymotionsensor-60A42386DDE2",
+        "auto_off":true,
+        "notes":"192.168.1.151",
+        "mode_commands": {
+            "night": [{ "start": "turn on shower fan", "stop": "turn off shower fan" }]
+        }
+    },
+    {
+        "room":"Kitchen",
+        "default_commands": [{
+            "start":"turn on kitchen",
+            "stop":"turn off kitchen"
+        },{
+            "start":"turn on under cabinet",
+            "stop":"turn off under cabinet"
+        }],
+        "address":"shellymotionsensor-60A42386E5BA",
+        "auto_off":true,
+        "notes":"192.168.1.152",
+        "mode_commands": {
+            "night": [{ "start": "turn on under cabinet", "stop": "turn off under cabinet" }],
+            "day": [{ "start": "turn on kitchen", "stop": "turn off kitchen" }]
+        }
+    },
+    {
+        "room":"Garage",
+        "default_commands": [{
+            "start":"turn on garage lights",
+            "stop":"turn off garage lights"
+        }],
+        "address":"shellymotionsensor-60A423872550",
+        "auto_off":true,
+        "notes":"192.168.1.153",
+        "mode_commands": {}
+    },
+    {
+        "room":"Storage Room",
+        "default_commands": [{
+            "start":"Storage Room",
+            "stop":"app"
+        }],
+        "address":"shellymotionsensor-60A423976276",
+        "auto_off":true,
+        "notes":"192.168.1.154",
+        "mode_commands": {
+            "night": []
+        }
+    },
+    {
+        "room":"Deck",
+        "default_commands": [{
+            "start":"turn on the deck fountain",
+            "stop":"turn off the deck fountain"
+        }],
+        "address":"shellymotionsensor-60A4239A6298",
+        "auto_off":true,
+        "notes":"192.168.1.155",
+        "mode_commands": {
+            "night": [{ "start": "turn on the deck rail", "stop": "turn off the deck rail" },{ "start": "turn on the deck light", "stop": "turn off the deck light" },{ "start": "turn on the day room light", "stop": "turn off the day room light" }],
+            "evening": [{ "start": "turn on the deck rail", "stop": "turn off the deck rail" },{ "start": "turn on the deck fountain", "stop": "turn off the deck fountain" }]
+        }
+    }
 ]
