@@ -17,7 +17,7 @@ export class HomeComponent {
     @Output() totalPower: number = 0.0;
     @Output() sysmonlog: any = [];
     @Output() apilog: any = [];
-    @Output() mode: object = {};
+    @Output() mode: any = [];
     
     constructor(public httpMessageService: StatusService) { 
       this.load(httpMessageService, true)
