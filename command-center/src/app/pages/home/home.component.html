@@ -136,6 +136,42 @@
                 <div class="col-6 text-end"><small>Stage Limit:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['stage_limit_minutes']}} minutes</div>
                 <div class="col-6 text-end"><small>Stage Cooldown:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['stage_cooldown_minutes']}} minutes</div>
                 <div class="col-6 text-end"><small>Air Circ Min Delay:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['air_circulation_minutes']}} minutes</div>
+                <div class="col-6 text-center" *ngIf="httpMessageService.auth!=''">
+                  <button class="btn-sm btn-danger w-75" (click)="sendThermosettings(
+                    reading.key,
+                    reading.value['settings']['temperature_low_setting']+1,
+                    reading.value['settings']['temperature_high_setting'],
+                    reading.value['settings']['humidity_setting'],
+                    reading.value['settings']['air_circulation_minutes'],
+                    3)">Raise Low</button>
+                </div>
+                <div class="col-6 text-center" *ngIf="httpMessageService.auth!=''">
+                  <button class="btn-sm btn-danger w-75" (click)="sendThermosettings(
+                    reading.key,
+                    reading.value['settings']['temperature_low_setting'],
+                    reading.value['settings']['temperature_high_setting']-1,
+                    reading.value['settings']['humidity_setting'],
+                    reading.value['settings']['air_circulation_minutes'],
+                    3)">Raise High</button>
+                </div>
+                <div class="col-6 text-center" *ngIf="httpMessageService.auth!=''">
+                  <button class="btn-sm btn-info w-75" (click)="sendThermosettings(
+                    reading.key,
+                    reading.value['settings']['temperature_low_setting']+1,
+                    reading.value['settings']['temperature_high_setting'],
+                    reading.value['settings']['humidity_setting'],
+                    reading.value['settings']['air_circulation_minutes'],
+                    3)">Lower Low</button>
+                </div>
+                <div class="col-6 text-center" *ngIf="httpMessageService.auth!=''">
+                  <button class="btn-sm btn-info w-75" (click)="sendThermosettings(
+                    reading.key,
+                    reading.value['settings']['temperature_low_setting'],
+                    reading.value['settings']['temperature_high_setting']-1,
+                    reading.value['settings']['humidity_setting'],
+                    reading.value['settings']['air_circulation_minutes'],
+                    3)">Lower High</button>
+                </div>
               </div>
               </div>
             </div>
