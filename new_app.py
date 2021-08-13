@@ -504,6 +504,14 @@ def thermoset(data):
         humidity_circulation_minutes = int(s[5])
         settings["humidity_circulation_minutes"] = humidity_circulation_minutes
 
+    if len(s) > 6:
+        stage_limit_minutes = int(s[6])
+        settings["stage_limit_minutes"] = stage_limit_minutes
+
+    if len(s) > 7:
+        stage_cooldown_minutes = int(s[7])
+        settings["stage_cooldown_minutes"] = stage_cooldown_minutes
+
     with open(homepath+"/"+room+"_thermosettings.json","w") as write_file:
         write_file.write(json.dumps(settings))
     return 'OK'
