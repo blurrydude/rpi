@@ -299,7 +299,7 @@ def report():
     if whf_state is True:
         w = "on"
     status = "normal"
-    if delay_stage is True:
+    if delay_stage > datetime.now():
         status = "delayed"
     if temperature is None or temperature == 0:
         status = "sensor_fail"
@@ -356,7 +356,7 @@ def report_readings():
     if whf_state is True:
         w = "on"
     status = "normal"
-    if delay_stage is True:
+    if delay_stage > datetime.now():
         status = "delayed"
     if temperature is None or temperature == 0:
         status = "sensor_fail"
