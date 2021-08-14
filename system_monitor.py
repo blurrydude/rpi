@@ -4,7 +4,7 @@ import time
 time.sleep(30)
 import paho.mqtt.client as mqtt
 import json
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 import os
 from os import path, read
 import requests
@@ -24,6 +24,7 @@ sunset = "21:00"
 civil_twilight_end = "21:30"
 civil_twilight_begin = "07:30"
 ignore_from_shelly = ["temperature", "temperature_f", "overtemperature", "input", "energy","online","announce","voltage"]
+last_motion = {}
 
 def loadCircuits():
     global circuits
@@ -328,6 +329,7 @@ def checkin(address):
         write_file.write(json.dumps(checkins))
 
 def handleMotionSensorMessage(sensor, text):
+    global last_motion
     checkin(sensor["address"])
     try:
         f = open("/home/pi/mode.txt")
@@ -338,6 +340,13 @@ def handleMotionSensorMessage(sensor, text):
     if data["motion"] is True:
         log("motion started")
         com = "start"
+        if sensor["address"] not in last_motion.keys():
+            last_motion[sensor["address"]] = datetime.now()
+        elif last_motion[sensor["address"]] < datetime.now() + timedelta(minutes=1):
+            return True
+        else:
+            last_motion[sensor["address"]] = datetime.now()
+
     else:
         log("motion stopped")
         com = "stop"
