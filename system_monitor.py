@@ -342,7 +342,8 @@ def handleMotionSensorMessage(sensor, text):
         com = "start"
         if sensor["address"] not in last_motion.keys():
             last_motion[sensor["address"]] = datetime.now()
-        elif last_motion[sensor["address"]] < datetime.now() + timedelta(minutes=1):
+        elif last_motion[sensor["address"]] > datetime.now() - timedelta(minutes=1):
+            log("motion ignored")
             return True
         else:
             last_motion[sensor["address"]] = datetime.now()
