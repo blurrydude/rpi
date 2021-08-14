@@ -435,7 +435,10 @@ def reportreadings(message):
         j = open(f)
     except:
         j = "{}"
-    readings = json.load(j)
+    try:
+        readings = json.load(j)
+    except:
+        readings = {}
     f2 = open(homepath+"/"+room+"_thermosettings.json")
     settings = json.load(f2)
     readings[room] = {
