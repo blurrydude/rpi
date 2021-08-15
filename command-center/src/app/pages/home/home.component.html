@@ -381,6 +381,7 @@
         <div class="card text-center my-2">
           <div class="card-header bg-dark" [ngClass]="pistat.value['class']">
             <h5>{{pistat.key}}</h5>
+            <small>{{pistat.value['ip']}}</small>
           </div>
           <div class="card-body bg-dark">
             {{pistat.value['heartbeat'] | date:'short'}}
