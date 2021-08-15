@@ -31,8 +31,8 @@
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:20:00"],
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:07:30", "Mon,Tue,Wed,Thu,Fri,Sat,Sun:21:15"]}, 
 
-    {"notes":"192.168.1.122",
-    "address": "shellyswitch25-8CAAB561DDED", "relay":"0", "label":"Guest Bathroom",
+    {"notes":"192.168.1.125",
+    "address": "shelly1pm-C82B961DD3C5", "relay":"0", "label":"Guest Bathroom",
     "onModes": ["Alert"],
     "offModes":["Dark", "Night"],
     "zones":["Guest Bathroom", "Up Stairs"],
@@ -168,7 +168,7 @@
     "offTimes":[]}, 
 
     {"notes":"192.168.1.122",
-    "address": "shellyswitch25-8CAAB561DDED", "relay":"1", "label":"Garage Lights",
+    "address": "shelly1pm-C82B961DD52E", "relay":"1", "label":"Garage Lights",
     "onModes": ["Morning", "Lunch", "Evening", "Alert"],
     "offModes":["Dark", "Night", "Day"],
     "zones":["Garage"],
