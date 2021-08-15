@@ -462,10 +462,10 @@ def reportreadings(message):
 def pireport(text):
     if "alive at" not in text:
         return True
-    s = text.replace(", ", "_").replace("-", "_").replace("alive at ", "").split(" ")
+    s = text.replace(", ", "_").replace("-", "_").split(" ")
     name = s[0]
     ip = s[1]
-    ts = s[2]
+    ts = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     #log(name+" "+ip+" "+ts)
     try:
         f = open("/home/pi/pistates.json")

@@ -114,7 +114,7 @@ def sendCommand(command):
         print('failed to send command')
 
 def heartbeat():
-    sendCommand(myname + " "+str(myip).split(' ')[0].replace("b'","")+" alive at "+datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
+    sendCommand(myname + " "+str(myip).split(' ')[0].replace("b'",""))
 
 def log(message):
     with open('/home/pi/SMS.log','a') as write_file:
