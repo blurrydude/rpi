@@ -97,10 +97,7 @@ def mosquittoDo(topic, command):
         return
     try:
         client = mqtt.Client()
-        if "192.168.1" in myip:
-            client.connect("192.168.1.200")
-        else:
-            client.connect("192.168.0.20")
+        client.connect("192.168.1.200")
         client.publish(topic,command)
         client.disconnect()
     except:
