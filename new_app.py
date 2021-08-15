@@ -460,8 +460,6 @@ def reportreadings(message):
 
 @app.route('/pireport/<text>')
 def pireport(text):
-    if "alive at" not in text:
-        return True
     s = text.replace(", ", "_").replace("-", "_").split(" ")
     name = s[0]
     ip = s[1]
