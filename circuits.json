@@ -168,7 +168,7 @@
     "offTimes":[]}, 
 
     {"notes":"192.168.1.122",
-    "address": "shelly1pm-C82B961DD52E", "relay":"1", "label":"Garage Lights",
+    "address": "shelly1pm-C82B961DD52E", "relay":"0", "label":"Garage Lights",
     "onModes": ["Morning", "Lunch", "Evening", "Alert"],
     "offModes":["Dark", "Night", "Day"],
     "zones":["Garage"],
