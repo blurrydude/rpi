@@ -207,11 +207,19 @@ def cycle():
         print("delayed")
         return
     
-    if round(temperature) > temperature_high_setting:
+    if round(temperature) > temperature_high_setting and ac_state is False:
         cool_down()
         return
     
-    if round(temperature) < temperature_low_setting:
+    if round(temperature) > temperature_high_setting - 1 and ac_state is True:
+        cool_down()
+        return
+    
+    if round(temperature) < temperature_low_setting and heat_state is False:
+        warm_up()
+        return
+    
+    if round(temperature) < temperature_low_setting + 1 and heat_state is True:
         warm_up()
         return
     
