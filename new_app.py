@@ -458,6 +458,29 @@ def reportreadings(message):
         write_file.write(json.dumps(readings))
     return 'OK'
 
+@app.route('/pireport/<text>')
+def pireport(text):
+    if "alive at" not in text:
+        return True
+    s = text.replace(", ", "_").replace("-", "_").replace("alive at ", "").split(" ")
+    name = s[0]
+    ip = s[1]
+    ts = s[2]
+    #log(name+" "+ip+" "+ts)
+    try:
+        f = open("/home/pi/pistates.json")
+        pi = json.load(f)
+    except:
+        pi = {}
+    pi[name] = {
+        "name": name,
+        "ip": ip,
+        "heartbeat": ts
+    }
+    with open("/home/pi/pistates.json", "w") as write_file:
+        write_file.write(json.dumps(pi))
+    return True
+
 @app.route('/getmode')
 def getmode():
     f = open(homepath+"/mode.txt")

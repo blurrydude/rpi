@@ -7,6 +7,7 @@ import socket
 import json
 import sys
 import subprocess
+import requests
 try:
     import psutil
 except:
@@ -104,8 +105,16 @@ def mosquittoDo(topic, command):
         print('failed')
     return 'OK'
 
+def sendCommand(command):
+    log("sending command: "+command)
+    try:
+        r =requests.get('https://api.idkline.com/pireport/'+command)
+        log(str(r.status_code))
+    except:
+        log('failed to send command')
+
 def heartbeat():
-    mosquittoDo("pi/"+myname+"/status",myname + " "+str(myip).split(' ')[0].replace("b'","")+" alive at "+datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
+    sendCommand(myname + " "+str(myip).split(' ')[0].replace("b'","")+" alive at "+datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
 
 def log(message):
     with open('/home/pi/SMS.log','a') as write_file:
