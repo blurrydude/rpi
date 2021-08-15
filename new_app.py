@@ -463,7 +463,7 @@ def pireport(text):
     s = text.replace(", ", "_").replace("-", "_").split(" ")
     name = s[0]
     ip = s[1]
-    ts = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+    ts = datetime.now().strftime("%m/%d/%Y_%H:%M:%S")
     #log(name+" "+ip+" "+ts)
     try:
         f = open("/home/pi/pistates.json")
