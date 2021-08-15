@@ -25,6 +25,7 @@ civil_twilight_end = "21:30"
 civil_twilight_begin = "07:30"
 ignore_from_shelly = ["temperature", "temperature_f", "overtemperature", "input", "energy","online","announce","voltage"]
 last_motion = {}
+shellies = {}
 
 def loadCircuits():
     global circuits
@@ -96,22 +97,34 @@ def loop():
             civil_twilight_begin = convert_suntime(j["results"]["civil_twilight_begin"],False)
             civil_twilight_end = convert_suntime(j["results"]["civil_twilight_end"],False)
 
-        for circuit in circuits:
-            for ontime in circuit["onTimes"]:
-                if now in ontime and day in ontime.lower():
-                    sendCommand("turn " + circuit["label"] + " on")
-            for offtime in circuit["offTimes"]:
-                if now in offtime and day in offtime.lower():
-                    sendCommand("turn " + circuit["label"] + " off")
+        # for circuit in circuits:
+        #     for ontime in circuit["onTimes"]:
+        #         if day not in ontime.lower():
+        #             continue
+        #         if time_check(now,ontime) is True:
+        #             sendCommand("turn " + circuit["label"] + " on")
+        #     for offtime in circuit["offTimes"]:
+        #         if day not in offtime.lower():
+        #             continue
+        #         if time_check(now,offtime) is True:
+        #             sendCommand("turn " + circuit["label"] + " off")
         
         for tc in timeCommands:
             check = tc["days_time"].lower()
             if day not in check:
                 continue
-            if now in check or (now == sunrise and "sunrise" in check) or (now == sunset and "sunset" in check) or (now == civil_twilight_end and "civil_twilight_end" in check) or (now == civil_twilight_begin and "civil_twilight_begin" in check):
+            if time_check(now,check) is True:
                 sendCommand(tc["command"])
         #TODO: thread this later
-        snapshot()
+        #snapshot()
+
+def time_check(now,check):
+    is_sunrise = now == sunrise
+    is_sunset = now == sunset
+    is_civil_twilight_end = now == civil_twilight_end
+    is_civil_twilight_begin = now == civil_twilight_begin
+    check = check.lower()
+    return now in check or (is_sunrise and "sunrise" in check) or (is_sunset and "sunset" in check) or (is_civil_twilight_end and "civil_twilight_end" in check) or (is_civil_twilight_begin and "civil_twilight_begin" in check)
 
 def snapshot():
     try:
@@ -190,6 +203,7 @@ def on_message(client, userdata, message):
         log("Unexpected error in on_message: "+str(err))
 
 def shelly_log(topic,text):
+    global shellies
     try:
         if path.exists("/home/pi/shellies.json") == False:
             with open("/home/pi/shellies.json","w") as write_file:
@@ -199,20 +213,20 @@ def shelly_log(topic,text):
         field = topic.replace("shellies/"+addy+"/","").replace("/","_")
         try:
             f = open("/home/pi/shellies.json")
-            j = json.load(f)
+            shellies = json.load(f)
         except:
-            j = {}
-        if addy not in j.keys():
-            j[addy] = {}
+            shellies = {}
+        if addy not in shellies.keys():
+            shellies[addy] = {}
         if "{" in text:
             try:
-                j[addy][field] = json.loads(text)
+                shellies[addy][field] = json.loads(text)
             except:
-                j[addy][field] = text
+                shellies[addy][field] = text
         else:
-            j[addy][field] = text
+            shellies[addy][field] = text
         with open("/home/pi/shellies.json","w") as write_file:
-            write_file.write(json.dumps(j))
+            write_file.write(json.dumps(shellies))
     except Exception as err:
         log("Unexpected error in shelly_log: "+str(err))
 
@@ -351,12 +365,32 @@ def handleMotionSensorMessage(sensor, text):
     else:
         log("motion stopped")
         com = "stop"
-    if mode in sensor["mode_commands"].keys():
-        for command in sensor["mode_commands"][mode]:
+    
+    for command in sensor["commands"]:
+        failed_conditions = False
+        for condition in command["conditions"]:
+            if condition["type"] == "mode_is":
+                if condition["value"] != mode:
+                    failed_conditions = True
+            if condition["type"] == "mode_isnt":
+                if condition["value"] == mode:
+                    failed_conditions = True
+            if "light" in condition["type"]:
+                sensor = None
+                for ms in motionSensors:
+                    if ms["label"] == condition["device_label"]:
+                        sensor = ms
+                if sensor is None:
+                    continue
+                if "status" not in sensor.keys():
+                    continue
+                if "lux" not in sensor["status"].keys():
+                    continue
+                if ("over" in condition["type"] and int(sensor["status"]["lux"]) < int(condition["value"])) or ("under" in condition["type"] and int(sensor["status"]["lux"]) > int(condition["value"])):
+                    failed_conditions = True
+        if failed_conditions is not True:
             sendCommand(command[com])
-    else:
-        for command in sensor["default_commands"]:
-            sendCommand(command[com])
+    
     return True
 
 def handlePiMessage(text):
