@@ -67,10 +67,10 @@
         "notes":"192.168.1.153"
     },
     {
-        "room":"Game Room",
+        "room":"Stairway",
         "commands": [{
-            "start":"turn on game room",
-            "stop":"turn off game room",
+            "start":"turn on stairway",
+            "stop":"turn off stairway",
             "conditions": []
         }],
         "address":"shellymotionsensor-60A423976276",
