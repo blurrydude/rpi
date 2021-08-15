@@ -106,12 +106,12 @@ def mosquittoDo(topic, command):
     return 'OK'
 
 def sendCommand(command):
-    log("sending command: "+command)
+    print("sending command: "+command)
     try:
         r =requests.get('https://api.idkline.com/pireport/'+command)
-        log(str(r.status_code))
+        print(str(r.status_code))
     except:
-        log('failed to send command')
+        print('failed to send command')
 
 def heartbeat():
     sendCommand(myname + " "+str(myip).split(' ')[0].replace("b'","")+" alive at "+datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S"))
