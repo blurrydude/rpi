@@ -393,7 +393,7 @@ def handleMotionSensorMessage(sensor, text):
             if "light" in condition["type"]:
                 sensor = None
                 for ms in motionSensors:
-                    if ms["label"] == condition["device_label"]:
+                    if ms["room"] == condition["device_label"]:
                         sensor = ms
                 if sensor is None:
                     continue
