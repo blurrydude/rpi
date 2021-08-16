@@ -36,6 +36,7 @@ circulating = False
 start_stage = datetime.now() - timedelta(minutes=1)
 delay_stage = datetime.now()
 has_circulated = False
+base_humidity = 0
 
 heat = 26
 ac = 20
@@ -186,6 +187,7 @@ def halt():
 
 def cycle():
     global last_circulation
+    global base_humidity
 
     load_settings()
 
@@ -198,7 +200,8 @@ def cycle():
     report_readings()
 
     if circulating is True:
-        if datetime.now() > circulate_until:
+        if humidity > base_humidity: # the humidity should fall for a bit, but when it starts to come back up, that means the air from the basement has arrived
+        # if datetime.now() > circulate_until: # kept for reference and so I can toggle which way this works for ... some reason.
             stop_circulating()
         else:
             return
@@ -211,7 +214,7 @@ def cycle():
         cool_down()
         return
     
-    if round(temperature) > temperature_high_setting - 1 and ac_state is True:
+    if round(temperature) > temperature_high_setting - 1 and ac_state is True: # this is half of my mercury switch/magnet for delaying a "swing" state
         cool_down()
         return
     
@@ -219,7 +222,7 @@ def cycle():
         warm_up()
         return
     
-    if round(temperature) < temperature_low_setting + 1 and heat_state is True:
+    if round(temperature) < temperature_low_setting + 1 and heat_state is True: # this is the other half of my mercury switch/magnet for delaying a "swing" state
         warm_up()
         return
     
@@ -258,14 +261,16 @@ def warm_up():
     start_stage = datetime.now()
     heat_on()
 
-def circulate_air(minutes, use_whf):
+def circulate_air(minutes, use_whf_if_set):
     global whf_state
     global circulate_until
     global circulating
+    global base_humidity
     fan_on()
-    if use_whf is True and use_whole_house_fan is True:
+    if use_whf_if_set is True and use_whole_house_fan is True:
         whf_on()
-    circulate_until = datetime.now() + timedelta(minutes=minutes)
+    base_humidity = humidity + 0.1 # in case the humidity wiggles a bit at the wrong time
+    circulate_until = datetime.now() + timedelta(minutes=minutes) # kept for reference and so I can toggle which way this works for ... some reason.
     circulating = True
 
 def stop_circulating():
