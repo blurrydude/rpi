@@ -114,9 +114,24 @@ def loop():
             if day not in check:
                 continue
             if time_check(now,check) is True:
-                sendCommand(tc["command"])
+                if "thermoset" in tc["command"]:
+                    thermoset_command(tc["command"])
+                else:
+                    sendCommand(tc["command"])
         #TODO: thread this later
         #snapshot()
+
+def thermoset_command(command):
+    words = command.split(" ")
+    room = words[1]
+    field = words[2]
+    value = words[3]
+    f = open("/home/pi/"+room+"_thermosettings.json")
+    settings = json.load(f)
+    settings[field] = int(value)
+    with open("/home/pi/"+room+"_thermosettings.json","w") as write_file:
+        write_file.write(json.dumps(settings))
+        
 
 def time_check(now,check):
     is_sunrise = now == sunrise
