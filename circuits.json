@@ -253,5 +253,13 @@
     "offModes":[],
     "zones":["Ventilation"],
     "onTimes":[],
+    "offTimes":[]}, 
+
+    {"notes":"192.168.1.126",
+    "address": "shelly1pm-F4CFA27480DD", "relay":"0", "label":"Floor Fan",
+    "onModes": [],
+    "offModes":[],
+    "zones":["Ventilation"],
+    "onTimes":[],
     "offTimes":[]} 
 ]
