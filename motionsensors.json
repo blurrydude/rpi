@@ -60,6 +60,10 @@
         "commands": [{
             "start":"turn on garage lights",
             "stop":"turn off garage lights",
+            "conditions": [{"type":"mode_isnt","value":"night"},{"type":"mode_isnt","value":"midnight"}]
+        },{
+            "start":"turn on stairway",
+            "stop":"turn off stairway",
             "conditions": []
         }],
         "address":"shellymotionsensor-60A423872550",
