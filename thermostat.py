@@ -200,7 +200,7 @@ def cycle():
     report_readings()
 
     if circulating is True:
-        if humidity > base_humidity - 0.2 or datetime.now() > circulate_until: # the humidity should fall for a bit, but when it starts to come back up, that means the air from the basement has arrived, also we should bail if it runs too long
+        if (humidity is not None and humidity > base_humidity - 0.2) or datetime.now() > circulate_until: # the humidity should fall for a bit, but when it starts to come back up, that means the air from the basement has arrived, also we should bail if it runs too long
             stop_circulating()
         else:
             base_humidity = humidity
@@ -269,7 +269,8 @@ def circulate_air(minutes, use_whf_if_set):
     fan_on()
     if use_whf_if_set is True and use_whole_house_fan is True:
         whf_on()
-    base_humidity = humidity + 0.1 # in case the humidity wiggles a bit at the wrong time
+    if humidity is not None:
+        base_humidity = humidity + 0.1 # in case the humidity wiggles a bit at the wrong time
     circulate_until = datetime.now() + timedelta(minutes=minutes) # kept for reference and so I can toggle which way this works for ... some reason.
     circulating = True
 
