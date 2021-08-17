@@ -44,19 +44,19 @@
         "command": "turn off floor fan"
     },
     {
-        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:22:00",
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunset",
         "command": "thermoset gameroom temperature_high_setting 69"
     },
     {
-        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:03:00",
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunrise",
         "command": "thermoset gameroom temperature_high_setting 72"
     },
     {
-        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:20:00",
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunset",
         "command": "thermoset hallway temperature_high_setting 69"
     },
     {
-        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:03:00",
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunrise",
         "command": "thermoset hallway temperature_high_setting 74"
     }
 ]
