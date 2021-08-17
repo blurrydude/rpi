@@ -27,6 +27,7 @@ stage_limit_minutes = 15
 stage_cooldown_minutes = 5
 use_whole_house_fan = False
 
+post = True
 temperature = None
 humidity = None
 failed_reads = 0
@@ -317,6 +318,8 @@ def report():
         status = "delayed"
     if temperature is None or temperature == 0:
         status = "sensor_fail"
+    if post is True:
+        status = "post"
     log('report: {0:0.1f} F {1:0.1f}% AC:{2} Fan:{3} Heat:{4} WHF:{5} Status:{6} Last Start:{7} Last Circ:{8}'.format(temp, hum,cool,circ,h,w,status,start_stage.strftime("%m/%d/%Y, %H:%M:%S"),last_circulation.strftime("%m/%d/%Y, %H:%M:%S")))
     report_readings()
 
@@ -385,6 +388,7 @@ log("*\n*\n*\nbegin power-on self-test")
 halt()
 time.sleep(60)
 circulate_air(2, False)
+post = False
 log("*\n*\n*\nbegin cycling")
 while True:
     try:
