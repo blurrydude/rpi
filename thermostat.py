@@ -200,8 +200,7 @@ def cycle():
     report_readings()
 
     if circulating is True:
-        if humidity > base_humidity - 0.2: # the humidity should fall for a bit, but when it starts to come back up, that means the air from the basement has arrived
-        # if datetime.now() > circulate_until: # kept for reference and so I can toggle which way this works for ... some reason.
+        if humidity > base_humidity - 0.2 or datetime.now() > circulate_until: # the humidity should fall for a bit, but when it starts to come back up, that means the air from the basement has arrived, also we should bail if it runs too long
             stop_circulating()
         else:
             base_humidity = humidity
