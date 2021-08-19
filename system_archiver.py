@@ -32,8 +32,8 @@ def getData():
             data.append(0)
     for key in preadings.keys():
         reading = preadings[key]
-        data.append(reading["temperature"])
-        data.append(reading["humidity"])
+        data.append(float(reading["temperature"]))
+        data.append(float(reading["humidity"]))
     return json.dumps(data)
 
 def log(message):

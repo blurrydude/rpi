@@ -29,7 +29,7 @@ export class HomeComponent {
       type: 'LineChart',
       data: [
       ],
-      columnNames: [''],
+      columnNames: ['','','','','','','','','','','','','','','','',''],
       options: {
         hAxis: {
            title: ''
@@ -84,11 +84,15 @@ export class HomeComponent {
       this.httpMessageService.getMotionSensors().toPromise().then(hmsg => {
         this.motionsensors = hmsg;
       });
+      this.httpMessageService.getTemplog().toPromise().then(hmsg => {
+        this.chartData.data = hmsg;
+        this.chartData.data = Object.assign([], this.chartData.data);
+      });
       this.httpMessageService.getReadings().toPromise().then(rmsg => {
         this.readings = rmsg;
         this.httpMessageService.getPassiveReadings().toPromise().then(prmsg => {
           this.thsensors = prmsg;
-          
+          /*
           let row = [this.chartData.data.length];
           let cooling_main = 0;
           let cooling_gameroom = 0;
@@ -120,6 +124,7 @@ export class HomeComponent {
           }
           this.chartData.data.push(row);
           this.chartData.data = Object.assign([], this.chartData.data);
+          */
         });
       });
       this.httpMessageService.getDoors().toPromise().then(dmsg => {
