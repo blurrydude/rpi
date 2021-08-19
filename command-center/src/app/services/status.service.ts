@@ -76,6 +76,15 @@ export class StatusService {
       );
   }
 
+  public getTemplog() {
+    return this.http.get(this.baseurl+"gettemplog", this.options)
+      .pipe(
+        catchError(err => {
+          return this.handleError(err);
+        })
+      );
+  }
+
   public getDoors() {
     return this.http.get(this.baseurl+"getdoors", this.options)
       .pipe(
