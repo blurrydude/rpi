@@ -271,8 +271,8 @@ def circulate_air(minutes, use_whf_if_set):
     if use_whf_if_set is True and use_whole_house_fan is True:
         whf_on()
     if humidity is not None:
-        base_humidity = humidity + 0.1 # in case the humidity wiggles a bit at the wrong time
-    circulate_until = datetime.now() + timedelta(minutes=minutes) # kept for reference and so I can toggle which way this works for ... some reason.
+        base_humidity = humidity + 0.5 # in case the humidity wiggles a bit at the wrong time
+    circulate_until = datetime.now() + timedelta(minutes=minutes) 
     circulating = True
 
 def stop_circulating():
