@@ -100,6 +100,17 @@
         <h3>Thermostats</h3>
       </div>
     </div>
+      
+    <div class="col-md-12 text-muted">
+      <google-chart #chart  
+        [title]="chartData.title"  
+        [type]="chartData.type"
+        [data]="chartData.data"
+        [options]="chartData.options"
+        [width]="chartData.width"
+        [height]="chartData.height">
+      </google-chart>  
+    </div>
     <div class="row">
       <div class="col-md-6" *ngFor="let reading of readings | keyvalue">
         <div class="card my-2">
