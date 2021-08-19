@@ -596,6 +596,18 @@ def getsysmonlogbydate(logfiledate):
     f = open(logfile)
     return [f.read()]
 
+@app.route('/gettemplog/<logfiledate>')
+def gettemplogbydate(logfiledate):
+    logfile = "/home/pi/templog_"+logfiledate+".txt"
+    f = open(logfile)
+    t = f.read()
+    data = []
+    for l in t.split('\n'):
+        if l == "":
+            continue
+        data.append(json.loads(l))
+    return data
+
 @app.route('/getapilog/<logfiledate>')
 def getapilogbydate(logfiledate):
     logfile = homepath+"/app_"+logfiledate+".log"
