@@ -101,11 +101,12 @@
       </div>
     </div>
       
-    <div class="col-md-12 text-muted">
+    <div class="col-md-12 text-muted text-center">
       <google-chart #chart  
         [title]="chartData.title"  
         [type]="chartData.type"
         [data]="chartData.data"
+        [columns]="chartData.columnNames"
         [options]="chartData.options"
         [width]="chartData.width"
         [height]="chartData.height">

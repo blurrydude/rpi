@@ -20,25 +20,31 @@ export class HomeComponent {
     @Output() apilog: any = [];
     @Output() mode: any = [];
     @Output() fast: boolean = false;
-    @Output() live: boolean = false;
+    @Output() live: boolean = true;
     @Output() local: boolean = true;
     firstLoad: boolean = true;
 
     @Output() @Input() chartData: any = {
-      title: 'googlechart',
-      type: 'PieChart',
+      title: 'Temperatures',
+      type: 'LineChart',
       data: [
-        ['Name1', 5.0],  
-        ['Name2', 36.8],  
-        ['Name3', 42.8],  
-        ['Name4', 18.5],  
-        ['Name5', 16.2]  
       ],
-      columnNames: ['Name', 'Percentage'],
+      columnNames: [''],
       options: {
+        hAxis: {
+           title: ''
+        },
+        vAxis:{
+           title: 'Temperature',
+           viewWindow: {
+            max:95,
+            min:65
+          }
+        },
+        //colors: ['#e0440e', '#e6693e']
       },
-      width: 500,
-      height: 300
+      width: 1200,
+      height: 400
     }
     constructor(public httpMessageService: StatusService) { 
       this.load(httpMessageService, true)
@@ -80,9 +86,41 @@ export class HomeComponent {
       });
       this.httpMessageService.getReadings().toPromise().then(rmsg => {
         this.readings = rmsg;
-      });
-      this.httpMessageService.getPassiveReadings().toPromise().then(rmsg => {
-        this.thsensors = rmsg;
+        this.httpMessageService.getPassiveReadings().toPromise().then(prmsg => {
+          this.thsensors = prmsg;
+          
+          let row = [this.chartData.data.length];
+          let cooling_main = 0;
+          let cooling_gameroom = 0;
+          for (const [k, v] of Object.entries(this.readings)) {
+            if(this.chartData.columnNames.indexOf(k)===-1) {
+              this.chartData.columnNames.push(k);
+            }
+            if(k == "gameroom") {
+              cooling_gameroom = v['cooling'] == 'on' ? 93:0;
+            }
+            if(k == "hallway") {
+              cooling_main = v['cooling'] === 'on' ? 94:0;
+            }
+            row.push(parseFloat(v["temperature"]));
+          }
+          for (const [k, v] of Object.entries(this.thsensors)) {
+            if(this.chartData.columnNames.indexOf(v["label"])===-1) {
+              this.chartData.columnNames.push(v["label"]);
+            }
+            row.push(parseFloat(v["temperature"]));
+          }
+          row.push(cooling_main);
+          row.push(cooling_gameroom);
+          if(this.chartData.columnNames.indexOf("Main A/C")===-1) {
+            this.chartData.columnNames.push("Main A/C");
+          }
+          if(this.chartData.columnNames.indexOf("Secondary A/C")===-1) {
+            this.chartData.columnNames.push("Secondary A/C");
+          }
+          this.chartData.data.push(row);
+          this.chartData.data = Object.assign([], this.chartData.data);
+        });
       });
       this.httpMessageService.getDoors().toPromise().then(dmsg => {
         this.doors = dmsg;

@@ -1,0 +1,52 @@
+import requests
+import time
+import json
+from datetime import datetime
+import os
+
+def getData():
+    r = requests.get('https://api.idkline.com/getreadings')
+    readings = json.loads(r.text)
+    pr = requests.get('https://api.idkline.com/getpassivereadings')
+    preadings = json.loads(pr.text)
+    data = [datetime.now().strftime("%m/%d/%Y, %H:%M:%S")]
+    for key in readings.keys():
+        reading = readings[key]
+        data.append(float(reading["temperature"]))
+        data.append(float(reading["humidity"]))
+        if reading["cooling"]=="on":
+            data.append(1)
+        if reading["cooling"]=="off":
+            data.append(0)
+        if reading["heating"]=="on":
+            data.append(1)
+        if reading["heating"]=="off":
+            data.append(0)
+        if reading["circulation"]=="on":
+            data.append(1)
+        if reading["circulation"]=="off":
+            data.append(0)
+        if reading["whf"]=="on":
+            data.append(1)
+        if reading["whf"]=="off":
+            data.append(0)
+    for key in preadings.keys():
+        reading = preadings[key]
+        data.append(reading["temperature"])
+        data.append(reading["humidity"])
+    return json.dumps(data)
+
+def log(message):
+    logfiledate = datetime.now().strftime("%Y%m%d%H")
+    logfile = "/home/pi/templog_"+logfiledate+".txt"
+    entry = message + "\n"
+    print(entry)
+    if os.path.exists(logfile):
+        append_write = 'a' # append if already exists
+    else:
+        append_write = 'w' # make a new file if not
+
+    with open(logfile, append_write) as write_file:
+        write_file.write(entry)
+
+log(getData())
