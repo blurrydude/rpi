@@ -29,7 +29,7 @@ export class HomeComponent {
       type: 'LineChart',
       data: [
       ],
-      columnNames: ['','','','','','','','','','','','','','','','',''],
+      columnNames: ['','Game Room Temp','Game Room Humidity','Cooling','Heating','Blower','WHF','Hallway Temp','Hallway Humidity','Cooling','Heating','Blower','WHF','Day Room Temp','Day Room Humidity','Deck Temp','Deck Humidity'],
       options: {
         hAxis: {
            title: ''
@@ -37,14 +37,14 @@ export class HomeComponent {
         vAxis:{
            title: 'Temperature',
            viewWindow: {
-            max:95,
-            min:65
+            max:100,
+            min:0
           }
         },
         //colors: ['#e0440e', '#e6693e']
       },
       width: 1200,
-      height: 400
+      height: 600
     }
     constructor(public httpMessageService: StatusService) { 
       this.load(httpMessageService, true)
