@@ -72,10 +72,10 @@ export class HomeComponent {
         },
         vAxis:{
            title: 'Temperature',
-           viewWindow: {
-            max:85,
-            min:55
-          },
+          //  viewWindow: {
+          //   max:110,
+          //   min:-10
+          // },
           textStyle: {
             color: "#fff"
           },
@@ -242,19 +242,24 @@ export class HomeComponent {
       this.httpMessageService.getTemplog().toPromise().then(hmsg => {
         this.chartData.data = hmsg;
         for (const v of this.chartData.data) {
-          v[3] = v[3] == 1 ? 100 : v[3];
-          v[4] = v[4] == 1 ? 100 : v[4];
-          v[5] = v[5] == 1 ? 100 : v[5];
-          v[6] = v[6] == 1 ? 100 : v[6];
-          v[9] = v[9] == 1 ? 100 : v[9];
-          v[10] = v[10] == 1 ? 100 : v[10];
-          v[11] = v[11] == 1 ? 100 : v[11];
-          v[12] = v[12] == 1 ? 100 : v[12];
+          v[3] = v[3] == 1 ? 10 : v[3];
+          v[4] = v[4] == 1 ? 10 : v[4];
+          v[5] = v[5] == 1 ? 10 : v[5];
+          v[6] = v[6] == 1 ? 10 : v[6];
+
+          v[9] = v[9] == 1 ? 5 : v[9];
+          v[10] = v[10] == 1 ? 5 : v[10];
+          v[11] = v[11] == 1 ? 5 : v[11];
+          v[12] = v[12] == 1 ? 5 : v[12];
         }
         this.chartData.data = Object.assign([], this.chartData.data);
       });
       this.httpMessageService.getPowerlog().toPromise().then(hmsg => {
         this.chartData2.data = hmsg;
+        // for (const v of this.chartData2.data) {
+        //   v.pop(v.length-1);
+        // }
+        this.chartData2.data = Object.assign([], this.chartData2.data);
       });
       this.httpMessageService.getReadings().toPromise().then(rmsg => {
         this.readings = rmsg;
