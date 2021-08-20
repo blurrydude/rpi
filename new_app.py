@@ -607,6 +607,7 @@ def gettemplog():
             hour = "0" + hour
         a = gettemplogbydate(logfiledate + hour)
         data = data + a
+        h = h + 1
     return data
 
 @app.route('/gettemplog/<logfiledate>')
