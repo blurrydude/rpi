@@ -610,6 +610,20 @@ def gettemplog():
         h = h + 1
     return data
 
+@app.route('/gettemplogforhours/<hours>')
+def gettemplogforhours(hours):
+    logfiledate = datetime.now().strftime("%Y%m%d")
+    h = datetime.now().hour - int(hours)
+    data = []
+    while h <= datetime.now().hour:
+        hour = str(h)
+        if h < 10:
+            hour = "0" + hour
+        a = gettemplogbydate(logfiledate + hour)
+        data = data + a
+        h = h + 1
+    return data
+
 @app.route('/gettemplog/<logfiledate>')
 def gettemplogbydate(logfiledate):
     data = []
@@ -629,6 +643,20 @@ def gettemplogbydate(logfiledate):
 def getpowerlog():
     logfiledate = datetime.now().strftime("%Y%m%d")
     h = datetime.now().hour - 3
+    data = []
+    while h <= datetime.now().hour:
+        hour = str(h)
+        if h < 10:
+            hour = "0" + hour
+        a = getpowerlogbydate(logfiledate + hour)
+        data = data + a
+        h = h + 1
+    return data
+
+@app.route('/getpowerlogforhours/<hours>')
+def getpowerlogforhours(hours):
+    logfiledate = datetime.now().strftime("%Y%m%d")
+    h = datetime.now().hour - int(hours)
     data = []
     while h <= datetime.now().hour:
         hour = str(h)
