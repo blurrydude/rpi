@@ -20,7 +20,7 @@ export class HomeComponent {
     @Output() apilog: any = [];
     @Output() mode: any = [];
     @Output() fast: boolean = false;
-    @Output() live: boolean = true;
+    @Output() live: boolean = false;
     @Output() local: boolean = true;
     firstLoad: boolean = true;
 
