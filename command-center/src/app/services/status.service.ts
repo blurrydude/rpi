@@ -76,8 +76,8 @@ export class StatusService {
       );
   }
 
-  public getTemplog() {
-    return this.http.get(this.baseurl+"gettemplog", this.options)
+  public getTemplog(hours: number) {
+    return this.http.get(this.baseurl+"gettemplogforhours/"+hours, this.options)
       .pipe(
         catchError(err => {
           return this.handleError(err);
@@ -85,8 +85,8 @@ export class StatusService {
       );
   }
 
-  public getPowerlog() {
-    return this.http.get(this.baseurl+"getpowerlog", this.options)
+  public getPowerlog(hours: number) {
+    return this.http.get(this.baseurl+"getpowerlogforhours/"+hours, this.options)
       .pipe(
         catchError(err => {
           return this.handleError(err);

@@ -23,6 +23,7 @@ export class HomeComponent {
     @Output() live: boolean = false;
     @Output() local: boolean = true;
     firstLoad: boolean = true;
+    @Output() loghours: number = 6;
 
     @Output() @Input() chartData: any = {
       title: 'Temperatures',
@@ -352,7 +353,7 @@ export class HomeComponent {
       this.httpMessageService.getMotionSensors().toPromise().then(hmsg => {
         this.motionsensors = hmsg;
       });
-      this.httpMessageService.getTemplog().toPromise().then(hmsg => {
+      this.httpMessageService.getTemplog(this.loghours).toPromise().then(hmsg => {
         let data: any = hmsg;
         let chart1data = [];
         let chart4data = [];
@@ -375,7 +376,7 @@ export class HomeComponent {
         this.chartData4.data = chart4data;
         this.chartData4.data = Object.assign([], this.chartData4.data);
       });
-      this.httpMessageService.getPowerlog().toPromise().then(hmsg => {
+      this.httpMessageService.getPowerlog(this.loghours).toPromise().then(hmsg => {
         let data: any = hmsg;
         let chart2data = [];
         for (const v of data) {

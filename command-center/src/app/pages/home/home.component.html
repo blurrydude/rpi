@@ -5,7 +5,11 @@
       <div class="col-md-10">
         <h3>Mode: {{mode[0]}}</h3>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-1">
+        <small>Log Hours:</small><br/>
+        <input type="number" class="form-control" [(ngModel)]="loghours"/>
+      </div>
+      <div class="col-md-1">
         <div class="form-group form-check">
           <input type="checkbox" class="form-check-input" id="fastswitch" [(ngModel)]="fast"/>
           <label class="form-check-label" for="fastswitch">Fast</label>
