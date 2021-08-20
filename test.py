@@ -1,40 +1,31 @@
-import base64
-from random import randint
-import hashlib
+import json
 
-pronouns = ["I","We","They"]
-spronouns = ["He","She","It"]
-verbs = ["love","hate","like","despise","admire","loathe","adore","tolerate","own","consume","paint","draw","sketch","build","sculpt","summon"]
-adjectives = ["plastic","glass","stone","wooden","organic","regular","medium","large","small","irregular","moronic","beautiful","terrifying","regulatory"]
-nouns = ["badgers","clowns","fruit","vegetables","crates","pillows","boats","pants","wheels","aardvarks","nighties","amoeba","cars","cathedrals","spoons","albums"]
+def convertthing(thing):
+    a = thing.split(', ')
+    b = a[0].split('/')
+    c = a[1].split(":")
+    day = b[1]
+    month = b[0]
+    year = b[2]
+    hour = c[0]
+    return year+month+day+hour
 
-def b64(message):
-    message_bytes = message.encode('ascii')
-    base64_bytes = base64.b64encode(message_bytes)
-    return base64_bytes.decode('ascii')
+def convertfile(file):
+    f = open("/home/pi/"+file+"log_2021082014.txt")
+    t = f.read()
+    data = {}
+    for l in t.split('\n'):
+        if l == "":
+            continue
+        d = json.loads(l)
+        dt = convertthing(d[0])
+        data[dt].append(d)
+    for k in data.keys():
+        text = ""
+        for line in data[k]:
+            text = text + json.dumps(line) + "\n"
+        with open("/home/pi/"+file+"log_"+k+".txt","w") as write_file:
+            write_file.write(text)
 
-def md5hash(message):
-    message_bytes = message.encode('ascii')
-    base64_bytes = hashlib.md5(message_bytes)
-    return base64_bytes.hexdigest()
-
-def gen_rand_pvan():
-    s = randint(0,1)
-    adds = ""
-    if s == 0:
-        p = pronouns[randint(0,len(pronouns)-1)]
-    else:
-        p = spronouns[randint(0,len(spronouns)-1)]
-        adds = "s"
-
-    v = verbs[randint(0,len(verbs)-1)]
-    a = adjectives[randint(0,len(adjectives)-1)]
-    n = nouns[randint(0,len(nouns)-1)]
-    print(p + " " + v + adds + " " + a + " " + n)
-
-def base64_default():
-    print(b64("I hate regulatory badgers"))
-    print(md5hash("I hate regulatory badgers"))
-    print(md5hash(b64("I hate regulatory badgers")))
-
-base64_default()
+convertfile("power")
+convertfile("temp")
