@@ -49,15 +49,42 @@ export class HomeComponent {
         'Deck Hum'
       ],
       options: {
+        backgroundColor: "#212529",
+        titleTextStyle: {
+          color: "#fff"
+        },
+        legend: {
+          textStyle: {
+            color: "#fff"
+          },
+          titleTextStyle: {
+            color: "#fff"
+          }
+        },
         hAxis: {
-           title: ''
+           title: '',
+           textStyle: {
+             color: "#fff"
+           },
+           titleTextStyle: {
+             color: "#fff"
+           }
         },
         vAxis:{
            title: 'Temperature',
-           viewWindow: {
-            max:85,
-            min:55
-          }
+          //  viewWindow: {
+          //   max:110,
+          //   min:-10
+          // },
+          textStyle: {
+            color: "#fff"
+          },
+          titleTextStyle: {
+            color: "#fff"
+          },
+           gridlines: {
+             color: "#777"
+           }
         },
       //  seriesType: 'bars',
       //  series: {
@@ -79,6 +106,24 @@ export class HomeComponent {
       //    15: {type: 'line'},
       //    16: {type: 'line'}
       //  }
+       series: {
+        0: {lineWidth: 3},
+        1: {lineWidth: 3},
+        2: {lineWidth: 1},
+        3: {lineWidth: 1},
+        4: {lineWidth: 1},
+        5: {lineWidth: 1},
+        6: {lineWidth: 5},
+        7: {lineWidth: 5},
+        8: {lineWidth: 2},
+        9: {lineWidth: 2},
+        10: {lineWidth: 2},
+        11: {lineWidth: 2},
+        12: {lineWidth: 3},
+        13: {lineWidth: 3},
+        14: {lineWidth: 3},
+        15: {lineWidth: 3}
+      },
         colors: [
           '#ff9999',
           '#9999ff',
@@ -98,7 +143,8 @@ export class HomeComponent {
           '#aaaaff',
           '#ffcccc',
           '#ccccff'
-        ]
+        ],
+      lineWidth: 3
       },
       width: 1295,
       height: 800
@@ -112,16 +158,44 @@ export class HomeComponent {
       ],
       columnNames: [''],
       options: {
+        backgroundColor: "#212529",
+        titleTextStyle: {
+          color: "#fff"
+        },
+        legend: {
+          textStyle: {
+            color: "#fff"
+          },
+          titleTextStyle: {
+            color: "#fff"
+          }
+        },
         hAxis: {
-           title: ''
+           title: '',
+           textStyle: {
+             color: "#fff"
+           },
+           titleTextStyle: {
+             color: "#fff"
+           }
         },
         vAxis:{
            title: 'Power (W)',
+           textStyle: {
+             color: "#fff"
+           },
+           titleTextStyle: {
+             color: "#fff"
+           },
+            gridlines: {
+              color: "#777"
+            }
           //  viewWindow: {
           //   max:85,
           //   min:55
           // }
-        }
+        },
+        lineWidth: 2
       },
       width: 1295,
       height: 800
@@ -168,19 +242,24 @@ export class HomeComponent {
       this.httpMessageService.getTemplog().toPromise().then(hmsg => {
         this.chartData.data = hmsg;
         for (const v of this.chartData.data) {
-          v[3] = v[3] == 1 ? 100 : v[3];
-          v[4] = v[4] == 1 ? 100 : v[4];
-          v[5] = v[5] == 1 ? 100 : v[5];
-          v[6] = v[6] == 1 ? 100 : v[6];
-          v[9] = v[9] == 1 ? 100 : v[9];
-          v[10] = v[10] == 1 ? 100 : v[10];
-          v[11] = v[11] == 1 ? 100 : v[11];
-          v[12] = v[12] == 1 ? 100 : v[12];
+          v[3] = v[3] == 1 ? 10 : v[3];
+          v[4] = v[4] == 1 ? 10 : v[4];
+          v[5] = v[5] == 1 ? 10 : v[5];
+          v[6] = v[6] == 1 ? 10 : v[6];
+
+          v[9] = v[9] == 1 ? 5 : v[9];
+          v[10] = v[10] == 1 ? 5 : v[10];
+          v[11] = v[11] == 1 ? 5 : v[11];
+          v[12] = v[12] == 1 ? 5 : v[12];
         }
         this.chartData.data = Object.assign([], this.chartData.data);
       });
       this.httpMessageService.getPowerlog().toPromise().then(hmsg => {
         this.chartData2.data = hmsg;
+        // for (const v of this.chartData2.data) {
+        //   v.pop(v.length-1);
+        // }
+        this.chartData2.data = Object.assign([], this.chartData2.data);
       });
       this.httpMessageService.getReadings().toPromise().then(rmsg => {
         this.readings = rmsg;
