@@ -49,15 +49,42 @@ export class HomeComponent {
         'Deck Hum'
       ],
       options: {
+        backgroundColor: "#212529",
+        titleTextStyle: {
+          color: "#fff"
+        },
+        legend: {
+          textStyle: {
+            color: "#fff"
+          },
+          titleTextStyle: {
+            color: "#fff"
+          }
+        },
         hAxis: {
-           title: ''
+           title: '',
+           textStyle: {
+             color: "#fff"
+           },
+           titleTextStyle: {
+             color: "#fff"
+           }
         },
         vAxis:{
            title: 'Temperature',
            viewWindow: {
             max:85,
             min:55
-          }
+          },
+          textStyle: {
+            color: "#fff"
+          },
+          titleTextStyle: {
+            color: "#fff"
+          },
+           gridlines: {
+             color: "#777"
+           }
         },
       //  seriesType: 'bars',
       //  series: {
@@ -79,6 +106,24 @@ export class HomeComponent {
       //    15: {type: 'line'},
       //    16: {type: 'line'}
       //  }
+       series: {
+        0: {lineWidth: 3},
+        1: {lineWidth: 3},
+        2: {lineWidth: 1},
+        3: {lineWidth: 1},
+        4: {lineWidth: 1},
+        5: {lineWidth: 1},
+        6: {lineWidth: 5},
+        7: {lineWidth: 5},
+        8: {lineWidth: 2},
+        9: {lineWidth: 2},
+        10: {lineWidth: 2},
+        11: {lineWidth: 2},
+        12: {lineWidth: 3},
+        13: {lineWidth: 3},
+        14: {lineWidth: 3},
+        15: {lineWidth: 3}
+      },
         colors: [
           '#ff9999',
           '#9999ff',
@@ -98,7 +143,8 @@ export class HomeComponent {
           '#aaaaff',
           '#ffcccc',
           '#ccccff'
-        ]
+        ],
+      lineWidth: 3
       },
       width: 1295,
       height: 800
@@ -112,16 +158,44 @@ export class HomeComponent {
       ],
       columnNames: [''],
       options: {
+        backgroundColor: "#212529",
+        titleTextStyle: {
+          color: "#fff"
+        },
+        legend: {
+          textStyle: {
+            color: "#fff"
+          },
+          titleTextStyle: {
+            color: "#fff"
+          }
+        },
         hAxis: {
-           title: ''
+           title: '',
+           textStyle: {
+             color: "#fff"
+           },
+           titleTextStyle: {
+             color: "#fff"
+           }
         },
         vAxis:{
            title: 'Power (W)',
+           textStyle: {
+             color: "#fff"
+           },
+           titleTextStyle: {
+             color: "#fff"
+           },
+            gridlines: {
+              color: "#777"
+            }
           //  viewWindow: {
           //   max:85,
           //   min:55
           // }
-        }
+        },
+        lineWidth: 2
       },
       width: 1295,
       height: 800
