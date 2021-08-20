@@ -237,6 +237,9 @@ export class HomeComponent {
           }
           this.totalPower += parseFloat(v["power"])
         }
+        if(this.chartData2.columnNames.indexOf("Total")===-1) {
+          this.chartData2.columnNames.push("Total");
+        }
         this.httpMessageService.getPiStatus().toPromise().then(smsg => {
           this.pistatus = smsg;
           for (const [k, v] of Object.entries(this.pistatus)) {
