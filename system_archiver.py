@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 import os
 
-def getData():
+def getTempData():
     r = requests.get('https://api.idkline.com/getreadings')
     readings = json.loads(r.text)
     pr = requests.get('https://api.idkline.com/getpassivereadings')
@@ -36,7 +36,7 @@ def getData():
         data.append(float(reading["humidity"]))
     return json.dumps(data)
 
-def log(message):
+def logTempData(message):
     logfiledate = datetime.now().strftime("%Y%m%d")
     logfile = "/home/pi/templog_"+logfiledate+".txt"
     entry = message + "\n"
@@ -49,4 +49,30 @@ def log(message):
     with open(logfile, append_write) as write_file:
         write_file.write(entry)
 
-log(getData())
+def logPowerData(message):
+    logfiledate = datetime.now().strftime("%Y%m%d")
+    logfile = "/home/pi/powerlog_"+logfiledate+".txt"
+    entry = message + "\n"
+    print(entry)
+    if os.path.exists(logfile):
+        append_write = 'a' # append if already exists
+    else:
+        append_write = 'w' # make a new file if not
+
+    with open(logfile, append_write) as write_file:
+        write_file.write(entry)
+
+def getPowerData():
+    r = requests.get('https://api.idkline.com/powerstates')
+    readings = json.loads(r.text)
+    data = []
+    total = 0.0
+    for key in readings.keys():
+        v = float(readings[key])
+        total = total + v
+        data.append(v)
+    data.append(round(total))
+    return json.dumps(data)
+
+logTempData(getTempData())
+logPowerData(getPowerData())

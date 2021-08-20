@@ -613,6 +613,23 @@ def gettemplogbydate(logfiledate):
         data.append(json.loads(l))
     return data
 
+@app.route('/getpowerlog')
+def getpowerlog():
+    logfiledate = datetime.now().strftime("%Y%m%d")
+    return getpowerlogbydate(logfiledate)
+
+@app.route('/getpowerlog/<logfiledate>')
+def getpowerlogbydate(logfiledate):
+    logfile = "/home/pi/powerlog_"+logfiledate+".txt"
+    f = open(logfile)
+    t = f.read()
+    data = []
+    for l in t.split('\n'):
+        if l == "":
+            continue
+        data.append(json.loads(l))
+    return data
+
 @app.route('/getapilog/<logfiledate>')
 def getapilogbydate(logfiledate):
     logfile = homepath+"/app_"+logfiledate+".log"
