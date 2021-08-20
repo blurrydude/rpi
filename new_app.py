@@ -537,7 +537,7 @@ def thermoset(data):
         settings["stage_cooldown_minutes"] = stage_cooldown_minutes
 
     if len(s) > 8:
-        swing_temp_offset = float(s[8])
+        swing_temp_offset = int(s[8])
         settings["swing_temp_offset"] = swing_temp_offset
 
     with open(homepath+"/"+room+"_thermosettings.json","w") as write_file:
