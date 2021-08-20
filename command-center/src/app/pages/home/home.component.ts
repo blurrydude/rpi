@@ -26,7 +26,7 @@ export class HomeComponent {
 
     @Output() @Input() chartData: any = {
       title: 'Temperatures',
-      type: 'LineChart',
+      type: 'ComboChart',
       data: [
       ],
       columnNames: ['','Game Room Temp','Game Room Humidity','Cooling','Heating','Blower','WHF','Hallway Temp','Hallway Humidity','Cooling','Heating','Blower','WHF','Day Room Temp','Day Room Humidity','Deck Temp','Deck Humidity'],
@@ -41,6 +41,26 @@ export class HomeComponent {
             min:0
           }
         },
+        seriesType: 'bars',
+        series: {
+          0: {type: 'line'},
+          1: {type: 'line'},
+          //2: {type: 'line'},
+          //3: {type: 'line'},
+          //4: {type: 'line'},
+          //5: {type: 'line'},
+          6: {type: 'line'},
+          7: {type: 'line'},
+          //8: {type: 'line'},
+          //9: {type: 'line'},
+          //10: {type: 'line'},
+          //11: {type: 'line'},
+          12: {type: 'line'},
+          13: {type: 'line'},
+          14: {type: 'line'},
+          15: {type: 'line'},
+          16: {type: 'line'}
+        }
         //colors: ['#e0440e', '#e6693e']
       },
       width: 1200,
