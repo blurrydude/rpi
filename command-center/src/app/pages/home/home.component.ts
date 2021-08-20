@@ -26,7 +26,8 @@ export class HomeComponent {
 
     @Output() @Input() chartData: any = {
       title: 'Temperatures',
-      type: 'ComboChart',
+      //type: 'ComboChart',
+      type: 'LineChart',
       data: [
       ],
       columnNames: ['','Game Room Temp','Game Room Humidity','Cooling','Heating','Blower','WHF','Hallway Temp','Hallway Humidity','Cooling','Heating','Blower','WHF','Day Room Temp','Day Room Humidity','Deck Temp','Deck Humidity'],
@@ -41,26 +42,26 @@ export class HomeComponent {
             min:0
           }
         },
-        seriesType: 'bars',
-        series: {
-          0: {type: 'line'},
-          1: {type: 'line'},
-          //2: {type: 'line'},
-          //3: {type: 'line'},
-          //4: {type: 'line'},
-          //5: {type: 'line'},
-          6: {type: 'line'},
-          7: {type: 'line'},
-          //8: {type: 'line'},
-          //9: {type: 'line'},
-          //10: {type: 'line'},
-          //11: {type: 'line'},
-          12: {type: 'line'},
-          13: {type: 'line'},
-          14: {type: 'line'},
-          15: {type: 'line'},
-          16: {type: 'line'}
-        }
+      //  seriesType: 'bars',
+      //  series: {
+      //    0: {type: 'line'},
+      //    1: {type: 'line'},
+      //     //2: {type: 'line'},
+      //     //3: {type: 'line'},
+      //     //4: {type: 'line'},
+      //     //5: {type: 'line'},
+      //    6: {type: 'line'},
+      //    7: {type: 'line'},
+      //     //8: {type: 'line'},
+      //     //9: {type: 'line'},
+      //     //10: {type: 'line'},
+      //     //11: {type: 'line'},
+      //    12: {type: 'line'},
+      //    13: {type: 'line'},
+      //    14: {type: 'line'},
+      //    15: {type: 'line'},
+      //    16: {type: 'line'}
+      //  }
         //colors: ['#e0440e', '#e6693e']
       },
       width: 1200,
@@ -106,6 +107,16 @@ export class HomeComponent {
       });
       this.httpMessageService.getTemplog().toPromise().then(hmsg => {
         this.chartData.data = hmsg;
+        for (const v of this.chartData.data) {
+          v[3] = v[3] == 1 ? 100 : v[3];
+          v[4] = v[4] == 1 ? 100 : v[4];
+          v[5] = v[5] == 1 ? 100 : v[5];
+          v[6] = v[6] == 1 ? 100 : v[6];
+          v[9] = v[9] == 1 ? 100 : v[9];
+          v[10] = v[10] == 1 ? 100 : v[10];
+          v[11] = v[11] == 1 ? 100 : v[11];
+          v[12] = v[12] == 1 ? 100 : v[12];
+        }
         this.chartData.data = Object.assign([], this.chartData.data);
       });
       this.httpMessageService.getReadings().toPromise().then(rmsg => {
