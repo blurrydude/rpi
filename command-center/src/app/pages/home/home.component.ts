@@ -32,21 +32,28 @@ export class HomeComponent {
       ],
       columnNames: ['',
         'GR Temp',
-        'GR Hum',
-        'GR Cool',
-        'GR Heat',
-        'GR Fan',
-        'WHF',
+        //'GR Hum',
+        //'GR Cool',
+        //'GR Heat',
+        //'GR Fan',
+        //'WHF',
         'HW Temp',
-        'HW Hum',
+        //'HW Hum',
+        //'HW Cool',
+        //'HW Heat',
+        //'HW Fan',
+        //'WHF',
+        'DR Temp',
+        //'DR Hum',
+        'Deck Temp',
+        //'Deck Hum'
         'HW Cool',
         'HW Heat',
         'HW Fan',
-        'WHF',
-        'DR Temp',
-        'DR Hum',
-        'Deck Temp',
-        'Deck Hum'
+        'GR Cool',
+        'GR Heat',
+        'GR Fan',
+        'WHF'
       ],
       options: {
         backgroundColor: "#212529",
@@ -72,10 +79,6 @@ export class HomeComponent {
         },
         vAxis:{
            title: 'Temperature',
-          //  viewWindow: {
-          //   max:110,
-          //   min:-10
-          // },
           textStyle: {
             color: "#fff"
           },
@@ -86,63 +89,34 @@ export class HomeComponent {
              color: "#777"
            }
         },
-      //  seriesType: 'bars',
-      //  series: {
-      //    0: {type: 'line'},
-      //    1: {type: 'line'},
-      //     //2: {type: 'line'},
-      //     //3: {type: 'line'},
-      //     //4: {type: 'line'},
-      //     //5: {type: 'line'},
-      //    6: {type: 'line'},
-      //    7: {type: 'line'},
-      //     //8: {type: 'line'},
-      //     //9: {type: 'line'},
-      //     //10: {type: 'line'},
-      //     //11: {type: 'line'},
-      //    12: {type: 'line'},
-      //    13: {type: 'line'},
-      //    14: {type: 'line'},
-      //    15: {type: 'line'},
-      //    16: {type: 'line'}
-      //  }
        series: {
-        0: {lineWidth: 3},
+        0: {lineWidth: 1},
         1: {lineWidth: 3},
         2: {lineWidth: 1},
-        3: {lineWidth: 1},
+        3: {lineWidth: 2},
         4: {lineWidth: 1},
         5: {lineWidth: 1},
-        6: {lineWidth: 5},
-        7: {lineWidth: 5},
-        8: {lineWidth: 2},
-        9: {lineWidth: 2},
-        10: {lineWidth: 2},
-        11: {lineWidth: 2},
-        12: {lineWidth: 3},
-        13: {lineWidth: 3},
-        14: {lineWidth: 3},
-        15: {lineWidth: 3}
+        6: {lineWidth: 1},
+        7: {lineWidth: 1},
+        8: {lineWidth: 1},
+        9: {lineWidth: 1},
+        10: {lineWidth: 1}
       },
         colors: [
           '#ff9999',
-          '#9999ff',
+
+          '#ff0000',
+          
+          '#ffaaaa',
+          '#ffcccc',
+
           '#ff99ff',
           '#99ffff',
           '#99ff99',
-          '#337733',
-
-          '#ff0000',
-          '#0000ff',
           '#ff00ff',
           '#00ffff',
           '#00ff00',
           '#007700',
-          
-          '#ffaaaa',
-          '#aaaaff',
-          '#ffcccc',
-          '#ccccff'
         ],
       lineWidth: 3
       },
@@ -225,6 +199,108 @@ export class HomeComponent {
       // height: 800
     }
 
+    @Output() @Input() chartData4: any = {
+      title: 'Humidities',
+      //type: 'ComboChart',
+      type: 'LineChart',
+      data: [
+      ],
+      columnNames: ['',
+        //'GR Temp',
+        'GR Hum',
+        //'GR Cool',
+        //'GR Heat',
+        //'GR Fan',
+        //'WHF',
+        //'HW Temp',
+        'HW Hum',
+        //'HW Cool',
+        //'HW Heat',
+        //'HW Fan',
+        //'WHF',
+        //'DR Temp',
+        'DR Hum',
+        //'Deck Temp',
+        'Deck Hum',
+        'HW Cool',
+        'HW Heat',
+        'HW Fan',
+        'GR Cool',
+        'GR Heat',
+        'GR Fan',
+        'WHF'
+      ],
+      options: {
+        backgroundColor: "#212529",
+        titleTextStyle: {
+          color: "#fff"
+        },
+        legend: {
+          textStyle: {
+            color: "#fff"
+          },
+          titleTextStyle: {
+            color: "#fff"
+          }
+        },
+        hAxis: {
+           title: '',
+           textStyle: {
+             color: "#fff"
+           },
+           titleTextStyle: {
+             color: "#fff"
+           }
+        },
+        vAxis:{
+           title: 'Power (W)',
+           textStyle: {
+             color: "#fff"
+           },
+           titleTextStyle: {
+             color: "#fff"
+           },
+            gridlines: {
+              color: "#777"
+            }
+          //  viewWindow: {
+          //   max:85,
+          //   min:55
+          // }
+        },
+        colors: [
+          //'#ff9999',
+          '#9999ff',
+          //'#ff99ff',
+          //'#99ffff',
+          //'#99ff99',
+          //'#337733',
+  
+          //'#ff0000',
+          '#0000ff',
+          //'#ff00ff',
+          //'#00ffff',
+          //'#00ff00',
+          //'#007700',
+          
+          //'#ffaaaa',
+          '#aaaaff',
+          //'#ffcccc',
+          '#ccccff',
+          '#ff99ff',
+          '#99ffff',
+          '#99ff99',
+          '#ff00ff',
+          '#00ffff',
+          '#00ff00',
+          '#007700',
+        ],
+        lineWidth: 2
+      },
+      width: 1295,
+      height: 800
+    }
+
     constructor(public httpMessageService: StatusService) { 
       this.load(httpMessageService, true)
     }
@@ -264,19 +340,27 @@ export class HomeComponent {
         this.motionsensors = hmsg;
       });
       this.httpMessageService.getTemplog().toPromise().then(hmsg => {
-        this.chartData.data = hmsg;
-        for (const v of this.chartData.data) {
-          v[3] = v[3] == 1 ? 4 : v[3];
-          v[4] = v[4] == 1 ? 6 : v[4];
-          v[5] = v[5] == 1 ? 8 : v[5];
-          v[6] = v[6] == 1 ? 10 : v[6];
+        let data: any = hmsg;
+        let chart1data = [];
+        let chart4data = [];
+        for (const v of data) {
+          v[3] = (v[3] == 1 ? 4 : v[3]) + 50;
+          v[4] = (v[4] == 1 ? 6 : v[4]) + 50;
+          v[5] = (v[5] == 1 ? 8 : v[5]) + 50;
+          v[6] = (v[6] == 1 ? 10 : v[6]) + 50;
 
-          v[9] = v[9] == 1 ? 12 : v[9];
-          v[10] = v[10] == 1 ? 14 : v[10];
-          v[11] = v[11] == 1 ? 16 : v[11];
-          v[12] = v[12] == 1 ? 18 : v[12];
+          v[9] =  (v[9] == 1 ? 12 : v[9]) + 50;
+          v[10] = (v[10] == 1 ? 14 : v[10]) + 50;
+          v[11] = (v[11] == 1 ? 16 : v[11]) + 50;
+          v[12] = (v[12] == 1 ? 18 : v[12]) + 50;
+
+          chart1data.push([v[0],v[1],v[7],v[13],v[15],v[3],v[4],v[5],v[9],v[10],v[11],v[12]]);
+          chart4data.push([v[0],v[2],v[8],v[14],v[16],v[3],v[4],v[5],v[9],v[10],v[11],v[12]]);
         }
+        this.chartData.data = chart1data;
         this.chartData.data = Object.assign([], this.chartData.data);
+        this.chartData4.data = chart4data;
+        this.chartData4.data = Object.assign([], this.chartData4.data);
       });
       this.httpMessageService.getPowerlog().toPromise().then(hmsg => {
         this.chartData2.data = hmsg;
