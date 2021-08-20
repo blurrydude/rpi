@@ -401,7 +401,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="col-md-12 text-muted text-center">
       <google-chart #chart2  
         [title]="chartData2.title"  
@@ -412,6 +412,20 @@
         [width]="chartData2.width"
         [height]="chartData2.height">
       </google-chart>  
+    </div>
+
+    <div class="row">
+      <div class="col-md-5"></div>
+      <div class="col-md-2 text-muted text-center">
+        <google-chart #chart3  
+          [title]="chartData3.title"  
+          [type]="chartData3.type"
+          [data]="chartData3.data"
+          [options]="chartData3.options"
+          [width]="chartData3.width"
+          [height]="chartData3.height">
+        </google-chart>  
+      </div>
     </div>
 
     <div class="row mt-3 mb-2 text-warning text-center">

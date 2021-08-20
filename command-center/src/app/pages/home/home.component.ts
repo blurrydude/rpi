@@ -201,6 +201,30 @@ export class HomeComponent {
       height: 800
     }
 
+    @Output() @Input() chartData3: any = {
+      title: 'Power',
+      //type: 'ComboChart',
+      type: 'Gauge',
+      data: [
+        ["Power (kW)",0]
+      ],
+      options: {
+        backgroundColor: "#212529",
+        width: 200,
+        height: 200,
+        greenFrom: 0,
+        greenTo: 25,
+        redFrom: 60,
+        redTo: 100,
+        yellowFrom: 25,
+        yellowTo: 60,
+        minorTicks: 5,
+        majorTicks: ['0W','250W','500W','750W','1kW']  // <-- add major ticks
+      }
+      // width: 1295,
+      // height: 800
+    }
+
     constructor(public httpMessageService: StatusService) { 
       this.load(httpMessageService, true)
     }
@@ -260,6 +284,15 @@ export class HomeComponent {
         //   v.pop(v.length-1);
         // }
         this.chartData2.data = Object.assign([], this.chartData2.data);
+        let last = this.chartData2.data[this.chartData2.data.length-1];
+        this.chartData3.data = [["Power",
+          //last[last.length-1]
+          {
+            v:Math.round((last[last.length-1]/1000)*100),
+            f:last[last.length-1]+" W"
+          }
+        ]];
+        this.chartData3.data = Object.assign([], this.chartData3.data);
       });
       this.httpMessageService.getReadings().toPromise().then(rmsg => {
         this.readings = rmsg;
