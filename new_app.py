@@ -598,7 +598,7 @@ def getsysmonlogbydate(logfiledate):
 
 @app.route('/gettemplog')
 def gettemplog():
-    logfiledate = datetime.now().strftime("%Y%m%d%H")
+    logfiledate = datetime.now().strftime("%Y%m%d")
     return gettemplogbydate(logfiledate)
 
 @app.route('/gettemplog/<logfiledate>')

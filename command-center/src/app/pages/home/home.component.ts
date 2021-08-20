@@ -30,7 +30,24 @@ export class HomeComponent {
       type: 'LineChart',
       data: [
       ],
-      columnNames: ['','Game Room Temp','Game Room Humidity','Cooling','Heating','Blower','WHF','Hallway Temp','Hallway Humidity','Cooling','Heating','Blower','WHF','Day Room Temp','Day Room Humidity','Deck Temp','Deck Humidity'],
+      columnNames: ['',
+        'GR Temp',
+        'GR Hum',
+        'GR Cool',
+        'GR Heat',
+        'GR Fan',
+        'WHF',
+        'HW Temp',
+        'HW Hum',
+        'HW Cool',
+        'HW Heat',
+        'HW Fan',
+        'WHF',
+        'DR Temp',
+        'DR Hum',
+        'Deck Temp',
+        'Deck Hum'
+      ],
       options: {
         hAxis: {
            title: ''
@@ -38,8 +55,8 @@ export class HomeComponent {
         vAxis:{
            title: 'Temperature',
            viewWindow: {
-            max:100,
-            min:0
+            max:85,
+            min:55
           }
         },
       //  seriesType: 'bars',
@@ -62,10 +79,29 @@ export class HomeComponent {
       //    15: {type: 'line'},
       //    16: {type: 'line'}
       //  }
-        //colors: ['#e0440e', '#e6693e']
+        colors: [
+          '#ff9999',
+          '#9999ff',
+          '#ff99ff',
+          '#99ffff',
+          '#99ff99',
+          '#337733',
+
+          '#ff0000',
+          '#0000ff',
+          '#ff00ff',
+          '#00ffff',
+          '#00ff00',
+          '#007700',
+          
+          '#ffaaaa',
+          '#aaaaff',
+          '#ffcccc',
+          '#ccccff'
+        ]
       },
-      width: 1200,
-      height: 600
+      width: 1295,
+      height: 800
     }
     constructor(public httpMessageService: StatusService) { 
       this.load(httpMessageService, true)

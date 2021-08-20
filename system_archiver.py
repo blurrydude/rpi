@@ -37,7 +37,7 @@ def getData():
     return json.dumps(data)
 
 def log(message):
-    logfiledate = datetime.now().strftime("%Y%m%d%H")
+    logfiledate = datetime.now().strftime("%Y%m%d")
     logfile = "/home/pi/templog_"+logfiledate+".txt"
     entry = message + "\n"
     print(entry)
