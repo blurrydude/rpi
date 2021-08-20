@@ -103,6 +103,30 @@ export class HomeComponent {
       width: 1295,
       height: 800
     }
+
+    @Output() @Input() chartData2: any = {
+      title: 'Power',
+      //type: 'ComboChart',
+      type: 'LineChart',
+      data: [
+      ],
+      columnNames: [''],
+      options: {
+        hAxis: {
+           title: ''
+        },
+        vAxis:{
+           title: 'Power (W)',
+          //  viewWindow: {
+          //   max:85,
+          //   min:55
+          // }
+        }
+      },
+      width: 1295,
+      height: 800
+    }
+
     constructor(public httpMessageService: StatusService) { 
       this.load(httpMessageService, true)
     }
@@ -155,6 +179,9 @@ export class HomeComponent {
         }
         this.chartData.data = Object.assign([], this.chartData.data);
       });
+      this.httpMessageService.getPowerlog().toPromise().then(hmsg => {
+        this.chartData2.data = hmsg;
+      });
       this.httpMessageService.getReadings().toPromise().then(rmsg => {
         this.readings = rmsg;
         this.httpMessageService.getPassiveReadings().toPromise().then(prmsg => {
@@ -205,6 +232,9 @@ export class HomeComponent {
         this.status = msg;
         this.totalPower = 0.0;
         for (const [k, v] of Object.entries(this.status)) {
+          if(this.chartData2.columnNames.indexOf(k)===-1) {
+            this.chartData2.columnNames.push(k);
+          }
           this.totalPower += parseFloat(v["power"])
         }
         this.httpMessageService.getPiStatus().toPromise().then(smsg => {

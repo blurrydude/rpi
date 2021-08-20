@@ -85,6 +85,15 @@ export class StatusService {
       );
   }
 
+  public getPowerlog() {
+    return this.http.get(this.baseurl+"getpowerlog", this.options)
+      .pipe(
+        catchError(err => {
+          return this.handleError(err);
+        })
+      );
+  }
+
   public getDoors() {
     return this.http.get(this.baseurl+"getdoors", this.options)
       .pipe(

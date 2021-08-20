@@ -65,7 +65,7 @@ def logPowerData(message):
 def getPowerData():
     r = requests.get('https://api.idkline.com/powerstates')
     readings = json.loads(r.text)
-    data = []
+    data = [datetime.now().strftime("%m/%d/%Y, %H:%M:%S")]
     total = 0.0
     for key in readings.keys():
         v = float(readings[key])

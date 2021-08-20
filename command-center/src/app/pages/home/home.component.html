@@ -111,6 +111,15 @@
         [width]="chartData.width"
         [height]="chartData.height">
       </google-chart>  
+      <google-chart #chart2  
+        [title]="chartData2.title"  
+        [type]="chartData2.type"
+        [data]="chartData2.data"
+        [columns]="chartData2.columnNames"
+        [options]="chartData2.options"
+        [width]="chartData2.width"
+        [height]="chartData2.height">
+      </google-chart>  
     </div>
     <div class="row">
       <div class="col-md-6" *ngFor="let reading of readings | keyvalue">
