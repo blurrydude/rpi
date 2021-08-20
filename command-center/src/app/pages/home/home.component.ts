@@ -376,10 +376,12 @@ export class HomeComponent {
         this.chartData4.data = Object.assign([], this.chartData4.data);
       });
       this.httpMessageService.getPowerlog().toPromise().then(hmsg => {
+        let data: any = hmsg;
+        let chart2data = [];
+        for (const v of data) {
+          chart2data.push(v);
+        }
         this.chartData2.data = hmsg;
-        // for (const v of this.chartData2.data) {
-        //   v.pop(v.length-1);
-        // }
         this.chartData2.data = Object.assign([], this.chartData2.data);
         let last = this.chartData2.data[this.chartData2.data.length-1];
         this.chartData3.data = [["Power",

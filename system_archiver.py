@@ -37,7 +37,7 @@ def getTempData():
     return json.dumps(data)
 
 def logTempData(message):
-    logfiledate = datetime.now().strftime("%Y%m%d")
+    logfiledate = datetime.now().strftime("%Y%m%d%H")
     logfile = "/home/pi/templog_"+logfiledate+".txt"
     entry = message + "\n"
     print(entry)
@@ -50,7 +50,7 @@ def logTempData(message):
         write_file.write(entry)
 
 def logPowerData(message):
-    logfiledate = datetime.now().strftime("%Y%m%d")
+    logfiledate = datetime.now().strftime("%Y%m%d%H")
     logfile = "/home/pi/powerlog_"+logfiledate+".txt"
     entry = message + "\n"
     print(entry)
