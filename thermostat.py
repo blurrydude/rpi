@@ -26,6 +26,7 @@ humidity_circulation_minutes = 10
 stage_limit_minutes = 15
 stage_cooldown_minutes = 5
 use_whole_house_fan = False
+swing_temp_offset = 1
 
 post = True
 temperature = None
@@ -215,7 +216,7 @@ def cycle():
         cool_down()
         return
     
-    if round(temperature) > temperature_high_setting - 1 and ac_state is True: # this is half of my mercury switch/magnet for delaying a "swing" state
+    if round(temperature) > temperature_high_setting - swing_temp_offset and ac_state is True: # this is half of my mercury switch/magnet for delaying a "swing" state
         cool_down()
         return
     
@@ -223,7 +224,7 @@ def cycle():
         warm_up()
         return
     
-    if round(temperature) < temperature_low_setting + 1 and heat_state is True: # this is the other half of my mercury switch/magnet for delaying a "swing" state
+    if round(temperature) < temperature_low_setting + swing_temp_offset and heat_state is True: # this is the other half of my mercury switch/magnet for delaying a "swing" state
         warm_up()
         return
     
@@ -333,6 +334,7 @@ def load_settings():
     global stage_limit_minutes
     global stage_cooldown_minutes
     global use_whole_house_fan
+    global swing_temp_offset
 
     try:
         r =requests.get('https://api.idkline.com/thermosettings/'+room)
@@ -347,6 +349,7 @@ def load_settings():
         stage_limit_minutes = s["stage_limit_minutes"]
         stage_cooldown_minutes = s["stage_cooldown_minutes"]
         use_whole_house_fan = s["use_whole_house_fan"]
+        swing_temp_offset = s["swing_temp_offset"]
         #log("loaded thermosettings.json")
     except:
         print('failed to get thermosettings')
