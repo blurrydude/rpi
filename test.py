@@ -19,6 +19,8 @@ def convertfile(file):
             continue
         d = json.loads(l)
         dt = convertthing(d[0])
+        if dt not in data.keys():
+            data[dt] = []
         data[dt].append(d)
     for k in data.keys():
         text = ""
