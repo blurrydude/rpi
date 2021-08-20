@@ -323,7 +323,8 @@
         [options]="chartData.options"
         [width]="chartData.width"
         [height]="chartData.height">
-      </google-chart>  
+      </google-chart>
+      <small>NOTE: Cooling, Heating, Fan, and Whole House Fan values are aritrarily set for display purposes only. These systems are either on or off with no variable output capabilities.</small>
     </div>
       
     <div class="col-md-12 text-muted text-center">
@@ -335,7 +336,8 @@
         [options]="chartData4.options"
         [width]="chartData4.width"
         [height]="chartData4.height">
-      </google-chart>  
+      </google-chart>
+      <small>NOTE: Cooling, Heating, Fan, and Whole House Fan values are aritrarily set for display purposes only. These systems are either on or off with no variable output capabilities.</small>
     </div>
 
     <div class="row mt-3 mb-2 text-warning text-center">
@@ -344,7 +346,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-3" *ngFor="let sensor of motionsensors | keyvalue">
+      <div class="col-md-2" *ngFor="let sensor of motionsensors | keyvalue">
         <div class="card text-center my-2" [ngClass]="{'border-danger':sensor.value['shelly']['status']['motion']===true}">
           <div class="card-header bg-dark border-bottom" [ngClass]="{'text-danger':sensor.value['shelly']['status']['bat']<40,'text-warning':sensor.value['shelly']['status']['bat']<50}">
             <h5>{{sensor.value["room"]}}</h5>
@@ -365,7 +367,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6" *ngFor="let door of doors | keyvalue">
+      <div class="col-md-4" *ngFor="let door of doors | keyvalue">
         <div class="card text-center my-2">
           <div class="card-header bg-dark border-bottom">
             <h5>{{door.key}} door</h5>
@@ -383,7 +385,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6" *ngFor="let roller of rollers | keyvalue">
+      <div class="col-md-4" *ngFor="let roller of rollers | keyvalue">
         <div class="card text-center my-2">
           <div class="card-header bg-dark border-bottom">
             <h5>{{roller.key}}</h5>
@@ -443,6 +445,7 @@
     <div class="row mt-3 mb-2 text-warning text-center">
       <div class="col-md-12">
         <h3>Circuit States - {{totalPower | number: '1.1-1'}} W</h3>
+        <small class="text-muted">Only system switchable circuits are metered here</small>
       </div>
     </div>
     <div class="row">
