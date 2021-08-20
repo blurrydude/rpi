@@ -242,15 +242,15 @@ export class HomeComponent {
       this.httpMessageService.getTemplog().toPromise().then(hmsg => {
         this.chartData.data = hmsg;
         for (const v of this.chartData.data) {
-          v[3] = v[3] == 1 ? 10 : v[3];
-          v[4] = v[4] == 1 ? 10 : v[4];
-          v[5] = v[5] == 1 ? 10 : v[5];
+          v[3] = v[3] == 1 ? 4 : v[3];
+          v[4] = v[4] == 1 ? 6 : v[4];
+          v[5] = v[5] == 1 ? 8 : v[5];
           v[6] = v[6] == 1 ? 10 : v[6];
 
-          v[9] = v[9] == 1 ? 5 : v[9];
-          v[10] = v[10] == 1 ? 5 : v[10];
-          v[11] = v[11] == 1 ? 5 : v[11];
-          v[12] = v[12] == 1 ? 5 : v[12];
+          v[9] = v[9] == 1 ? 12 : v[9];
+          v[10] = v[10] == 1 ? 14 : v[10];
+          v[11] = v[11] == 1 ? 16 : v[11];
+          v[12] = v[12] == 1 ? 18 : v[12];
         }
         this.chartData.data = Object.assign([], this.chartData.data);
       });
