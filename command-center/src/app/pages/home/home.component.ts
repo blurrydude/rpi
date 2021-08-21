@@ -19,11 +19,11 @@ export class HomeComponent {
     @Output() sysmonlog: any = [];
     @Output() apilog: any = [];
     @Output() mode: any = [];
-    @Output() fast: boolean = false;
-    @Output() live: boolean = false;
+    @Output() fast: boolean = true;
+    @Output() live: boolean = true;
     @Output() local: boolean = true;
     firstLoad: boolean = true;
-    @Output() loghours: number = 6;
+    @Output() loghours: number = 2;
 
     @Output() @Input() chartData: any = {
       title: 'Temperatures',
@@ -368,8 +368,10 @@ export class HomeComponent {
           v[11] = (v[11] == 1 ? 16 : v[11]) + 50;
           v[12] = (v[12] == 1 ? 18 : v[12]) + 50;
 
-          chart1data.push([v[0],v[1],v[7],v[13],v[15],v[3],v[4],v[5],v[9],v[10],v[11],v[12]]);
-          chart4data.push([v[0],v[2],v[8],v[14],v[16],v[3],v[4],v[5],v[9],v[10],v[11],v[12]]);
+          if(v[1]>0&&v[7]>0) {
+            chart1data.push([v[0],v[1],v[7],v[13],v[15],v[3],v[4],v[5],v[9],v[10],v[11],v[12]]);
+            chart4data.push([v[0],v[2],v[8],v[14],v[16],v[3],v[4],v[5],v[9],v[10],v[11],v[12]]);
+          }
         }
         this.chartData.data = chart1data;
         this.chartData.data = Object.assign([], this.chartData.data);

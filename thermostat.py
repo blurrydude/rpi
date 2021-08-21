@@ -113,11 +113,13 @@ def heat_off():
 def ac_off():
     global ac_state
     global last_circulation
+    global has_circulated
     log("ac_off")
     if ac_state is True:
         last_circulation = datetime.now()
     set_circuit(ac, False)
     ac_state = False
+    has_circulated = False
     report()
 
 def fan_off():
@@ -271,7 +273,8 @@ def circulate_air(minutes, use_whf_if_set):
     global base_humidity
     if circulating is True:
         return
-    fan_on()
+    if use_whf_if_set is not True:
+        fan_on()
     if use_whf_if_set is True and use_whole_house_fan is True:
         whf_on()
     # if humidity is not None:
@@ -392,8 +395,8 @@ def report_readings():
 print("*\n*\n*\nbegin")
 log("*\n*\n*\nbegin power-on self-test")
 halt()
-time.sleep(60)
-circulate_air(2, False)
+time.sleep(2)
+#circulate_air(2, False)
 post = False
 log("*\n*\n*\nbegin cycling")
 while True:
