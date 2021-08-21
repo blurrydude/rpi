@@ -43,6 +43,7 @@ has_ventilated = False
 start_stage = datetime.now() - timedelta(minutes=1)
 delay_stage = datetime.now()
 shower_vent = False
+status = "loading"
 
 heat = 26
 ac = 20
@@ -220,14 +221,17 @@ def getMode():
 
 def cycle():
     global last_circulation
-    #global base_humidity
+    global status
 
     load_settings()
 
     read_sensor()
+    if temperature is None or temperature == 0:
+        status = "sensor_fail"
 
     if temperature is None:
         halt()
+        status = "halted"
         return
     
     report_readings()
@@ -245,7 +249,7 @@ def cycle():
             return
 
     if delay_stage > datetime.now():
-        print("delayed")
+        status = "delayed"
         return
     
     if round(temperature) > temperature_high_setting and ac_state is False:
@@ -272,11 +276,15 @@ def cycle():
 
     if air_circulation_minutes > 0 and datetime.now() > last_circulation + timedelta(minutes=air_circulation_minutes):
         circulate_air(humidity_circulation_minutes)
+        return
+        
+    status = "stand_by"
 
 def cool_down():
     global start_stage
     global delay_stage
     global has_ventilated
+    global status
     if ac_state is True:
         if start_stage < datetime.now() - timedelta(minutes=stage_limit_minutes):
             delay_stage = datetime.now() + timedelta(minutes=stage_cooldown_minutes)
@@ -289,10 +297,12 @@ def cool_down():
     has_ventilated = False
     start_stage = datetime.now()
     ac_on()
+    status = "cooling"
 
 def warm_up():
     global start_stage
     global delay_stage
+    global status
     if heat_state is True:
         if start_stage < datetime.now() - timedelta(minutes=stage_limit_minutes):
             delay_stage = datetime.now() + timedelta(minutes=stage_cooldown_minutes)
@@ -300,40 +310,49 @@ def warm_up():
         return
     start_stage = datetime.now()
     heat_on()
+    status = "heating"
 
 def circulate_air(minutes):
     global circulate_until
     global circulating
+    global status
     if circulating is True:
         return
     fan_on()
     circulate_until = datetime.now() + timedelta(minutes=minutes) 
     circulating = True
+    status = "circulating"
 
 def ventilate_air(minutes):
     global ventilate_until
     global ventilating
+    global status
     if ventilating is True:
         return
     if use_whole_house_fan is True:
         whf_on()
     ventilate_until = datetime.now() + timedelta(minutes=minutes) 
     ventilating = True
+    status = "ventilating"
 
 def stop_circulating():
     global circulating
     global has_circulated
+    global status
     fan_off()
     circulating = False
     has_circulated = True
+    status = "stand_by"
 
 def stop_ventilating():
     global ventilating
     global has_ventilated
+    global status
     if use_whole_house_fan is True:
         whf_off()
     ventilating = False
     has_ventilated = True
+    status = "stand_by"
 
 def sendCommand(command):
     print("sending command: "+command)
@@ -344,6 +363,7 @@ def sendCommand(command):
         print('failed to send command')
 
 def report():
+    global status
     hum = humidity
     temp = temperature
     #print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
@@ -363,13 +383,6 @@ def report():
     w = "off"
     if whf_state is True:
         w = "on"
-    status = "normal"
-    if delay_stage > datetime.now():
-        status = "delayed"
-    if temperature is None or temperature == 0:
-        status = "sensor_fail"
-    if post is True:
-        status = "post"
     log('report: {0:0.1f} F {1:0.1f}% AC:{2} Fan:{3} Heat:{4} WHF:{5} Status:{6} Last Start:{7} Last Circ:{8}'.format(temp, hum,cool,circ,h,w,status,start_stage.strftime("%m/%d/%Y, %H:%M:%S"),last_circulation.strftime("%m/%d/%Y, %H:%M:%S")))
     report_readings()
 
