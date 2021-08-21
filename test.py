@@ -8,6 +8,7 @@ first = "none"
 def break_beam_callback(channel):
     left = GPIO.input(BEAM_PIN_L)
     right = GPIO.input(BEAM_PIN_R)
+    print(str(left)+" "+str(right))
     if left is True:
         print("left beam unbroken")
     elif left is False:
