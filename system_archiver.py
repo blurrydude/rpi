@@ -10,7 +10,7 @@ def getTempData():
     pr = requests.get('https://api.idkline.com/getpassivereadings')
     preadings = json.loads(pr.text)
     data = [datetime.now().strftime("%m/%d/%Y, %H:%M:%S")]
-    for key in readings.keys():
+    for key in readings.keys().sort():
         reading = readings[key]
         data.append(float(reading["temperature"]))
         data.append(float(reading["humidity"]))
