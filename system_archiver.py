@@ -30,7 +30,7 @@ def getTempData():
             data.append(1)
         if reading["whf"]=="off":
             data.append(0)
-    for key in sorted(preadings.keys()):
+    for key in sorted(preadings.keys(), reverse=True):
         reading = preadings[key]
         data.append(float(reading["temperature"]))
         data.append(float(reading["humidity"]))
