@@ -167,6 +167,7 @@ def fan_on():
 def whf_on():
     global whf_state
     global shower_vent
+    global status
     log("whf_on")
     whf_state = True
     sendCommand('turn on whole house fan')
@@ -175,6 +176,7 @@ def whf_on():
     mode = getMode()
     more = temperature is not None and temperature > temperature_high_setting + 3
     if more is True and mode != "shower":
+        status = "assisted_ventilation"
         sendCommand('turn on shower fan')
         shower_vent = True
     report()
