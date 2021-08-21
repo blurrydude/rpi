@@ -344,7 +344,6 @@ def stop_circulating():
     fan_off()
     circulating = False
     has_circulated = True
-    status = "stand_by"
 
 def stop_ventilating():
     global ventilating
@@ -354,7 +353,6 @@ def stop_ventilating():
         whf_off()
     ventilating = False
     has_ventilated = True
-    status = "stand_by"
 
 def sendCommand(command):
     print("sending command: "+command)
