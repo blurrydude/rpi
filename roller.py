@@ -19,7 +19,6 @@ GPIO.setup(16, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(20, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(21, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.add_event_detect(23, GPIO.BOTH, callback=break_beam_callback)
 
 kit = MotorKit(0x61)
 
@@ -125,6 +124,7 @@ if __name__ == "__main__":
     #for i in range(len(read_pins)):
     #    _thread.start_new_thread(power_on_self_test, (i,))
     #    time.sleep(2)
+    GPIO.add_event_detect(23, GPIO.BOTH, callback=break_beam_callback)
     time.sleep(2)
     ir_state = GPIO.input(23)
     if str(ir_state) == "1":
