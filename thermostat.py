@@ -35,10 +35,14 @@ failed_reads = 0
 last_circulation = datetime.now()
 circulate_until = datetime.now() + timedelta(minutes=1)
 circulating = False
+has_circulated = False
+last_ventilation = datetime.now()
+ventilate_until = datetime.now() + timedelta(minutes=1)
+ventilating = False
+has_ventilated = False
 start_stage = datetime.now() - timedelta(minutes=1)
 delay_stage = datetime.now()
-has_circulated = False
-base_humidity = 0
+shower_vent = False
 
 heat = 26
 ac = 20
@@ -161,20 +165,31 @@ def fan_on():
 
 def whf_on():
     global whf_state
+    global shower_vent
     log("whf_on")
     whf_state = True
     sendCommand('turn on whole house fan')
     sendCommand('turn on circulating fan')
     sendCommand('turn on floor fan')
+    mode = getMode()
+    more = temperature is not None and temperature > temperature_high_setting + 3
+    if more is True and mode != "shower":
+        sendCommand('turn on shower fan')
+        shower_vent = True
     report()
 
 def whf_off():
     global whf_state
+    global shower_vent
     log("whf_off")
     whf_state = False
     sendCommand('turn off whole house fan')
     sendCommand('turn off circulating fan')
     sendCommand('turn off floor fan')
+    mode = getMode()
+    if shower_vent is True and mode != "shower":
+        sendCommand('turn off shower fan')
+    shower_vent = False
     report()
 
 def halt():
@@ -195,6 +210,14 @@ def halt():
     whf_state = False
     report()
 
+def getMode():
+    try:
+        r =requests.get('https://api.idkline.com/getmode')
+        data = json.loads(r.text)
+        return data["mode"].lower()
+    except:
+        return "unknown"
+
 def cycle():
     global last_circulation
     #global base_humidity
@@ -210,11 +233,15 @@ def cycle():
     report_readings()
 
     if circulating is True:
-        #if (humidity is not None and humidity > base_humidity - 0.2) or datetime.now() > circulate_until: # the humidity should fall for a bit, but when it starts to come back up, that means the air from the basement has arrived, also we should bail if it runs too long
         if datetime.now() > circulate_until:
             stop_circulating()
         else:
-            #base_humidity = humidity
+            return
+
+    if ventilating is True:
+        if datetime.now() > ventilate_until:
+            stop_ventilating()
+        else:
             return
 
     if delay_stage > datetime.now():
@@ -244,20 +271,22 @@ def cycle():
         ac_off()
 
     if air_circulation_minutes > 0 and datetime.now() > last_circulation + timedelta(minutes=air_circulation_minutes):
-        circulate_air(humidity_circulation_minutes, False)
+        circulate_air(humidity_circulation_minutes)
 
 def cool_down():
     global start_stage
     global delay_stage
-    global has_circulated
+    global has_ventilated
     if ac_state is True:
         if start_stage < datetime.now() - timedelta(minutes=stage_limit_minutes):
             delay_stage = datetime.now() + timedelta(minutes=stage_cooldown_minutes)
             ac_off()
         return
-    if round(humidity) > humidity_setting and humidity_setting > 0 and has_circulated is False:
-        circulate_air(humidity_circulation_minutes, True)
-    has_circulated = False
+    # if round(humidity) > humidity_setting and humidity_setting > 0 and has_circulated is False:
+    #     circulate_air(humidity_circulation_minutes)
+    if temperature > temperature_high_setting + 2 and has_ventilated is False:
+        ventilate_air(humidity_circulation_minutes)
+    has_ventilated = False
     start_stage = datetime.now()
     ac_on()
 
@@ -272,31 +301,39 @@ def warm_up():
     start_stage = datetime.now()
     heat_on()
 
-def circulate_air(minutes, use_whf_if_set):
-    global whf_state
+def circulate_air(minutes):
     global circulate_until
     global circulating
-    global base_humidity
     if circulating is True:
         return
-    if use_whf_if_set is not True:
-        fan_on()
-    if use_whf_if_set is True and use_whole_house_fan is True:
-        whf_on()
-    # if humidity is not None:
-    #     base_humidity = humidity + 0.5 # in case the humidity wiggles a bit at the wrong time
+    fan_on()
     circulate_until = datetime.now() + timedelta(minutes=minutes) 
     circulating = True
 
+def ventilate_air(minutes):
+    global ventilate_until
+    global ventilating
+    if ventilating is True:
+        return
+    if use_whole_house_fan is True:
+        whf_on()
+    ventilate_until = datetime.now() + timedelta(minutes=minutes) 
+    ventilating = True
+
 def stop_circulating():
-    global whf_state
     global circulating
     global has_circulated
-    if whf_state is True and use_whole_house_fan is True:
-        whf_off()
     fan_off()
     circulating = False
     has_circulated = True
+
+def stop_ventilating():
+    global ventilating
+    global has_ventilated
+    if use_whole_house_fan is True:
+        whf_off()
+    ventilating = False
+    has_ventilated = True
 
 def sendCommand(command):
     print("sending command: "+command)
