@@ -3,20 +3,21 @@ import RPi.GPIO as GPIO
 
 BEAM_PIN_L = 21
 BEAM_PIN_R = 20
-first = "none"
+seq = "none"
 
 def break_beam_callback(channel):
+    global seq
     left = GPIO.input(BEAM_PIN_L)
     right = GPIO.input(BEAM_PIN_R)
-    print(str(left)+" "+str(right))
-    if left == 1:
-        print("left beam unbroken")
-    elif left == 0:
-        print("left beam broken")
-    if right == 1:
-        print("right beam unbroken")
-    elif right == 0:
-        print("right beam broken")
+    seq = seq + str(left)+str(right)
+    if seq == "10000111":
+        seq = ""
+        print("IN")
+    if seq == "01001011":
+        seq = ""
+        print("OUT")
+
+    
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(BEAM_PIN_L, GPIO.IN, pull_up_down=GPIO.PUD_UP)
