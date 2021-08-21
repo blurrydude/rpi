@@ -47,7 +47,10 @@ labels = [
 
 def break_beam_callback(channel):
     ir_state = GPIO.input(23)
-    print("IR State: "+str(ir_state))
+    if str(ir_state) == "1":
+        sendReport("ir", "open")
+    else:
+        sendReport("ir", "closed")
 
 def open_roller(addy):
     global moving
@@ -122,6 +125,11 @@ if __name__ == "__main__":
     for i in range(len(read_pins)):
         _thread.start_new_thread(power_on_self_test, (i,))
         time.sleep(2)
+    ir_state = GPIO.input(23)
+    if str(ir_state) == "1":
+        sendReport("ir", "open")
+    else:
+        sendReport("ir", "closed")
     client.on_message = on_message
     client.connect('192.168.1.200')
     topic = 'pi/' + myname + '/commands'
