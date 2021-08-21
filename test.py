@@ -1,33 +1,16 @@
-import json
+import RPi.GPIO as GPIO
 
-def convertthing(thing):
-    a = thing.split(', ')
-    b = a[0].split('/')
-    c = a[1].split(":")
-    day = b[1]
-    month = b[0]
-    year = b[2]
-    hour = c[0]
-    return year+month+day+hour
+BEAM_PIN = 21
 
-def convertfile(file):
-    f = open("/home/pi/"+file+"log_2021082014.txt")
-    t = f.read()
-    data = {}
-    for l in t.split('\n'):
-        if l == "":
-            continue
-        d = json.loads(l)
-        dt = convertthing(d[0])
-        if dt not in data.keys():
-            data[dt] = []
-        data[dt].append(d)
-    for k in data.keys():
-        text = ""
-        for line in data[k]:
-            text = text + json.dumps(line) + "\n"
-        with open("/home/pi/"+file+"log_"+k+".txt","w") as write_file:
-            write_file.write(text)
+def break_beam_callback(channel):
+    if GPIO.input(BEAM_PIN):
+        print("beam unbroken")
+    else:
+        print("beam broken")
 
-convertfile("power")
-convertfile("temp")
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(BEAM_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.add_event_detect(BEAM_PIN, GPIO.BOTH, callback=break_beam_callback)
+
+message = input("Press enter to quit\n\n")
+GPIO.cleanup()
