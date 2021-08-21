@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO
 
 BEAM_PIN_L = 21
 BEAM_PIN_R = 20
-seq = "none"
+seq = ""
 
 def break_beam_callback(channel):
     global seq
