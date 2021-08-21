@@ -18,6 +18,8 @@ GPIO.setup(12, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(16, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(20, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(21, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.add_event_detect(23, GPIO.BOTH, callback=break_beam_callback)
 
 kit = MotorKit(0x61)
 
@@ -42,6 +44,10 @@ labels = [
     "Third Shade",
     "Curtain"
 ]
+
+def break_beam_callback(channel):
+    ir_state = GPIO.input(23)
+    print("IR State: "+str(ir_state))
 
 def open_roller(addy):
     global moving
