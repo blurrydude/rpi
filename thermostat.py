@@ -164,6 +164,8 @@ def whf_on():
     log("whf_on")
     whf_state = True
     sendCommand('turn on whole house fan')
+    sendCommand('turn on circulating fan')
+    sendCommand('turn on floor fan')
     report()
 
 def whf_off():
@@ -171,6 +173,8 @@ def whf_off():
     log("whf_off")
     whf_state = False
     sendCommand('turn off whole house fan')
+    sendCommand('turn off circulating fan')
+    sendCommand('turn off floor fan')
     report()
 
 def halt():
@@ -183,6 +187,8 @@ def halt():
     GPIO.output(ac, low)
     GPIO.output(fan, low)
     sendCommand('turn off whole house fan')
+    sendCommand('turn off circulating fan')
+    sendCommand('turn off floor fan')
     fan_state = False
     heat_state = False
     ac_state = False
