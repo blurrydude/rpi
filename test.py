@@ -16,10 +16,9 @@ def break_beam_callback(channel):
     elif seq == "01001011":
         seq = ""
         print("OUT")
-    else:
-        print(seq)
-
-    
+    elif len(seq) > 8:
+        print("reset")
+        seq = ""
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(BEAM_PIN_L, GPIO.IN, pull_up_down=GPIO.PUD_UP)
