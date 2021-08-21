@@ -13,9 +13,11 @@ def break_beam_callback(channel):
     if seq == "10000111":
         seq = ""
         print("IN")
-    if seq == "01001011":
+    elif seq == "01001011":
         seq = ""
         print("OUT")
+    else:
+        print(seq)
 
     
 
