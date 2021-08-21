@@ -15,14 +15,15 @@ def break_beam_callback(channel):
     if seq == "10000111":
         seq = ""
         occupants = occupants + 1
+        print(str(occupants))
     elif seq == "01001011":
         seq = ""
         occupants = occupants - 1
         if occupants < 0:
             occupants = 0
+        print(str(occupants))
     elif len(seq) > 8:
         seq = ""
-    print(str(occupants))
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(BEAM_PIN_L, GPIO.IN, pull_up_down=GPIO.PUD_UP)
