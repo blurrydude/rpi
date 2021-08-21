@@ -10,7 +10,7 @@ def getTempData():
     pr = requests.get('https://api.idkline.com/getpassivereadings')
     preadings = json.loads(pr.text)
     data = [datetime.now().strftime("%m/%d/%Y, %H:%M:%S")]
-    for key in readings.keys().sort():
+    for key in sorted(readings.keys()):
         reading = readings[key]
         data.append(float(reading["temperature"]))
         data.append(float(reading["humidity"]))
@@ -30,7 +30,7 @@ def getTempData():
             data.append(1)
         if reading["whf"]=="off":
             data.append(0)
-    for key in preadings.keys().sort():
+    for key in sorted(preadings.keys()):
         reading = preadings[key]
         data.append(float(reading["temperature"]))
         data.append(float(reading["humidity"]))
