@@ -122,9 +122,10 @@ def power_on_self_test(addy):
         close_roller(addy)
 
 if __name__ == "__main__":
-    for i in range(len(read_pins)):
-        _thread.start_new_thread(power_on_self_test, (i,))
-        time.sleep(2)
+    #for i in range(len(read_pins)):
+    #    _thread.start_new_thread(power_on_self_test, (i,))
+    #    time.sleep(2)
+    time.sleep(2)
     ir_state = GPIO.input(23)
     if str(ir_state) == "1":
         sendReport("ir", "open")
