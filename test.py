@@ -9,13 +9,13 @@ def break_beam_callback(channel):
     left = GPIO.input(BEAM_PIN_L)
     right = GPIO.input(BEAM_PIN_R)
     print(str(left)+" "+str(right))
-    if left is True:
+    if left == 1:
         print("left beam unbroken")
-    elif left is False:
+    elif left == 0:
         print("left beam broken")
-    if right is True:
+    if right == 1:
         print("right beam unbroken")
-    elif right is False:
+    elif right == 0:
         print("right beam broken")
 
 GPIO.setmode(GPIO.BCM)
