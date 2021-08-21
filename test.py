@@ -6,7 +6,7 @@ BEAM_PIN_R = 20
 seq = ""
 occupants = 0
 
-def break_beam_callback(channel):
+def break_beam_callback_orig(channel):
     global seq
     global occupants
     left = GPIO.input(BEAM_PIN_L)
@@ -24,6 +24,14 @@ def break_beam_callback(channel):
         print(str(occupants))
     elif len(seq) > 8:
         seq = ""
+
+def break_beam_callback(channel):
+    global seq
+    global occupants
+    left = GPIO.input(BEAM_PIN_L)
+    right = GPIO.input(BEAM_PIN_R)
+    seq = seq + str(left)+str(right)
+    print(str(left)+""+str(right))
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(BEAM_PIN_L, GPIO.IN, pull_up_down=GPIO.PUD_UP)
