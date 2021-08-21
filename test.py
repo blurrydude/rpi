@@ -6,7 +6,7 @@ BEAM_PIN_R = 20
 seq = ""
 occupants = 0
 
-def break_beam_callback_orig(channel):
+def break_beam_callback(channel):
     global seq
     global occupants
     left = GPIO.input(BEAM_PIN_L)
@@ -25,7 +25,7 @@ def break_beam_callback_orig(channel):
     elif len(seq) > 8:
         seq = ""
 
-def break_beam_callback(channel):
+def break_beam_callbackx(channel):
     global seq
     global occupants
     left = GPIO.input(BEAM_PIN_L)
