@@ -22,8 +22,9 @@ export class HomeComponent {
     @Output() fast: boolean = true;
     @Output() live: boolean = true;
     @Output() local: boolean = true;
-    firstLoad: boolean = true;
     @Output() loghours: number = 2;
+    firstLoad: boolean = true;
+    logtick: number = 0;
 
     @Output() @Input() chartData: any = {
       title: 'Temperatures',
@@ -353,86 +354,58 @@ export class HomeComponent {
       this.httpMessageService.getMotionSensors().toPromise().then(hmsg => {
         this.motionsensors = hmsg;
       });
-      this.httpMessageService.getTemplog(this.loghours).toPromise().then(hmsg => {
-        let data: any = hmsg;
-        let chart1data = [];
-        let chart4data = [];
-        for (const v of data) {
-          v[3] = (v[3] == 1 ? 4 : v[3]) + 50;
-          v[4] = (v[4] == 1 ? 6 : v[4]) + 50;
-          v[5] = (v[5] == 1 ? 8 : v[5]) + 50;
-          v[6] = (v[6] == 1 ? 10 : v[6]) + 50;
+      if(this.logtick == 0) {
+        this.httpMessageService.getTemplog(this.loghours).toPromise().then(hmsg => {
+          let data: any = hmsg;
+          let chart1data = [];
+          let chart4data = [];
+          for (const v of data) {
+            v[3] = (v[3] == 1 ? 4 : v[3]) + 50;
+            v[4] = (v[4] == 1 ? 6 : v[4]) + 50;
+            v[5] = (v[5] == 1 ? 8 : v[5]) + 50;
+            v[6] = (v[6] == 1 ? 10 : v[6]) + 50;
 
-          v[9] =  (v[9] == 1 ? 12 : v[9]) + 50;
-          v[10] = (v[10] == 1 ? 14 : v[10]) + 50;
-          v[11] = (v[11] == 1 ? 16 : v[11]) + 50;
-          v[12] = (v[12] == 1 ? 18 : v[12]) + 50;
+            v[9] =  (v[9] == 1 ? 12 : v[9]) + 50;
+            v[10] = (v[10] == 1 ? 14 : v[10]) + 50;
+            v[11] = (v[11] == 1 ? 16 : v[11]) + 50;
+            v[12] = (v[12] == 1 ? 18 : v[12]) + 50;
 
-          if(v[1]>0&&v[7]>0) {
-            chart1data.push([v[0],v[1],v[7],v[13],v[15],v[3],v[4],v[5],v[9],v[10],v[11],v[12]]);
-            chart4data.push([v[0],v[2],v[8],v[14],v[16],v[3],v[4],v[5],v[9],v[10],v[11],v[12]]);
+            if(v[1]>0&&v[7]>0) {
+              chart1data.push([v[0],v[1],v[7],v[13],v[15],v[3],v[4],v[5],v[9],v[10],v[11],v[12]]);
+              chart4data.push([v[0],v[2],v[8],v[14],v[16],v[3],v[4],v[5],v[9],v[10],v[11],v[12]]);
+            }
           }
-        }
-        this.chartData.data = chart1data;
-        this.chartData.data = Object.assign([], this.chartData.data);
-        this.chartData4.data = chart4data;
-        this.chartData4.data = Object.assign([], this.chartData4.data);
-      });
-      this.httpMessageService.getPowerlog(this.loghours).toPromise().then(hmsg => {
-        let data: any = hmsg;
-        let chart2data = [];
-        for (const v of data) {
-          chart2data.push(v);
-        }
-        this.chartData2.data = hmsg;
-        this.chartData2.data = Object.assign([], this.chartData2.data);
-        let last = this.chartData2.data[this.chartData2.data.length-1];
-        this.chartData3.data = [["Power",
-          //last[last.length-1]
-          {
-            v:Math.round((last[last.length-1]/1000)*100),
-            f:last[last.length-1]+" W"
+          this.chartData.data = chart1data;
+          this.chartData.data = Object.assign([], this.chartData.data);
+          this.chartData4.data = chart4data;
+          this.chartData4.data = Object.assign([], this.chartData4.data);
+        });
+        this.httpMessageService.getPowerlog(this.loghours).toPromise().then(hmsg => {
+          let data: any = hmsg;
+          let chart2data = [];
+          for (const v of data) {
+            chart2data.push(v);
           }
-        ]];
-        this.chartData3.data = Object.assign([], this.chartData3.data);
-      });
+          this.chartData2.data = hmsg;
+          this.chartData2.data = Object.assign([], this.chartData2.data);
+          let last = this.chartData2.data[this.chartData2.data.length-1];
+          this.chartData3.data = [["Power",
+            //last[last.length-1]
+            {
+              v:Math.round((last[last.length-1]/1000)*100),
+              f:last[last.length-1]+" W"
+            }
+          ]];
+          this.chartData3.data = Object.assign([], this.chartData3.data);
+        });
+        this.logtick = this.fast == true ? 12 : 4;
+      } else {
+        this.logtick--;
+      }
       this.httpMessageService.getReadings().toPromise().then(rmsg => {
         this.readings = rmsg;
         this.httpMessageService.getPassiveReadings().toPromise().then(prmsg => {
           this.thsensors = prmsg;
-          /*
-          let row = [this.chartData.data.length];
-          let cooling_main = 0;
-          let cooling_gameroom = 0;
-          for (const [k, v] of Object.entries(this.readings)) {
-            if(this.chartData.columnNames.indexOf(k)===-1) {
-              this.chartData.columnNames.push(k);
-            }
-            if(k == "gameroom") {
-              cooling_gameroom = v['cooling'] == 'on' ? 93:0;
-            }
-            if(k == "hallway") {
-              cooling_main = v['cooling'] === 'on' ? 94:0;
-            }
-            row.push(parseFloat(v["temperature"]));
-          }
-          for (const [k, v] of Object.entries(this.thsensors)) {
-            if(this.chartData.columnNames.indexOf(v["label"])===-1) {
-              this.chartData.columnNames.push(v["label"]);
-            }
-            row.push(parseFloat(v["temperature"]));
-          }
-          row.push(cooling_main);
-          row.push(cooling_gameroom);
-          if(this.chartData.columnNames.indexOf("Main A/C")===-1) {
-            this.chartData.columnNames.push("Main A/C");
-          }
-          if(this.chartData.columnNames.indexOf("Secondary A/C")===-1) {
-            this.chartData.columnNames.push("Secondary A/C");
-          }
-          this.chartData.data.push(row);
-          this.chartData.data = Object.assign([], this.chartData.data);
-          */
         });
       });
       this.httpMessageService.getDoors().toPromise().then(dmsg => {
