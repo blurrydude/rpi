@@ -224,13 +224,13 @@ export class HomeComponent {
         'Day Room Humidity',
         //'Deck Temp',
         'Deck Humidity',
-        'Game Room Cooling',
-        'Game Room Heating',
-        'Game Room Fan',
-        'Main Cooling',
-        'Main Heating',
-        'Main Fan',
-        'Whole House Fan'
+        //'Game Room Cooling',
+        //'Game Room Heating',
+        //'Game Room Fan',
+        //'Main Cooling',
+        //'Main Heating',
+        //'Main Fan',
+        //'Whole House Fan'
       ],
       options: {
         backgroundColor: "#212529",
