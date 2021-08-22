@@ -137,6 +137,7 @@
                 <div class="col-6 text-end"><small>Stage Cooldown:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['stage_cooldown_minutes']}} minutes</div>
                 <div class="col-6 text-end"><small>Air Circ Min Delay:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['air_circulation_minutes']}} minutes</div>
                 <div class="col-6 text-end"><small>Circ Cycle Time:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['circulation_cycle_minutes']}} minutes</div>
+                <div class="col-6 text-end"><small>Vent Cycle Time:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['ventilation_cycle_minutes']}} minutes</div>
                 <div class="col-6 text-end"><small>Swing Temp Offset:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['swing_temp_offset']}}&deg;F</div>
                 <div class="col-6 text-center" *ngIf="httpMessageService.auth!=''">
                   <button class="btn btn-sm btn-danger w-75" (click)="sendThermosettings(
