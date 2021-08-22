@@ -539,6 +539,10 @@ def thermoset(data):
         swing_temp_offset = int(s[8])
         settings["swing_temp_offset"] = swing_temp_offset
 
+    if len(s) > 9:
+        ventilation_cycle_minutes = int(s[9])
+        settings["ventilation_cycle_minutes"] = ventilation_cycle_minutes
+
     with open(homepath+"/"+room+"_thermosettings.json","w") as write_file:
         write_file.write(json.dumps(settings))
     return 'OK'

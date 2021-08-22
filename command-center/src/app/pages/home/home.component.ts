@@ -320,8 +320,8 @@ export class HomeComponent {
       this.load(httpMessageService, true)
     }
 
-    public sendThermosettings(room: string, temp_low: number, temp_high: number, humidity: number, circ_min: number, hum_circ_min: number, stage_limit: number, stage_cooldown: number, swing_temp_offset: number) {
-      this.httpMessageService.sendThermosettings(room,temp_low,temp_high,humidity,circ_min,hum_circ_min, stage_limit, stage_cooldown, swing_temp_offset).toPromise().then(smsg => {
+    public sendThermosettings(room: string, temp_low: number, temp_high: number, humidity: number, circ_min: number, hum_circ_min: number, stage_limit: number, stage_cooldown: number, swing_temp_offset: number, vent_min: number) {
+      this.httpMessageService.sendThermosettings(room,temp_low,temp_high,humidity,circ_min,hum_circ_min, stage_limit, stage_cooldown, swing_temp_offset, vent_min).toPromise().then(smsg => {
         setTimeout(()=>{this.load(this.httpMessageService,false)},500);
       });
     }
@@ -372,7 +372,7 @@ export class HomeComponent {
 
             if(v[1]>0&&v[7]>0) {
               chart1data.push([v[0],v[1],v[7],v[13],v[15],v[3],v[4],v[5],v[9],v[10],v[11],v[12]]);
-              chart4data.push([v[0],v[2],v[8],v[14],v[16],v[3],v[4],v[5],v[9],v[10],v[11],v[12]]);
+              chart4data.push([v[0],v[2],v[8],v[14],v[16]]);
             }
           }
           this.chartData.data = chart1data;
