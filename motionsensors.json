@@ -58,8 +58,8 @@
     {
         "room":"Garage",
         "commands": [{
-            "start":"turn on garage lights",
-            "stop":"turn off garage lights",
+            "start":"turn on shop lights",
+            "stop":"turn off shop lights",
             "conditions": [{"type":"mode_isnt","value":"night"},{"type":"mode_isnt","value":"midnight"}]
         },{
             "start":"turn on stairway",
