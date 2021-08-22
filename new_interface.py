@@ -238,6 +238,16 @@ def buildThermostatScreen():
                     "fontname": "Times", "fontsize": 24, "sticky": "nesw",
                     "row": 3, "col": 2, "padx": 5, "pady": 5
                 }))
+        screens[room+"thermostat"].labels.append(SmartLabel({
+                    "text": "stand_by", "bg": "black", "fg": "grey",
+                    "fontname": "Times", "fontsize": 20, "sticky": "nesw",
+                    "row": 4, "col": 1, "padx": 5, "pady": 5
+                }))
+        screens[room+"thermostat"].labels.append(SmartLabel({
+                    "text": "", "bg": "black", "fg": "grey",
+                    "fontname": "Times", "fontsize": 24, "sticky": "nesw",
+                    "row": 5, "col": 1, "padx": 5, "pady": 5
+                }))
 
 def buildWorkingScreen():
     global screens
@@ -394,6 +404,17 @@ def switchToScreen(target):
             screens[room+"thermostat"].labels[4].text = str(reading["temperature"]) + " F"
             screens[room+"thermostat"].labels[3].text = str(reading["settings"]["temperature_low_setting"]) + " F"
             screens[room+"thermostat"].labels[5].text = str(reading["settings"]["temperature_high_setting"]) + " F"
+            status_text = ""
+            if reading["cooling"] == "on":
+                status_text = status_text + " C"
+            if reading["heating"] == "on":
+                status_text = status_text + " H"
+            if reading["circulation"] == "on":
+                status_text = status_text + " A"
+            if reading["whf"] == "on":
+                status_text = status_text + " V"
+            screens[room+"thermostat"].labels[6].text = str(reading["status"])
+            screens[room+"thermostat"].labels[7].text = status_text
     if "modes" in target:
         mode = getMode()
         screens["modes"].labels[0].text = mode['mode'].upper()
