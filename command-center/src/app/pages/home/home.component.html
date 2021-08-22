@@ -132,11 +132,11 @@
                 <div class="row">
                 <div class="col-6 text-end"><small>High:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['temperature_high_setting']}}&deg;F</div>
                 <div class="col-6 text-end"><small>Low:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['temperature_low_setting']}}&deg;F</div>
-                <div class="col-6 text-end"><small>Humidity Limit:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['humidity_setting']}}%</div>
-                <div class="col-6 text-end"><small>Humidity Venting:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['humidity_circulation_minutes']}} minutes</div>
+                <div class="col-6 text-end"><small>Humidity:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['humidity_setting']}}%</div>
                 <div class="col-6 text-end"><small>Stage Limit:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['stage_limit_minutes']}} minutes</div>
                 <div class="col-6 text-end"><small>Stage Cooldown:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['stage_cooldown_minutes']}} minutes</div>
                 <div class="col-6 text-end"><small>Air Circ Min Delay:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['air_circulation_minutes']}} minutes</div>
+                <div class="col-6 text-end"><small>Circ Cycle Time:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['circulation_cycle_minutes']}} minutes</div>
                 <div class="col-6 text-end"><small>Swing Temp Offset:</small></div><div class="col-6 fw-bold">{{reading.value['settings']['swing_temp_offset']}}&deg;F</div>
                 <div class="col-6 text-center" *ngIf="httpMessageService.auth!=''">
                   <button class="btn btn-sm btn-danger w-75" (click)="sendThermosettings(
@@ -145,7 +145,7 @@
                     reading.value['settings']['temperature_high_setting'],
                     reading.value['settings']['humidity_setting'],
                     reading.value['settings']['air_circulation_minutes'],
-                    reading.value['settings']['humidity_circulation_minutes'],
+                    reading.value['settings']['circulation_cycle_minutes'],
                     reading.value['settings']['stage_limit_minutes'],
                     reading.value['settings']['stage_cooldown_minutes'],
                     reading.value['settings']['swing_temp_offset'])">Raise Low</button>
@@ -157,7 +157,7 @@
                     reading.value['settings']['temperature_high_setting']+1,
                     reading.value['settings']['humidity_setting'],
                     reading.value['settings']['air_circulation_minutes'],
-                    reading.value['settings']['humidity_circulation_minutes'],
+                    reading.value['settings']['circulation_cycle_minutes'],
                     reading.value['settings']['stage_limit_minutes'],
                     reading.value['settings']['stage_cooldown_minutes'],
                     reading.value['settings']['swing_temp_offset'])">Raise High</button>
@@ -169,7 +169,7 @@
                     reading.value['settings']['temperature_high_setting'],
                     reading.value['settings']['humidity_setting'],
                     reading.value['settings']['air_circulation_minutes'],
-                    reading.value['settings']['humidity_circulation_minutes'],
+                    reading.value['settings']['circulation_cycle_minutes'],
                     reading.value['settings']['stage_limit_minutes'],
                     reading.value['settings']['stage_cooldown_minutes'],
                     reading.value['settings']['swing_temp_offset'])">Lower Low</button>
@@ -181,7 +181,7 @@
                     reading.value['settings']['temperature_high_setting']-1,
                     reading.value['settings']['humidity_setting'],
                     reading.value['settings']['air_circulation_minutes'],
-                    reading.value['settings']['humidity_circulation_minutes'],
+                    reading.value['settings']['circulation_cycle_minutes'],
                     reading.value['settings']['stage_limit_minutes'],
                     reading.value['settings']['stage_cooldown_minutes'],
                     reading.value['settings']['swing_temp_offset'])">Lower High</button>
@@ -193,7 +193,7 @@
                     reading.value['settings']['temperature_high_setting'],
                     reading.value['settings']['humidity_setting']-5,
                     reading.value['settings']['air_circulation_minutes'],
-                    reading.value['settings']['humidity_circulation_minutes'],
+                    reading.value['settings']['circulation_cycle_minutes'],
                     reading.value['settings']['stage_limit_minutes'],
                     reading.value['settings']['stage_cooldown_minutes'],
                     reading.value['settings']['swing_temp_offset'])">Lower Humidity</button>
@@ -205,7 +205,7 @@
                     reading.value['settings']['temperature_high_setting'],
                     reading.value['settings']['humidity_setting']+5,
                     reading.value['settings']['air_circulation_minutes'],
-                    reading.value['settings']['humidity_circulation_minutes'],
+                    reading.value['settings']['circulation_cycle_minutes'],
                     reading.value['settings']['stage_limit_minutes'],
                     reading.value['settings']['stage_cooldown_minutes'],
                     reading.value['settings']['swing_temp_offset'])">Raise Humidity</button>
@@ -217,7 +217,7 @@
                     reading.value['settings']['temperature_high_setting'],
                     reading.value['settings']['humidity_setting'],
                     reading.value['settings']['air_circulation_minutes'],
-                    reading.value['settings']['humidity_circulation_minutes'],
+                    reading.value['settings']['circulation_cycle_minutes'],
                     reading.value['settings']['stage_limit_minutes']-5,
                     reading.value['settings']['stage_cooldown_minutes'],
                     reading.value['settings']['swing_temp_offset'])">Shorter Stage</button>
@@ -229,7 +229,7 @@
                     reading.value['settings']['temperature_high_setting'],
                     reading.value['settings']['humidity_setting'],
                     reading.value['settings']['air_circulation_minutes'],
-                    reading.value['settings']['humidity_circulation_minutes'],
+                    reading.value['settings']['circulation_cycle_minutes'],
                     reading.value['settings']['stage_limit_minutes']+5,
                     reading.value['settings']['stage_cooldown_minutes'],
                     reading.value['settings']['swing_temp_offset'])">Longer Stage</button>
@@ -241,7 +241,7 @@
                     reading.value['settings']['temperature_high_setting'],
                     reading.value['settings']['humidity_setting'],
                     reading.value['settings']['air_circulation_minutes'],
-                    reading.value['settings']['humidity_circulation_minutes'],
+                    reading.value['settings']['circulation_cycle_minutes'],
                     reading.value['settings']['stage_limit_minutes'],
                     reading.value['settings']['stage_cooldown_minutes']-5,
                     reading.value['settings']['swing_temp_offset'])">Shorter Cooldown</button>
@@ -253,7 +253,7 @@
                     reading.value['settings']['temperature_high_setting'],
                     reading.value['settings']['humidity_setting'],
                     reading.value['settings']['air_circulation_minutes'],
-                    reading.value['settings']['humidity_circulation_minutes'],
+                    reading.value['settings']['circulation_cycle_minutes'],
                     reading.value['settings']['stage_limit_minutes'],
                     reading.value['settings']['stage_cooldown_minutes']+5,
                     reading.value['settings']['swing_temp_offset'])">Longer Cooldown</button>
@@ -265,7 +265,7 @@
                     reading.value['settings']['temperature_high_setting'],
                     reading.value['settings']['humidity_setting'],
                     reading.value['settings']['air_circulation_minutes'],
-                    reading.value['settings']['humidity_circulation_minutes']-1,
+                    reading.value['settings']['circulation_cycle_minutes']-1,
                     reading.value['settings']['stage_limit_minutes'],
                     reading.value['settings']['stage_cooldown_minutes'],
                     reading.value['settings']['swing_temp_offset'])">Shorter Vent</button>
@@ -277,7 +277,7 @@
                     reading.value['settings']['temperature_high_setting'],
                     reading.value['settings']['humidity_setting'],
                     reading.value['settings']['air_circulation_minutes'],
-                    reading.value['settings']['humidity_circulation_minutes']+1,
+                    reading.value['settings']['circulation_cycle_minutes']+1,
                     reading.value['settings']['stage_limit_minutes'],
                     reading.value['settings']['stage_cooldown_minutes'],
                     reading.value['settings']['swing_temp_offset'])">Longer Vent</button>
@@ -289,7 +289,7 @@
                     reading.value['settings']['temperature_high_setting'],
                     reading.value['settings']['humidity_setting'],
                     reading.value['settings']['air_circulation_minutes']-5,
-                    reading.value['settings']['humidity_circulation_minutes'],
+                    reading.value['settings']['circulation_cycle_minutes'],
                     reading.value['settings']['stage_limit_minutes'],
                     reading.value['settings']['stage_cooldown_minutes'],
                     reading.value['settings']['swing_temp_offset'])">Raise Circ Limit</button>
@@ -301,7 +301,7 @@
                     reading.value['settings']['temperature_high_setting'],
                     reading.value['settings']['humidity_setting'],
                     reading.value['settings']['air_circulation_minutes']+5,
-                    reading.value['settings']['humidity_circulation_minutes'],
+                    reading.value['settings']['circulation_cycle_minutes'],
                     reading.value['settings']['stage_limit_minutes'],
                     reading.value['settings']['stage_cooldown_minutes'],
                     reading.value['settings']['swing_temp_offset'])">Lower Circ Limit</button>
@@ -313,7 +313,7 @@
                     reading.value['settings']['temperature_high_setting'],
                     reading.value['settings']['humidity_setting'],
                     reading.value['settings']['air_circulation_minutes'],
-                    reading.value['settings']['humidity_circulation_minutes'],
+                    reading.value['settings']['circulation_cycle_minutes'],
                     reading.value['settings']['stage_limit_minutes'],
                     reading.value['settings']['stage_cooldown_minutes'],
                     reading.value['settings']['swing_temp_offset']+1)">Raise Swing Offset</button>
@@ -325,7 +325,7 @@
                     reading.value['settings']['temperature_high_setting'],
                     reading.value['settings']['humidity_setting'],
                     reading.value['settings']['air_circulation_minutes'],
-                    reading.value['settings']['humidity_circulation_minutes'],
+                    reading.value['settings']['circulation_cycle_minutes'],
                     reading.value['settings']['stage_limit_minutes'],
                     reading.value['settings']['stage_cooldown_minutes'],
                     reading.value['settings']['swing_temp_offset']-1)">Lower Swing Offset</button>

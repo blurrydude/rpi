@@ -22,11 +22,15 @@ temperature_high_setting = 73
 temperature_low_setting = 69
 humidity_setting = 50
 air_circulation_minutes = 30
-humidity_circulation_minutes = 10
+circulation_cycle_minutes = 10
+ventilation_cycle_minutes = 10
 stage_limit_minutes = 15
 stage_cooldown_minutes = 5
 use_whole_house_fan = False
 swing_temp_offset = 1
+extra_ventilation_circuits = []
+extra_circulation_circuits = []
+humidification_circuits = []
 
 post = True
 temperature = None
@@ -171,8 +175,8 @@ def whf_on():
     log("whf_on")
     whf_state = True
     sendCommand('turn on whole house fan')
-    sendCommand('turn on circulating fan')
-    sendCommand('turn on floor fan')
+    for evc in extra_ventilation_circuits:
+        sendCommand('turn on '+evc)
     mode = getMode()
     more = temperature is not None and temperature > temperature_high_setting + 3
     if more is True and mode != "shower":
@@ -187,8 +191,8 @@ def whf_off():
     log("whf_off")
     whf_state = False
     sendCommand('turn off whole house fan')
-    sendCommand('turn off circulating fan')
-    sendCommand('turn off floor fan')
+    for evc in extra_ventilation_circuits:
+        sendCommand('turn off '+evc)
     mode = getMode()
     if shower_vent is True and mode != "shower":
         sendCommand('turn off shower fan')
@@ -277,7 +281,7 @@ def cycle():
         ac_off()
 
     if air_circulation_minutes > 0 and datetime.now() > last_circulation + timedelta(minutes=air_circulation_minutes):
-        circulate_air(humidity_circulation_minutes)
+        circulate_air(circulation_cycle_minutes)
         return
         
     status = "stand_by"
@@ -293,9 +297,9 @@ def cool_down():
             ac_off()
         return
     # if round(humidity) > humidity_setting and humidity_setting > 0 and has_circulated is False:
-    #     circulate_air(humidity_circulation_minutes)
+    #     circulate_air(circulation_cycle_minutes)
     if temperature > temperature_high_setting + 2 and has_ventilated is False:
-        ventilate_air(humidity_circulation_minutes)
+        ventilate_air(ventilation_cycle_minutes)
     has_ventilated = False
     start_stage = datetime.now()
     ac_on()
@@ -392,11 +396,15 @@ def load_settings():
     global temperature_low_setting
     global humidity_setting
     global air_circulation_minutes
-    global humidity_circulation_minutes
+    global circulation_cycle_minutes
+    global ventilation_cycle_minutes
     global stage_limit_minutes
     global stage_cooldown_minutes
     global use_whole_house_fan
     global swing_temp_offset
+    global extra_ventilation_circuits
+    global extra_circulation_circuits
+    global humidification_circuits
 
     try:
         r =requests.get('https://api.idkline.com/thermosettings/'+room)
@@ -407,11 +415,15 @@ def load_settings():
         temperature_low_setting = s["temperature_low_setting"]
         humidity_setting = s["humidity_setting"]
         air_circulation_minutes = s["air_circulation_minutes"]
-        humidity_circulation_minutes = s["humidity_circulation_minutes"]
+        circulation_cycle_minutes = s["circulation_cycle_minutes"]
+        ventilation_cycle_minutes = s["ventilation_cycle_minutes"]
         stage_limit_minutes = s["stage_limit_minutes"]
         stage_cooldown_minutes = s["stage_cooldown_minutes"]
         use_whole_house_fan = s["use_whole_house_fan"]
         swing_temp_offset = s["swing_temp_offset"]
+        extra_ventilation_circuits = s["extra_ventilation_circuits"]
+        extra_circulation_circuits = s["extra_circulation_circuits"]
+        humidification_circuits = s["humidification_circuits"]
         #log("loaded thermosettings.json")
     except:
         print('failed to get thermosettings')

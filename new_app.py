@@ -525,8 +525,8 @@ def thermoset(data):
         settings["air_circulation_minutes"] = air_circulation_minutes
 
     if len(s) > 5:
-        humidity_circulation_minutes = int(s[5])
-        settings["humidity_circulation_minutes"] = humidity_circulation_minutes
+        circulation_cycle_minutes = int(s[5])
+        settings["circulation_cycle_minutes"] = circulation_cycle_minutes
 
     if len(s) > 6:
         stage_limit_minutes = int(s[6])
