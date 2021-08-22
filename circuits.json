@@ -261,5 +261,13 @@
     "offModes":[],
     "zones":["Ventilation"],
     "onTimes":[],
+    "offTimes":[]} , 
+
+    {"notes":"192.168.1.130",
+    "address": "shelly1pm-F4CFA274807A", "relay":"0", "label":"Shop Light",
+    "onModes": [],
+    "offModes":[],
+    "zones":["Garage"],
+    "onTimes":[],
     "offTimes":[]} 
 ]

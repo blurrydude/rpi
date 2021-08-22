@@ -295,7 +295,6 @@ def control(text):
             command_list.append({"t":topic,"c":com})
             text = text + c["label"]+" "+com+"\n"
     elif "turn" in command:
-        command = command.replace("shop", "garage")
         for ci in range(0,len(circuits)):
             c = circuits[ci]
             if c["label"].lower() in command or c["label"].lower().replace("light","lamp") in command:
