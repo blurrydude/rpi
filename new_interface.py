@@ -417,7 +417,7 @@ def switchToScreen(target):
             screens[room+"thermostat"].labels[7].text = status_text
     if "modes" in target:
         mode = getMode()
-        screens["modes"].labels[0].text = mode['mode'].upper()
+        screens["modes"].labels[0].text = mode[0].upper()
 
 
     screens[target].draw()
