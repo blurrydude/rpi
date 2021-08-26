@@ -158,7 +158,7 @@ def debug():
 def pistates():
     dirname = homepath
     
-    ext = ('_pistate.state')
+    ext = ('_pistate.json')
     states = {}
     for f in os.listdir(dirname):
         if f.endswith(ext):
