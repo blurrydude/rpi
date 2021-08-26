@@ -162,7 +162,7 @@ def pistates():
     states = {}
     for f in os.listdir(dirname):
         if f.endswith(ext):
-            x = open(f)
+            x = open(dirname+'/'+f)
             pi = json.load(x)
             states[pi["name"]] = pi
         else:
