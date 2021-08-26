@@ -478,7 +478,7 @@ def pireport(text):
         "ip": ip,
         "heartbeat": ts
     }
-    with open("/home/pi/"+name+"pistate.json", "w") as write_file:
+    with open("/home/pi/"+name+"_pistate.json", "w") as write_file:
         write_file.write(json.dumps(pi))
     return True
 
