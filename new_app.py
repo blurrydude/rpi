@@ -156,8 +156,17 @@ def debug():
 
 @app.route('/pistates',methods=['GET'])
 def pistates():
-    f = open(homepath+'/pistates.json')
-    states = json.load(f)
+    dirname = homepath
+    
+    ext = ('_pistate.state')
+    states = {}
+    for f in os.listdir(dirname):
+        if f.endswith(ext):
+            x = open(f)
+            pi = json.load(x)
+            states[pi["name"]] = pi
+        else:
+            continue
     return states
 
 @app.route('/checkins',methods=['GET'])
@@ -464,17 +473,12 @@ def pireport(text):
     ip = s[1]
     ts = datetime.now().strftime("%m/%d/%Y_%H:%M:%S")
     #log(name+" "+ip+" "+ts)
-    try:
-        f = open("/home/pi/pistates.json")
-        pi = json.load(f)
-    except:
-        pi = {}
-    pi[name] = {
+    pi = {
         "name": name,
         "ip": ip,
         "heartbeat": ts
     }
-    with open("/home/pi/pistates.json", "w") as write_file:
+    with open("/home/pi/"+name+"pistate.json", "w") as write_file:
         write_file.write(json.dumps(pi))
     return True
 
