@@ -1,0 +1,5 @@
+<h3>States</h3>
+<div *ngFor="let state of states | keyvalue">
+    {{state.key}} - {{state.value["relay_0"]}}<br/>
+    <button (click)="toggle(state.value['label'], state.value['relay_0'])">TOGGLE</button>
+</div>

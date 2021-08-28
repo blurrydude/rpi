@@ -4,8 +4,6 @@ import os
 import json
 
 def mosquittoDo(topic, command):
-    global received
-    global result
     try:
         client = mqtt.Client()
         client.connect("192.168.0.8")

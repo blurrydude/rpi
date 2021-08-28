@@ -1,16 +1,31 @@
 sudo apt install mosquitto
+nano mqttcreds
+mosquitto_passwd -U mqttcreds
+sudo cp mqttcreds /etc/mosquitto/mqttcreds
+cd /etc/mosquitto
+sudo nano mosquitto.conf
 
+[add]
+allow_anonymous false # optional
+password_file /etc/mostquitto/mqttcreds
 
 sudo apt install flask flask-api flask-cors
 sudo apt install paho-mqtt
 
-sudo apt install apache2 -y
+sudo apt remove nodejs
+wget https://nodejs.org/dist/v14.15.4/node-v14.15.4-linux-armv7l.tar.gz
+tar -xzf node-v14.15.4-linux-armv7l.tar.gz
+cd node-v14.15.4-linux-armv7l
+sudo cp -R * /usr/local/
+node -v
 
-npm install -g @angular/cli
+sudo apt install apache2
+
+sudo npm install -g @angular/cli
 mkdir ~/api
 cd ~/api
 ng new mqttapi
 cd mqttapi
 ng serve
-ng build --prod
-sudo cp ~/mqttapi/* /var/www/html/
+ng build
+sudo cp ~/mqttapi/dist/mqttapi/* /var/www/html/
