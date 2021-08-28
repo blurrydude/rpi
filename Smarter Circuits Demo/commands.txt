@@ -1,0 +1,16 @@
+sudo apt install mosquitto
+
+
+sudo apt install flask flask-api flask-cors
+sudo apt install paho-mqtt
+
+sudo apt install apache2 -y
+
+npm install -g @angular/cli
+mkdir ~/api
+cd ~/api
+ng new mqttapi
+cd mqttapi
+ng serve
+ng build --prod
+sudo cp ~/mqttapi/* /var/www/html/
