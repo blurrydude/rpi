@@ -3,7 +3,7 @@ import tkinter as tk
 import requests
 import json
 
-my_circuit = "Reading Light"
+my_circuit = "Reading Lamp"
 relay = "0"
 
 def on_click():

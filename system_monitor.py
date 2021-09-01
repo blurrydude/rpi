@@ -83,43 +83,46 @@ def loop():
     global civil_twilight_begin
     time.sleep(0.5)
     if time.time() - last_loop >= 60:
-        loadTimeCommands()
-        last_loop = time.time()
-        now = datetime.now().strftime("%H:%M")
-        day = datetime.now().strftime("%a").lower()
-        
-        if day != last_day:
-            last_day = day
-            r = requests.get("https://api.sunrise-sunset.org/json?lat=39.68021508778703&lng=-84.17636552954109")
-            j = r.json()
-            sunrise = convert_suntime(j["results"]["sunrise"],False)
-            sunset = convert_suntime(j["results"]["sunset"],False)
-            civil_twilight_begin = convert_suntime(j["results"]["civil_twilight_begin"],False)
-            civil_twilight_end = convert_suntime(j["results"]["civil_twilight_end"],False)
+        try:
+            loadTimeCommands()
+            last_loop = time.time()
+            now = datetime.now().strftime("%H:%M")
+            day = datetime.now().strftime("%a").lower()
+            
+            if day != last_day:
+                last_day = day
+                r = requests.get("https://api.sunrise-sunset.org/json?lat=39.68021508778703&lng=-84.17636552954109")
+                j = r.json()
+                sunrise = convert_suntime(j["results"]["sunrise"],False)
+                sunset = convert_suntime(j["results"]["sunset"],False)
+                civil_twilight_begin = convert_suntime(j["results"]["civil_twilight_begin"],False)
+                civil_twilight_end = convert_suntime(j["results"]["civil_twilight_end"],False)
 
-        # for circuit in circuits:
-        #     for ontime in circuit["onTimes"]:
-        #         if day not in ontime.lower():
-        #             continue
-        #         if time_check(now,ontime) is True:
-        #             sendCommand("turn " + circuit["label"] + " on")
-        #     for offtime in circuit["offTimes"]:
-        #         if day not in offtime.lower():
-        #             continue
-        #         if time_check(now,offtime) is True:
-        #             sendCommand("turn " + circuit["label"] + " off")
-        
-        for tc in timeCommands:
-            check = tc["days_time"].lower()
-            if day not in check:
-                continue
-            if time_check(now,check) is True:
-                if "thermoset" in tc["command"]:
-                    thermoset_command(tc["command"])
-                else:
-                    sendCommand(tc["command"])
-        #TODO: thread this later
-        #snapshot()
+            # for circuit in circuits:
+            #     for ontime in circuit["onTimes"]:
+            #         if day not in ontime.lower():
+            #             continue
+            #         if time_check(now,ontime) is True:
+            #             sendCommand("turn " + circuit["label"] + " on")
+            #     for offtime in circuit["offTimes"]:
+            #         if day not in offtime.lower():
+            #             continue
+            #         if time_check(now,offtime) is True:
+            #             sendCommand("turn " + circuit["label"] + " off")
+            
+            for tc in timeCommands:
+                check = tc["days_time"].lower()
+                if day not in check:
+                    continue
+                if time_check(now,check) is True:
+                    if "thermoset" in tc["command"]:
+                        thermoset_command(tc["command"])
+                    else:
+                        sendCommand(tc["command"])
+            #TODO: thread this later
+            #snapshot()
+        except:
+            print("bad loop")
 
 def thermoset_command(command):
     words = command.split(" ")
