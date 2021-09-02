@@ -8,6 +8,7 @@ from datetime import date, datetime, timedelta
 import os
 from os import path, read
 import requests
+import subprocess
 
 file_logging = True
 running = True
@@ -65,6 +66,7 @@ def loadDoorSensors():
 def initializeMqtt():
     log('initializeMqtt')
     client.on_message = on_message
+    client.on_disconnect = on_disconnect
     client.connect('192.168.1.200')
     client.subscribe('shellies/#')
     client.subscribe('pi/#')
@@ -473,6 +475,13 @@ def log(message):
 
         with open(logfile, append_write) as write_file:
             write_file.write(entry)
+
+def on_disconnect(client, userdata, rc):
+    restart()
+
+def restart():
+    subprocess.Popen(["python3","roller.py"])
+    exit()
 
 def loadAll():
     loadCircuits()
