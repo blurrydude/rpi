@@ -400,6 +400,8 @@ def report():
     w = "off"
     if whf_state is True:
         w = "on"
+    if system_disabled is True:
+        status = "disabled"
     log('report: {0:0.1f} F {1:0.1f}% AC:{2} Fan:{3} Heat:{4} WHF:{5} Status:{6} Last Start:{7} Last Circ:{8}'.format(temp, hum,cool,circ,h,w,status,start_stage.strftime("%m/%d/%Y, %H:%M:%S"),last_circulation.strftime("%m/%d/%Y, %H:%M:%S")))
     report_readings()
 
