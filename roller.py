@@ -120,6 +120,10 @@ def power_on_self_test(addy):
         time.sleep(3)
         close_roller(addy)
 
+def on_disconnect(client, userdata, rc):
+    subprocess.Popen(["python3","roller.py"])
+    exit()
+
 if __name__ == "__main__":
     #for i in range(len(read_pins)):
     #    _thread.start_new_thread(power_on_self_test, (i,))
@@ -132,6 +136,7 @@ if __name__ == "__main__":
     else:
         sendReport("ir", "closed")
     client.on_message = on_message
+    client.on_disconnect = on_disconnect
     client.connect('192.168.1.200')
     topic = 'pi/' + myname + '/commands'
     #print('subscribing to '+topic)

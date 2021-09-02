@@ -34,6 +34,10 @@ def closeDoor(bay):
     dooropen[bay] = False
     return True
 
+def on_disconnect(client, userdata, rc):
+    subprocess.Popen(["python3","roller.py"])
+    exit()
+
 def on_message(client, userdata, message):
     global running
     result = str(message.payload.decode("utf-8"))
@@ -64,6 +68,7 @@ def sendReport(door, state):
 if __name__ == "__main__":
     p.init()
     client.on_message = on_message
+    client.on_disconnect = on_disconnect
     client.connect('192.168.1.200')
     topic = 'pi/' + myname + '/commands'
     #print('subscribing to '+topic)
