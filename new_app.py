@@ -548,7 +548,9 @@ def thermoset(data):
         settings["ventilation_cycle_minutes"] = ventilation_cycle_minutes
 
     if len(s) > 10:
-        system_disabled = bool(s[10])
+        system_disabled = False
+        if s[10].lower() == "true":
+            system_disabled = True
         settings["system_disabled"] = system_disabled
 
     with open(homepath+"/"+room+"_thermosettings.json","w") as write_file:

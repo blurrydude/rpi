@@ -43,6 +43,8 @@ class SmartScreen:
             decrease_high_temp(button.target)
         if "shades" in button.func:
             sendCommand(button.target + " the shades")
+        if "system_switch" in button.func:
+            toggle_system(button.target)
     def hide(self):
         for button in self.buttons:
             button.hide()
@@ -207,6 +209,12 @@ def buildThermostatScreen():
                     "height": 1, "fontname": "Times", "fontsize": 20,
                     "bg": "darkblue", "fg": "white", "sticky": "nesw",
                     "row": 4, "col": 2, "padx": 5, "pady": 5
+                }))
+        screens[room+"thermostat"].buttons.append(SmartButton(screens[room+"thermostat"],{
+                    "text": "Toggle System", "func": "system_switch", "target":room,
+                    "height": 1, "fontname": "Times", "fontsize": 20,
+                    "bg": "darkblue", "fg": "white", "sticky": "nesw",
+                    "row": 6, "col": 1, "padx": 5, "pady": 5
                 }))
         screens[room+"thermostat"].labels.append(SmartLabel({
                     "text": "Heat When Below", "bg": "black", "fg": "white",
@@ -497,6 +505,29 @@ def increase_low_temp(room):
     except:
         print('failed to send command: '+request)
     # switchToScreen(room+"thermostat")
+
+def toggle_system(room):
+    request = 'https://api.idkline.com/thermosettings/'+room
+    response = requests.get(request)
+    settings = json.loads(response.text)
+    print("Original Value: "+str(settings["system_disabled"]))
+    if settings["system_disabled"] is True:
+        settings["system_disabled"] = False
+    else:
+        settings["system_disabled"] = True
+    request = 'https://api.idkline.com/thermoset/'+room+'-'
+    request = request + str(settings["temperature_low_setting"]) + '-'
+    request = request + str(settings["temperature_high_setting"]) + '-'
+    request = request + str(settings["humidity_setting"]) + '-'
+    request = request + str(settings["air_circulation_minutes"]) + '-'
+    request = request + str(settings["circulation_cycle_minutes"]) + '-'
+    request = request + str(settings["stage_limit_minutes"]) + '-'
+    request = request + str(settings["stage_cooldown_minutes"]) + '-'
+    request = request + str(settings["swing_temp_offset"]) + '-'
+    request = request + str(settings["ventilation_cycle_minutes"]) + '-'
+    request = request + str(settings["system_disabled"]).lower()
+    print("Sending Request: "+request)
+    response = requests.get(request)
 
 def increase_high_temp(room):
     #print("sending command: "+command)
