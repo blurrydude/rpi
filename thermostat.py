@@ -27,6 +27,7 @@ ventilation_cycle_minutes = 10
 stage_limit_minutes = 15
 stage_cooldown_minutes = 5
 use_whole_house_fan = False
+system_disabled = False
 swing_temp_offset = 1
 extra_ventilation_circuits = []
 extra_circulation_circuits = []
@@ -257,6 +258,18 @@ def cycle():
     if delay_stage > datetime.now():
         status = "delayed"
         return
+
+    if system_disabled is True:
+        status = "disabled"
+        if ac_state is True:
+            ac_off()
+        if heat_state is True:
+            heat_off()
+        if circulating is True:
+            stop_circulating()
+        if ventilating is True:
+            stop_ventilating()
+        return
     
     if round(temperature) > temperature_high_setting and ac_state is False:
         cool_down()
@@ -405,6 +418,7 @@ def load_settings():
     global extra_ventilation_circuits
     global extra_circulation_circuits
     global humidification_circuits
+    global system_disabled
 
     try:
         r =requests.get('https://api.idkline.com/thermosettings/'+room)
@@ -424,6 +438,7 @@ def load_settings():
         extra_ventilation_circuits = s["extra_ventilation_circuits"]
         extra_circulation_circuits = s["extra_circulation_circuits"]
         humidification_circuits = s["humidification_circuits"]
+        system_disabled = s["system_disabled"]
         #log("loaded thermosettings.json")
     except:
         print('failed to get thermosettings')
