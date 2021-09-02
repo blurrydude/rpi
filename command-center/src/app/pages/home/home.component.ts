@@ -320,8 +320,8 @@ export class HomeComponent {
       this.load(httpMessageService, true)
     }
 
-    public sendThermosettings(room: string, temp_low: number, temp_high: number, humidity: number, circ_min: number, hum_circ_min: number, stage_limit: number, stage_cooldown: number, swing_temp_offset: number, vent_min: number) {
-      this.httpMessageService.sendThermosettings(room,temp_low,temp_high,humidity,circ_min,hum_circ_min, stage_limit, stage_cooldown, swing_temp_offset, vent_min).toPromise().then(smsg => {
+    public sendThermosettings(room: string, temp_low: number, temp_high: number, humidity: number, circ_min: number, hum_circ_min: number, stage_limit: number, stage_cooldown: number, swing_temp_offset: number, vent_min: number, system_disabled: boolean) {
+      this.httpMessageService.sendThermosettings(room,temp_low,temp_high,humidity,circ_min,hum_circ_min, stage_limit, stage_cooldown, swing_temp_offset, vent_min, system_disabled).toPromise().then(smsg => {
         setTimeout(()=>{this.load(this.httpMessageService,false)},500);
       });
     }
