@@ -121,7 +121,7 @@ def log(message):
         write_file.write(message+'\n')
 
 def sms(message):
-    print('sms: '+message)
+    log('sms: '+message)
     if twilled is False:
         return
     try:

@@ -477,6 +477,7 @@ def log(message):
             write_file.write(entry)
 
 def on_disconnect(client, userdata, rc):
+    log("restarting due to MQTT disconnect")
     restart()
 
 def restart():
