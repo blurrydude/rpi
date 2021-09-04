@@ -78,6 +78,7 @@ def close_click():
     global running
     running = False
     time.sleep(1)
+    GPIO.cleanup()
     exit()
 
 GPIO.setmode(GPIO.BCM)
@@ -114,3 +115,4 @@ if __name__ == '__main__':
     _thread.start_new_thread(draw_loop, ())
 
     window.mainloop()
+    
