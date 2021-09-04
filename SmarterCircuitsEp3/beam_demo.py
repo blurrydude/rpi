@@ -5,6 +5,7 @@ import RPi.GPIO as GPIO
 
 inner_beam_pin = 20
 outer_beam_pin = 21
+running = True
 
 inner_beam = 0
 outer_beam = 0
@@ -30,7 +31,6 @@ def on_beam_state_read(channel):
     elif c == "00":
         direction = "none"
     last_beam_state = c
-    draw_labels()
 
 def check_direction():
     global direction
@@ -43,27 +43,41 @@ def check_direction():
         direction = "in"
         occupants = occupants + 1
 
-def draw_labels():
+def draw_loop():
     global label1
     global label2
     global label3
     global label4
-    label1.grid_forget()
-    label2.grid_forget()
-    label3.grid_forget()
-    label4.grid_forget()
-    label1 = tk.Label(text=str(inner_beam), font = ("Times", 72), bg="black", fg="white")
-    label2 = tk.Label(text=str(outer_beam), font = ("Times", 72), bg="black", fg="white")
-    label3 = tk.Label(text=direction, font = ("Times", 64), bg="black", fg="white")
-    label4 = tk.Label(text=str(occupants), font = ("Times", 48), bg="black", fg="white")
-    label5 = tk.Label(text=action, font = ("Times", 48), bg="black", fg="white")
-    label1.grid(row=0, column=0, sticky="nesw", padx=5, pady=5)
-    label2.grid(row=0, column=2, sticky="nesw", padx=5, pady=5)
-    label3.grid(row=1, column=1, sticky="nesw", padx=5, pady=5)
-    label4.grid(row=2, column=1, sticky="nesw", padx=5, pady=5)
-    label5.grid(row=3, column=1, sticky="nesw", padx=5, pady=5)
+    last_inner = 0
+    last_outer = 0
+    last_direction = ""
+    last_occupants = 0
+    while running is True:
+        if inner_beam != last_inner:
+            last_inner = inner_beam
+            label1.grid_forget()
+            label1 = tk.Label(text=str(inner_beam), font = ("Times", 72), bg="black", fg="white")
+            label1.grid(row=0, column=0, sticky="nesw", padx=5, pady=5)
+        if outer_beam != last_outer:
+            last_outer = outer_beam
+            label2.grid_forget()
+            label2 = tk.Label(text=str(outer_beam), font = ("Times", 72), bg="black", fg="white")
+            label2.grid(row=0, column=2, sticky="nesw", padx=5, pady=5)
+        if direction != last_direction:
+            last_direction = direction
+            label3.grid_forget()
+            label3 = tk.Label(text=direction, font = ("Times", 64), bg="black", fg="white")
+            label3.grid(row=1, column=1, sticky="nesw", padx=5, pady=5)
+        if occupants != last_occupants:
+            last_occupants = occupants
+            label4.grid_forget()
+            label4 = tk.Label(text=str(occupants), font = ("Times", 48), bg="black", fg="white")
+            label4.grid(row=2, column=1, sticky="nesw", padx=5, pady=5)
 
 def close_click():
+    global running
+    running = False
+    time.sleep(1)
     exit()
 
 GPIO.setmode(GPIO.BCM)
@@ -77,7 +91,6 @@ label1 = tk.Label(text="0", font = ("Times", 72), bg="black", fg="white")
 label2 = tk.Label(text="0", font = ("Times", 72), bg="black", fg="white")
 label3 = tk.Label(text="none", font = ("Times", 64), bg="black", fg="white")
 label4 = tk.Label(text="0", font = ("Times", 48), bg="black", fg="white")
-label5 = tk.Label(text="", font = ("Times", 48), bg="black", fg="white")
 
 if __name__ == '__main__':
     width = window.winfo_screenwidth()
@@ -94,9 +107,10 @@ if __name__ == '__main__':
     label2.grid(row=0, column=2, sticky="nesw", padx=5, pady=5)
     label3.grid(row=1, column=1, sticky="nesw", padx=5, pady=5)
     label4.grid(row=2, column=1, sticky="nesw", padx=5, pady=5)
-    label5.grid(row=3, column=1, sticky="nesw", padx=5, pady=5)
 
     close_button = tk.Button(text="CLOSE",command=close_click, height=1, font = ("Times", 12), bg="orange", fg="white")
     close_button.grid(row=4, column=1, sticky="nesw", padx=5, pady=5)
+        
+    _thread.start_new_thread(draw_loop, ())
 
     window.mainloop()
