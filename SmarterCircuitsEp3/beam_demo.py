@@ -1,6 +1,10 @@
 import tkinter as tk
 import _thread
 import time
+import RPi.GPIO as GPIO
+
+inner_beam_pin = 20
+outer_beam_pin = 21
 
 inner_beam = 0
 outer_beam = 0
@@ -9,18 +13,15 @@ occupants = 0
 last_beam_state = "00"
 action = ""
 
-window = tk.Tk()
-label1 = tk.Label(text="0", font = ("Times", 72), bg="black", fg="white")
-label2 = tk.Label(text="0", font = ("Times", 72), bg="black", fg="white")
-label3 = tk.Label(text="none", font = ("Times", 64), bg="black", fg="white")
-label4 = tk.Label(text="0", font = ("Times", 48), bg="black", fg="white")
-label5 = tk.Label(text="", font = ("Times", 48), bg="black", fg="white")
-
-def on_beam_state_read():
+def on_beam_state_read(channel):
     global last_beam_state
     global direction
-    a = str(inner_beam)
-    b = str(outer_beam)
+    global inner_beam
+    global outer_beam
+    a = str(GPIO.input(inner_beam_pin))
+    b = str(GPIO.input(outer_beam_pin))
+    inner_beam = a
+    outer_beam = b
     c = a+b
     if c == last_beam_state:
         return
@@ -65,118 +66,18 @@ def draw_labels():
 def close_click():
     exit()
 
-def demo():
-    global inner_beam
-    global outer_beam
-    global action
-    time.sleep(3)
-    demo_enter()
-    time.sleep(2)
-    demo_enter()
-    time.sleep(2)
-    demo_exit()
-    time.sleep(2)
-    demo_play_with_door()
-    time.sleep(2)
-    demo_enter()
-    time.sleep(2)
-    demo_exit()
-    time.sleep(2)
-    demo_enter()
-    time.sleep(2)
-    demo_play_with_door()
-    time.sleep(2)
-    demo_enter()
-    time.sleep(2)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(inner_beam_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(outer_beam_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.add_event_detect(inner_beam_pin, GPIO.BOTH, callback=on_beam_state_read)
+GPIO.add_event_detect(outer_beam_pin, GPIO.BOTH, callback=on_beam_state_read)
 
-def demo_enter():
-    global action
-    action = "open door"
-    demo_door()
-    action = "walk in"
-    demo_in()
-    action = "close door"
-    demo_door()
-    action = ""
-    draw_labels()
-
-def demo_exit():
-    global action
-    action = "open door"
-    demo_door()
-    action = "walk out"
-    demo_out()
-    action = "close door"
-    demo_door()
-    action = ""
-    draw_labels()
-
-def demo_play_with_door():
-    global action
-    action = "open door"
-    demo_door()
-    action = "close door"
-    demo_door()
-    action = ""
-    draw_labels()
-
-def demo_out():
-    global inner_beam
-    global outer_beam
-    on_beam_state_read()
-    time.sleep(1)
-    inner_beam = 0
-    outer_beam = 1
-    on_beam_state_read()
-    time.sleep(1)
-    inner_beam = 1
-    outer_beam = 1
-    on_beam_state_read()
-    time.sleep(1)
-    inner_beam = 1
-    outer_beam = 0
-    on_beam_state_read()
-    time.sleep(1)
-    inner_beam = 0
-    outer_beam = 0
-    on_beam_state_read()
-    time.sleep(1)
-    
-def demo_in():
-    global inner_beam
-    global outer_beam
-    on_beam_state_read()
-    time.sleep(1)
-    inner_beam = 1
-    outer_beam = 0
-    on_beam_state_read()
-    time.sleep(1)
-    inner_beam = 1
-    outer_beam = 1
-    on_beam_state_read()
-    time.sleep(1)
-    inner_beam = 0
-    outer_beam = 1
-    on_beam_state_read()
-    time.sleep(1)
-    inner_beam = 0
-    outer_beam = 0
-    on_beam_state_read()
-    time.sleep(1)
-    
-def demo_door():
-    global inner_beam
-    global outer_beam
-    on_beam_state_read()
-    time.sleep(1)
-    inner_beam = 1
-    outer_beam = 0
-    on_beam_state_read()
-    time.sleep(1)
-    inner_beam = 0
-    outer_beam = 0
-    on_beam_state_read()
-    time.sleep(1)
+window = tk.Tk()
+label1 = tk.Label(text="0", font = ("Times", 72), bg="black", fg="white")
+label2 = tk.Label(text="0", font = ("Times", 72), bg="black", fg="white")
+label3 = tk.Label(text="none", font = ("Times", 64), bg="black", fg="white")
+label4 = tk.Label(text="0", font = ("Times", 48), bg="black", fg="white")
+label5 = tk.Label(text="", font = ("Times", 48), bg="black", fg="white")
 
 if __name__ == '__main__':
     width = window.winfo_screenwidth()
@@ -198,5 +99,4 @@ if __name__ == '__main__':
     close_button = tk.Button(text="CLOSE",command=close_click, height=1, font = ("Times", 12), bg="orange", fg="white")
     close_button.grid(row=4, column=1, sticky="nesw", padx=5, pady=5)
 
-    _thread.start_new_thread(demo, ())
     window.mainloop()
