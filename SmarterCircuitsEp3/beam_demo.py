@@ -55,14 +55,14 @@ def draw_loop():
     while running is True:
         if inner_beam != last_inner:
             last_inner = inner_beam
-            label2.grid_forget()
-            label2 = tk.Label(text=str(inner_beam), font = ("Times", 128), bg="black", fg="white")
-            label2.grid(row=0, column=0, sticky="nesw", padx=5, pady=5)
+            label1.grid_forget()
+            label1 = tk.Label(text=str(inner_beam), font = ("Times", 128), bg="black", fg="white")
+            label1.grid(row=0, column=0, sticky="nesw", padx=5, pady=5)
         if outer_beam != last_outer:
             last_outer = outer_beam
-            label1.grid_forget()
-            label1 = tk.Label(text=str(outer_beam), font = ("Times", 128), bg="black", fg="white")
-            label1.grid(row=0, column=2, sticky="nesw", padx=5, pady=5)
+            label2.grid_forget()
+            label2 = tk.Label(text=str(outer_beam), font = ("Times", 128), bg="black", fg="white")
+            label2.grid(row=0, column=2, sticky="nesw", padx=5, pady=5)
         if direction != last_direction:
             last_direction = direction
             label3.grid_forget()
