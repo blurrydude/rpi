@@ -61,18 +61,34 @@
     },
     {
         "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunset",
-        "command": "thermoset gameroom temperature_high_setting 69"
-    },
-    {
-        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunrise",
-        "command": "thermoset gameroom temperature_high_setting 72"
+        "command": "thermoset gameroom temperature_high_setting 71"
     },
     {
         "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunset",
-        "command": "thermoset hallway temperature_high_setting 69"
+        "command": "thermoset gameroom temperature_low_setting 68"
     },
     {
         "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunrise",
-        "command": "thermoset hallway temperature_high_setting 74"
+        "command": "thermoset gameroom temperature_high_setting 73"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunrise",
+        "command": "thermoset gameroom temperature_low_setting 70"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunset",
+        "command": "thermoset hallway temperature_high_setting 71"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunset",
+        "command": "thermoset hallway temperature_low_setting 68"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunrise",
+        "command": "thermoset hallway temperature_high_setting 75"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunrise",
+        "command": "thermoset hallway temperature_high_setting 72"
     }
 ]
