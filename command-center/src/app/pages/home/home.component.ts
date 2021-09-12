@@ -1,4 +1,4 @@
-import { Component, Input, Output } from '@angular/core';
+import { OnInit, Component, ElementRef, Input, Output, ViewChild } from '@angular/core';
 import { StatusService } from "../../services/status.service";
 import { GoogleChartComponent } from 'angular-google-charts';  
 
@@ -6,7 +6,7 @@ import { GoogleChartComponent } from 'angular-google-charts';
   selector: 'home',
   templateUrl: './home.component.html'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
     @Output() status: object = {};
     @Output() pistatus: object = {};
     @Output() readings: object = {};
@@ -25,6 +25,13 @@ export class HomeComponent {
     @Output() loghours: number = 2;
     firstLoad: boolean = true;
     logtick: number = 0;
+    canvasX: number = 0;
+    canvasY: number = 0;
+    scale: number = 1.6;
+
+    @ViewChild('myCanvas', { static: true })
+    myCanvas!: ElementRef;
+    public context!: CanvasRenderingContext2D;
 
     @Output() @Input() chartData: any = {
       title: 'Temperatures',
@@ -316,8 +323,406 @@ export class HomeComponent {
       height: 800
     }
 
+    housepoints = [
+      [482,54],
+      [551,54],
+      [724,54],
+      [76,105],
+      [185,105],
+      [412,105],
+      [443,105],
+      [482,105],
+      [76,132],
+      [185,132],
+      [412,138],
+      [443,138],
+      [586,142],
+      [653,142],
+      [724,142],
+      [412,175],
+      [421,175],
+      [429,175],
+      [437,175],
+      [443,175],
+      [445,175],
+      [453,175],
+      [462,175],
+      [482,175],
+      [551,175],
+      [586,175],
+      [653,175],
+      [724,175],
+      [185,206],
+      [316,206],
+      [370,206],
+      [412,206],
+      [421,206],
+      [429,206],
+      [437,206],
+      [445,206],
+      [453,206],
+      [462,206],
+      [484,206],
+      [504,206],
+      [533,206],
+      [551,206],
+      [586,206],
+      [337,230],
+      [370,230],
+      [533,233],
+      [551,233],
+      [566,233],
+      [411,238],
+      [484,238],
+      [504,238],
+      [76,245],
+      [185,245],
+      [484,262],
+      [504,262],
+      [49,271],
+      [58,271],
+      [67,271],
+      [76,271],
+      [316,281],
+      [337,281],
+      [538,284],
+      [551,284],
+      [566,284],
+      [49,299],
+      [58,299],
+      [67,299],
+      [76,299],
+      [484,304],
+      [505,304],
+      [551,304],
+      [587,304],
+      [724,304],
+      [310,336],
+      [341,336],
+      [185,360],
+      [310,360],
+      [341,360],
+      [411,360],
+      [484,360],
+      [475,422],
+      [504,422],
+      [725,422],
+      [475,510],
+      [504,510],
+      [475,548],
+      [535,548],
+      [185,550],
+      [475,585],
+      [535,585],
+      [596,585],
+      [725,585],
+      [185,592],
+      [194,592],
+      [203,592],
+      [212,592],
+      [596,618],
+      [642,618],
+      [185,620],
+      [194,620],
+      [203,620],
+      [212,620],
+      [76,628],
+      [185,628],
+      [475,668],
+      [596,668],
+      [642,668],
+      [725,668],
+      [411,550],
+      [587,233],
+
+      [374,105],
+      [402,105],
+      [412,113],
+      [482,123],
+      [412,134],
+      [667,142],
+      [715,142],
+      [482,169],
+      [528,175],
+      [545,175],
+      [560,175],
+      [580,175],
+      [601,175],
+      [646,175],
+      [586,186],
+      [586,201],
+      [382,206],
+      [405,206],
+      [512,206],
+      [530,206],
+      [185,217],
+      [411,218],
+      [411,232],
+      [571,233],
+      [584,233],
+      [185,241],
+      [411,242],
+      [587,242],
+      [104,245],
+      [160,245],
+      [587,258],
+      [316,284],
+      [316,336],
+      [342,336],
+      [204,360],
+      [294,360],
+      [516,422],
+      [588,422],
+      [612,422],
+      [690,422],
+      [185,434],
+      [185,497],
+      [562,585],
+      [581,585],
+      [633,585],
+      [654,585],
+      [204,206],
+      [294,206],
+
+      [388,30],
+      [545,65],
+      [561,65],
+      [387,94],
+      [351,113],
+      [177,144],
+      [195,165],
+      [525,183],
+      [525,193],
+      [569,193],
+      [133,194],
+      [367,202],
+      [571,222],
+      [597,223],
+      [355,266],
+      [524,266],
+      [577,269],
+      [253,283],
+      [82,306],
+      [432,311],
+      [472,312],
+      [386,349],
+      [288,371],
+      [182,410],
+      [600,416],
+      [319,459],
+      [652,497],
+      [182,506],
+      [670,518],
+      [307,544],
+      [507,570],
+      [684,635],
+      [547,639],
+      // [228,548],
+      // [298,548],
+      // [371,548],
+    ];
+    houselines = [
+      [0,2],
+      [0,23],
+      [3,7],
+      [3,102],
+      [8,9],
+      [4,103],
+      [102,103],
+      [92,95],
+      [95,101],
+      [98,101],
+      [93,99],
+      [94,100],
+      [55,58],
+      [55,64],
+      [64,67],
+      [56,65],
+      [57,66],
+      [51,52],
+      [28,42],
+      [5,48],
+      [6,19],
+      [15,27],
+      [10,11],
+      [1,24],
+      [12,71],
+      [12,14],
+      [13,26],
+      [2,72],
+      [16,32],
+      [17,33],
+      [18,34],
+      [20,35],
+      [21,36],
+      [22,37],
+      [29,59],
+      [59,60],
+      [43,60],
+      [43,44],
+      [30,44],
+      [48,50],
+      [38,79],
+      [75,79],
+      [73,76],
+      [73,74],
+      [74,77],
+      [78,108],
+      [87,108],
+      [68,72],
+      [39,69],
+      [53,54],
+      [41,70],
+      [40,45],
+      [45,109],
+      [45,61],
+      [61,63],
+      [47,63],
+
+      [80,82],
+      [80,104],
+      [82,107],
+      [104,107],
+      [81,84],
+      [83,84],
+      [85,86],
+      [86,89],
+      [88,91],
+      [90,105],
+      [96,97],
+      [97,106]
+    ];
+    housedoors = [
+      [110,111],
+      [112,114],
+      [130,135],
+      [138,139],
+      [144,145],
+      [131,132],
+      [150,151],
+      [126,127],
+      [113,117],
+      [128,129],
+      [118,119],
+      [120,121],
+      [115,116],
+      [124,125],
+      [122,123],
+      [133,134],
+      [137,140],
+      [152,153],
+      [154,155],
+      [146,147],
+      [148,149],
+      [156,157]
+    ];
+    housecircuits = [
+      "Lamp post",
+      "Gym Lamp",
+      "Library Lamp",
+      "Porch",
+      "Livingroom TV",
+      "Day Room Lamp",
+      "Fireplace",
+      "Floor Fan",
+      "Hallway",
+      "Whole House Fan",
+      "Day Room Fan",
+      "Livingroom Lamp",
+      "Shower Fan",
+      "Bedroom Lamp",
+      "Bar",
+      "Guest Bath",
+      "Master Bath",
+      "Dining Room",
+      "Deck Rail",
+      "Kitchen",
+      "Under Cabinet",
+      "Coffee Station",
+      "Circulating Fan",
+      "Deck Fountain",
+      "Lamp post",
+      "Game Room",
+      "Shop Light",
+      "Deck Light",
+      "Bench Fan",
+      "Game Tables",
+      "Stairway",
+      "Storage Room",
+      "Laundry Room"
+    ];
+
     constructor(public httpMessageService: StatusService) { 
-      this.load(httpMessageService, true)
+      this.load(httpMessageService, true);
+    }
+
+    public canvasClick(event: any) {
+      console.log("clicked "+(event.clientX-this.canvasX)+" "+(event.clientY-this.canvasY));
+      let clickX = event.clientX-this.canvasX;
+      let clickY = event.clientY-this.canvasY;
+      for(let i = 158; i < this.housepoints.length; i++) {
+        let p = this.housepoints[i];
+        let c = this.housecircuits[i - 158];
+        let l = p[0]*this.scale - 10;
+        let r = p[0]*this.scale + 50;
+        let t = p[1]*this.scale - 10;
+        let b = p[1]*this.scale + 10;
+        if(clickX >= l && clickX <= r && clickY >= t && clickY <= b) {
+          console.log(c+" clicked!");
+        }
+      }
+    }
+
+    ngOnInit(): void {
+      console.log("I inited.");
+      let rect = this.myCanvas.nativeElement.getBoundingClientRect();
+      this.canvasX = rect.x;
+      this.canvasY = rect.y;
+      this.context = this.myCanvas.nativeElement.getContext('2d');
+      this.context.fillStyle = 'white';
+      
+
+      this.context.strokeStyle = '#009900';
+      this.context.lineWidth = 2;
+      this.context.beginPath();
+      this.houselines.forEach(line => {
+        let p1 = this.housepoints[line[0]];
+        let p2 = this.housepoints[line[1]];
+        this.context.moveTo(p1[0]*this.scale,p1[1]*this.scale);
+        this.context.lineTo(p2[0]*this.scale,p2[1]*this.scale);
+      });
+      this.context.stroke();
+
+      this.context.strokeStyle = '#000099';
+      this.context.lineWidth = 2;
+      this.context.beginPath();
+      this.housedoors.forEach(door => {
+        let p1 = this.housepoints[door[0]];
+        let p2 = this.housepoints[door[1]];
+        this.context.moveTo(p1[0]*this.scale,p1[1]*this.scale);
+        this.context.lineTo(p2[0]*this.scale,p2[1]*this.scale);
+      });
+      this.context.stroke();
+
+      let i = 0;
+      this.housepoints.forEach(point => {
+        let x = point[0];
+        let y = point[1];
+        this.context.fillRect(x*this.scale,y*this.scale,2,2);
+        if (i > 157) {
+          let cindex = i - 158;
+          //this.context.fillText(cindex+'',x+3,y+3);
+          this.context.fillText(this.housecircuits[cindex],x*this.scale+3,y*this.scale+3);
+        }
+        i++;
+      });
+      //this.context.fillRect(0, 0, 5, 5);
+      
+      //this.context.strokeStyle = '#ff0000';
+      //this.context.beginPath();
+      //this.context.moveTo(153,210);
+      //this.context.lineTo(372,210);
+      //this.context.stroke();
     }
 
     public sendThermosettings(room: string, temp_low: number, temp_high: number, humidity: number, circ_min: number, hum_circ_min: number, stage_limit: number, stage_cooldown: number, swing_temp_offset: number, vent_min: number, system_disabled: boolean) {
