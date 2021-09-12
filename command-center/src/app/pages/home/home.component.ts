@@ -657,7 +657,7 @@ export class HomeComponent implements OnInit {
     }
 
     public canvasClick(event: any) {
-      let clickX = event.clientX-this.canvasX;
+      let clickX = event.clientX-this.canvasX+window.pageXOffset;
       let clickY = event.clientY-this.canvasY+window.pageYOffset;
       console.log("clicked "+clickX+" "+clickY);
       for(let i = 158; i < this.housepoints.length; i++) {
@@ -700,7 +700,7 @@ export class HomeComponent implements OnInit {
 
     public drawFloors() {
       this.context.strokeStyle = '#009900';
-      this.context.lineWidth = 2;
+      this.context.lineWidth = 3;
       this.context.beginPath();
       this.houselines.forEach(line => {
         let p1 = this.housepoints[line[0]];
@@ -713,7 +713,7 @@ export class HomeComponent implements OnInit {
 
     public drawDoors() {
       this.context.strokeStyle = '#004400';
-      this.context.lineWidth = 2;
+      this.context.lineWidth = 3;
       this.context.beginPath();
       this.housedoors.forEach(door => {
         let p1 = this.housepoints[door[0]];
@@ -726,6 +726,7 @@ export class HomeComponent implements OnInit {
 
     public drawCircuits() {
       let i = 0;
+      this.context.lineWidth = 1;
       this.housepoints.forEach(point => {
         let x = point[0];
         let y = point[1];
