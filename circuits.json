@@ -89,7 +89,7 @@
 
     {"notes":"192.168.1.100",
     "address": "shelly1pm-8CAAB574C489",      "relay":"0", "label":"Fireplace",
-    "onModes": ["Evening", "Alert", "Dinner"],
+    "onModes": ["Alert", "Dinner"],
     "offModes":["Dark", "Night", "Day"],
     "zones":["Living Room", "Down Stairs"],
     "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:18:00"],
@@ -169,11 +169,11 @@
 
     {"notes":"192.168.1.122",
     "address": "shelly1pm-C82B961DD52E", "relay":"0", "label":"Garage Lights",
-    "onModes": ["Morning", "Lunch", "Evening", "Alert"],
+    "onModes": ["Alert"],
     "offModes":["Dark", "Night", "Day"],
-    "zones":["Garage"],
-    "onTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:11:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:17:00"],
-    "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:09:30","Mon,Tue,Wed,Thu,Fri,Sat,Sun:14:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:23:10"]}, 
+    "zones":[],
+    "onTimes":[],
+    "offTimes":[]}, 
 
     {"notes":"192.168.1.117",
     "address": "shellyswitch25-8CAAB561DDCF", "relay":"1", "label":"Stairway",
@@ -241,7 +241,7 @@
 
     {"notes":"192.168.1.114",
     "address": "shelly1pm-84CCA89FC0FD", "relay":"0", "label":"Deck Rail",
-    "onModes": ["Evening", "Alert"],
+    "onModes": ["Alert"],
     "offModes":["Dark", "Night", "Day"],
     "zones":["Exterior", "Deck"],
     "onTimes":[],
@@ -266,7 +266,7 @@
     {"notes":"192.168.1.130",
     "address": "shelly1pm-F4CFA274807A", "relay":"0", "label":"Shop Light",
     "onModes": ["Alert"],
-    "offModes":["Dark"],
+    "offModes":["Dark","Night","Midnight"],
     "zones":["Garage"],
     "onTimes":[],
     "offTimes":[]} 

@@ -25,7 +25,7 @@ f = open('/home/pi/config.json')
 config = json.load(f)
 try:
     from twilio.rest import Client
-    twilled = True
+    #twilled = True # off for a reason. will remove later
     print('we have twilio')
 except:
     os.system('pip3 install twilio')
