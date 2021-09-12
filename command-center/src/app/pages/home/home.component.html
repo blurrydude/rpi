@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <canvas #myCanvas width="1600" height="1600" (click)="canvasClick($event)"></canvas>
+    <canvas #myCanvas width="1600" height="1100" (click)="canvasClick($event)"></canvas>
     <div class="row mt-3 mb-2 text-center" *ngIf="httpMessageService.auth!=''">
       <div class="col-md-12 text-warning">
         <h3>Control</h3>
@@ -57,14 +57,14 @@
             <button class="btn btn-primary mx-2 my-1 w-100" (click)="command('switch to alert mode')">ALERT</button>
           </div>
         </div>
-        <div class="col-md-12 text-muted">
+        <!--<div class="col-md-12 text-muted">
           <h4>Circuits</h4>
-        </div>
+        </div>//-->
         <div class="row">
-          <div class="col-md-4" *ngFor="let circuitstatus of status | keyvalue">
+          <!--<div class="col-md-4" *ngFor="let circuitstatus of status | keyvalue">
             <button class="btn btn-primary mx-2 my-1 w-100" *ngIf="circuitstatus.value['state'] == 'on'" (click)="command('turn off '+circuitstatus.key)">{{circuitstatus.key}}</button>
             <button class="btn btn-secondary mx-2 my-1 w-100" *ngIf="circuitstatus.value['state'] == 'off'" (click)="command('turn on '+circuitstatus.key)">{{circuitstatus.key}}</button>
-          </div>
+          </div>//-->
           <div class="col-md-12 text-muted">
             <h4>Shade Control</h4>
           </div>
@@ -97,6 +97,7 @@
             </div>
           </div>
         </div>
+
       </div>
     </div>
 

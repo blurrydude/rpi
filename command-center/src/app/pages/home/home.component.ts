@@ -657,18 +657,25 @@ export class HomeComponent implements OnInit {
     }
 
     public canvasClick(event: any) {
-      console.log("clicked "+(event.clientX-this.canvasX)+" "+(event.clientY-this.canvasY));
       let clickX = event.clientX-this.canvasX;
-      let clickY = event.clientY-this.canvasY;
+      let clickY = event.clientY-this.canvasY+window.pageYOffset;
+      console.log("clicked "+clickX+" "+clickY);
       for(let i = 158; i < this.housepoints.length; i++) {
         let p = this.housepoints[i];
         let c = this.housecircuits[i - 158];
-        let l = p[0]*this.scale - 10;
-        let r = p[0]*this.scale + 50;
-        let t = p[1]*this.scale - 10;
-        let b = p[1]*this.scale + 10;
+        let l = p[0]*this.scale - 8;
+        let r = p[0]*this.scale + 8;
+        let t = p[1]*this.scale - 8;
+        let b = p[1]*this.scale + 8;
         if(clickX >= l && clickX <= r && clickY >= t && clickY <= b) {
           console.log(c+" clicked!");
+          for (const [k, v] of Object.entries(this.status)) {
+            if(k == c) {
+              console.log(v);
+              let state = v["state"] == "on" ? "off" : "on";
+              this.command("turn "+k.toLowerCase()+" "+state);
+            }
+          }
         }
       }
     }
@@ -679,9 +686,19 @@ export class HomeComponent implements OnInit {
       this.canvasX = rect.x;
       this.canvasY = rect.y;
       this.context = this.myCanvas.nativeElement.getContext('2d');
-      this.context.fillStyle = 'white';
       
+      this.drawFloors();
+      this.drawDoors();
+    }
 
+    public redraw() {
+      this.context.clearRect(0,0,2000,2000);
+      this.drawFloors();
+      this.drawDoors();
+      this.drawCircuits();
+    }
+
+    public drawFloors() {
       this.context.strokeStyle = '#009900';
       this.context.lineWidth = 2;
       this.context.beginPath();
@@ -692,8 +709,10 @@ export class HomeComponent implements OnInit {
         this.context.lineTo(p2[0]*this.scale,p2[1]*this.scale);
       });
       this.context.stroke();
+    }
 
-      this.context.strokeStyle = '#000099';
+    public drawDoors() {
+      this.context.strokeStyle = '#004400';
       this.context.lineWidth = 2;
       this.context.beginPath();
       this.housedoors.forEach(door => {
@@ -703,26 +722,106 @@ export class HomeComponent implements OnInit {
         this.context.lineTo(p2[0]*this.scale,p2[1]*this.scale);
       });
       this.context.stroke();
+    }
 
+    public drawCircuits() {
       let i = 0;
       this.housepoints.forEach(point => {
         let x = point[0];
         let y = point[1];
-        this.context.fillRect(x*this.scale,y*this.scale,2,2);
+        //this.context.fillRect(x*this.scale,y*this.scale,2,2);
         if (i > 157) {
           let cindex = i - 158;
+          let state = "off";
+          let power = "0 W";
+          let circuitname = this.housecircuits[cindex];
+          for (const [k, v] of Object.entries(this.status)) {
+            if(k == circuitname) {
+              state = v["state"];
+              power = v["power"] + " W";
+            }
+          }
           //this.context.fillText(cindex+'',x+3,y+3);
-          this.context.fillText(this.housecircuits[cindex],x*this.scale+3,y*this.scale+3);
+          let shape = [[0,0]];
+          if(circuitname.indexOf("Fan")> -1) {
+            shape = this.fanshape(x*this.scale,y*this.scale);
+            this.context.strokeStyle = '#7777ff';
+          } else {
+            shape = this.bulbshape(x*this.scale,y*this.scale);
+            this.context.strokeStyle = '#aaaa00';
+          }
+          if(state=="off"){
+            this.context.strokeStyle = '#999999';
+          }
+          
+          this.context.beginPath();
+          this.context.moveTo(shape[0][0],shape[0][1]);
+          shape.forEach(bp => {
+            this.context.lineTo(bp[0],bp[1]);
+          });
+          this.context.stroke();
+          this.context.fillStyle = '#cccccc';
+          this.context.fillText(power,x*this.scale+8,y*this.scale-6);
         }
         i++;
       });
-      //this.context.fillRect(0, 0, 5, 5);
-      
-      //this.context.strokeStyle = '#ff0000';
-      //this.context.beginPath();
-      //this.context.moveTo(153,210);
-      //this.context.lineTo(372,210);
-      //this.context.stroke();
+    }
+
+    public bulbshape(x:number, y:number) {
+      return [
+        [x-5,y],
+        [x-3,y-3],
+        [x,y-5],
+        [x+3,y-3],
+        [x+5,y],
+        [x+3,y+2],
+        [x+2,y+7],
+        [x-2,y+7],
+        [x-3,y+2],
+        [x-5,y]
+      ];
+    }
+
+    public fanshape(x:number, y:number) {
+      return [
+        [x-3,y-1],
+        [x-1,y-3],
+        [x-2,y-6],
+        [x-4,y-6],
+        [x-6,y-4],
+        [x-6,y-2],
+        [x-3,y-1],
+        [x-1,y-3],
+
+        [x+1,y-3],
+        [x+3,y-1],
+        [x+6,y-2],
+        [x+6,y-4],
+        [x+4,y-6],
+        [x+2,y-6],
+        [x+1,y-3],
+        [x+3,y-1],
+
+        [x+3,y+1],
+        [x+1,y+3],
+        [x+2,y+6],
+        [x+4,y+6],
+        [x+6,y+4],
+        [x+6,y+2],
+        [x+3,y+1],
+        [x+1,y+3],
+
+        [x-1,y+3],
+        [x-3,y+1],
+        [x-6,y+2],
+        [x-6,y+4],
+        [x-4,y+6],
+        [x-2,y+6],
+        [x-1,y+3],
+        [x-3,y+1],
+
+        [x-3,y-1]
+      ];
     }
 
     public sendThermosettings(room: string, temp_low: number, temp_high: number, humidity: number, circ_min: number, hum_circ_min: number, stage_limit: number, stage_cooldown: number, swing_temp_offset: number, vent_min: number, system_disabled: boolean) {
@@ -822,6 +921,7 @@ export class HomeComponent implements OnInit {
 
       this.httpMessageService.getStatus().toPromise().then(msg => {
         this.status = msg;
+        this.redraw();
         this.totalPower = 0.0;
         for (const [k, v] of Object.entries(this.status)) {
           if(this.chartData2.columnNames.indexOf(k)===-1) {
