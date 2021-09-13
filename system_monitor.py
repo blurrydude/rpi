@@ -481,7 +481,7 @@ def on_disconnect(client, userdata, rc):
     restart()
 
 def restart():
-    subprocess.Popen(["python3","roller.py"])
+    subprocess.Popen(["python3","system_monitor.py"])
     exit()
 
 def loadAll():
