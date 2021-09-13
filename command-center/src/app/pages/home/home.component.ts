@@ -651,13 +651,53 @@ export class HomeComponent implements OnInit {
       "Storage Room",
       "Laundry Room"
     ];
+    houselabelpoints = [
+      [280,160],
+      [235,300],
+      [350,280],
+      [420,325],
+      [115,210],
+      [480,192],
+      [510,90],
+      [630,90],
+      [512,295],
+      [552,295],
+      [554,214],
+      [640,225],
+      [280,450],
+      [125,450],
+      [492,557],
+      [535,625],
+      [672,620],
+      [645,480]
+    ];
+    houselabels = [
+      "Livingroom",
+      "Dining Room",
+      "Bar",
+      "Kitchen",
+      "Day Room",
+      "Hallway",
+      "Gym",
+      "Library",
+      "Guest Bath",
+      "Master Bath",
+      "Shower",
+      "Bedroom",
+      "Game Room",
+      "Deck",
+      "Stairway",
+      "Laundry",
+      "Storage",
+      "Shop"
+    ];
 
     constructor(public httpMessageService: StatusService) { 
       this.load(httpMessageService, true);
     }
 
     public canvasClick(event: any) {
-      let clickX = event.clientX-this.canvasX+window.pageXOffset;
+      let clickX = event.clientX-this.canvasX;
       let clickY = event.clientY-this.canvasY+window.pageYOffset;
       console.log("clicked "+clickX+" "+clickY);
       for(let i = 158; i < this.housepoints.length; i++) {
@@ -689,13 +729,25 @@ export class HomeComponent implements OnInit {
       
       this.drawFloors();
       this.drawDoors();
+      this.drawLabels();
     }
 
     public redraw() {
       this.context.clearRect(0,0,2000,2000);
       this.drawFloors();
       this.drawDoors();
+      this.drawLabels();
       this.drawCircuits();
+    }
+
+    public drawLabels() {
+      this.context.fillStyle = '#ffcc77';
+      let i = 0;
+      this.houselabelpoints.forEach(lp => {
+        let text = this.houselabels[i];
+        this.context.fillText(text,lp[0]*this.scale,lp[1]*this.scale);
+        i++;
+      });
     }
 
     public drawFloors() {
@@ -747,9 +799,12 @@ export class HomeComponent implements OnInit {
           if(circuitname.indexOf("Fan")> -1) {
             shape = this.fanshape(x*this.scale,y*this.scale);
             this.context.strokeStyle = '#7777ff';
+          } else if(circuitname.indexOf("TV")> -1) {
+            shape = this.tvshape(x*this.scale,y*this.scale);
+            this.context.strokeStyle = '#ff7777';
           } else {
             shape = this.bulbshape(x*this.scale,y*this.scale);
-            this.context.strokeStyle = '#aaaa00';
+            this.context.strokeStyle = '#ffff00';
           }
           if(state=="off"){
             this.context.strokeStyle = '#999999';
@@ -766,6 +821,18 @@ export class HomeComponent implements OnInit {
         }
         i++;
       });
+    }
+
+    public tvshape(x:number, y:number) {
+      return [
+        [x-20,y-2],
+        [x+20,y-2],
+        [x+22,y+2],
+        [x+22,y+3],
+        [x-22,y+3],
+        [x-22,y+2],
+        [x-20,y-2]
+      ];
     }
 
     public bulbshape(x:number, y:number) {
