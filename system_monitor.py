@@ -494,5 +494,8 @@ if __name__ == "__main__":
     loadAll()
     initializeMqtt()
     while running is True:
+        if os.path.exists("/home/pi/killmonitor.txt"):
+            os.remove("/home/pi/killmonitor.txt")
+            restart()
         loop()
     stopMqtt()
