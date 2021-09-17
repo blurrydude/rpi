@@ -1,0 +1,21 @@
+09/16/2021, 21:53:06 [SmarterConfig]: change_observer
+09/16/2021, 21:53:06 [SmarterMQTTClient]: connect to 192.168.1.200
+09/16/2021, 21:53:06 [SmarterConfig]: load
+09/16/2021, 21:53:06 [SmarterConfig]: load_config
+09/16/2021, 21:53:06 [SmarterConfig]: load_circuits
+09/16/2021, 21:53:06 [SmarterConfig]: load_motion_sensors
+09/16/2021, 21:53:06 [SmarterConfig]: load_th_sensors
+09/16/2021, 21:53:06 [SmarterConfig]: load_door_sensors
+09/16/2021, 21:53:06 [SmarterConfig]: load_config
+09/16/2021, 21:53:06 [SmarterConfig]: load_circuits
+09/16/2021, 21:53:06 [SmarterConfig]: load_motion_sensors
+09/16/2021, 21:53:06 [SmarterConfig]: load_th_sensors
+09/16/2021, 21:53:06 [SmarterConfig]: load_door_sensors
+09/16/2021, 21:53:06 [SmarterMQTTClient]: start_listening to 192.168.1.200
+09/16/2021, 21:53:06 [SmarterMQTTClient]: connected to 192.168.1.200
+09/16/2021, 21:53:06 [SmarterMQTTClient]: subscribe_to_topics
+09/16/2021, 21:53:19 [Main]: stopping...
+09/16/2021, 21:53:19 [SmarterConfig]: stop
+09/16/2021, 21:53:21 [SmarterMQTTClient]: stop
+09/16/2021, 21:53:21 [SmarterMQTTClient]: shutdown
+09/16/2021, 21:53:21 [SmarterMQTTClient]: disconnected from 192.168.1.200

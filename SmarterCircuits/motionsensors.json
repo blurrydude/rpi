@@ -1,0 +1,107 @@
+[
+    {
+        "room":"Guest Bathroom",
+        "commands": [{
+            "start":"turn on guest bathroom",
+            "stop":"turn off guest bathroom",
+            "conditions": [
+                {"type":"light_under","device_label":"Guest Bathroom","value":"2000"},
+                {"type":"mode_isnt","value":"day"}
+            ]
+        }],
+        "address":"shellymotionsensor-60A423BECB98",
+        "auto_off":true,
+        "notes":"192.168.1.150",
+        "dark": [],
+        "alert": [],
+        "midnight": []
+    },
+    {
+        "room":"Master Bathroom",
+        "commands": [
+            {
+                "start":"turn on master bath",
+                "stop":"turn off master bath",
+                "conditions": [
+                    {"type":"mode_isnt","value":"night"},
+                    {"type":"mode_isnt","value":"midnight"}
+                ]
+            },
+            { 
+                "start": "turn on shower fan", 
+                "stop": "turn off shower fan", 
+                "conditions": [
+                    {"type":"mode_is","value":"night"},
+                    {"type":"mode_is","value":"midnight"}
+                ] 
+            }
+        ],
+        "address":"shellymotionsensor-60A42386DDE2",
+        "auto_off":true,
+        "notes":"192.168.1.151"
+    },
+    {
+        "room":"Kitchen",
+        "commands": [{
+            "start":"turn on kitchen",
+            "stop":"turn off kitchen",
+            "conditions": [{"type":"mode_isnt","value":"night"},{"type":"mode_isnt","value":"midnight"}]
+        },{
+            "start":"turn on under cabinet",
+            "stop":"turn off under cabinet",
+            "conditions": [{"type":"mode_isnt","value":"day"}]
+        }],
+        "address":"shellymotionsensor-60A42386E5BA",
+        "auto_off":true,
+        "notes":"192.168.1.152"
+    },
+    {
+        "room":"Garage",
+        "commands": [{
+            "start":"turn on shop lights",
+            "stop":"turn off shop lights",
+            "conditions": [{"type":"mode_isnt","value":"night"},{"type":"mode_isnt","value":"midnight"}]
+        },{
+            "start":"turn on stairway",
+            "stop":"turn off stairway",
+            "conditions": []
+        }],
+        "address":"shellymotionsensor-60A423872550",
+        "auto_off":true,
+        "notes":"192.168.1.153"
+    },
+    {
+        "room":"Stairway",
+        "commands": [{
+            "start":"turn on stairway",
+            "stop":"turn off stairway",
+            "conditions": []
+        }],
+        "address":"shellymotionsensor-60A423976276",
+        "auto_off":true,
+        "notes":"192.168.1.154"
+    },
+    {
+        "room":"Deck",
+        "commands": [{
+            "start":"turn on the deck fountain",
+            "stop":"turn off the deck fountain",
+            "conditions": [{"type":"mode_isnt","value":"midnight"}]
+        },{
+            "start":"turn on the deck rail",
+            "stop":"turn off the deck rail",
+            "conditions": [{"type":"mode_is","value":"night"}]
+        },{
+            "start":"turn on the deck light",
+            "stop":"turn off the deck light",
+            "conditions": [{"type":"mode_is","value":"midnight"},{"type":"mode_is","value":"night"}]
+        },{
+            "start":"turn on the day room light",
+            "stop":"turn off the day room light",
+            "conditions": [{"type":"mode_is","value":"midnight"}]
+        }],
+        "address":"shellymotionsensor-60A4239A6298",
+        "auto_off":true,
+        "notes":"192.168.1.155"
+    }
+]

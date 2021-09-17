@@ -1,0 +1,94 @@
+[
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunset",
+        "command": "close the shades"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:civil_twilight_begin",
+        "command": "open the shades"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunset",
+        "command": "switch to evening mode"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:00:00",
+        "command": "switch to midnight mode"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:04:30",
+        "command": "switch to night mode"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:05:15",
+        "command": "switch to morning mode"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:08:15",
+        "command": "switch to day mode"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:02:00",
+        "command": "turn on circulating fan"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:05:00",
+        "command": "turn off circulating fan"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:02:00",
+        "command": "turn on floor fan"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:05:00",
+        "command": "turn off floor fan"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:22:00",
+        "command": "turn on circulating fan"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:00:00",
+        "command": "turn off circulating fan"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:22:00",
+        "command": "turn on floor fan"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:00:00",
+        "command": "turn off floor fan"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunset",
+        "command": "thermoset gameroom temperature_high_setting 72"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunset",
+        "command": "thermoset gameroom temperature_low_setting 68"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunrise",
+        "command": "thermoset gameroom temperature_high_setting 74"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunrise",
+        "command": "thermoset gameroom temperature_low_setting 70"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunset",
+        "command": "thermoset hallway temperature_high_setting 72"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunset",
+        "command": "thermoset hallway temperature_low_setting 68"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunrise",
+        "command": "thermoset hallway temperature_high_setting 76"
+    },
+    {
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunrise",
+        "command": "thermoset hallway temperature_high_setting 72"
+    }
+]
