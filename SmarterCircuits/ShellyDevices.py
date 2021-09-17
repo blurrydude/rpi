@@ -34,6 +34,8 @@ class DoorWindowSensor:
         self.id = id
         self.ip_address = ip_address
         self.name = name
+        self.open_command = ""
+        self.close_command = ""
         self.status = DoorWindowSensorStatus()
 
 class DoorWindowSensorStatus:
@@ -49,10 +51,11 @@ class DoorWindowSensorStatus:
         self.state = "close"
 
 class HumidityTemperatureSensor:
-    def __init__(self, id, ip_address, name):
+    def __init__(self, id, ip_address, name, room):
         self.id = id
         self.ip_address = ip_address
         self.name = name
+        self.room = room
         self.status = HumidityTemperatureSensorStatus()
 
 class HumidityTemperatureSensorStatus:
@@ -62,10 +65,13 @@ class HumidityTemperatureSensorStatus:
         self.battery = 0
 
 class MotionSensor:
-    def __init__(self, id, ip_address, name):
+    def __init__(self, id, ip_address, name, room, auto_off):
         self.id = id
         self.ip_address = ip_address
         self.name = name
+        self.room = room
+        self.commands = []
+        self.auto_off = auto_off
         self.status = MotionSensorStatus()
 
 class MotionSensorStatus:
@@ -76,4 +82,15 @@ class MotionSensorStatus:
         self.vibration = False
         self.lux = 0
         self.battery = 0
-    
+
+class MotionSensorCommand:
+    def __init__(self, start, stop, conditions):
+        self.start = start
+        self.stop = stop
+        self.conditions = conditions
+
+class CommandCondition:
+    def __init__(self, prop, comparitor, value):
+        self.prop = prop
+        self.comparitor = comparitor
+        self.value = value
