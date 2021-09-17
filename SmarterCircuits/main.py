@@ -7,9 +7,10 @@ import socket
 import subprocess
 
 class SmarterCircuitsMCP:
-    def __init__(self, name, ip_address):
+    def __init__(self, name, ip_address, model):
         self.id = 0
         self.name = name
+        self.model = model
         self.ip_address = ip_address
         self.circuit_authority = False
         self.discovery_mode = True
@@ -53,5 +54,11 @@ class SmarterCircuitsMCP:
 
 if __name__ == "__main__":
     myname = socket.gethostname()
-    myip = subprocess.check_output(['hostname', '-I'])
-    mcp = SmarterCircuitsMCP(myname, myip)
+    myip = subprocess.check_output(['hostname', '-I']).decode("utf-8").replace("\n","")
+    uname = subprocess.check_output(['uname','-m']).decode("utf-8").replace("\n","")
+    model = "pc"
+    if uname.__contains__("Raspberry"):
+        model = subprocess.check_output(['cat','/proc/device-tree/model'])
+    print(uname)
+    print(model)
+    mcp = SmarterCircuitsMCP(myname, myip, model)
