@@ -3,21 +3,55 @@ from os import name
 import SmarterCircuitsMQTT
 import SmarterConfiguration
 from SmarterLogging import SmarterLog
+import socket
+import subprocess
 
-def on_message(client, userdata, message):
-    print(message) # placeholder
+class SmarterCircuitsMCP:
+    def __init__(self, name, ip_address):
+        self.id = 0
+        self.name = name
+        self.ip_address = ip_address
+        self.circuit_authority = False
+        self.discovery_mode = True
+        self.config = None
+        self.mqtt = None
+        self.peers = []
+
+    def start(self):
+        SmarterLog.log("SmarterCircuits","starting...")
+        self.config = SmarterConfiguration.SmarterConfig()
+        while self.config.loaded is False:
+            time.sleep(1)
+        self.mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(self.config.brokers,["shellies/#","smarter_circuits/#"],self.on_message)
+        
+        input("Press any key to stop...")
+
+    def stop(self):
+        SmarterLog.log("SmarterCircuits","stopping...")
+        self.config.stop()
+        self.mqtt.stop()
+        time.sleep(5)
+        SmarterLog.log("Main","stopped.")
+        exit()
+    
+    def on_message(self, client, userdata, message):
+        topic = message.topic
+        text = str(message.payload.decode("utf-8"))
+        if topic.startswith("shellies"):
+            self.handle_shelly_message(topic, text)
+        if topic.startswith("smarter_circuits"):
+            self.handle_smarter_circuits_message(topic, text)
+    
+    def handle_shelly_message(self, topic, message):
+        print(topic+": "+message)
+        if self.discovery_mode is True:
+            return
+        return
+    
+    def handle_smarter_circuits_message(self, topic, message):
+        print(topic+": "+message)
 
 if __name__ == "__main__":
-    SmarterLog.log("Main","starting...")
-    config = SmarterConfiguration.SmarterConfig()
-    while config.loaded is False:
-        time.sleep(1)
-    mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(["192.168.1.200"],["shellies/#"],on_message)
-
-    input("Press any key to stop...")
-
-    SmarterLog.log("Main","stopping...")
-    config.stop()
-    mqtt.stop()
-    time.sleep(5)
-    SmarterLog.log("Main","stopped.")
+    myname = socket.gethostname()
+    myip = subprocess.check_output(['hostname', '-I'])
+    mcp = SmarterCircuitsMCP(myname, myip)
