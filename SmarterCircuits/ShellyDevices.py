@@ -1,9 +1,9 @@
 class RelayModule:
-    def __init__(self, id, ip_address, name, name2, location, room, zones, on_modes, off_modes):
+    def __init__(self, id, ip_address, name, relay_id, location, room, zones, on_modes, off_modes):
         self.id = id
         self.ip_address = ip_address
         self.name = name
-        self.name2 = name2
+        self.relay_id = relay_id
         self.rollershutter = id.__contains__("switch25")
         self.location = location
         self.room = room
@@ -14,8 +14,7 @@ class RelayModule:
 
 class RelayModuleStatus:
     def __init__(self):
-        self.relay_0 = RelayStatus()
-        self.relay_1 = RelayStatus()
+        self.relay = RelayStatus()
         self.temperature = 0.0
         self.temperature_f = 0.0
         self.overtemperature = 0
@@ -50,11 +49,10 @@ class DoorWindowSensorStatus:
         self.state = "close"
 
 class HumidityTemperatureSensor:
-    def __init__(self, id, ip_address, name, room):
+    def __init__(self, id, ip_address, name):
         self.id = id
         self.ip_address = ip_address
         self.name = name
-        self.room = room
         self.status = HumidityTemperatureSensorStatus()
 
 class HumidityTemperatureSensorStatus:
@@ -64,10 +62,9 @@ class HumidityTemperatureSensorStatus:
         self.battery = 0
 
 class MotionSensor:
-    def __init__(self, id, ip_address, name, room, auto_off):
+    def __init__(self, id, ip_address, room, auto_off):
         self.id = id
         self.ip_address = ip_address
-        self.name = name
         self.room = room
         self.commands = []
         self.auto_off = auto_off

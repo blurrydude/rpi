@@ -1,4 +1,4 @@
 [
-    {"address":"shellyht-6BA1BE","label":"Deck"},
-    {"address":"shellyht-6BABF1","label":"Day Room"}
+    {"id":"shellyht-6BA1BE","name":"Deck", "ip_address":"192.168.1.220"},
+    {"id":"shellyht-6BABF1","name":"Day Room", "ip_address":"192.168.1.221"}
 ]

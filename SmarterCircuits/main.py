@@ -1,4 +1,4 @@
-from SmarterCircuits.ShellyDevices import RelayModule, DoorWindowSensor, HumidityTemperatureSensor, MotionSensor
+from ShellyDevices import RelayModule, DoorWindowSensor, HumidityTemperatureSensor, MotionSensor
 import time
 from os import name
 import SmarterCircuitsMQTT
@@ -106,29 +106,25 @@ class SmarterCircuitsMCP:
         return
 
     def handle_shelly_relay_message(self, id, subtopic, message):
-        circuit = (RelayModule)(self.config.circuits[id])
-        if subtopic == "relay/0":
-            circuit.status.relay_0.on = message == "on"
-        if subtopic == "relay/1":
-            circuit.status.relay_1.on = message == "on"
-        if subtopic == "relay/0/power":
-            circuit.status.relay_0.power = float(message)
-        if subtopic == "relay/0/energy":
-            circuit.status.relay_0.energy = int(message)
-        if subtopic == "relay/1/power":
-            circuit.status.relay_1.power = float(message)
-        if subtopic == "relay/1/energy":
-            circuit.status.relay_1.energy = int(message)
-        if subtopic == "temperature":
-            circuit.status.temperature = float(message)
-        if subtopic == "temperature_f":
-            circuit.status.temperature_f = float(message)
-        if subtopic == "overtemperature":
-            circuit.status.overtemperature = int(message)
-        if subtopic == "temperature_status":
-            circuit.status.temperature = message
-        if subtopic == "voltage":
-            circuit.status.voltage = float(message)    
+        for circuit in self.config.circuits:
+            if(circuit.id != id):
+                continue
+            if subtopic == "relay/"+circuit.relay_id:
+                circuit.status.relay.on = message == "on"
+            if subtopic == "relay/"+circuit.relay_id+"/power":
+                circuit.status.relay.power = float(message)
+            if subtopic == "relay/"+circuit.relay_id+"/energy":
+                circuit.status.relay.energy = int(message)
+            if subtopic == "temperature":
+                circuit.status.temperature = float(message)
+            if subtopic == "temperature_f":
+                circuit.status.temperature_f = float(message)
+            if subtopic == "overtemperature":
+                circuit.status.overtemperature = int(message)
+            if subtopic == "temperature_status":
+                circuit.status.temperature = message
+            if subtopic == "voltage":
+                circuit.status.voltage = float(message)    
 
     def handle_shelly_dw_message(self, id, subtopic, message):
         sensor = (DoorWindowSensor)(self.config.door_sensors[id])

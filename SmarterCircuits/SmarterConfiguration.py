@@ -19,7 +19,7 @@ class SmarterConfig:
         self.door_sensors_config_modified = 0.0
         self.brokers = []
         self.topics = []
-        self.circuits = {}
+        self.circuits = []
         self.motion_sensors = {}
         self.ht_sensors = {}
         self.door_sensors = {}
@@ -63,17 +63,14 @@ class SmarterConfig:
     def load_circuits(self):
         self.log("load_circuits")
         circuit_data = open(self.circuits_config_file)
-        circuit_list = json.load(circuit_data)
-        for circuit in circuit_list:
-            relay_module = RelayModule(circuit["id"],circuit["ip_address"],circuit["name"],circuit["name2"],circuit["location"],circuit["room"],circuit["zones"],circuit["on_modes"],circuit["off_modes"])
-            self.circuits[relay_module.id] = relay_module
+        self.circuits = json.load(circuit_data)
 
     def load_motion_sensors(self):
         self.log("load_motion_sensors")
         motion_sensor_data = open(self.motion_sensors_file)
         motion_sensor_list = json.load(motion_sensor_data)
         for sensor in motion_sensor_list:
-            motion_sensor = MotionSensor(sensor["id"],sensor["ip_address"],sensor["name"],sensor["room"],sensor["auto_off"])
+            motion_sensor = MotionSensor(sensor["id"],sensor["ip_address"],sensor["room"],sensor["auto_off"])
             for com in sensor["commands"]:
                 conditions = []
                 for con in com["conditions"]:
@@ -88,7 +85,7 @@ class SmarterConfig:
         th_sensor_data = open(self.ht_sensors_file)
         ht_sensor_list = json.load(th_sensor_data)
         for sensor in ht_sensor_list:
-            ht_sensor = HumidityTemperatureSensor(sensor["id"], sensor["ip_address"], sensor["name"], sensor["room"])
+            ht_sensor = HumidityTemperatureSensor(sensor["id"], sensor["ip_address"], sensor["name"])
             self.ht_sensors[ht_sensor.id] = ht_sensor
 
     def load_door_sensors(self):
@@ -96,7 +93,7 @@ class SmarterConfig:
         door_sensor_data = open(self.door_sensors_file)
         door_sensor_list = json.load(door_sensor_data)
         for sensor in door_sensor_list:
-            door_sensor = DoorWindowSensor(sensor["name"], sensor["ip_address"], sensor["open_command"], sensor["close_command"])
+            door_sensor = DoorWindowSensor(sensor["id"], sensor["name"], sensor["ip_address"], sensor["open_command"], sensor["close_command"])
             self.door_sensors[door_sensor.id] = door_sensor
         
     def check_changes(self):
