@@ -66,6 +66,7 @@ class SmarterConfig:
         self.log("load_circuits")
         circuit_data = open(self.circuits_config_file)
         circuit_list = json.load(circuit_data)
+        self.circuits = []
         for circuit in circuit_list:
             #TODO: fix room
             self.circuits.append(RelayModule(circuit["id"],circuit["ip_address"],circuit["name"],circuit["relay_id"],circuit["location"],"",circuit["zones"],circuit["on_modes"],circuit["off_modes"]))
