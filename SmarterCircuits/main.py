@@ -45,6 +45,7 @@ class SmarterCircuitsMCP:
                 self.send_peer_data()
             if self.ticks >= 59:
                 self.ticks = 0
+                self.check_circuit_authority()
                 if self.circuit_authority is True:
                     self.do_time_commands()
             self.ticks = self.ticks + 1
@@ -86,6 +87,8 @@ class SmarterCircuitsMCP:
         #print(topic+": "+message)
         if self.discovery_mode is True:
             return
+        s = topic.split('/')
+        id = s[1]
         return
     
     def handle_smarter_circuits_message(self, topic, message):
@@ -96,11 +99,15 @@ class SmarterCircuitsMCP:
     def received_peer_data(self, peer):
         found = False
         for p in self.peers:
-            if p.name == peer.name:
-                p = peer
+            if p.name == peer["name"]:
+                p.id = peer["id"]
+                p.ip_address = peer["ip_address"]
+                p.model = peer["model"]
+                p.circuit_authority = peer["circuit_authority"]
+                p.timestamp = peer["timestamp"]
                 found = True
         if found is not True:
-            self.peers.append(peer)
+            self.peers.append(SmarterCircuitsPeer(peer["id"],peer["name"],peer["ip_address"],peer["model"],peer["circuit_authority"],peer["timestamp"]))
 
 class SmarterCircuitsPeer:
     def __init__(self, id, name, ip_address, model, circuit_authority, timestamp):
