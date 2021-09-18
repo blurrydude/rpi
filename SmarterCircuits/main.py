@@ -138,7 +138,6 @@ class SmarterCircuitsMCP:
         #print(topic+": "+message)
         s = topic.split('/')
         id = s[1]
-        SmarterLog.log("SmarterCircuitsMCP", "handle shelly message: "+id)
         if "1pm" in id or "switch25" in id:
             self.handle_shelly_relay_message(id, topic.replace("shellies/"+id+"/",""), message)
         if "dw" in id:
