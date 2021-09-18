@@ -52,7 +52,7 @@ class SmarterCircuitsMCP:
         modified = 0
         source_dir = os.path.dirname(os.path.realpath(__file__))+"/"
         for file in os.listdir(source_dir):
-            file_check = os.stat(file).st_mtime
+            file_check = os.stat(source_dir+file).st_mtime
             if file_check > modified:
                 modified = file_check
         if modified == self.source_modified:
