@@ -6,12 +6,12 @@ from SmarterLogging import SmarterLog
 from ShellyDevices import RelayModule, DoorWindowSensor, HumidityTemperatureSensor, MotionSensor, MotionSensorCommand, CommandCondition
 
 class SmarterConfig:
-    def __init__(self):
-        self.smarter_config_file = "SmarterConfig.json"
-        self.circuits_config_file = "circuits.json"
-        self.motion_sensors_file = "motionsensors.json"
-        self.ht_sensors_file = "thsensors.json"
-        self.door_sensors_file = "doorsensors.json"
+    def __init__(self, home_dir):
+        self.smarter_config_file = home_dir+"SmarterConfig.json"
+        self.circuits_config_file = home_dir+"circuits.json"
+        self.motion_sensors_file = home_dir+"motionsensors.json"
+        self.ht_sensors_file = home_dir+"thsensors.json"
+        self.door_sensors_file = home_dir+"doorsensors.json"
         self.smarter_config_modified = 0.0
         self.circuits_config_modified = 0.0
         self.motion_sensors_config_modified = 0.0

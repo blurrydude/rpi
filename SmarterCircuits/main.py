@@ -38,7 +38,10 @@ class SmarterCircuitsMCP:
 
     def start(self):
         SmarterLog.log("SmarterCircuits","starting...")
-        self.config = SmarterConfiguration.SmarterConfig()
+        home_dir = ""
+        if self.model !="pc":
+            home_dir = "/home/pi/rpi/SmarterCircuits/"
+        self.config = SmarterConfiguration.SmarterConfig(home_dir)
         while self.config.loaded is False:
             time.sleep(1)
         self.mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(self.config.brokers,["shellies/#","smarter_circuits/#"],self.on_message)
@@ -474,7 +477,7 @@ if __name__ == "__main__":
     myip = subprocess.check_output(['hostname', '-I']).decode("utf-8").replace("\n","").split(' ')[0]
     uname = subprocess.check_output(['uname','-m']).decode("utf-8").replace("\n","")
     model = "pc"
-    if uname.__contains__("Raspberry"):
+    if uname.__contains__("arm"):
         model = subprocess.check_output(['cat','/proc/device-tree/model'])
     print(uname)
     print(model)
