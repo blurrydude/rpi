@@ -65,7 +65,9 @@ class SmarterConfig:
     def load_circuits(self):
         self.log("load_circuits")
         circuit_data = open(self.circuits_config_file)
-        self.circuits = json.load(circuit_data)
+        circuit_list = json.load(circuit_data)
+        for circuit in circuit_list:
+            self.circuits.append(RelayModule(circuit["id"],circuit["ip_address"],circuit["name"],circuit["relay_id"],circuit["location"],circuit["room"],circuit["zones"],circuit["on_modes"],circuit["off_modes"]))
 
     def load_motion_sensors(self):
         self.log("load_motion_sensors")
