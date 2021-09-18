@@ -56,7 +56,7 @@ class SmarterCircuitsMCP:
     
     def send_peer_data(self):
         timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-        self.mqtt.publish("smarter_circuits/peers",SmarterCircuitsPeer(self.id, self.name, self.ip_address, self.model, self.circuit_authority, timestamp).toJSON())
+        self.mqtt.publish("smarter_circuits/peers/"+self.name,SmarterCircuitsPeer(self.id, self.name, self.ip_address, self.model, self.circuit_authority, timestamp).toJSON())
 
     def check_circuit_authority(self):
         existing_authority = False
@@ -64,7 +64,10 @@ class SmarterCircuitsMCP:
         lowest_ip = last_octet
         for peer in self.peers:
             peer_last_octet = int(peer.ip_address.split('.')[3])
-
+        if lowest_ip == last_octet:
+            self.circuit_authority = True
+        else:
+            self.circuit_authority = False
 
     def stop(self):
         SmarterLog.log("SmarterCircuits","stopping...")
@@ -92,8 +95,8 @@ class SmarterCircuitsMCP:
         return
     
     def handle_smarter_circuits_message(self, topic, message):
-        print(topic+": "+message)
-        if topic == "smarter_circuits/peers":
+        #print(topic+": "+message)
+        if "smarter_circuits/peers" in topic:
             self.received_peer_data(json.loads(message))
     
     def received_peer_data(self, peer):
@@ -123,7 +126,7 @@ class SmarterCircuitsPeer:
 
 if __name__ == "__main__":
     myname = socket.gethostname()
-    myip = subprocess.check_output(['hostname', '-I']).decode("utf-8").replace("\n","")
+    myip = subprocess.check_output(['hostname', '-I']).decode("utf-8").replace("\n","").split(' ')[0]
     uname = subprocess.check_output(['uname','-m']).decode("utf-8").replace("\n","")
     model = "pc"
     if uname.__contains__("Raspberry"):
