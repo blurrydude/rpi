@@ -359,7 +359,7 @@ class SmarterCircuitsMCP:
                 c = self.config.circuits[ci]
                 for z in c.zones:
                     if z.lower() in command:
-                        topic = "shellies/"+c.address+"/relay/"+c.relay_id+"/command"
+                        topic = "shellies/"+c.ip_address+"/relay/"+c.relay_id+"/command"
                         command_list.append({"t":topic,"c":com})
         elif "mode" in command:
             detected_mode = None
@@ -379,7 +379,7 @@ class SmarterCircuitsMCP:
             for ci in range(0,len(self.config.circuits)):
                 c = self.config.circuits[ci]
                 if c.name.lower() in command or c.name.lower().replace("light","lamp") in command:
-                    topic = "shellies/"+c.address+"/relay/"+c.relay_id+"/command"
+                    topic = "shellies/"+c.ip_address+"/relay/"+c.relay_id+"/command"
                     command_list.append({"t":topic,"c":com})
 
         elif "first shade" in command:
