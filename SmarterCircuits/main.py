@@ -12,6 +12,7 @@ import _thread
 import json
 from datetime import datetime, timedelta
 import requests
+import os
 
 class SmarterCircuitsMCP:
     def __init__(self, name, ip_address, model):
@@ -34,20 +35,33 @@ class SmarterCircuitsMCP:
         self.civil_twilight_end = ""
         self.civil_twilight_begin = ""
         self.motion_detected = []
+        self.source_modified = 0
         self.start()
 
     def start(self):
         SmarterLog.log("SmarterCircuits","starting...")
-        home_dir = ""
-        if self.model !="pc":
-            home_dir = "/home/pi/rpi/SmarterCircuits/"
-        self.config = SmarterConfiguration.SmarterConfig(home_dir)
+        self.config = SmarterConfiguration.SmarterConfig()
         while self.config.loaded is False:
             time.sleep(1)
         self.mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(self.config.brokers,["shellies/#","smarter_circuits/#"],self.on_message)
         _thread.start_new_thread(self.main_loop, ())
         if self.config.touchscreen is True:
             self.touchscreen = Touchscreen(self)
+    
+    def check_for_updates(self):
+        modified = 0
+        source_dir = os.path.dirname(os.path.realpath(__file__))+"/"
+        for file in os.listdir(source_dir):
+            file_check = os.stat(file).st_mtime
+            if file_check > modified:
+                modified = file_check
+        if modified == self.source_modified:
+            return
+        if self.source_modified == 0:
+            self.source_modified = modified
+            return
+        self.source_modified = modified
+        self.stop(True)
     
     def main_loop(self):
         self.running = True
@@ -56,6 +70,7 @@ class SmarterCircuitsMCP:
                 continue
             if self.ticks in [0,10,20,30,40,50]:
                 self.send_peer_data()
+                self.check_for_updates()
             
             now = datetime.now().strftime("%H:%M")
             day = datetime.now().strftime("%a").lower()
@@ -122,13 +137,16 @@ class SmarterCircuitsMCP:
         else:
             self.circuit_authority = False
 
-    def stop(self):
+    def stop(self, restart = False):
         SmarterLog.log("SmarterCircuits","stopping...")
         self.running = False
         self.config.stop()
         self.mqtt.stop()
         time.sleep(5)
         SmarterLog.log("SmarterCircuits","stopped.")
+        if restart is True:
+            SmarterLog.log("SmarterCircuits","restarting...")
+            subprocess.Popen(["python3","main.py"])
         exit()
     
     def on_message(self, client, userdata, message):
