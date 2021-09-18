@@ -1,5 +1,5 @@
 import time
-time.sleep(15)
+time.sleep(10)
 from ShellyDevices import RelayModule, DoorWindowSensor, HumidityTemperatureSensor, MotionSensor, CommandCondition
 from os import name
 import SmarterCircuitsMQTT
