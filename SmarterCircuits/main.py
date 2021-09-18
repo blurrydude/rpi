@@ -30,6 +30,7 @@ class SmarterCircuitsMCP:
         self.sunset = ""
         self.civil_twilight_end = ""
         self.civil_twilight_begin = ""
+        self.motion_detected = []
         self.start()
 
     def start(self):
@@ -240,6 +241,9 @@ class SmarterCircuitsMCP:
         SmarterLog.log("SmarterCircuitsMCP","Motion detected: "+sensor.room)
         if self.circuit_authority is not True:
             return
+        if sensor.id in self.motion_detected:
+            return
+        self.motion_detected.append(sensor.id)
         for command in sensor.commands:
             if self.conditions_met(command.conditions) is True:
                 self.execute_command(command.start)
@@ -255,13 +259,25 @@ class SmarterCircuitsMCP:
         for command in sensor.commands:
             if self.conditions_met(command.conditions) is True:
                 self.execute_command(command.stop)
+        self.motion_detected.remove(sensor.id)
 
     def handle_smarter_circuits_message(self, topic, message):
         #print(topic+": "+message)
         if "smarter_circuits/peers" in topic:
             self.received_peer_data(json.loads(message))
-        if "smarter_circuits/mode" in topic:
+        if "smarter_circuits/mode" in topic and self.mode != message:
             self.mode = message
+            self.handle_mode_change()
+    
+    def handle_mode_change(self):
+        SmarterLog.log("SmarterCircuitsMCP","mode set to "+self.mode)
+        if self.circuit_authority is not True:
+            return
+        for circuit in self.config.circuits:
+            if self.mode in circuit.on_modes:
+                self.execute_command("turn on "+circuit.name.lower())
+            if self.mode in circuit.off_modes:
+                self.execute_command("turn off "+circuit.name.lower())
     
     def battery_status_check(self, sensor):
         if sensor.status.battery < 42:
