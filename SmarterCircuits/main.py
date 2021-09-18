@@ -270,7 +270,7 @@ class SmarterCircuitsMCP:
         if "smarter_circuits/mode" in topic and self.mode != message:
             self.mode = message
             self.handle_mode_change()
-        if "smarter_circuits/command" in topic:
+        if "smarter_circuits/command" in topic and self.circuit_authority is True:
             self.execute_command(message)
     
     def handle_mode_change(self):
@@ -345,8 +345,6 @@ class SmarterCircuitsMCP:
             SmarterLog.log("SmarterCircuitsMCP",'failed to send command')
 
     def execute_command(self, command):
-        if self.circuit_authority is not True:
-            return
         if self.config.use_api is True:
             self.send_api_command(command)
             return
