@@ -3,25 +3,25 @@ import os
 import _thread
 import time
 from SmarterLogging import SmarterLog
-from ShellyDevices import RelayModule, DoorWindowSensor, HumidityTemperatureSensor, MotionSensor
+from ShellyDevices import RelayModule, DoorWindowSensor, HumidityTemperatureSensor, MotionSensor, MotionSensorCommand, CommandCondition
 
 class SmarterConfig:
     def __init__(self):
         self.smarter_config_file = "SmarterConfig.json"
         self.circuits_config_file = "circuits.json"
         self.motion_sensors_file = "motionsensors.json"
-        self.th_sensors_file = "thsensors.json"
+        self.ht_sensors_file = "thsensors.json"
         self.door_sensors_file = "doorsensors.json"
         self.smarter_config_modified = 0.0
         self.circuits_config_modified = 0.0
         self.motion_sensors_config_modified = 0.0
-        self.th_sensors_config_modified = 0.0
+        self.ht_sensors_config_modified = 0.0
         self.door_sensors_config_modified = 0.0
         self.brokers = []
         self.topics = []
         self.circuits = {}
         self.motion_sensors = {}
-        self.th_sensors = {}
+        self.ht_sensors = {}
         self.door_sensors = {}
         self.time_commands = []
         self.running = False
@@ -49,7 +49,7 @@ class SmarterConfig:
         self.load_config()
         self.load_circuits()
         self.load_motion_sensors()
-        self.load_th_sensors()
+        self.load_ht_sensors()
         self.load_door_sensors()
         self.loaded = True
 
@@ -65,29 +65,45 @@ class SmarterConfig:
         circuit_data = open(self.circuits_config_file)
         circuit_list = json.load(circuit_data)
         for circuit in circuit_list:
-            relay_module = RelayModule(circuit["id"],circuit["ip_address"],circuit["name"],circuit["location"],circuit["room"],circuit["zones"],circuit["on_modes"],circuit["off_modes"])
+            relay_module = RelayModule(circuit["id"],circuit["ip_address"],circuit["name"],circuit["name2"],circuit["location"],circuit["room"],circuit["zones"],circuit["on_modes"],circuit["off_modes"])
             self.circuits[relay_module.id] = relay_module
 
     def load_motion_sensors(self):
         self.log("load_motion_sensors")
         motion_sensor_data = open(self.motion_sensors_file)
-        self.motion_sensors = json.load(motion_sensor_data)
+        motion_sensor_list = json.load(motion_sensor_data)
+        for sensor in motion_sensor_list:
+            motion_sensor = MotionSensor(sensor["id"],sensor["ip_address"],sensor["name"],sensor["room"],sensor["auto_off"])
+            for com in sensor["commands"]:
+                conditions = []
+                for con in com["conditions"]:
+                    condition = CommandCondition(con["prop"],con["comparitor"],con["value"])
+                    conditions.append(condition)
+                command = MotionSensorCommand(com["start"], com["stop"],conditions)
+                motion_sensor.commands.append(command)
+            self.motion_sensors[motion_sensor.id] = motion_sensor
 
-    def load_th_sensors(self):
-        self.log("load_th_sensors")
-        th_sensor_data = open(self.th_sensors_file)
-        self.th_sensors = json.load(th_sensor_data)
+    def load_ht_sensors(self):
+        self.log("load_ht_sensors")
+        th_sensor_data = open(self.ht_sensors_file)
+        ht_sensor_list = json.load(th_sensor_data)
+        for sensor in ht_sensor_list:
+            ht_sensor = HumidityTemperatureSensor(sensor["id"], sensor["ip_address"], sensor["name"], sensor["room"])
+            self.ht_sensors[ht_sensor.id] = ht_sensor
 
     def load_door_sensors(self):
         self.log("load_door_sensors")
         door_sensor_data = open(self.door_sensors_file)
-        self.door_sensors = json.load(door_sensor_data)
+        door_sensor_list = json.load(door_sensor_data)
+        for sensor in door_sensor_list:
+            door_sensor = DoorWindowSensor(sensor["name"], sensor["ip_address"], sensor["open_command"], sensor["close_command"])
+            self.door_sensors[door_sensor.id] = door_sensor
         
     def check_changes(self):
         now_smarter_config_modified = os.stat(self.smarter_config_file).st_mtime
         now_circuits_config_modified = os.stat(self.circuits_config_file).st_mtime
         now_motion_sensors_config_modified = os.stat(self.motion_sensors_file).st_mtime
-        now_th_sensors_config_modified = os.stat(self.th_sensors_file).st_mtime
+        now_ht_sensors_config_modified = os.stat(self.ht_sensors_file).st_mtime
         now_door_sensors_config_modified = os.stat(self.door_sensors_file).st_mtime
 
         if now_smarter_config_modified != self.smarter_config_modified:
@@ -102,9 +118,9 @@ class SmarterConfig:
             self.motion_sensors_config_modified = now_motion_sensors_config_modified
             self.load_motion_sensors()
 
-        if now_th_sensors_config_modified != self.th_sensors_config_modified:
-            self.th_sensors_config_modified = now_th_sensors_config_modified
-            self.load_th_sensors()
+        if now_ht_sensors_config_modified != self.ht_sensors_config_modified:
+            self.ht_sensors_config_modified = now_ht_sensors_config_modified
+            self.load_ht_sensors()
 
         if now_door_sensors_config_modified != self.door_sensors_config_modified:
             self.door_sensors_config_modified = now_door_sensors_config_modified

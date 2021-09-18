@@ -1,4 +1,4 @@
-from SmarterCircuits.ShellyDevices import RelayModule
+from SmarterCircuits.ShellyDevices import RelayModule, DoorWindowSensor, HumidityTemperatureSensor, MotionSensor
 import time
 from os import name
 import SmarterCircuitsMQTT
@@ -107,17 +107,68 @@ class SmarterCircuitsMCP:
 
     def handle_shelly_relay_message(self, id, subtopic, message):
         circuit = (RelayModule)(self.config.circuits[id])
+        if subtopic == "relay/0":
+            circuit.status.relay_0.on = message == "on"
+        if subtopic == "relay/1":
+            circuit.status.relay_1.on = message == "on"
         if subtopic == "relay/0/power":
-            circuit.status.relay_0.power = int(message)
+            circuit.status.relay_0.power = float(message)
+        if subtopic == "relay/0/energy":
+            circuit.status.relay_0.energy = int(message)
+        if subtopic == "relay/1/power":
+            circuit.status.relay_1.power = float(message)
+        if subtopic == "relay/1/energy":
+            circuit.status.relay_1.energy = int(message)
+        if subtopic == "temperature":
+            circuit.status.temperature = float(message)
+        if subtopic == "temperature_f":
+            circuit.status.temperature_f = float(message)
+        if subtopic == "overtemperature":
+            circuit.status.overtemperature = int(message)
+        if subtopic == "temperature_status":
+            circuit.status.temperature = message
+        if subtopic == "voltage":
+            circuit.status.voltage = float(message)    
 
     def handle_shelly_dw_message(self, id, subtopic, message):
-        
+        sensor = (DoorWindowSensor)(self.config.door_sensors[id])
+        if subtopic == "sensor/tilt":
+            sensor.status.tilt = int(message)
+        if subtopic == "sensor/vibration":
+            sensor.status.vibration = int(message)
+        if subtopic == "sensor/temperature":
+            sensor.status.temperature = float(message)
+        if subtopic == "sensor/lux":
+            sensor.status.lux = int(message)
+        if subtopic == "sensor/illumination":
+            sensor.status.illumination = message
+        if subtopic == "sensor/battery":
+            sensor.status.battery = int(message)
+        if subtopic == "sensor/error":
+            sensor.status.error = int(message)
+        if subtopic == "sensor/act_reasons":
+            sensor.status.act_reasons = json.dumps(message)
+        if subtopic == "sensor/state":
+            if sensor.status.state != message:
+                sensor.status.state = message
+                self.handle_dw_state_change(sensor)
+    
+    def hande_dw_state_change(self, sensor:DoorWindowSensor):
+        if self.circuit_authority is not True:
+            return
+        if sensor.status.state == "open":
+            self.execute_command(sensor.open_command)
+        else:
+            self.execute_command(sensor.close_command)
 
     def handle_shelly_ht_message(self, id, subtopic, message):
-
+        sensor = (HumidityTemperatureSensor)(self.config.ht_sensors[id])
 
     def handle_shelly_motion_message(self, id, subtopic, message):
+        sensor = (MotionSensor)(self.config.motion_sensors[id])
     
+    def motion_auto_off_timer(sensor:MotionSensor):
+        donothing = True
 
     def handle_smarter_circuits_message(self, topic, message):
         #print(topic+": "+message)
