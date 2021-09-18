@@ -27,6 +27,7 @@ class SmarterConfig:
         self.running = False
         self.loaded = False
         self.command_endpoint = ""
+        self.use_api = False
         _thread.start_new_thread(self.change_observer, ())
     
     def log(self, message):
@@ -61,6 +62,7 @@ class SmarterConfig:
         self.brokers = config["brokers"]
         self.topics = config["topics"]
         self.command_endpoint = config["command_endpoint"]
+        self.use_api = config["use_api"]
 
     def load_circuits(self):
         self.log("load_circuits")

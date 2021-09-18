@@ -268,6 +268,8 @@ class SmarterCircuitsMCP:
         if "smarter_circuits/mode" in topic and self.mode != message:
             self.mode = message
             self.handle_mode_change()
+        if "smarter_circuits/command" in topic:
+            self.execute_command(message)
     
     def handle_mode_change(self):
         SmarterLog.log("SmarterCircuitsMCP","mode set to "+self.mode)
@@ -330,9 +332,8 @@ class SmarterCircuitsMCP:
                 if str(target_value) not in condition.value:
                     return False
         return True
-                
 
-    def execute_command(self, command):
+    def send_api_command(self, command):
         #TODO: remove API altogether from system
         SmarterLog.log("SmarterCircuitsMCP","sending command: "+command)
         try:
@@ -340,6 +341,81 @@ class SmarterCircuitsMCP:
             SmarterLog.log("SmarterCircuitsMCP","command response: "+str(r.status_code))
         except:
             SmarterLog.log("SmarterCircuitsMCP",'failed to send command')
+
+    def execute_command(self, command):
+        if self.circuit_authority is not True:
+            return
+        if self.config.use_api is True:
+            self.send_api_command(command)
+            return
+        SmarterLog.log("SmarterCircuitsMCP","executing command: "+command)
+        command = command.lower()
+        com = "off"
+        command_list = []
+        if " on" in command:
+            com = "on"
+        if "zone" in command or "area" in command or "all of the" in command:
+            for ci in range(0,len(self.config.circuits)):
+                c = self.config.circuits[ci]
+                for z in c.zones:
+                    if z.lower() in command:
+                        topic = "shellies/"+c.address+"/relay/"+c.relay_id+"/command"
+                        command_list.append({"t":topic,"c":com})
+        elif "mode" in command:
+            detected_mode = None
+            for ci in range(0,len(self.config.circuits)):
+                c = self.config.circuits[ci]
+                for m in c.on_modes:
+                    if m.lower() in command:
+                        detected_mode = m.lower()
+                for m in c.off_modes:
+                    if m.lower() in command:
+                        detected_mode = m.lower()
+                if detected_mode is None:
+                    continue
+                self.mode = detected_mode
+                self.handle_mode_change()
+        elif "turn" in command:
+            for ci in range(0,len(self.config.circuits)):
+                c = self.config.circuits[ci]
+                if c.name.lower() in command or c.name.lower().replace("light","lamp") in command:
+                    topic = "shellies/"+c.address+"/relay/"+c.relay_id+"/command"
+                    command_list.append({"t":topic,"c":com})
+
+        elif "first shade" in command:
+            if "open" in command:
+                command_list.append({"t":"pi/rollerpi/commands","c":"0:0"})
+            else:
+                command_list.append({"t":"pi/rollerpi/commands","c":"0:1"})
+        elif "second shade" in command:
+            if "open" in command:
+                command_list.append({"t":"pi/rollerpi/commands","c":"1:0"})
+            else:
+                command_list.append({"t":"pi/rollerpi/commands","c":"1:1"})
+        elif "third shade" in command:
+            if "open" in command:
+                command_list.append({"t":"pi/rollerpi/commands","c":"2:0"})
+            else:
+                command_list.append({"t":"pi/rollerpi/commands","c":"2:1"})
+        elif "shade" in command:
+            if "open" in command:
+                command_list.append({"t":"pi/rollerpi/commands","c":"5:0"})
+            else:
+                command_list.append({"t":"pi/rollerpi/commands","c":"5:1"})
+
+        elif "shop door" in command:
+            if "open" in command:
+                command_list.append({"t":"pi/baydoorpi/commands","c":"1:1"})
+            if ("close" in command or "shut" in command):
+                command_list.append({"t":"pi/baydoorpi/commands","c":"1:0"})
+        elif "garage door" in command:
+            if "open" in command:
+                command_list.append({"t":"pi/baydoorpi/commands","c":"0:1"})
+            if "close" in command or "shut" in command:
+                command_list.append({"t":"pi/baydoorpi/commands","c":"0:0"})
+
+        for cmd in command_list:
+            self.mqtt.publish(cmd["t"],cmd["c"])
 
     def received_peer_data(self, peer):
         found = False
