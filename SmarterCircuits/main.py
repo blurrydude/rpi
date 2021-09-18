@@ -112,8 +112,9 @@ class SmarterCircuitsMCP:
             if peer_last_octet < lowest_ip:
                 lowest_ip = peer_last_octet
         if lowest_ip == last_octet:
-            SmarterLog.log("SmarterCircuitsMCP","I am circuit authority")
-            self.circuit_authority = True
+            if self.circuit_authority is not True:
+                SmarterLog.log("SmarterCircuitsMCP","I am circuit authority")
+                self.circuit_authority = True
         else:
             self.circuit_authority = False
 
@@ -238,6 +239,7 @@ class SmarterCircuitsMCP:
             self.handle_motion(sensor)
 
     def handle_motion(self, sensor:MotionSensor):
+        SmarterLog.log("SmarterCircuitsMCP","Motion detected: "+sensor.room)
         if self.circuit_authority is not True:
             return
         for command in sensor.commands:
