@@ -26,6 +26,12 @@ class SmarterCircuitsMCP:
         self.config = None
         self.mqtt = None
         self.peers = []
+        self.last_day = ""
+        self.solar_data = False
+        self.sunrise = ""
+        self.sunset = ""
+        self.civil_twilight_end = ""
+        self.civil_twilight_begin = ""
         self.start()
 
     def start(self):
@@ -47,17 +53,53 @@ class SmarterCircuitsMCP:
                 continue
             if self.ticks in [0,10,20,30,40,50]:
                 self.send_peer_data()
+            
+            now = datetime.now().strftime("%H:%M")
+            day = datetime.now().strftime("%a").lower()
             if self.ticks >= 59:
                 self.ticks = 0
+                self.check_solar_data(day)
                 self.check_circuit_authority()
-                self.do_time_commands()
+                self.do_time_commands(now, day)
             self.ticks = self.ticks + 1
             time.sleep(1)
+
+    def check_solar_data(self, day):
+        if day != self.last_day:
+            self.last_day = day
+            r = requests.get("https://api.sunrise-sunset.org/json?lat=39.68021508778703&lng=-84.17636552954109")
+            j = r.json()
+            self.sunrise = self.convert_suntime(j["results"]["sunrise"],False)
+            SmarterLog.log("SmarterCircuitsMCP","got sunrise time: "+self.sunrise)
+            self.sunset = self.convert_suntime(j["results"]["sunset"],False)
+            SmarterLog.log("SmarterCircuitsMCP","got sunset time: "+self.sunset)
+            self.civil_twilight_begin = self.convert_suntime(j["results"]["civil_twilight_begin"],False)
+            SmarterLog.log("SmarterCircuitsMCP","got civil_twilight_begin time: "+self.civil_twilight_begin)
+            self.civil_twilight_end = self.convert_suntime(j["results"]["civil_twilight_end"],False)
+            SmarterLog.log("SmarterCircuitsMCP","got civil_twilight_end time: "+self.civil_twilight_end)
     
-    def do_time_commands(self):
+    def do_time_commands(self, now, day):
         if self.circuit_authority is False:
             return
-        return
+        for tc in self.do_time_commands:
+            check = tc["days_time"].lower()
+            if day not in check:
+                continue
+            if self.time_check(now,check) is True:
+                if "thermoset" in tc["command"]:
+                    #TODO: make this work again
+                    #thermoset_command(tc["command"])
+                    donothing = True
+                else:
+                    self.execute_command(tc["command"])
+
+    def time_check(self, now, check):
+        is_sunrise = now == self.sunrise
+        is_sunset = now == self.sunset
+        is_civil_twilight_end = now == self.civil_twilight_end
+        is_civil_twilight_begin = now == self.civil_twilight_begin
+        check = check.lower()
+        return now in check or (is_sunrise and "sunrise" in check) or (is_sunset and "sunset" in check) or (is_civil_twilight_end and "civil_twilight_end" in check) or (is_civil_twilight_begin and "civil_twilight_begin" in check)
     
     def send_peer_data(self):
         timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
@@ -295,6 +337,32 @@ class SmarterCircuitsMCP:
         if found is not True:
             SmarterLog.log("SmarterCircuits","new peer "+peer["name"])
             self.peers.append(SmarterCircuitsPeer(peer["id"],peer["name"],peer["ip_address"],peer["model"],peer["circuit_authority"],peer["timestamp"]))
+    
+    def convert_suntime(self, jdata, winter):
+        a = jdata.split(' ')
+        s = a[0].split(":")
+        h = int(s[0])
+        if a[1] == "AM" and h == 12:
+            h = 0
+        if a[1] == "PM" and h != 12:
+            h = h + 12
+        if winter is True:
+            h = h - 5
+        else:
+            h = h - 4
+        if h < 0:
+            h = h + 24
+        if h == 24:
+            h = 0
+        m = int(s[1])
+        o = ""
+        if h < 10:
+            o = "0"
+        o = o + str(h) + ":"
+        if m < 10:
+            o = o + "0"
+        o = o + str(m)
+        return o
 
 class SmarterCircuitsPeer:
     def __init__(self, id, name, ip_address, model, circuit_authority, timestamp):
