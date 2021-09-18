@@ -5,12 +5,13 @@
             "start":"turn on guest bathroom",
             "stop":"turn off guest bathroom",
             "conditions": [
-                {"prop":"GuestBathroom.lux","comparitor":"<","value":"2000"},
+                {"prop":"motion.GuestBathroom.lux","comparitor":"<","value":"2000"},
                 {"prop":"mode","comparitor":"!=","value":"day"}
             ]
         }],
         "id":"shellymotionsensor-60A423BECB98",
         "auto_off":true,
+        "off_time_minutes":"20",
         "ip_address":"192.168.1.150"
     },
     {
@@ -35,6 +36,7 @@
         ],
         "id":"shellymotionsensor-60A42386DDE2",
         "auto_off":true,
+        "off_time_minutes":"20",
         "ip_address":"192.168.1.151"
     },
     {
@@ -50,6 +52,7 @@
         }],
         "id":"shellymotionsensor-60A42386E5BA",
         "auto_off":true,
+        "off_time_minutes":"20",
         "ip_address":"192.168.1.152"
     },
     {
@@ -65,6 +68,7 @@
         }],
         "id":"shellymotionsensor-60A423872550",
         "auto_off":true,
+        "off_time_minutes":"20",
         "ip_address":"192.168.1.153"
     },
     {
@@ -76,6 +80,7 @@
         }],
         "id":"shellymotionsensor-60A423976276",
         "auto_off":true,
+        "off_time_minutes":"20",
         "ip_address":"192.168.1.154"
     },
     {
@@ -99,6 +104,7 @@
         }],
         "id":"shellymotionsensor-60A4239A6298",
         "auto_off":true,
+        "off_time_minutes":"20",
         "ip_address":"192.168.1.155"
     }
 ]

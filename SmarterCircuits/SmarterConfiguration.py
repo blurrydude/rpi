@@ -26,6 +26,7 @@ class SmarterConfig:
         self.time_commands = []
         self.running = False
         self.loaded = False
+        self.command_endpoint = ""
         _thread.start_new_thread(self.change_observer, ())
     
     def log(self, message):
@@ -59,6 +60,7 @@ class SmarterConfig:
         config = json.load(config_data)
         self.brokers = config["brokers"]
         self.topics = config["topics"]
+        self.command_endpoint = config["command_endpoint"]
 
     def load_circuits(self):
         self.log("load_circuits")
@@ -70,7 +72,7 @@ class SmarterConfig:
         motion_sensor_data = open(self.motion_sensors_file)
         motion_sensor_list = json.load(motion_sensor_data)
         for sensor in motion_sensor_list:
-            motion_sensor = MotionSensor(sensor["id"],sensor["ip_address"],sensor["room"],sensor["auto_off"])
+            motion_sensor = MotionSensor(sensor["id"],sensor["ip_address"],sensor["room"],sensor["auto_off"],sensor["off_time_minutes"])
             for com in sensor["commands"]:
                 conditions = []
                 for con in com["conditions"]:

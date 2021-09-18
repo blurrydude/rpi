@@ -1,3 +1,4 @@
+from SmarterCircuits.ShellyDevices import CommandCondition
 from ShellyDevices import RelayModule, DoorWindowSensor, HumidityTemperatureSensor, MotionSensor
 import time
 from os import name
@@ -8,13 +9,15 @@ import socket
 import subprocess
 import _thread
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
+import requests
 
 class SmarterCircuitsMCP:
     def __init__(self, name, ip_address, model):
         self.id = 0
         self.name = name
         self.model = model
+        self.mode = "day"
         self.running = False
         self.ticks = 0
         self.ip_address = ip_address
@@ -139,7 +142,10 @@ class SmarterCircuitsMCP:
         if subtopic == "sensor/illumination":
             sensor.status.illumination = message
         if subtopic == "sensor/battery":
-            sensor.status.battery = int(message)
+            battery = int(message)
+            if sensor.status.battery != battery:
+                sensor.status.battery = battery
+                self.battery_status_check(sensor)
         if subtopic == "sensor/error":
             sensor.status.error = int(message)
         if subtopic == "sensor/act_reasons":
@@ -159,18 +165,123 @@ class SmarterCircuitsMCP:
 
     def handle_shelly_ht_message(self, id, subtopic, message):
         sensor = (HumidityTemperatureSensor)(self.config.ht_sensors[id])
+        if subtopic == "sensor/battery":
+            battery = int(message)
+            if sensor.status.battery != battery:
+                sensor.status.battery = battery
+                self.battery_status_check(sensor)
+        if subtopic == "sensor/temperature":
+            sensor.status.temperature = float(message)
+        if subtopic == "sensor/humidity":
+            sensor.status.humidity = float(message)
 
     def handle_shelly_motion_message(self, id, subtopic, message):
         sensor = (MotionSensor)(self.config.motion_sensors[id])
-    
-    def motion_auto_off_timer(sensor:MotionSensor):
-        donothing = True
+        if subtopic != "status":
+            return
+        data = json.loads(message)
+        if sensor.status.active != data["active"]:
+            sensor.status.active = data["active"]
+        if sensor.status.battery != data["bat"]:
+            sensor.status.battery = data["bat"]
+            self.battery_status_check(sensor)
+        if sensor.status.lux != data["lux"]:
+            sensor.status.lux = data["lux"]
+        if sensor.status.vibration != data["vibration"]:
+            sensor.status.vibration = data["vibration"]
+        if sensor.status.timestamp != data["timestamp"]:
+            sensor.status.timestamp = data["timestamp"]
+        if sensor.status.motion != data["motion"]:
+            sensor.status.motion = data["motion"]
+            self.handle_motion(sensor)
+
+    def handle_motion(self, sensor:MotionSensor):
+        if self.circuit_authority is not True:
+            return
+        for command in sensor.commands:
+            if self.conditions_met(command.conditions) is True:
+                self.execute_command(command.start)
+        if sensor.auto_off is True:
+            auto_off_at = datetime.now() + timedelta(minutes=sensor.off_time_minutes)
+            _thread.start_new_thread(self.motion_auto_off_timer, (sensor, auto_off_at))
+
+    def motion_auto_off_timer(self, sensor:MotionSensor, auto_off_time):
+        now = datetime.now()
+        while now < auto_off_time:
+            now = datetime.now()
+            time.sleep(1)
+        for command in sensor.commands:
+            if self.conditions_met(command.conditions) is True:
+                self.execute_command(command.stop)
 
     def handle_smarter_circuits_message(self, topic, message):
         #print(topic+": "+message)
         if "smarter_circuits/peers" in topic:
             self.received_peer_data(json.loads(message))
     
+    def battery_status_check(self, sensor):
+        if sensor.status.battery < 42:
+            SmarterLog.log("BATTERY STATUS","Battery Low: "+sensor.name+" ["+sensor.id+"]")
+    
+    def conditions_met(self, conditions):
+        for c in conditions:
+            target_value = None
+            condition = (CommandCondition)(c)
+            if "." in condition.prop:
+                s = condition.prop.split(".")
+                device = None
+                if s[0] == "motion":
+                    for sensor in self.config.motion_sensors:
+                        if sensor.room.replace(" ","") == s[1]:
+                            device = sensor
+                if s[0] == "circuit":
+                    for circuit in self.config.circuits:
+                        if circuit.name.replace(" ","") == s[1]:
+                            device = circuit
+                for attr, value in device.__dict__.items():
+                    if attr == s[2]:
+                        target_value = value
+            else:
+                for attr, value in self.__dict__.items():
+                    if attr == condition.prop:
+                        target_value = value
+            
+            if condition.comparitor == "=":
+                if str(target_value) != condition.value:
+                    return False
+            if condition.comparitor == "!=":
+                if str(target_value) == condition.value:
+                    return False
+            if condition.comparitor == ">":
+                if str(target_value) <= condition.value:
+                    return False
+            if condition.comparitor == ">=":
+                if str(target_value) < condition.value:
+                    return False
+            if condition.comparitor == "<":
+                if str(target_value) >= condition.value:
+                    return False
+            if condition.comparitor == "<=":
+                if str(target_value) > condition.value:
+                    return False
+            if condition.comparitor == "in":
+                if str(target_value) in condition.value:
+                    return False
+            if condition.comparitor == "not in":
+                if str(target_value) not in condition.value:
+                    return False
+        return True
+                
+
+    def execute_command(self, command):
+        #TODO: remove API altogether from system
+        SmarterLog.log("SmarterCircuitsMCP","sending command: "+command)
+        try:
+            r =requests.get(self.config.command_endpoint+command)
+            SmarterLog.log("SmarterCircuitsMCP","command response: "+str(r.status_code))
+        except:
+            SmarterLog.log("SmarterCircuitsMCP",'failed to send command')
+
     def received_peer_data(self, peer):
         found = False
         for p in self.peers:

@@ -62,12 +62,13 @@ class HumidityTemperatureSensorStatus:
         self.battery = 0
 
 class MotionSensor:
-    def __init__(self, id, ip_address, room, auto_off):
+    def __init__(self, id, ip_address, room, auto_off, off_time_minutes):
         self.id = id
         self.ip_address = ip_address
         self.room = room
         self.commands = []
         self.auto_off = auto_off
+        self.off_time_minutes = off_time_minutes
         self.status = MotionSensorStatus()
 
 class MotionSensorStatus:

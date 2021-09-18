@@ -1,4 +1,5 @@
 {
     "brokers":["192.168.1.200"],
-    "topics":["shellies/#"]
+    "topics":["shellies/#"],
+    "command_endpoint":"https://api.idkline.com/control/"
 }
