@@ -1,5 +1,5 @@
 import time
-time.sleep(30)
+#time.sleep(30)
 from ShellyDevices import RelayModule, DoorWindowSensor, HumidityTemperatureSensor, MotionSensor, CommandCondition
 from os import name
 import SmarterCircuitsMQTT
@@ -42,9 +42,9 @@ class SmarterCircuitsMCP:
         while self.config.loaded is False:
             time.sleep(1)
         self.mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(self.config.brokers,["shellies/#","smarter_circuits/#"],self.on_message)
-        _thread.start_new_thread(self.main_loop, (self))
+        _thread.start_new_thread(self.main_loop, (self,))
         if self.config.touchscreen is True:
-            self.touchscreen = Touchscreen()
+            self.touchscreen = Touchscreen(self)
         
         input("Press any key to stop...")
 
