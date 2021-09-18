@@ -283,7 +283,7 @@ class SmarterCircuitsMCP:
     
     def battery_status_check(self, sensor):
         if sensor.status.battery < 42:
-            SmarterLog.log("BATTERY STATUS","Battery Low: "+sensor.name+" ["+sensor.id+"]")
+            SmarterLog.log("BATTERY STATUS","Battery Low: "+sensor.id)
     
     def conditions_met(self, conditions):
         for condition in conditions:
