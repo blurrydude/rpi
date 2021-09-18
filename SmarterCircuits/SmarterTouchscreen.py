@@ -53,7 +53,7 @@ class Touchscreen:
         c = 0
         for circuit in self.mcp.config.circuits:
             if zone in circuit.zones:
-                buttons.append(SmartButton(r,c,circuit.name,lambda d=circuit: self.toggle_circuit(d),"",1,"Times",24,"darkblue","white",5,5))
+                buttons.append(SmartButton(r,c,circuit.name,lambda d=circuit: self.toggle_circuit(d),"",1,"Times",20,"darkblue","white",5,5))
                 if c == 2:
                     r = r + 1
                     c = 0
@@ -73,7 +73,7 @@ class Touchscreen:
         r = 1
         c = 0
         for zone in zones:
-            buttons.append(SmartButton(r,c,zone,lambda d=zone: self.select_zone(d),"",1,"Times",24,"darkblue","white",5,5))
+            buttons.append(SmartButton(r,c,zone,lambda d=zone: self.select_zone(d),"",1,"Times",20,"darkblue","white",5,5))
             
             if c == 2:
                 r = r + 1
