@@ -68,20 +68,25 @@ class SmarterCircuitsMCP:
     def main_loop(self):
         self.running = True
         while self.running is True:
-            if self.config.loaded is False or self.mqtt.connected is False:
-                continue
-            if self.ticks in [0,10,20,30,40,50]:
-                self.send_peer_data()
-                self.check_for_updates()
-            
-            now = datetime.now().strftime("%H:%M")
-            day = datetime.now().strftime("%a").lower()
-            if self.ticks >= 59:
-                self.ticks = 0
-                self.check_solar_data(day)
-                self.check_circuit_authority()
-                self.do_time_commands(now, day)
-            self.ticks = self.ticks + 1
+            try:
+                if self.config.loaded is False or self.mqtt.connected is False:
+                    continue
+                if self.ticks in [0,10,20,30,40,50]:
+                    self.send_peer_data()
+                    self.check_for_updates()
+                
+                now = datetime.now().strftime("%H:%M")
+                day = datetime.now().strftime("%a").lower()
+                if self.ticks >= 59:
+                    self.ticks = 0
+                    self.check_solar_data(day)
+                    self.check_circuit_authority()
+                    self.do_time_commands(now, day)
+                self.ticks = self.ticks + 1
+            except Exception as e: 
+                error = str(e)
+                SmarterLog.log("SmarterCircuitsMCP",error)
+                self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
             time.sleep(1)
 
     def check_solar_data(self, day):
