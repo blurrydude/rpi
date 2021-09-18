@@ -80,7 +80,7 @@ class SmarterCircuitsMCP:
     def do_time_commands(self, now, day):
         if self.circuit_authority is False:
             return
-        for tc in self.do_time_commands:
+        for tc in self.config.time_commands:
             check = tc["days_time"].lower()
             if day not in check:
                 continue
@@ -112,6 +112,7 @@ class SmarterCircuitsMCP:
             if peer_last_octet < lowest_ip:
                 lowest_ip = peer_last_octet
         if lowest_ip == last_octet:
+            SmarterLog.log("SmarterCircuitsMCP","I am circuit authority")
             self.circuit_authority = True
         else:
             self.circuit_authority = False
