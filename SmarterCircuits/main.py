@@ -148,7 +148,8 @@ class SmarterCircuitsMCP:
         SmarterLog.log("SmarterCircuits","stopped.")
         if restart is True:
             SmarterLog.log("SmarterCircuits","restarting...")
-            subprocess.Popen(["python3","main.py"])
+            source_dir = os.path.dirname(os.path.realpath(__file__))+"/"
+            subprocess.Popen(["python3",source_dir+"main.py"])
         exit()
     
     def on_message(self, client, userdata, message):
@@ -295,6 +296,8 @@ class SmarterCircuitsMCP:
             self.handle_mode_change()
         if "smarter_circuits/command" in topic and self.circuit_authority is True:
             self.execute_command(message)
+        if "smarter_circuits/restart" in topic:
+            self.stop(True)
     
     def handle_mode_change(self):
         SmarterLog.log("SmarterCircuitsMCP","mode set to "+self.mode)
