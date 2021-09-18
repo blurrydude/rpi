@@ -22,7 +22,7 @@ class SmarterCircuitsMCP:
         self.config = None
         self.mqtt = None
         self.peers = []
-        _thread.start_new_thread(self.main_loop, ())
+        self.start()
 
     def start(self):
         SmarterLog.log("SmarterCircuits","starting...")
@@ -30,19 +30,24 @@ class SmarterCircuitsMCP:
         while self.config.loaded is False:
             time.sleep(1)
         self.mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(self.config.brokers,["shellies/#","smarter_circuits/#"],self.on_message)
+        _thread.start_new_thread(self.main_loop, ())
         
         input("Press any key to stop...")
+
+        self.stop()
     
     def main_loop(self):
         self.running = True
         while self.running is True:
             if self.config.loaded is False or self.mqtt.connected is False:
                 continue
+            if self.ticks in [0,10,20,30,40,50]:
+                self.send_peer_data()
             if self.ticks >= 59:
                 self.ticks = 0
-                self.send_peer_data()
                 if self.circuit_authority is True:
                     self.do_time_commands()
+            self.ticks = self.ticks + 1
             time.sleep(1)
     
     def do_time_commands(self):
@@ -50,7 +55,7 @@ class SmarterCircuitsMCP:
     
     def send_peer_data(self):
         timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-        self.mqtt.publish("smarter_circuits/peers",json.dumps(SmarterCircuitsPeer(self.id, self.name, self.ip_address, self.model, self.circuit_authority, timestamp)))
+        self.mqtt.publish("smarter_circuits/peers",SmarterCircuitsPeer(self.id, self.name, self.ip_address, self.model, self.circuit_authority, timestamp).toJSON())
 
     def check_circuit_authority(self):
         existing_authority = False
@@ -78,7 +83,7 @@ class SmarterCircuitsMCP:
             self.handle_smarter_circuits_message(topic, text)
     
     def handle_shelly_message(self, topic, message):
-        print(topic+": "+message)
+        #print(topic+": "+message)
         if self.discovery_mode is True:
             return
         return
@@ -105,6 +110,9 @@ class SmarterCircuitsPeer:
         self.model = model
         self.circuit_authority = circuit_authority
         self.timestamp = timestamp
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__, 
+            sort_keys=True, indent=4)
 
 if __name__ == "__main__":
     myname = socket.gethostname()
