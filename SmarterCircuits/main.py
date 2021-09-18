@@ -59,8 +59,10 @@ class SmarterCircuitsMCP:
             return
         if self.source_modified == 0:
             self.source_modified = modified
+            SmarterLog.log("SmarterCircuitsMCP","got last source modification: "+self.source_modified)
             return
         self.source_modified = modified
+        SmarterLog.log("SmarterCircuitsMCP","restarting due to source modification: "+self.source_modified)
         self.stop(True)
     
     def main_loop(self):
