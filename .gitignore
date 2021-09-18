@@ -5,3 +5,4 @@ command-center/dist
 SmarterCircuits/config.json
 snapshots
 SmarterCircuits/logs
+SmarterCircuits/__pycache__
