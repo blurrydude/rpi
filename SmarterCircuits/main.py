@@ -21,7 +21,6 @@ class SmarterCircuitsMCP:
         self.ticks = 0
         self.ip_address = ip_address
         self.circuit_authority = False
-        self.discovery_mode = True
         self.config = None
         self.mqtt = None
         self.peers = []
@@ -137,8 +136,6 @@ class SmarterCircuitsMCP:
     
     def handle_shelly_message(self, topic, message):
         #print(topic+": "+message)
-        if self.discovery_mode is True:
-            return
         s = topic.split('/')
         id = s[1]
         SmarterLog.log("SmarterCircuitsMCP", "handle shelly message: "+id)
