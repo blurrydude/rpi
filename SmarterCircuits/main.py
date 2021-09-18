@@ -244,7 +244,7 @@ class SmarterCircuitsMCP:
             if self.conditions_met(command.conditions) is True:
                 self.execute_command(command.start)
         if sensor.auto_off is True:
-            auto_off_at = datetime.now() + timedelta(minutes=sensor.off_time_minutes)
+            auto_off_at = datetime.now() + timedelta(minutes=int(sensor.off_time_minutes))
             _thread.start_new_thread(self.motion_auto_off_timer, (sensor, auto_off_at))
 
     def motion_auto_off_timer(self, sensor:MotionSensor, auto_off_time):
