@@ -3,6 +3,7 @@ import os
 import _thread
 import time
 from SmarterLogging import SmarterLog
+from ShellyDevices import RelayModule, DoorWindowSensor, HumidityTemperatureSensor, MotionSensor
 
 class SmarterConfig:
     def __init__(self):
@@ -18,10 +19,10 @@ class SmarterConfig:
         self.door_sensors_config_modified = 0.0
         self.brokers = []
         self.topics = []
-        self.circuits = []
-        self.motion_sensors = []
-        self.th_sensors = []
-        self.door_sensors = []
+        self.circuits = {}
+        self.motion_sensors = {}
+        self.th_sensors = {}
+        self.door_sensors = {}
         self.time_commands = []
         self.running = False
         self.loaded = False
@@ -62,7 +63,10 @@ class SmarterConfig:
     def load_circuits(self):
         self.log("load_circuits")
         circuit_data = open(self.circuits_config_file)
-        self.circuits = json.load(circuit_data)
+        circuit_list = json.load(circuit_data)
+        for circuit in circuit_list:
+            relay_module = RelayModule(circuit["id"],circuit["ip_address"],circuit["name"],circuit["location"],circuit["room"],circuit["zones"],circuit["on_modes"],circuit["off_modes"])
+            self.circuits[relay_module.id] = relay_module
 
     def load_motion_sensors(self):
         self.log("load_motion_sensors")

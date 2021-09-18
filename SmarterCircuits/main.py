@@ -1,3 +1,4 @@
+from SmarterCircuits.ShellyDevices import RelayModule
 import time
 from os import name
 import SmarterCircuitsMQTT
@@ -46,13 +47,14 @@ class SmarterCircuitsMCP:
             if self.ticks >= 59:
                 self.ticks = 0
                 self.check_circuit_authority()
-                if self.circuit_authority is True:
-                    self.do_time_commands()
+                self.do_time_commands()
             self.ticks = self.ticks + 1
             time.sleep(1)
     
     def do_time_commands(self):
-        donothing = True
+        if self.circuit_authority is False:
+            return
+        return
     
     def send_peer_data(self):
         timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
@@ -93,8 +95,30 @@ class SmarterCircuitsMCP:
             return
         s = topic.split('/')
         id = s[1]
+        if "1pm" in id or "switch25" in id:
+            self.handle_shelly_relay_message(id, topic.replace("shellies/"+id+"/",""), message)
+        if "dw" in id:
+            self.handle_shelly_dw_message(id, topic.replace("shellies/"+id+"/",""), message)
+        if "ht" in id:
+            self.handle_shelly_ht_message(id, topic.replace("shellies/"+id+"/",""), message)
+        if "motion" in id:
+            self.handle_shelly_motion_message(id, topic.replace("shellies/"+id+"/",""), message)
         return
+
+    def handle_shelly_relay_message(self, id, subtopic, message):
+        circuit = (RelayModule)(self.config.circuits[id])
+        if subtopic == "relay/0/power":
+            circuit.status.relay_0.power = int(message)
+
+    def handle_shelly_dw_message(self, id, subtopic, message):
+        
+
+    def handle_shelly_ht_message(self, id, subtopic, message):
+
+
+    def handle_shelly_motion_message(self, id, subtopic, message):
     
+
     def handle_smarter_circuits_message(self, topic, message):
         #print(topic+": "+message)
         if "smarter_circuits/peers" in topic:
