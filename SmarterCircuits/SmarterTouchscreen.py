@@ -23,10 +23,10 @@ class Touchscreen:
         self.title = SmartLabel(0,1,"Main","Times",24,"black","white",5,5)
         self.title.draw()
 
-        self.button_exit = SmartButton(0,0,"Close",self.stop,"",1,"Times","12","darkred","white",5,5)
+        self.button_exit = SmartButton(0,0,"Close",self.stop,"",1,"Times",16,"darkred","white",5,5)
         self.button_exit.draw()
 
-        self.button_exit = SmartButton(0,2,"Zone",self.zone_screen,"",1,"Times","12","darkblue","white",5,5)
+        self.button_exit = SmartButton(0,2,"Zone",self.zone_screen,"",1,"Times",16,"darkblue","white",5,5)
         self.button_exit.draw()
 
         self.start()
@@ -53,7 +53,7 @@ class Touchscreen:
         c = 0
         for circuit in self.mcp.config.circuits:
             if zone in circuit.zones:
-                buttons.append(SmartButton(r,c,circuit.name,lambda d=circuit: self.toggle_circuit(d),"",2,"Times",16,"darkblue","white",5,5))
+                buttons.append(SmartButton(r,c,circuit.name,lambda d=circuit: self.toggle_circuit(d),"",2,"Times",24,"darkblue","white",5,5))
                 if c == 2:
                     r = r + 1
                     c = 0
@@ -73,7 +73,7 @@ class Touchscreen:
         r = 1
         c = 0
         for zone in zones:
-            buttons.append(SmartButton(r,c,zone,lambda d=zone: self.select_zone(d),"",2,"Times",16,"darkblue","white",5,5))
+            buttons.append(SmartButton(r,c,zone,lambda d=zone: self.select_zone(d),"",2,"Times",24,"darkblue","white",5,5))
             
             if c == 2:
                 r = r + 1
