@@ -170,7 +170,7 @@ class SmarterCircuitsMCP:
                 circuit.status.voltage = float(message)    
 
     def handle_shelly_dw_message(self, id, subtopic, message):
-        sensor = (DoorWindowSensor)(self.config.door_sensors[id])
+        sensor = self.config.door_sensors[id]
         if subtopic == "sensor/tilt":
             sensor.status.tilt = int(message)
         if subtopic == "sensor/vibration":
@@ -204,7 +204,7 @@ class SmarterCircuitsMCP:
             self.execute_command(sensor.close_command)
 
     def handle_shelly_ht_message(self, id, subtopic, message):
-        sensor = (HumidityTemperatureSensor)(self.config.ht_sensors[id])
+        sensor = self.config.ht_sensors[id]
         if subtopic == "sensor/battery":
             battery = int(message)
             if sensor.status.battery != battery:
@@ -217,7 +217,7 @@ class SmarterCircuitsMCP:
 
     def handle_shelly_motion_message(self, id, subtopic, message):
         SmarterLog.log("SmarterCircuitsMCP", "handle motion message: "+message)
-        sensor = (MotionSensor)(self.config.motion_sensors[id])
+        sensor = self.config.motion_sensors[id]
         if subtopic != "status":
             return
         data = json.loads(message)
@@ -268,9 +268,8 @@ class SmarterCircuitsMCP:
             SmarterLog.log("BATTERY STATUS","Battery Low: "+sensor.name+" ["+sensor.id+"]")
     
     def conditions_met(self, conditions):
-        for c in conditions:
+        for condition in conditions:
             target_value = None
-            condition = (CommandCondition)(c)
             if "." in condition.prop:
                 s = condition.prop.split(".")
                 device = None
