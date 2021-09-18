@@ -219,6 +219,7 @@ class SmarterCircuitsMCP:
             sensor.status.humidity = float(message)
 
     def handle_shelly_motion_message(self, id, subtopic, message):
+        SmarterLog.log("SmarterCircuitsMCP", "handle motion message: "+message)
         sensor = (MotionSensor)(self.config.motion_sensors[id])
         if subtopic != "status":
             return
@@ -262,6 +263,8 @@ class SmarterCircuitsMCP:
         #print(topic+": "+message)
         if "smarter_circuits/peers" in topic:
             self.received_peer_data(json.loads(message))
+        if "smarter_circuits/mode" in topic:
+            self.mode = message
     
     def battery_status_check(self, sensor):
         if sensor.status.battery < 42:
