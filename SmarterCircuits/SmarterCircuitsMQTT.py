@@ -77,7 +77,7 @@ class SmarterMQTTClient:
             self.connect()
     
     def publish(self, topic, message):
-        self.log("publish '"+message+"' to '"+topic+"'")
+        #self.log("publish '"+message+"' to '"+topic+"'")
         if self.connected is False:
             return False
         try:
