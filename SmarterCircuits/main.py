@@ -110,6 +110,7 @@ class SmarterCircuitsMCP:
                 p.timestamp = peer["timestamp"]
                 found = True
         if found is not True:
+            SmarterLog.log("SmarterCircuits","new peer "+peer["name"])
             self.peers.append(SmarterCircuitsPeer(peer["id"],peer["name"],peer["ip_address"],peer["model"],peer["circuit_authority"],peer["timestamp"]))
 
 class SmarterCircuitsPeer:
