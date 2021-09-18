@@ -195,7 +195,8 @@ class SmarterCircuitsMCP:
         if subtopic == "sensor/state":
             if sensor.status.state != message:
                 sensor.status.state = message
-                self.handle_dw_state_change(sensor)
+                #TODO: fix this
+                #self.handle_dw_state_change(sensor)
     
     def hande_dw_state_change(self, sensor:DoorWindowSensor):
         if self.circuit_authority is not True:

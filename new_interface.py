@@ -1,4 +1,5 @@
 #! /usr/bin/env python3
+import paho.mqtt.client as mqtt
 import time
 time.sleep(10)
 from os import write
@@ -482,13 +483,24 @@ def getMode():
         return "modes"
 
 def sendCommand(command):
+    mosquittoDo("smarter_circuits/command",command)
     #print("sending command: "+command)
+    # try:
+    #     r =requests.get('https://api.idkline.com/control/'+command)
+    #     #print(str(r.status_code))
+    #     switchToScreen("main")
+    # except:
+    #     print('failed to send command')
+
+def mosquittoDo(topic, command):
     try:
-        r =requests.get('https://api.idkline.com/control/'+command)
-        #print(str(r.status_code))
-        switchToScreen("main")
+        client = mqtt.Client()
+        client.connect("192.168.1.200")
+        client.publish(topic,command)
+        client.disconnect()
     except:
-        print('failed to send command')
+        print('failed')
+    return 'OK'
 
 def increase_low_temp(room):
     #print("sending command: "+command)
