@@ -1,5 +1,6 @@
-from ShellyDevices import RelayModule, DoorWindowSensor, HumidityTemperatureSensor, MotionSensor, CommandCondition
 import time
+time.sleep(30)
+from ShellyDevices import RelayModule, DoorWindowSensor, HumidityTemperatureSensor, MotionSensor, CommandCondition
 from os import name
 import SmarterCircuitsMQTT
 import SmarterConfiguration
