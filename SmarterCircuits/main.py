@@ -42,13 +42,9 @@ class SmarterCircuitsMCP:
         while self.config.loaded is False:
             time.sleep(1)
         self.mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(self.config.brokers,["shellies/#","smarter_circuits/#"],self.on_message)
-        _thread.start_new_thread(self.main_loop, (self,))
+        _thread.start_new_thread(self.main_loop, ())
         if self.config.touchscreen is True:
             self.touchscreen = Touchscreen(self)
-        
-        input("Press any key to stop...")
-
-        self.stop()
     
     def main_loop(self):
         self.running = True

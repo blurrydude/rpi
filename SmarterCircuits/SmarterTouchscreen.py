@@ -1,7 +1,6 @@
 from SmarterLogging import SmarterLog
 from ShellyDevices import RelayModule
 import tkinter as tk
-import _thread
 
 class Touchscreen:
     def __init__(self, mcp):
@@ -30,7 +29,7 @@ class Touchscreen:
         self.button_exit = SmartButton(0,2,"Zone",self.zone_screen,"",1,"Times","12","darkblue","white",5,5)
         self.button_exit.draw()
 
-        _thread.start_new_thread(self.start, ())
+        self.start()
 
     
     def start(self):
