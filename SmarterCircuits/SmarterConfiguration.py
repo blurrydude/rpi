@@ -24,6 +24,7 @@ class SmarterConfig:
         self.ht_sensors = {}
         self.door_sensors = {}
         self.time_commands = []
+        self.touchscreen = False
         self.running = False
         self.loaded = False
         self.command_endpoint = ""
@@ -63,6 +64,7 @@ class SmarterConfig:
         self.topics = config["topics"]
         self.command_endpoint = config["command_endpoint"]
         self.use_api = config["use_api"]
+        self.touchscreen = config["touchscreen"]
 
     def load_circuits(self):
         self.log("load_circuits")
