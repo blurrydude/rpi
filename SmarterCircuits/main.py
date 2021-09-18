@@ -1,5 +1,4 @@
-from SmarterCircuits.ShellyDevices import CommandCondition
-from ShellyDevices import RelayModule, DoorWindowSensor, HumidityTemperatureSensor, MotionSensor
+from ShellyDevices import RelayModule, DoorWindowSensor, HumidityTemperatureSensor, MotionSensor, CommandCondition
 import time
 from os import name
 import SmarterCircuitsMQTT
