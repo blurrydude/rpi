@@ -498,7 +498,7 @@ if __name__ == "__main__":
     uname = subprocess.check_output(['uname','-m']).decode("utf-8").replace("\n","")
     model = "pc"
     if uname.__contains__("arm"):
-        model = subprocess.check_output(['cat','/proc/device-tree/model'])
+        model = subprocess.check_output(['cat','/proc/device-tree/model']).decode("utf-8").replace("\n","")
     print(uname)
     print(model)
     mcp = SmarterCircuitsMCP(myname, myip, model)
