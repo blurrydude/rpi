@@ -70,6 +70,7 @@ class Thermostat:
         self.room = self.mcp.name.replace("thermopi","")
 
         self.settings = ThermostatSettings()
+        self.settings_from_circuit_authority = False
         
         self.extra_ventilation_circuits = []
         self.extra_circulation_circuits = []
@@ -106,9 +107,10 @@ class Thermostat:
         time.sleep(2)
         self.post = False
         self.log("begin cycling")
-        self.mqtt.publish("smarter_circuits/info/"+self.mcp.name,"settings please")
         while True:
             try:
+                if self.settings_from_circuit_authority is not True:
+                    self.mqtt.publish("smarter_circuits/info/"+self.mcp.name,"settings please")
                 self.cycle()
             except:
                 self.log("BAD CYCLE!!!")
@@ -127,6 +129,7 @@ class Thermostat:
         if setting == "temperature_low_setting": self.settings.temperature_low_setting = int(value)
         if setting == "use_whole_house_fan": self.settings.use_whole_house_fan = bool(value)
         if setting == "ventilation_cycle_minutes": self.settings.ventilation_cycle_minutes = int(value)
+        if setting == "settings_from_circuit_authority": self.settings_from_circuit_authority = bool(value)
 
     def log(self, message):
         SmarterLog.log("SmarterThermostat", "[" + self.room + "] " + message)
