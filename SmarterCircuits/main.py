@@ -152,14 +152,14 @@ class SmarterCircuitsMCP:
     def check_circuit_authority(self):
         now = datetime.now()
         last_octet = int(self.ip_address.split('.')[3])
-        lowest_ip = last_octet
+        highest_ip = last_octet
         for peer in self.peers:
             if peer.id in self.last_seen.keys() and self.last_seen[peer.id] < now - timedelta(minutes=2):
                 continue
             peer_last_octet = int(peer.ip_address.split('.')[3])
-            if peer_last_octet < lowest_ip:
-                lowest_ip = peer_last_octet
-        if lowest_ip == last_octet:
+            if peer_last_octet > highest_ip:
+                highest_ip = peer_last_octet
+        if highest_ip == last_octet:
             if self.circuit_authority is not True:
                 SmarterLog.log("SmarterCircuitsMCP","I am circuit authority")
                 self.circuit_authority = True
