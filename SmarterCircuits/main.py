@@ -412,8 +412,8 @@ class SmarterCircuitsMCP:
                         detected_mode = m.lower()
                 if detected_mode is None:
                     continue
-                self.mode = detected_mode
-                self.handle_mode_change()
+            self.mode = detected_mode
+            self.handle_mode_change()
         elif "turn" in command:
             for ci in range(0,len(self.config.circuits)):
                 c = self.config.circuits[ci]

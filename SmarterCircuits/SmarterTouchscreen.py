@@ -27,9 +27,8 @@ class Touchscreen:
         self.button_exit = SmartButton(0,0,"Close",self.stop,"",1,"Times",16,"darkred","white",5,5)
         self.button_exit.draw()
 
-        self.button_exit = SmartButton(0,2,"Zone",self.zone_screen,"",1,"Times",16,"darkgreen","white",5,5)
-        self.button_exit.draw()
-
+        self.main_screen()
+        
         self.start()
 
     
@@ -47,23 +46,79 @@ class Touchscreen:
         command = "turn "+state+" "+circuit.name.lower()
         SmarterLog.log("SmarterTouchscreen","command: "+command)
         self.mcp.execute_command(command)
+        self.main_screen()
+    
+    def set_mode(self, mode):
+        command = "set mode " + mode.lower()
+        self.mcp.execute_command(command)
+        self.main_screen()
+    
+    def screen_wipe(self, buttons, labels):
+        self.clear()
+        self.buttons = buttons
+        self.labels = labels
+        self.draw()
+    
+    def main_screen(self):
+        buttons = [
+            SmartButton(1,1,"Zones",self.zone_screen,"",1,"Times",20,"darkblue","white",5,5),
+            SmartButton(2,1,"Modes",self.mode_screen,"",1,"Times",20,"darkgreen","white",5,5),
+            SmartButton(3,1,"Thermostat",self.thermostat_screen,"",1,"Times",20,"darkorange","white",5,5),
+        ]
+        labels = []
 
-    def select_zone(self, zone):
+        self.screen_wipe(buttons,labels)
+    
+    def thermostat_screen(self):
+        buttons = [
+            SmartButton(1,1,"Zones",self.zone_screen,"",1,"Times",20,"darkblue","white",5,5),
+            SmartButton(2,1,"Modes",self.mode_screen,"",1,"Times",20,"darkgreen","white",5,5),
+            SmartButton(3,1,"Thermostat",self.thermostat_screen,"",1,"Times",20,"darkorange","white",5,5),
+        ]
+        labels = []
+
+        self.screen_wipe(buttons,labels)
+    
+    def mode_screen(self):
+        buttons = []
+        labels = []
+        modes = []
+        r = 1
+        c = 0
+        for circuit in self.mcp.config.circuits:
+            for mode in circuit.on_modes:
+                if mode not in modes:
+                    modes.append(mode)
+            for mode in circuit.off_modes:
+                if mode not in modes:
+                    modes.append(mode)
+        for mode in modes:
+            buttons.append(SmartButton(r,c,mode,lambda d=mode: self.set_mode(d),"",2,"Times",20,"darkblue","white",5,5))
+            if c == 2:
+                r = r + 1
+                c = 0
+            else:
+                c = c + 1
+
+        self.screen_wipe(buttons,labels)
+
+    def zone_button_screen(self, zone):
         buttons = []
         r = 1
         c = 0
         self.title.text.set(zone)
         for circuit in self.mcp.config.circuits:
             if zone in circuit.zones:
-                buttons.append(SmartButton(r,c,circuit.name,lambda d=circuit: self.toggle_circuit(d),"",2,"Times",20,"darkblue","white",5,5))
+                color = "darkred"
+                if circuit.status.relay.on is True:
+                    color = "darkgreen"
+                buttons.append(SmartButton(r,c,circuit.name,lambda d=circuit: self.toggle_circuit(d),"",2,"Times",20,color,"white",5,5))
                 if c == 2:
                     r = r + 1
                     c = 0
                 else:
                     c = c + 1
-        self.clear()
-        self.buttons = buttons
-        self.draw()
+        self.screen_wipe(buttons, [])
     
     def zone_screen(self):
         zones = []
@@ -75,16 +130,14 @@ class Touchscreen:
         r = 1
         c = 0
         for zone in zones:
-            buttons.append(SmartButton(r,c,zone,lambda d=zone: self.select_zone(d),"",1,"Times",20,"darkblue","white",5,5))
+            buttons.append(SmartButton(r,c,zone,lambda d=zone: self.zone_button_screen(d),"",1,"Times",20,"darkblue","white",5,5))
             
             if c == 2:
                 r = r + 1
                 c = 0
             else:
                 c = c + 1
-        self.clear()
-        self.buttons = buttons
-        self.draw()
+        self.screen_wipe(buttons, [])
 
     def clear(self):
         for button in self.buttons:
