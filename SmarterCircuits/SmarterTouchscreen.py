@@ -28,12 +28,6 @@ class Touchscreen:
         self.title = SmartLabel(0,1,"Main 2.0","Times",24,"black","white",5,5)
         self.title.draw()
 
-        self.button_exit = SmartButton(0,0,"Close",self.stop,"",1,"Times",16,"darkred","white",5,5)
-        self.button_exit.draw()
-
-        self.button_exit = SmartButton(0,2,"Main Menu",self.main_screen,"",1,"Times",16,"darkorange","white",5,5)
-        self.button_exit.draw()
-
         self.main_screen()
         
         self.start()
@@ -69,6 +63,7 @@ class Touchscreen:
     def main_screen(self):
         self.title.text.set(self.mcp.name)
         buttons = [
+            SmartButton(0,2,"Close",self.stop,"",1,"Times",16,"darkred","white",5,5),
             SmartButton(1,1,"Zones",self.zone_screen,"",2,"Times",20,"darkblue","white",5,5),
             SmartButton(2,1,"Modes",self.mode_screen,"",2,"Times",20,"darkgreen","white",5,5),
             SmartButton(3,1,"Thermostat",self.thermostat_screen,"",2,"Times",20,"darkorange","white",5,5),
@@ -111,7 +106,9 @@ class Touchscreen:
 
     def thermostat_screen(self):
         self.title.text.set("Thermostats")
-        buttons = []
+        buttons = [
+            SmartButton(0,0,"Main Menu",self.main_screen,"",1,"Times",16,"darkorange","white",5,5)
+        ]
         labels = []
         r = 1
         c = len(self.mcp.thermostats)
@@ -145,7 +142,9 @@ class Touchscreen:
     
     def mode_screen(self):
         self.title.text.set("Mode: "+self.mcp.mode)
-        buttons = []
+        buttons = [
+            SmartButton(0,0,"Main Menu",self.main_screen,"",1,"Times",16,"darkorange","white",5,5)
+        ]
         labels = []
         modes = []
         r = 1
@@ -169,7 +168,10 @@ class Touchscreen:
 
     def zone_button_screen(self, zone):
         self.title.text.set(zone)
-        buttons = []
+        buttons = [
+            SmartButton(0,0,"Main Menu",self.main_screen,"",1,"Times",16,"darkorange","white",5,5),
+            SmartButton(0,2,"Main Menu",self.zone_screen,"",1,"Times",16,"darkblue","white",5,5)
+        ]
         r = 1
         c = 0
         for circuit in self.mcp.config.circuits:
@@ -188,7 +190,9 @@ class Touchscreen:
     def zone_screen(self):
         self.title.text.set("Zones")
         zones = []
-        buttons = []
+        buttons = [
+            SmartButton(0,0,"Main Menu",self.main_screen,"",1,"Times",16,"darkorange","white",5,5)
+        ]
         for circuit in self.mcp.config.circuits:
             for zone in circuit.zones:
                 if zone not in zones:
