@@ -80,7 +80,9 @@ class Touchscreen:
     def cool(self, room):
         thermostat = self.mcp.thermostats[room]
         target_low = thermostat.settings.temperature_low_setting - 1
+        self.mcp.thermostats[room].settings.temperature_low_setting = target_low
         target_high = thermostat.settings.temperature_high_setting - 1
+        self.mcp.thermostats[room].settings.temperature_high_setting = target_high
         self.mcp.mqtt.publish("smarter_circuits/thermosettings/"+room,"temperature_low_setting:"+str(target_low))
         time.sleep(0.5)
         self.mcp.mqtt.publish("smarter_circuits/thermosettings/"+room,"temperature_high_setting:"+str(target_high))
@@ -90,7 +92,9 @@ class Touchscreen:
     def warm(self, room):
         thermostat = self.mcp.thermostats[room]
         target_low = thermostat.settings.temperature_low_setting + 1
+        self.mcp.thermostats[room].settings.temperature_low_setting = target_low
         target_high = thermostat.settings.temperature_high_setting + 1
+        self.mcp.thermostats[room].settings.temperature_high_setting = target_high
         self.mcp.mqtt.publish("smarter_circuits/thermosettings/"+room,"temperature_low_setting:"+str(target_low))
         time.sleep(0.5)
         self.mcp.mqtt.publish("smarter_circuits/thermosettings/"+room,"temperature_high_setting:"+str(target_high))
@@ -100,6 +104,7 @@ class Touchscreen:
     def toggle_system(self, room):
         thermostat = self.mcp.thermostats[room]
         target = thermostat.settings.system_disabled is False
+        self.mcp.thermostats[room].settings.system_disabled = target
         self.mcp.mqtt.publish("smarter_circuits/thermosettings/"+room,"system_disabled:"+str(target))
         time.sleep(1)
         self.thermostat_screen()
