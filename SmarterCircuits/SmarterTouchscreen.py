@@ -20,7 +20,7 @@ class Touchscreen:
         self.window.columnconfigure(1, minsize=width/3)
         self.window.columnconfigure(2, minsize=width/3)
 
-        self.title = SmartLabel(0,1,"Main 2.0","Times",24,"black","white",5,5)
+        self.title = SmartLabel(0,1,"Main","Times",24,"black","white",5,5)
         self.title.draw()
 
         self.button_exit = SmartButton(0,0,"Close",self.stop,"",1,"Times",16,"darkred","white",5,5)
