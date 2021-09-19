@@ -157,8 +157,12 @@ class SmarterCircuitsMCP:
         SmarterLog.log("SmarterCircuits","stopped.")
         if restart is True:
             SmarterLog.log("SmarterCircuits","restarting...")
-            source_dir = os.path.dirname(os.path.realpath(__file__))+"/"
-            subprocess.Popen(["python3",source_dir+"main.py"])
+            if self.config.touchscreen is True: # damn Tcl...
+                SmarterLog.log("SmarterCircuits","restarting pi because TKinter...")
+                os.system('sudo reboot now')
+            else:
+                source_dir = os.path.dirname(os.path.realpath(__file__))+"/"
+                subprocess.Popen(["python3",source_dir+"main.py"])
         exit()
     
     def on_message(self, client, userdata, message):
