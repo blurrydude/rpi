@@ -60,6 +60,7 @@ class Touchscreen:
         self.draw()
     
     def main_screen(self):
+        self.title.text.set(self.mcp.name)
         buttons = [
             SmartButton(1,1,"Zones",self.zone_screen,"",1,"Times",20,"darkblue","white",5,5),
             SmartButton(2,1,"Modes",self.mode_screen,"",1,"Times",20,"darkgreen","white",5,5),
@@ -70,6 +71,7 @@ class Touchscreen:
         self.screen_wipe(buttons,labels)
     
     def thermostat_screen(self):
+        self.title.text.set("Environment")
         buttons = [
             SmartButton(1,1,"Zones",self.zone_screen,"",1,"Times",20,"darkblue","white",5,5),
             SmartButton(2,1,"Modes",self.mode_screen,"",1,"Times",20,"darkgreen","white",5,5),
@@ -80,6 +82,7 @@ class Touchscreen:
         self.screen_wipe(buttons,labels)
     
     def mode_screen(self):
+        self.title.text.set("Mode: "+self.mcp.mode)
         buttons = []
         labels = []
         modes = []
@@ -103,10 +106,10 @@ class Touchscreen:
         self.screen_wipe(buttons,labels)
 
     def zone_button_screen(self, zone):
+        self.title.text.set(zone)
         buttons = []
         r = 1
         c = 0
-        self.title.text.set(zone)
         for circuit in self.mcp.config.circuits:
             if zone in circuit.zones:
                 color = "darkred"
@@ -121,6 +124,7 @@ class Touchscreen:
         self.screen_wipe(buttons, [])
     
     def zone_screen(self):
+        self.title.text.set("Zones")
         zones = []
         buttons = []
         for circuit in self.mcp.config.circuits:
