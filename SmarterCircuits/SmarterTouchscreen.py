@@ -77,14 +77,46 @@ class Touchscreen:
 
         self.screen_wipe(buttons,labels)
     
+    def cool(self, room):
+        thermostat = self.mcp.thermostats[room]
+        target_low = thermostat.settings.temperature_low_setting - 1
+        target_high = thermostat.settings.temperature_high_setting - 1
+        self.mcp.mqtt.publish("smarter_circuits/thermosettings/"+room,"temperature_low_setting:"+str(target_low))
+        time.sleep(0.5)
+        self.mcp.mqtt.publish("smarter_circuits/thermosettings/"+room,"temperature_high_setting:"+str(target_high))
+
+    def warm(self, room):
+        thermostat = self.mcp.thermostats[room]
+        target_low = thermostat.settings.temperature_low_setting + 1
+        target_high = thermostat.settings.temperature_high_setting + 1
+        self.mcp.mqtt.publish("smarter_circuits/thermosettings/"+room,"temperature_low_setting:"+str(target_low))
+        time.sleep(0.5)
+        self.mcp.mqtt.publish("smarter_circuits/thermosettings/"+room,"temperature_high_setting:"+str(target_high))
+
     def thermostat_screen(self):
-        self.title.text.set("Environment")
-        buttons = [
-            SmartButton(1,1,"Zones",self.zone_screen,"",1,"Times",20,"darkblue","white",5,5),
-            SmartButton(2,1,"Modes",self.mode_screen,"",1,"Times",20,"darkgreen","white",5,5),
-            SmartButton(3,1,"Thermostat",self.thermostat_screen,"",1,"Times",20,"darkorange","white",5,5),
-        ]
+        self.title.text.set("Thermostats")
+        buttons = []
         labels = []
+        r = 1
+        c = len(self.mcp.thermostats)
+        for room in self.mcp.thermostats.keys():
+            thermostat = self.mcp.thermostats[room]
+            labels.append(SmartLabel(r,0,room.upper(),"Times",16,"black","white",5,5))
+            labels.append(SmartLabel(r,1,str(round(thermostat.state.temperature,1))+"F","Times",24,"black","red",5,5))
+            labels.append(SmartLabel(r,2,str(round(thermostat.state.humidity,1))+"%","Times",24,"black","blue",5,5))
+
+            buttons.append(SmartButton(r+c,1,"cool "+room,lambda d=room: self.cool(d),"",2,"Times",20,"darkblue","white",5,5))
+            buttons.append(SmartButton(r+c,1,"warm "+room,lambda d=room: self.warm(d),"",2,"Times",20,"darkred","white",5,5))
+            
+            r = r + 1
+
+        for sensor_id in self.mcp.config.ht_sensors.keys():
+            sensor = self.mcp.config.ht_sensors[sensor_id]
+            labels.append(SmartLabel(r,0,sensor.name.upper(),"Times",16,"black","white",5,5))
+            labels.append(SmartLabel(r,1,str(round(sensor.status.temperature,1))+"F","Times",24,"black","red",5,5))
+            labels.append(SmartLabel(r,2,str(round(sensor.status.humidity,1))+"%","Times",24,"black","blue",5,5))
+            
+            r = r + 1
 
         self.screen_wipe(buttons,labels)
     
