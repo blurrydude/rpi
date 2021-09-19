@@ -363,6 +363,8 @@ class SmarterCircuitsMCP:
                 self.mqtt.publish("smarter_circuits/thermosettings/"+room, "system_disabled:"+thermostat.settings.system_disabled)
                 time.sleep(0.5)
                 self.mqtt.publish("smarter_circuits/thermosettings/"+room, "swing_temp_offset:"+thermostat.settings.swing_temp_offset)
+                time.sleep(0.5)
+                self.mqtt.publish("smarter_circuits/thermosettings/"+room, "settings_from_circuit_authority:true")
     
     def handle_mode_change(self):
         SmarterLog.log("SmarterCircuitsMCP","mode set to "+self.mode)
