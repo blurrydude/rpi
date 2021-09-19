@@ -76,7 +76,7 @@ if __name__ == "__main__":
     while running is True:
         bay_1_open = str(p.digital_read(0)) == "1"
         bay_0_open = str(p.digital_read(1)) == "1"
-        if dooropen[0] != bay_0_open or dooropen[0] != bay_1_open:
+        if dooropen[0] != bay_0_open or dooropen[1] != bay_1_open:
             dooropen = [bay_0_open,bay_1_open]
             client.publish("smarter_circuits/baydoors/status",json.dumps(dooropen))
         time.sleep(1)
