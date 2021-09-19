@@ -1,6 +1,10 @@
 from SmarterLogging import SmarterLog
 from ShellyDevices import RelayModule
-import tkinter as tk
+try:
+    import tkinter as tk
+    libraries_available = True
+except:
+    libraries_available = False
 import time
 
 class Touchscreen:
