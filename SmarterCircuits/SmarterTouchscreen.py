@@ -27,6 +27,9 @@ class Touchscreen:
         self.button_exit = SmartButton(0,0,"Close",self.stop,"",1,"Times",16,"darkred","white",5,5)
         self.button_exit.draw()
 
+        self.button_exit = SmartButton(0,2,"Main Menu",self.main_screen,"",1,"Times",16,"darkorange","white",5,5)
+        self.button_exit.draw()
+
         self.main_screen()
         
         self.start()
