@@ -170,7 +170,7 @@ class Touchscreen:
         self.title.text.set(zone)
         buttons = [
             SmartButton(0,0,"Main Menu",self.main_screen,"",1,"Times",16,"darkorange","white",5,5),
-            SmartButton(0,2,"Main Menu",self.zone_screen,"",1,"Times",16,"darkblue","white",5,5)
+            SmartButton(0,2,"Zones",self.zone_screen,"",1,"Times",16,"darkblue","white",5,5)
         ]
         r = 1
         c = 0
