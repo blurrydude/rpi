@@ -6,7 +6,7 @@ import SmarterCircuitsMQTT
 import SmarterConfiguration
 from SmarterTouchscreen import Touchscreen
 from SmarterLogging import SmarterLog
-from SmarterThermostat import Thermostat, ThermostatState, ThermostatSettings
+from SmarterThermostat import Thermostat, ThermostatState, ThermostatSettings, ThermostatView
 import socket
 import subprocess
 import _thread
@@ -29,7 +29,7 @@ class SmarterCircuitsMCP:
         self.mqtt = None
         self.touchscreen = None
         self.peers = []
-        self.thermostats = []
+        self.thermostats = {}
         self.thermostat = None
         self.last_seen = {}
         self.last_day = ""
@@ -333,6 +333,9 @@ class SmarterCircuitsMCP:
             if self.thermostat is not None and self.thermostat.room == room:
                 s = message.split(":")
                 self.thermostat.set(s[0],s[1])
+        if "smarter_circuits/thermostats/" in topic:
+            room = topic.split("/")[2]
+            self.thermostats[room] = ThermostatView(json.dumps(message))
     
     def handle_mode_change(self):
         SmarterLog.log("SmarterCircuitsMCP","mode set to "+self.mode)

@@ -14,6 +14,31 @@ try:
 except:
     libraries_available = False
 
+class ThermostatView:
+    def __init__(self, data):
+        self.room = data["room"]
+        self.settings = ThermostatSettings()
+        self.settings.failed_read_halt_limit = data["settings"]["failed_read_halt_limit"]
+        self.settings.temperature_high_setting = data["settings"]["temperature_high_setting"]
+        self.settings.temperature_low_setting = data["settings"]["temperature_low_setting"]
+        self.settings.humidity_setting = data["settings"]["humidity_setting"]
+        self.settings.air_circulation_minutes = data["settings"]["air_circulation_minutes"]
+        self.settings.circulation_cycle_minutes = data["settings"]["circulation_cycle_minutes"]
+        self.settings.ventilation_cycle_minutes = data["settings"]["ventilation_cycle_minutes"]
+        self.settings.stage_limit_minutes = data["settings"]["stage_limit_minutes"]
+        self.settings.stage_cooldown_minutes = data["settings"]["stage_cooldown_minutes"]
+        self.settings.use_whole_house_fan = data["settings"]["use_whole_house_fan"]
+        self.settings.system_disabled = data["settings"]["system_disabled"]
+        self.settings.swing_temp_offset = data["settings"]["swing_temp_offset"]
+        self.state = ThermostatState()
+        self.state.temperature = data["state"]["temperature"]
+        self.state.humidity = data["state"]["humidity"]
+        self.state.heat_on = data["state"]["heat_on"]
+        self.state.ac_on = data["state"]["ac_on"]
+        self.state.fan_on = data["state"]["fan_on"]
+        self.state.whf_on = data["state"]["whf_on"]
+        self.state.status = data["state"]["status"]
+
 class ThermostatSettings:
     def __init__(self):
         self.failed_read_halt_limit = 10
