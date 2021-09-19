@@ -335,7 +335,7 @@ class SmarterCircuitsMCP:
                 self.thermostat.set(s[0],s[1])
         if "smarter_circuits/thermostats/" in topic:
             room = topic.split("/")[2]
-            self.thermostats[room] = ThermostatView(json.dumps(message))
+            self.thermostats[room] = ThermostatView(json.loads(message))
         if "smarter_circuits/info/" in topic and "settings please" in message and self.circuit_authority is True:
             room = topic.split("/")[2]
             if room in self.thermostats.keys():
