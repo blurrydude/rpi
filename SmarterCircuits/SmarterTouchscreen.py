@@ -84,6 +84,8 @@ class Touchscreen:
         self.mcp.mqtt.publish("smarter_circuits/thermosettings/"+room,"temperature_low_setting:"+str(target_low))
         time.sleep(0.5)
         self.mcp.mqtt.publish("smarter_circuits/thermosettings/"+room,"temperature_high_setting:"+str(target_high))
+        time.sleep(1)
+        self.thermostat_screen()
 
     def warm(self, room):
         thermostat = self.mcp.thermostats[room]
@@ -92,6 +94,15 @@ class Touchscreen:
         self.mcp.mqtt.publish("smarter_circuits/thermosettings/"+room,"temperature_low_setting:"+str(target_low))
         time.sleep(0.5)
         self.mcp.mqtt.publish("smarter_circuits/thermosettings/"+room,"temperature_high_setting:"+str(target_high))
+        time.sleep(1)
+        self.thermostat_screen()
+
+    def toggle_system(self, room):
+        thermostat = self.mcp.thermostats[room]
+        target = thermostat.settings.system_disabled is False
+        self.mcp.mqtt.publish("smarter_circuits/thermosettings/"+room,"system_disabled:"+str(target))
+        time.sleep(1)
+        self.thermostat_screen()
 
     def thermostat_screen(self):
         self.title.text.set("Thermostats")
@@ -106,17 +117,22 @@ class Touchscreen:
             labels.append(SmartLabel(r,2,str(round(thermostat.state.humidity,1))+"%","Times",24,"black","blue",5,5))
             r = r + 1
 
-        for room in self.mcp.thermostats.keys():
-            buttons.append(SmartButton(r,1,"cool "+room,lambda d=room: self.cool(d),"",2,"Times",20,"darkblue","white",5,5))
-            buttons.append(SmartButton(r,1,"warm "+room,lambda d=room: self.warm(d),"",2,"Times",20,"darkred","white",5,5))
-            r = r + 1
-
         for sensor_id in self.mcp.config.ht_sensors.keys():
             sensor = self.mcp.config.ht_sensors[sensor_id]
             labels.append(SmartLabel(r,0,sensor.name.upper(),"Times",16,"black","white",5,5))
             labels.append(SmartLabel(r,1,str(round(sensor.status.temperature,1))+"F","Times",24,"black","red",5,5))
             labels.append(SmartLabel(r,2,str(round(sensor.status.humidity,1))+"%","Times",24,"black","blue",5,5))
             
+            r = r + 1
+
+        for room in self.mcp.thermostats.keys():
+            thermostat = self.mcp.thermostats[room]
+            color = "darkgreen"
+            if thermostat.settings.system_disabled is True:
+                color = "darkred"
+            buttons.append(SmartButton(r,0,"toggle "+room,lambda d=room: self.toggle_system(d),"",2,"Times",20,color,"white",5,5))
+            buttons.append(SmartButton(r,1,"cool "+room,lambda d=room: self.cool(d),"",2,"Times",20,"darkblue","white",5,5))
+            buttons.append(SmartButton(r,2,"warm "+room,lambda d=room: self.warm(d),"",2,"Times",20,"darkred","white",5,5))
             r = r + 1
 
         self.screen_wipe(buttons,labels)
