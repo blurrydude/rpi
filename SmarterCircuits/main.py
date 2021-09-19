@@ -131,9 +131,12 @@ class SmarterCircuitsMCP:
         self.mqtt.publish("smarter_circuits/peers/"+self.name,SmarterCircuitsPeer(self.id, self.name, self.ip_address, self.model, self.circuit_authority, timestamp).toJSON())
 
     def check_circuit_authority(self):
+        now = datetime.now()
         last_octet = int(self.ip_address.split('.')[3])
         lowest_ip = last_octet
         for peer in self.peers:
+            if peer.last_seen < now - timedelta(minutes=2):
+                continue
             peer_last_octet = int(peer.ip_address.split('.')[3])
             if peer_last_octet < lowest_ip:
                 lowest_ip = peer_last_octet
@@ -149,6 +152,8 @@ class SmarterCircuitsMCP:
         self.running = False
         self.config.stop()
         self.mqtt.stop()
+        if self.config.touchscreen is True:
+            self.touchscreen.stop()
         time.sleep(5)
         SmarterLog.log("SmarterCircuits","stopped.")
         if restart is True:
@@ -457,6 +462,7 @@ class SmarterCircuitsMCP:
                 p.model = peer["model"]
                 p.circuit_authority = peer["circuit_authority"]
                 p.timestamp = peer["timestamp"]
+                p.last_seen = datetime.now()
                 found = True
         if found is not True:
             SmarterLog.log("SmarterCircuits","new peer "+peer["name"])
@@ -496,6 +502,7 @@ class SmarterCircuitsPeer:
         self.model = model
         self.circuit_authority = circuit_authority
         self.timestamp = timestamp
+        self.last_seen = datetime.now()
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__, 
             sort_keys=True, indent=4)
