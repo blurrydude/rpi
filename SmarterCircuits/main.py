@@ -336,6 +336,33 @@ class SmarterCircuitsMCP:
         if "smarter_circuits/thermostats/" in topic:
             room = topic.split("/")[2]
             self.thermostats[room] = ThermostatView(json.dumps(message))
+        if "smarter_circuits/info" in topic and "settings please" in message and self.circuit_authority is True:
+            room = topic.split("/")[2]
+            if room in self.thermostats.keys():
+                thermostat = self.thermostats[room]
+                self.mqtt.publish("smarter_circuits/thermosettings/"+room, "failed_read_halt_limit:"+thermostat.settings.failed_read_halt_limit)
+                time.sleep(0.5)
+                self.mqtt.publish("smarter_circuits/thermosettings/"+room, "temperature_high_setting:"+thermostat.settings.temperature_high_setting)
+                time.sleep(0.5)
+                self.mqtt.publish("smarter_circuits/thermosettings/"+room, "temperature_low_setting:"+thermostat.settings.temperature_low_setting)
+                time.sleep(0.5)
+                self.mqtt.publish("smarter_circuits/thermosettings/"+room, "humidity_setting:"+thermostat.settings.humidity_setting)
+                time.sleep(0.5)
+                self.mqtt.publish("smarter_circuits/thermosettings/"+room, "air_circulation_minutes:"+thermostat.settings.air_circulation_minutes)
+                time.sleep(0.5)
+                self.mqtt.publish("smarter_circuits/thermosettings/"+room, "circulation_cycle_minutes:"+thermostat.settings.circulation_cycle_minutes)
+                time.sleep(0.5)
+                self.mqtt.publish("smarter_circuits/thermosettings/"+room, "ventilation_cycle_minutes:"+thermostat.settings.ventilation_cycle_minutes)
+                time.sleep(0.5)
+                self.mqtt.publish("smarter_circuits/thermosettings/"+room, "stage_limit_minutes:"+thermostat.settings.stage_limit_minutes)
+                time.sleep(0.5)
+                self.mqtt.publish("smarter_circuits/thermosettings/"+room, "stage_cooldown_minutes:"+thermostat.settings.stage_cooldown_minutes)
+                time.sleep(0.5)
+                self.mqtt.publish("smarter_circuits/thermosettings/"+room, "use_whole_house_fan:"+thermostat.settings.use_whole_house_fan)
+                time.sleep(0.5)
+                self.mqtt.publish("smarter_circuits/thermosettings/"+room, "system_disabled:"+thermostat.settings.system_disabled)
+                time.sleep(0.5)
+                self.mqtt.publish("smarter_circuits/thermosettings/"+room, "swing_temp_offset:"+thermostat.settings.swing_temp_offset)
     
     def handle_mode_change(self):
         SmarterLog.log("SmarterCircuitsMCP","mode set to "+self.mode)
