@@ -170,8 +170,6 @@ class SmarterCircuitsMCP:
         SmarterLog.log("SmarterCircuits","stopping...")
         if restart is True:
             self.mqtt.publish("smarter_circuits/info/"+self.name,"restarting...")
-            if self.config.touchscreen is True: # damn Tcl...
-                self.mqtt.publish("smarter_circuits/info/"+self.name,"restarting pi because TKinter...")
         self.running = False
         self.config.stop()
         self.mqtt.stop()
@@ -179,12 +177,7 @@ class SmarterCircuitsMCP:
         SmarterLog.log("SmarterCircuits","stopped.")
         if restart is True:
             SmarterLog.log("SmarterCircuits","restarting...")
-            if self.config.touchscreen is True: # damn Tcl...
-                SmarterLog.log("SmarterCircuits","restarting pi because TKinter...")
-                os.system('sudo reboot now')
-            else:
-                source_dir = os.path.dirname(os.path.realpath(__file__))+"/"
-                subprocess.Popen(["python3",source_dir+"main.py"])
+            os.system('sudo reboot now')
         exit()
     
     def on_message(self, client, userdata, message):
@@ -331,7 +324,9 @@ class SmarterCircuitsMCP:
             self.handle_mode_change()
         if "smarter_circuits/command" in topic and self.circuit_authority is True:
             self.execute_command(message)
-        if "smarter_circuits/restart" in topic:
+        if "smarter_circuits/restart/"+self.name in topic:
+            SmarterLog.log("SmarterCircuitsMCP","received restart command")
+            self.mqtt.publish("smarter_circuits/info/"+self.name,"received restart command")
             self.stop(True)
         if "smarter_circuits/thermosettings" in topic:
             room = topic.split("/")[2]
