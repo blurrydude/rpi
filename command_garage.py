@@ -6,6 +6,7 @@ import pifacedigitalio as p
 import subprocess
 import socket
 import requests
+import json
 
 myname = socket.gethostname()
 myip = subprocess.check_output(['hostname', '-I'])
@@ -14,6 +15,8 @@ dooropen = [False,False]
 running = True
 client = mqtt.Client()
 
+p.digital_read()
+
 def openDoor(bay):
     global dooropen
 #    if dooropen[bay] == True:
@@ -21,7 +24,6 @@ def openDoor(bay):
     p.digital_write(bay,1)
     time.sleep(1)
     p.digital_write(bay,0)
-    dooropen[bay] = True
     return True
 
 def closeDoor(bay):
@@ -31,7 +33,6 @@ def closeDoor(bay):
     p.digital_write(bay,1)
     time.sleep(1)
     p.digital_write(bay,0)
-    dooropen[bay] = False
     return True
 
 def on_disconnect(client, userdata, rc):
@@ -75,6 +76,11 @@ if __name__ == "__main__":
     client.subscribe(topic)
     client.loop_start()
     while running is True:
+        bay_1_open = str(p.digital_read(0)) == "1"
+        bay_0_open = str(p.digital_read(1)) == "1"
+        if dooropen[0] != bay_0_open or dooropen[0] != bay_1_open:
+            dooropen = [bay_0_open,bay_1_open]
+            client.publish("smarter_circuits/baydoors",json.dumps(dooropen))
         time.sleep(1)
     client.loop_stop()
     client.disconnect()
