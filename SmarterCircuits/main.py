@@ -328,7 +328,7 @@ class SmarterCircuitsMCP:
             SmarterLog.log("SmarterCircuitsMCP","received restart command")
             self.mqtt.publish("smarter_circuits/info/"+self.name,"received restart command")
             self.stop(True)
-        if "smarter_circuits/thermosettings" in topic:
+        if "smarter_circuits/thermosettings/" in topic:
             room = topic.split("/")[2]
             if self.thermostat is not None and self.thermostat.room == room:
                 s = message.split(":")
@@ -336,7 +336,7 @@ class SmarterCircuitsMCP:
         if "smarter_circuits/thermostats/" in topic:
             room = topic.split("/")[2]
             self.thermostats[room] = ThermostatView(json.dumps(message))
-        if "smarter_circuits/info" in topic and "settings please" in message and self.circuit_authority is True:
+        if "smarter_circuits/info/" in topic and "settings please" in message and self.circuit_authority is True:
             room = topic.split("/")[2]
             if room in self.thermostats.keys():
                 thermostat = self.thermostats[room]
