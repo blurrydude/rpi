@@ -44,6 +44,7 @@ class SmarterCircuitsMCP:
 
     def start(self):
         SmarterLog.log("SmarterCircuits","starting...")
+        self.running = True
         self.config = SmarterConfiguration.SmarterConfig()
         while self.config.loaded is False:
             time.sleep(1)
@@ -53,6 +54,9 @@ class SmarterCircuitsMCP:
             self.thermostat = Thermostat(self)
         if self.config.touchscreen is True:
             self.touchscreen = Touchscreen(self)
+        else:
+            while self.running is True:
+                time.sleep(1)
     
     def check_for_updates(self):
         modified = 0
@@ -72,7 +76,6 @@ class SmarterCircuitsMCP:
         self.stop(True)
     
     def main_loop(self):
-        self.running = True
         while self.running is True:
             try:
                 if self.config.loaded is False or self.mqtt.connected is False:
