@@ -52,6 +52,7 @@ class Touchscreen:
         buttons = []
         r = 1
         c = 0
+        self.title.text.set(zone)
         for circuit in self.mcp.config.circuits:
             if zone in circuit.zones:
                 buttons.append(SmartButton(r,c,circuit.name,lambda d=circuit: self.toggle_circuit(d),"",2,"Times",20,"darkblue","white",5,5))
