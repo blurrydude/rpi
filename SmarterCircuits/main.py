@@ -45,7 +45,7 @@ class SmarterCircuitsMCP:
     def start(self):
         SmarterLog.log("SmarterCircuits","starting...")
         self.running = True
-        self.config = SmarterConfiguration.SmarterConfig()
+        self.config = SmarterConfiguration.SmarterConfig(self)
         while self.config.loaded is False:
             time.sleep(1)
         self.mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(self.config.brokers,["shellies/#","smarter_circuits/#"],self.on_message)

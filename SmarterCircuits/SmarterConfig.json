@@ -3,6 +3,6 @@
     "topics":["shellies/#"],
     "command_endpoint":"https://api.idkline.com/control/",
     "use_api": false,
-    "touchscreen":true,
-    "thermostat":false
+    "touchscreens":["garagecontrolpi","dayroompi","kitchenpi","hallwaypi"],
+    "thermostats":["gameroomthermopi","hallwaythermopi"]
 }

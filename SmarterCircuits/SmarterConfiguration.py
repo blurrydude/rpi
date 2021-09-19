@@ -6,8 +6,9 @@ from SmarterLogging import SmarterLog
 from ShellyDevices import RelayModule, DoorWindowSensor, HumidityTemperatureSensor, MotionSensor, MotionSensorCommand, CommandCondition
 
 class SmarterConfig:
-    def __init__(self):
+    def __init__(self, mcp):
         home_dir = os.path.dirname(os.path.realpath(__file__))+"/"
+        self.mcp = mcp
         self.smarter_config_file = home_dir+"SmarterConfig.json"
         self.circuits_config_file = home_dir+"circuits.json"
         self.motion_sensors_file = home_dir+"motionsensors.json"
@@ -66,8 +67,12 @@ class SmarterConfig:
         self.topics = config["topics"]
         self.command_endpoint = config["command_endpoint"]
         self.use_api = config["use_api"]
-        self.touchscreen = config["touchscreen"]
-        self.thermostat = config["thermostat"]
+        self.touchscreen = self.mcp.name in config["touchscreens"]
+        if self.touchscreen is True:
+            SmarterLog.log("SmarterConfiguration","I am a touchscreen")
+        self.thermostat = self.mcp.name in config["thermostats"]
+        if self.thermostat is True:
+            SmarterLog.log("SmarterConfiguration","I am a thermostat")
 
     def load_circuits(self):
         self.log("load_circuits")
