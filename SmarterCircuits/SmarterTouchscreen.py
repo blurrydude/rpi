@@ -112,7 +112,8 @@ class Touchscreen:
         c = len(self.mcp.thermostats)
         for room in self.mcp.thermostats.keys():
             thermostat = self.mcp.thermostats[room]
-            labels.append(SmartLabel(r,0,room.upper(),"Times",16,"black","white",5,5))
+            setting = str(thermostat.settings.temperature_low_setting) + "/" + str(thermostat.settings.temperature_high_setting)
+            labels.append(SmartLabel(r,0,room.upper()+ " " + setting,"Times",16,"black","white",5,5))
             labels.append(SmartLabel(r,1,str(round(thermostat.state.temperature,1))+"F","Times",24,"black","red",5,5))
             labels.append(SmartLabel(r,2,str(round(thermostat.state.humidity,1))+"%","Times",24,"black","blue",5,5))
             r = r + 1
