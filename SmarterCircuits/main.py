@@ -387,7 +387,8 @@ class SmarterCircuitsMCP:
                 s = condition.prop.split(".")
                 device = None
                 if s[0] == "motion":
-                    for sensor in self.config.motion_sensors:
+                    for sensor_id in self.config.motion_sensors.keys():
+                        sensor = self.config.motion_sensors[sensor_id]
                         if sensor.room.replace(" ","") == s[1]:
                             device = sensor
                 if s[0] == "circuit":
