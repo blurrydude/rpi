@@ -110,7 +110,7 @@ class Thermostat:
         while True:
             try:
                 if self.settings_from_circuit_authority is not True:
-                    self.mqtt.publish("smarter_circuits/info/"+self.mcp.name,"settings please")
+                    self.mcp.mqtt.publish("smarter_circuits/info/"+self.mcp.name,"settings please")
                 self.cycle()
             except:
                 self.log("BAD CYCLE!!!")
