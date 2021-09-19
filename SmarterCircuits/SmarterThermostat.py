@@ -54,6 +54,25 @@ class ThermostatSettings:
         self.system_disabled = False
         self.swing_temp_offset = 1
 
+    def load_json(self, json_string):
+        data = json.loads(json_string)
+        self.failed_read_halt_limit = data["failed_read_halt_limit"]
+        self.temperature_high_setting = data["temperature_high_setting"]
+        self.temperature_low_setting = data["temperature_low_setting"]
+        self.humidity_setting = data["humidity_setting"]
+        self.air_circulation_minutes = data["air_circulation_minutes"]
+        self.circulation_cycle_minutes = data["circulation_cycle_minutes"]
+        self.ventilation_cycle_minutes = data["ventilation_cycle_minutes"]
+        self.stage_limit_minutes = data["stage_limit_minutes"]
+        self.stage_cooldown_minutes = data["stage_cooldown_minutes"]
+        self.use_whole_house_fan = data["use_whole_house_fan"]
+        self.system_disabled = data["system_disabled"]
+        self.swing_temp_offset = data["swing_temp_offset"]
+        
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__, 
+            sort_keys=True, indent=4)
+
 class ThermostatState:
     def __init__(self):
         self.temperature = None
@@ -70,7 +89,7 @@ class Thermostat:
         self.room = self.mcp.name.replace("thermopi","")
 
         self.settings = ThermostatSettings()
-        self.settings_from_circuit_authority = False
+        self.settings_loaded = False
         
         self.extra_ventilation_circuits = []
         self.extra_circulation_circuits = []
@@ -109,7 +128,7 @@ class Thermostat:
         self.log("begin cycling")
         while True:
             try:
-                if self.settings_from_circuit_authority is not True:
+                if self.settings_loaded is not True:
                     self.mcp.mqtt.publish("smarter_circuits/info/"+self.room,"settings please")
                 self.cycle()
             except:
@@ -129,8 +148,21 @@ class Thermostat:
         if setting == "temperature_low_setting": self.settings.temperature_low_setting = int(value)
         if setting == "use_whole_house_fan": self.settings.use_whole_house_fan = bool(value)
         if setting == "ventilation_cycle_minutes": self.settings.ventilation_cycle_minutes = int(value)
-        if setting == "settings_from_circuit_authority": self.settings_from_circuit_authority = bool(value)
-
+        if setting == "settings_from_circuit_authority": self.settings_loaded = bool(value)
+        self.save_settings()
+    
+    def save_settings(self):
+        settings_file = os.path.dirname(os.path.realpath(__file__))+"/thermosettings.json"
+        with open(settings_file, "w") as write_file:
+            write_file.write(self.settings.toJSON())
+        
+    def load_settings(self):
+        settings_file = os.path.dirname(os.path.realpath(__file__))+"/thermosettings.json"
+        if os.path.exists(settings_file) is True:
+            f = open(settings_file)
+            self.settings.load_json(f.read())
+            self.settings_loaded = True
+            
     def log(self, message):
         SmarterLog.log("SmarterThermostat", "[" + self.room + "] " + message)
     
