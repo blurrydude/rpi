@@ -28,7 +28,7 @@ class ThermostatView:
         self.settings.stage_limit_minutes = data["settings"]["stage_limit_minutes"]
         self.settings.stage_cooldown_minutes = data["settings"]["stage_cooldown_minutes"]
         self.settings.use_whole_house_fan = data["settings"]["use_whole_house_fan"]
-        self.settings.system_disabled = data["settings"]["system_disabled"]
+        self.settings.system_disabled = str(data["settings"]["system_disabled"]).lower() == "true"
         self.settings.swing_temp_offset = data["settings"]["swing_temp_offset"]
         self.state = ThermostatState()
         self.state.temperature = data["state"]["temperature"]
@@ -66,7 +66,7 @@ class ThermostatSettings:
         self.stage_limit_minutes = data["stage_limit_minutes"]
         self.stage_cooldown_minutes = data["stage_cooldown_minutes"]
         self.use_whole_house_fan = data["use_whole_house_fan"]
-        self.system_disabled = data["system_disabled"]
+        self.system_disabled = str(data["system_disabled"]).lower() == "true"
         self.swing_temp_offset = data["swing_temp_offset"]
         
     def toJSON(self):
@@ -144,7 +144,7 @@ class Thermostat:
         if setting == "stage_cooldown_minutes": self.settings.stage_cooldown_minutes = int(value)
         if setting == "stage_limit_minutes": self.settings.stage_limit_minutes = int(value)
         if setting == "swing_temp_offset": self.settings.swing_temp_offset = int(value)
-        if setting == "system_disabled": self.settings.system_disabled = bool(value)
+        if setting == "system_disabled": self.settings.system_disabled = str(value).lower() == "true"
         if setting == "temperature_high_setting": self.settings.temperature_high_setting = int(value)
         if setting == "temperature_low_setting": self.settings.temperature_low_setting = int(value)
         if setting == "use_whole_house_fan": self.settings.use_whole_house_fan = bool(value)
