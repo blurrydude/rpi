@@ -28,6 +28,7 @@ class SmarterCircuitsMCP:
         self.mqtt = None
         self.touchscreen = None
         self.peers = []
+        self.last_seen = {}
         self.last_day = ""
         self.solar_data = False
         self.sunrise = ""
@@ -135,7 +136,7 @@ class SmarterCircuitsMCP:
         last_octet = int(self.ip_address.split('.')[3])
         lowest_ip = last_octet
         for peer in self.peers:
-            if peer.last_seen < now - timedelta(minutes=2):
+            if peer.id in self.last_seen.keys() and self.last_seen[peer.id] < now - timedelta(minutes=2):
                 continue
             peer_last_octet = int(peer.ip_address.split('.')[3])
             if peer_last_octet < lowest_ip:
@@ -454,6 +455,7 @@ class SmarterCircuitsMCP:
             self.mqtt.publish(cmd["t"],cmd["c"])
 
     def received_peer_data(self, peer):
+        self.last_seen[peer["id"]] = datetime.now()
         found = False
         for p in self.peers:
             if p.name == peer["name"]:
@@ -462,7 +464,6 @@ class SmarterCircuitsMCP:
                 p.model = peer["model"]
                 p.circuit_authority = peer["circuit_authority"]
                 p.timestamp = peer["timestamp"]
-                p.last_seen = datetime.now()
                 found = True
         if found is not True:
             SmarterLog.log("SmarterCircuits","new peer "+peer["name"])
@@ -502,7 +503,6 @@ class SmarterCircuitsPeer:
         self.model = model
         self.circuit_authority = circuit_authority
         self.timestamp = timestamp
-        self.last_seen = datetime.now()
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__, 
             sort_keys=True, indent=4)
