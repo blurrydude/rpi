@@ -3,5 +3,6 @@
     "topics":["shellies/#"],
     "command_endpoint":"https://api.idkline.com/control/",
     "use_api": false,
-    "touchscreen":true
+    "touchscreen":true,
+    "thermostat":false
 }

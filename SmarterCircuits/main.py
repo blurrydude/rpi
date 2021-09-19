@@ -6,6 +6,7 @@ import SmarterCircuitsMQTT
 import SmarterConfiguration
 from SmarterTouchscreen import Touchscreen
 from SmarterLogging import SmarterLog
+from SmarterThermostat import Thermostat, ThermostatState, ThermostatSettings
 import socket
 import subprocess
 import _thread
@@ -28,6 +29,8 @@ class SmarterCircuitsMCP:
         self.mqtt = None
         self.touchscreen = None
         self.peers = []
+        self.thermostats = []
+        self.thermostat = None
         self.last_seen = {}
         self.last_day = ""
         self.solar_data = False
@@ -46,6 +49,8 @@ class SmarterCircuitsMCP:
             time.sleep(1)
         self.mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(self.config.brokers,["shellies/#","smarter_circuits/#"],self.on_message)
         _thread.start_new_thread(self.main_loop, ())
+        if self.config.thermostat is True:
+            self.thermostat = Thermostat(self)
         if self.config.touchscreen is True:
             self.touchscreen = Touchscreen(self)
     
@@ -314,6 +319,11 @@ class SmarterCircuitsMCP:
             self.execute_command(message)
         if "smarter_circuits/restart" in topic:
             self.stop(True)
+        if "smarter_circuits/thermosettings" in topic:
+            room = topic.split("/")[2]
+            if self.thermostat is not None and self.thermostat.room == room:
+                s = message.split(":")
+                self.thermostat.set(s[0],s[1])
     
     def handle_mode_change(self):
         SmarterLog.log("SmarterCircuitsMCP","mode set to "+self.mode)

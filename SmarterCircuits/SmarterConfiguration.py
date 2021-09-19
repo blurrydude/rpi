@@ -26,6 +26,7 @@ class SmarterConfig:
         self.door_sensors = {}
         self.time_commands = []
         self.touchscreen = False
+        self.thermostat = False
         self.running = False
         self.loaded = False
         self.command_endpoint = ""
@@ -66,6 +67,7 @@ class SmarterConfig:
         self.command_endpoint = config["command_endpoint"]
         self.use_api = config["use_api"]
         self.touchscreen = config["touchscreen"]
+        self.thermostat = config["thermostat"]
 
     def load_circuits(self):
         self.log("load_circuits")

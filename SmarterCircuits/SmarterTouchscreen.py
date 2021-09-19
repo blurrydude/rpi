@@ -65,9 +65,9 @@ class Touchscreen:
     def main_screen(self):
         self.title.text.set(self.mcp.name)
         buttons = [
-            SmartButton(1,1,"Zones",self.zone_screen,"",1,"Times",20,"darkblue","white",5,5),
-            SmartButton(2,1,"Modes",self.mode_screen,"",1,"Times",20,"darkgreen","white",5,5),
-            SmartButton(3,1,"Thermostat",self.thermostat_screen,"",1,"Times",20,"darkorange","white",5,5),
+            SmartButton(1,1,"Zones",self.zone_screen,"",2,"Times",20,"darkblue","white",5,5),
+            SmartButton(2,1,"Modes",self.mode_screen,"",2,"Times",20,"darkgreen","white",5,5),
+            SmartButton(3,1,"Thermostat",self.thermostat_screen,"",2,"Times",20,"darkorange","white",5,5),
         ]
         labels = []
 
