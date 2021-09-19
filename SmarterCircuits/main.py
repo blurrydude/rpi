@@ -157,8 +157,11 @@ class SmarterCircuitsMCP:
         SmarterLog.log("SmarterCircuits","stopped.")
         if restart is True:
             SmarterLog.log("SmarterCircuits","restarting...")
+            self.mqtt.publish("smarter_circuits/info/"+self.name,"restarting...")
             if self.config.touchscreen is True: # damn Tcl...
-                SmarterLog.log("SmarterCircuits","restarting pi because TKinter...")
+                message = "restarting pi because TKinter..."
+                SmarterLog.log("SmarterCircuits",message)
+                self.mqtt.publish("smarter_circuits/info/"+self.name,message)
                 os.system('sudo reboot now')
             else:
                 source_dir = os.path.dirname(os.path.realpath(__file__))+"/"
