@@ -26,8 +26,11 @@ class SmarterConfig:
         self.ht_sensors = {}
         self.door_sensors = {}
         self.time_commands = []
+        self.update_files = []
         self.touchscreen = False
+        self.touchscreen_update_files = []
         self.thermostat = False
+        self.thermostat_update_files = []
         self.running = False
         self.loaded = False
         self.command_endpoint = ""
@@ -68,6 +71,9 @@ class SmarterConfig:
         self.command_endpoint = config["command_endpoint"]
         self.use_api = config["use_api"]
         self.touchscreen = self.mcp.name in config["touchscreens"]
+        self.update_files = config["update_files"]
+        self.touchscreen_update_files = config["touchscreen_update_files"]
+        self.thermostat_update_files = config["thermostat_update_files"]
         if self.touchscreen is True:
             SmarterLog.log("SmarterConfiguration","I am a touchscreen")
         self.thermostat = self.mcp.name in config["thermostats"]

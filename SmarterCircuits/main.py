@@ -57,12 +57,22 @@ class SmarterCircuitsMCP:
         else:
             while self.running is True:
                 time.sleep(1)
+            self.stop()
     
     def check_for_updates(self):
         modified = 0
         source_dir = os.path.dirname(os.path.realpath(__file__))+"/"
         for file in os.listdir(source_dir):
-            file_check = os.stat(source_dir+file).st_mtime
+            ignore_file = True
+            if file in self.config.update_files:
+                ignore_file = False
+            if self.config.touchscreen is True and file in self.config.touchscreen_update_files:
+                ignore_file = False
+            if self.config.thermostat is True and file in self.config.thermostat_update_files:
+                ignore_file = False
+            if ignore_file is True:
+                continue
+            file_check = round(os.stat(source_dir+file).st_mtime,0)
             if file_check > modified:
                 modified = file_check
         if modified == self.source_modified:
