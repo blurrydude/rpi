@@ -1,6 +1,7 @@
 from SmarterLogging import SmarterLog
 from ShellyDevices import RelayModule
 import tkinter as tk
+import time
 
 class Touchscreen:
     def __init__(self, mcp):
@@ -34,6 +35,9 @@ class Touchscreen:
     
     def start(self):
         self.window.mainloop()
+        while self.mcp.running is True:
+            time.sleep(1)
+        self.stop()
     
     def stop(self):
         self.window.destroy()

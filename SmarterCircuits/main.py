@@ -153,11 +153,6 @@ class SmarterCircuitsMCP:
         self.running = False
         self.config.stop()
         self.mqtt.stop()
-        if self.config.touchscreen is True:
-            try:
-                subprocess.check_output(['killall','python3'])
-            except:
-                print("nope")
         time.sleep(5)
         SmarterLog.log("SmarterCircuits","stopped.")
         if restart is True:
