@@ -72,7 +72,7 @@ class Thermostat:
         _thread.start_new_thread(self.start, ())
 
     def start(self):
-        self.self.halt()
+        self.halt()
         time.sleep(2)
         self.post = False
         self.log("begin cycling")
