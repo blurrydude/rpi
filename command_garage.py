@@ -15,8 +15,6 @@ dooropen = [False,False]
 running = True
 client = mqtt.Client()
 
-p.digital_read()
-
 def openDoor(bay):
     global dooropen
 #    if dooropen[bay] == True:
@@ -71,7 +69,7 @@ if __name__ == "__main__":
     client.on_message = on_message
     client.on_disconnect = on_disconnect
     client.connect('192.168.1.200')
-    topic = 'pi/' + myname + '/commands'
+    topic = 'smarter_circuits/baydoors/command'
     #print('subscribing to '+topic)
     client.subscribe(topic)
     client.loop_start()
@@ -80,7 +78,7 @@ if __name__ == "__main__":
         bay_0_open = str(p.digital_read(1)) == "1"
         if dooropen[0] != bay_0_open or dooropen[0] != bay_1_open:
             dooropen = [bay_0_open,bay_1_open]
-            client.publish("smarter_circuits/baydoors",json.dumps(dooropen))
+            client.publish("smarter_circuits/baydoors/status",json.dumps(dooropen))
         time.sleep(1)
     client.loop_stop()
     client.disconnect()
