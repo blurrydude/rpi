@@ -68,6 +68,11 @@ class Thermostat:
         self.heat_pin = 26
         self.ac_pin = 20
         self.fan_pin = 21
+        
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.heat_pin, GPIO.OUT)
+        GPIO.setup(self.ac_pin, GPIO.OUT)
+        GPIO.setup(self.fan_pin, GPIO.OUT)
 
         _thread.start_new_thread(self.start, ())
 
