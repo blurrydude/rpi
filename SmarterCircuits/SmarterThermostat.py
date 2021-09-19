@@ -106,7 +106,7 @@ class Thermostat:
         SmarterLog.log("SmarterThermostat", "[" + self.room + "] " + message)
     
     def set_circuit(self, circuit_pin, state):
-        if state is True:
+        if state is False:
             GPIO.output(circuit_pin, GPIO.HIGH)
         else:
             GPIO.output(circuit_pin, GPIO.LOW)
@@ -208,9 +208,9 @@ class Thermostat:
 
     def halt(self):
         self.log("halt")
-        GPIO.output(self.heat_pin, GPIO.LOW)
-        GPIO.output(self.ac_pin, GPIO.LOW)
-        GPIO.output(self.fan_pin, GPIO.LOW)
+        GPIO.output(self.heat_pin, GPIO.HIGH)
+        GPIO.output(self.ac_pin, GPIO.HIGH)
+        GPIO.output(self.fan_pin, GPIO.HIGH)
         self.send_command('turn off whole house fan')
         self.send_command('turn off circulating fan')
         self.send_command('turn off floor fan')
