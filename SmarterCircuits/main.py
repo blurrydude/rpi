@@ -168,6 +168,10 @@ class SmarterCircuitsMCP:
 
     def stop(self, restart = False):
         SmarterLog.log("SmarterCircuits","stopping...")
+        if restart is True:
+            self.mqtt.publish("smarter_circuits/info/"+self.name,"restarting...")
+            if self.config.touchscreen is True: # damn Tcl...
+                self.mqtt.publish("smarter_circuits/info/"+self.name,"restarting pi because TKinter...")
         self.running = False
         self.config.stop()
         self.mqtt.stop()
@@ -175,11 +179,8 @@ class SmarterCircuitsMCP:
         SmarterLog.log("SmarterCircuits","stopped.")
         if restart is True:
             SmarterLog.log("SmarterCircuits","restarting...")
-            self.mqtt.publish("smarter_circuits/info/"+self.name,"restarting...")
             if self.config.touchscreen is True: # damn Tcl...
-                message = "restarting pi because TKinter..."
-                SmarterLog.log("SmarterCircuits",message)
-                self.mqtt.publish("smarter_circuits/info/"+self.name,message)
+                SmarterLog.log("SmarterCircuits","restarting pi because TKinter...")
                 os.system('sudo reboot now')
             else:
                 source_dir = os.path.dirname(os.path.realpath(__file__))+"/"
