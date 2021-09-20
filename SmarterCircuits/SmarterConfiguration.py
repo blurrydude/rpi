@@ -14,6 +14,7 @@ class SmarterConfig:
         self.motion_sensors_file = home_dir+"motionsensors.json"
         self.ht_sensors_file = home_dir+"thsensors.json"
         self.door_sensors_file = home_dir+"doorsensors.json"
+        self.http_keys_file = home_dir+"shellylogins.json"
         self.smarter_config_modified = 0.0
         self.circuits_config_modified = 0.0
         self.motion_sensors_config_modified = 0.0
@@ -88,6 +89,14 @@ class SmarterConfig:
         for circuit in circuit_list:
             #TODO: fix room
             self.circuits.append(RelayModule(circuit["id"],circuit["ip_address"],circuit["name"],circuit["relay_id"],circuit["location"],"",circuit["zones"],circuit["on_modes"],circuit["off_modes"]))
+
+    def load_http_keys(self):
+        self.log("load_http_keys")
+        key_data = open(self.http_keys_file)
+        keys = json.load(key_data)
+        for circuit in self.circuits:
+            if circuit.id in keys.keys():
+                circuit.http_key = keys[circuit.id]
 
     def load_motion_sensors(self):
         self.log("load_motion_sensors")

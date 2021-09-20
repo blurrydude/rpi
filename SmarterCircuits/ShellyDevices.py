@@ -1,3 +1,7 @@
+from SmarterLogging import SmarterLog
+import requests
+import json
+from requests.models import HTTPBasicAuth
 class RelayModule:
     def __init__(self, id, ip_address, name, relay_id, location, room, zones, on_modes, off_modes):
         self.id = id
@@ -11,6 +15,34 @@ class RelayModule:
         self.on_modes = on_modes
         self.off_modes = off_modes
         self.status = RelayModuleStatus()
+        self.http_key = ""
+    
+    def http_setting(self,setting,value):
+        if self.http_key == "":
+            return
+        try:
+            r = requests.get("http://"+self.ip+"/status", auth=HTTPBasicAuth('admin', self.http_key))
+        except:
+            SmarterLog.log("RelayModule","http_setting failed: set "+setting+" on "+self.id+"("+self.name+") to "+str(value))
+    
+    def http_toggle(self,state):
+        if self.http_key == "":
+            return
+        try:
+            r = requests.get("http://"+self.ip+"/relay/"+str(self.relay_id)+"?turn="+state, auth=HTTPBasicAuth('admin', self.http_key))
+        except:
+            SmarterLog.log("RelayModule","http_toggle failed: set "+self.id+"("+self.name+") to "+state)
+    
+    def http_status(self):
+        state = {}
+        if self.http_key == "":
+            return state
+        try:
+            r = requests.get("http://"+self.ip+"/status", auth=HTTPBasicAuth('admin', self.http_key))
+            return json.loads(r.text)
+        except:
+            SmarterLog.log("RelayModule","http_toggle failed: set "+self.id+"("+self.name+") to "+state)
+            return {}
 
 class RelayModuleStatus:
     def __init__(self):

@@ -1,5 +1,6 @@
 from SmarterLogging import SmarterLog
 from ShellyDevices import RelayModule
+import _thread
 try:
     import tkinter as tk
     libraries_available = True
@@ -47,8 +48,25 @@ class Touchscreen:
         command = "turn "+state+" "+circuit.name.lower()
         SmarterLog.log("SmarterTouchscreen","command: "+command)
         self.mcp.mqtt.publish("smarter_circuits/command",command)
+        _thread.start_new_thread(self.make_sure, (circuit,state))
         self.main_screen()
     
+    def make_sure(self,circuit:RelayModule,expected_state):
+        if circuit.http_key == "":
+            return
+        data = circuit.http_status()
+        check = data["relays"][int(circuit["relay_id"])]["ison"]
+        done = (check is True and expected_state == "on") or (check is not True and expected_state == "off")
+        tries = 0
+        while done is not True and tries < 3:
+            data = circuit.http_status()
+            check = data["relays"][int(circuit["relay_id"])]["ison"]
+            done = (check is True and expected_state == "on") or (check is not True and expected_state == "off")
+            tries = tries + 1
+            time.sleep(1)
+        if done is not True:
+            circuit.http_toggle(expected_state)
+        
     def set_mode(self, mode):
         self.mcp.mqtt.publish("smarter_circuits/mode",mode.lower())
         self.main_screen()

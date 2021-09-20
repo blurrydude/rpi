@@ -322,6 +322,11 @@ class SmarterCircuitsMCP:
 
     def handle_smarter_circuits_message(self, topic, message):
         #print(topic+": "+message)
+        if "smarter_circuits/shellylogins" in topic:
+            filepath = os.path.dirname(os.path.realpath(__file__))+"/shellylogins.json"
+            with open(filepath, "w") as write_file:
+                write_file.write(message)
+            self.config.load_http_keys()
         if "smarter_circuits/peers" in topic:
             self.received_peer_data(json.loads(message))
         if "smarter_circuits/mode" in topic and self.mode != message:
