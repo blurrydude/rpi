@@ -54,6 +54,7 @@ class Touchscreen:
     def make_sure(self,circuit:RelayModule,expected_state):
         if circuit.http_key == "":
             return
+        SmarterLog.log("SmarterTouchscreen","make_sure: "+circuit["id"]+"("+circuit["name"]+") "+expected_state)
         data = circuit.http_status()
         check = data["relays"][int(circuit["relay_id"])]["ison"]
         done = (check is True and expected_state == "on") or (check is not True and expected_state == "off")
@@ -65,7 +66,10 @@ class Touchscreen:
             tries = tries + 1
             time.sleep(1)
         if done is not True:
+            SmarterLog.log("SmarterTouchscreen","make_sure: "+circuit["id"]+"("+circuit["name"]+") is not "+expected_state+" so we'll http_toggle")
             circuit.http_toggle(expected_state)
+        else:
+            SmarterLog.log("SmarterTouchscreen","make_sure: "+circuit["id"]+"("+circuit["name"]+") is "+expected_state)
         
     def set_mode(self, mode):
         self.mcp.mqtt.publish("smarter_circuits/mode",mode.lower())
