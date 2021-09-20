@@ -76,7 +76,7 @@ class Touchscreen:
     def status_screen(self):
         self.title.text.set(self.mcp.name)
         buttons = [
-            SmartButton(0,2,"Close",self.stop,"",1,"Times",16,"darkred","white",5,5)
+            SmartButton(0,0,"Main Menu",self.main_screen,"",1,"Times",16,"darkorange","black",5,5)
         ]
         labels = []
         data = {}
@@ -89,7 +89,7 @@ class Touchscreen:
         r = 2
         c = 0
         for key in data.keys():
-            SmartLabel(1,0,key+": "+data[key],"Times",16,"black","white",5,5)
+            labels.append(SmartLabel(1,0,key+": "+data[key],"Times",16,"black","white",5,5))
             if c == 2:
                 r = r + 1
                 c = 0
