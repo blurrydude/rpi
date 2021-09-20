@@ -98,9 +98,11 @@ class SmarterConfig:
             return
         key_data = open(self.http_keys_file)
         keys = json.load(key_data)
+        i = 0
         for circuit in self.circuits:
             if circuit.id in keys.keys():
-                circuit.http_key = keys[circuit.id]
+                self.circuits[i].http_key = keys[circuit.id]
+            i = i + 1
         self.log("loaded http keys")
 
     def load_motion_sensors(self):
