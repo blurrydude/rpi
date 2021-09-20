@@ -52,7 +52,7 @@ class Touchscreen:
         self.main_screen()
     
     def make_sure(self,circuit:RelayModule,expected_state):
-        if circuit.id in self.mcp.config.http_keys:
+        if circuit.id in self.mcp.config.http_keys.keys():
             SmarterLog.log("SmarterTouchscreen","make_sure: no key to check "+circuit.id+"("+circuit.name+") "+expected_state)
             return
         key = self.mcp.config.http_keys[circuit.id]
