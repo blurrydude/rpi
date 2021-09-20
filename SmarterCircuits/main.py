@@ -439,9 +439,6 @@ class SmarterCircuitsMCP:
             SmarterLog.log("SmarterCircuitsMCP",'failed to send command')
 
     def execute_command(self, command):
-        if self.config.use_api is True:
-            self.send_api_command(command)
-            return
         SmarterLog.log("SmarterCircuitsMCP","executing command: "+command)
         command = command.lower()
         com = "off"
@@ -449,16 +446,14 @@ class SmarterCircuitsMCP:
         if " on" in command:
             com = "on"
         if "zone" in command or "area" in command or "all of the" in command:
-            for ci in range(0,len(self.config.circuits)):
-                c = self.config.circuits[ci]
+            for c in self.config.circuits:
                 for z in c.zones:
                     if z.lower() in command:
                         topic = "shellies/"+c.id+"/relay/"+c.relay_id+"/command"
                         command_list.append({"t":topic,"c":com})
         elif "mode" in command:
             detected_mode = None
-            for ci in range(0,len(self.config.circuits)):
-                c = self.config.circuits[ci]
+            for c in self.config.circuits:
                 for m in c.on_modes:
                     if m.lower() in command:
                         detected_mode = m.lower()
