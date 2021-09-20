@@ -23,6 +23,7 @@ class SmarterConfig:
         self.brokers = []
         self.topics = []
         self.circuits = []
+        self.http_keys = {}
         self.motion_sensors = {}
         self.ht_sensors = {}
         self.door_sensors = {}
@@ -97,12 +98,7 @@ class SmarterConfig:
             self.log("no http keys file to load")
             return
         key_data = open(self.http_keys_file)
-        keys = json.load(key_data)
-        i = 0
-        for circuit in self.circuits:
-            if circuit.id in keys.keys():
-                self.circuits[i].http_key = keys[circuit.id]
-            i = i + 1
+        self.http_keys = json.load(key_data)
         self.log("loaded http keys")
 
     def load_motion_sensors(self):
