@@ -1,3 +1,8 @@
+mqtt
+========
+sudo apt-get update && sudo apt install mosquitto mosquitto-clients -y
+sudo nano /etc/mosquitto/mosquitto.conf
+
 switchpi
 ========
 sudo apt-get update && sudo apt-get install python3-pip

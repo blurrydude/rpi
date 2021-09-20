@@ -6,4 +6,5 @@ SmarterCircuits/config.json
 snapshots
 SmarterCircuits/logs
 SmarterCircuits/thermosettings.json
+SmarterCircuits/shellylogins.json
 SmarterCircuits/__pycache__

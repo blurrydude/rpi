@@ -67,7 +67,8 @@ class Touchscreen:
             SmartButton(2,1,"Modes",self.mode_screen,"",2,"Times",20,"darkgreen","white",5,5),
             SmartButton(3,1,"Thermostat",self.thermostat_screen,"",2,"Times",20,"magenta","black",5,5),
             SmartButton(4,1,"Shades",self.roller_screen,"",2,"Times",20,"darkorange","black",5,5),
-            SmartButton(5,1,"Info",self.status_screen,"",2,"Times",20,"purple","black",5,5),
+            SmartButton(5,1,"Doors",self.door_screen,"",2,"Times",20,"green","black",5,5),
+            SmartButton(6,1,"Info",self.status_screen,"",2,"Times",20,"purple","black",5,5),
         ]
         labels = []
 
@@ -99,6 +100,25 @@ class Touchscreen:
                 c = 0
             else:
                 c = c + 1
+
+        self.screen_wipe(buttons,labels)
+    
+    def open_door(self, which):
+        self.mcp.mqtt.publish("smarter_circuits/command","open "+which+" door")
+    
+    def close_door(self, which):
+        self.mcp.mqtt.publish("smarter_circuits/command","close "+which+" door")
+
+    def door_screen(self):
+        self.title.text.set("Doors")
+        buttons = [
+            SmartButton(0,0,"Main Menu",self.main_screen,"",1,"Times",16,"darkorange","black",5,5),
+            SmartButton(3,0,"Open Garage Door",lambda d="garage": self.open_door(d),"",2,"Times",20,"darkorange","black",5,5),
+            SmartButton(3,2,"Open Shop Door",lambda d="shop": self.close_door(d),"",2,"Times",20,"darkorange","black",5,5),
+            SmartButton(4,0,"Close Garage Door",lambda d="garage": self.open_door(d),"",2,"Times",20,"darkblue","white",5,5),
+            SmartButton(4,2,"Close Shop Door",lambda d="shop": self.close_door(d),"",2,"Times",20,"darkblue","white",5,5),
+        ]
+        labels = []
 
         self.screen_wipe(buttons,labels)
     

@@ -1,4 +1,6 @@
-import os
+import requests
+from requests.models import HTTPBasicAuth
+#import os
 # import subprocess
 # import time
 
@@ -15,4 +17,7 @@ import os
 # print("exiting")
 # exit()
 
-print(os.path.dirname(os.path.realpath(__file__)))
+#print(os.path.dirname(os.path.realpath(__file__)))
+
+r = requests.get("http://192.168.1.130/settings", auth=HTTPBasicAuth('admin', 'pkg2kjg!ydh@nat.NZT'))
+print(r.text)
