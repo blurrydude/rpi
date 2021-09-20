@@ -198,7 +198,7 @@ class Thermostat:
             self.report(True)
         except:
             print("nolog")
-        if self.state.self.state.heat_on is True:
+        if self.state.heat_on is True:
             self.last_circulation = datetime.now()
         self.set_circuit(self.heat_pin, False)
         self.state.heat_on = False
