@@ -67,8 +67,34 @@ class Touchscreen:
             SmartButton(2,1,"Modes",self.mode_screen,"",2,"Times",20,"darkgreen","white",5,5),
             SmartButton(3,1,"Thermostat",self.thermostat_screen,"",2,"Times",20,"magenta","black",5,5),
             SmartButton(4,1,"Shades",self.roller_screen,"",2,"Times",20,"darkorange","black",5,5),
+            SmartButton(5,1,"Info",self.status_screen,"",2,"Times",20,"purple","black",5,5),
         ]
         labels = []
+
+        self.screen_wipe(buttons,labels)
+    
+    def status_screen(self):
+        self.title.text.set(self.mcp.name)
+        buttons = [
+            SmartButton(0,2,"Close",self.stop,"",1,"Times",16,"darkred","white",5,5)
+        ]
+        labels = []
+        data = {}
+        total = 0.0
+        for circuit in self.mcp.config.circuits:
+            power = circuit.status.relay.power
+            data[circuit.name] = str(round(power,2)) + " W"
+            total = total + power
+        labels.append(SmartLabel(1,0,"Total: "+str(total)+" W","Times",24,"black","white",5,5))
+        r = 2
+        c = 0
+        for key in data.keys():
+            SmartLabel(1,0,key+": "+data[key],"Times",16,"black","white",5,5)
+            if c == 2:
+                r = r + 1
+                c = 0
+            else:
+                c = c + 1
 
         self.screen_wipe(buttons,labels)
     
