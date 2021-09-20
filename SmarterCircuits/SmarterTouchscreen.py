@@ -66,7 +66,31 @@ class Touchscreen:
             SmartButton(0,2,"Close",self.stop,"",1,"Times",16,"darkred","white",5,5),
             SmartButton(1,1,"Zones",self.zone_screen,"",2,"Times",20,"darkblue","white",5,5),
             SmartButton(2,1,"Modes",self.mode_screen,"",2,"Times",20,"darkgreen","white",5,5),
-            SmartButton(3,1,"Thermostat",self.thermostat_screen,"",2,"Times",20,"darkorange","white",5,5),
+            SmartButton(3,1,"Thermostat",self.thermostat_screen,"",2,"Times",20,"magenta","black",5,5),
+            SmartButton(4,1,"Shades",self.roller_screen,"",2,"Times",20,"darkorange","black",5,5),
+        ]
+        labels = []
+
+        self.screen_wipe(buttons,labels)
+    
+    def open_shade(self, which):
+        self.mcp.execute_command("open "+which+" shade")
+    
+    def close_shade(self, which):
+        self.mcp.execute_command("close "+which+" shade")
+
+    def roller_screen(self):
+        self.title.text.set("Shades")
+        buttons = [
+            SmartButton(0,0,"Main Menu",self.main_screen,"",1,"Times",16,"darkorange","black",5,5),
+            SmartButton(1,1,"All Open",lambda d="first": self.open_shade(d),"",2,"Times",20,"darkorange","black",5,5),
+            SmartButton(2,1,"All Closed",lambda d="first": self.close_shade(d),"",2,"Times",20,"darkblue","white",5,5),
+            SmartButton(3,0,"Left Open",lambda d="first": self.open_shade(d),"",2,"Times",20,"darkorange","black",5,5),
+            SmartButton(3,1,"Center Open",lambda d="first": self.close_shade(d),"",2,"Times",20,"darkorange","black",5,5),
+            SmartButton(3,2,"Right Open",lambda d="second": self.open_shade(d),"",2,"Times",20,"darkorange","black",5,5),
+            SmartButton(3,0,"Left Closed",lambda d="second": self.close_shade(d),"",2,"Times",20,"darkblue","white",5,5),
+            SmartButton(3,1,"Center Closed",lambda d="third": self.open_shade(d),"",2,"Times",20,"darkblue","white",5,5),
+            SmartButton(3,2,"Right Closed",lambda d="third": self.close_shade(d),"",2,"Times",20,"darkblue","white",5,5),
         ]
         labels = []
 
@@ -107,7 +131,7 @@ class Touchscreen:
     def thermostat_screen(self):
         self.title.text.set("Thermostats")
         buttons = [
-            SmartButton(0,0,"Main Menu",self.main_screen,"",1,"Times",16,"darkorange","white",5,5)
+            SmartButton(0,0,"Main Menu",self.main_screen,"",1,"Times",16,"darkorange","black",5,5)
         ]
         labels = []
         r = 1
@@ -143,7 +167,7 @@ class Touchscreen:
     def mode_screen(self):
         self.title.text.set("Mode: "+self.mcp.mode)
         buttons = [
-            SmartButton(0,0,"Main Menu",self.main_screen,"",1,"Times",16,"darkorange","white",5,5)
+            SmartButton(0,0,"Main Menu",self.main_screen,"",1,"Times",16,"darkorange","black",5,5)
         ]
         labels = []
         modes = []
@@ -169,7 +193,7 @@ class Touchscreen:
     def zone_button_screen(self, zone):
         self.title.text.set(zone)
         buttons = [
-            SmartButton(0,0,"Main Menu",self.main_screen,"",1,"Times",16,"darkorange","white",5,5),
+            SmartButton(0,0,"Main Menu",self.main_screen,"",1,"Times",16,"darkorange","black",5,5),
             SmartButton(0,2,"Zones",self.zone_screen,"",1,"Times",16,"darkblue","white",5,5)
         ]
         r = 1
@@ -191,7 +215,7 @@ class Touchscreen:
         self.title.text.set("Zones")
         zones = []
         buttons = [
-            SmartButton(0,0,"Main Menu",self.main_screen,"",1,"Times",16,"darkorange","white",5,5)
+            SmartButton(0,0,"Main Menu",self.main_screen,"",1,"Times",16,"darkorange","black",5,5)
         ]
         for circuit in self.mcp.config.circuits:
             for zone in circuit.zones:
