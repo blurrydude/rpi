@@ -46,12 +46,12 @@ class Touchscreen:
             state = "off"
         command = "turn "+state+" "+circuit.name.lower()
         SmarterLog.log("SmarterTouchscreen","command: "+command)
-        self.mcp.execute_command(command)
+        self.mcp.mqtt.publish("smarter_circuits/command",command)
         self.main_screen()
     
     def set_mode(self, mode):
         command = "set mode " + mode.lower()
-        self.mcp.execute_command(command)
+        self.mcp.mqtt.publish("smarter_circuits/command",command)
         self.main_screen()
     
     def screen_wipe(self, buttons, labels):
@@ -74,10 +74,10 @@ class Touchscreen:
         self.screen_wipe(buttons,labels)
     
     def open_shade(self, which):
-        self.mcp.execute_command("open "+which+" shade")
+        self.mcp.mqtt.publish("smarter_circuits/command","open "+which+" shade")
     
     def close_shade(self, which):
-        self.mcp.execute_command("close "+which+" shade")
+        self.mcp.mqtt.publish("smarter_circuits/command","close "+which+" shade")
 
     def roller_screen(self):
         self.title.text.set("Shades")
