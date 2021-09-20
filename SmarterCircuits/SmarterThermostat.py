@@ -194,7 +194,11 @@ class Thermostat:
         self.failed_reads = 0
 
     def heat_off(self):
-        self.log("heat_off")
+        try:
+            self.log("heat_off")
+            self.report(True)
+        except:
+            print("nolog")
         if self.state.self.state.heat_on is True:
             self.last_circulation = datetime.now()
         self.set_circuit(self.heat_pin, False)
@@ -202,7 +206,11 @@ class Thermostat:
         self.report()
 
     def ac_off(self):
-        self.log("ac_off")
+        try:
+            self.log("ac_off")
+            self.report(True)
+        except:
+            print("nolog")
         if self.state.ac_on is True:
             self.last_circulation = datetime.now()
         self.set_circuit(self.ac_pin, False)
@@ -211,7 +219,11 @@ class Thermostat:
         self.report()
 
     def fan_off(self):
-        self.log("fan_off")
+        try:
+            self.log("fan_off")
+            self.report(True)
+        except:
+            print("nolog")
         if self.state.fan_on is True:
             self.last_circulation = datetime.now()
         self.set_circuit(self.fan_pin, False)
@@ -219,7 +231,11 @@ class Thermostat:
         self.report()
 
     def heat_on(self):
-        self.log("heat_on")
+        try:
+            self.log("heat_on")
+            self.report(True)
+        except:
+            print("nolog")
         if self.state.ac_on is True or self.state.fan_on is True:
             return
         self.set_circuit(self.heat_pin, True)
@@ -227,7 +243,11 @@ class Thermostat:
         self.report()
 
     def ac_on(self):
-        self.log("ac_on")
+        try:
+            self.log("ac_on")
+            self.report(True)
+        except:
+            print("nolog")
         if self.state.heat_on is True or self.state.fan_on is True:
             return
         self.set_circuit(self.ac_pin, True)
@@ -235,7 +255,11 @@ class Thermostat:
         self.report()
 
     def fan_on(self):
-        self.log("fan_on")
+        try:
+            self.log("fan_on")
+            self.report(True)
+        except:
+            print("nolog")
         if self.state.ac_on is True or self.state.heat_on is True:
             return
         self.set_circuit(self.fan_pin, True)
@@ -243,7 +267,11 @@ class Thermostat:
         self.report()
 
     def whf_on(self):
-        self.log("whf_on")
+        try:
+            self.log("whf_on")
+            self.report(True)
+        except:
+            print("nolog")
         self.state.whf_on = True
         self.send_command('turn on whole house fan')
         for evc in self.extra_ventilation_circuits:
@@ -257,7 +285,11 @@ class Thermostat:
         self.report()
 
     def whf_off(self):
-        self.log("whf_off")
+        try:
+            self.log("whf_off")
+            self.report(True)
+        except:
+            print("nolog")
         self.state.whf_on = False
         self.send_command('turn off whole house fan')
         for evc in self.extra_ventilation_circuits:
@@ -269,7 +301,11 @@ class Thermostat:
         self.report()
 
     def halt(self):
-        self.log("halt")
+        try:
+            SmarterLog.log("SmarterThermostat","halting")
+            self.report(True)
+        except:
+            print("nolog")
         GPIO.output(self.heat_pin, GPIO.HIGH)
         GPIO.output(self.ac_pin, GPIO.HIGH)
         GPIO.output(self.fan_pin, GPIO.HIGH)
@@ -287,12 +323,8 @@ class Thermostat:
         if self.state.temperature is None or self.state.temperature == 0:
             self.halt()
             self.state.status = "sensor_fail"
+            SmarterLog.log("SmarterThermostat","halting because sensor sucks")
             self.report()
-            return
-
-        if self.state.temperature is None:
-            self.halt()
-            self.state.status = "halted"
             return
         
         self.report()
@@ -410,7 +442,7 @@ class Thermostat:
         self.log("sending command: "+command)
         self.mcp.execute_command(command)
 
-    def report(self):
+    def report(self, to_log = False):
         state = {
             "ac_on": self.state.ac_on,
             "fan_on": self.state.fan_on,
@@ -441,5 +473,8 @@ class Thermostat:
             "state": state,
             "settings": settings
         }
-
-        self.mcp.mqtt.publish("smarter_circuits/thermostats/"+self.room, json.dumps(data))
+        json_string = json.dumps(data)
+        if to_log is True:
+            SmarterLog.log("SmarterThermostat",json_string)
+        else:
+            self.mcp.mqtt.publish("smarter_circuits/thermostats/"+self.room, json_string)
