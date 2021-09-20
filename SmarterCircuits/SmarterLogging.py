@@ -5,11 +5,12 @@ import os
 class SmarterLog:
     @staticmethod
     def log(origin, message):
+        source_dir = os.path.dirname(os.path.realpath(__file__))+"/"
         if type(message) is not type(""):
             message = json.dumps(message)
         timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         logfiledate = datetime.now().strftime("%Y%m%d%H")
-        logfile = "logs/SmarterCircuits_"+logfiledate+".log"
+        logfile = source_dir + "logs/SmarterCircuits_"+logfiledate+".log"
         entry = timestamp + " [" + origin + "]: " + message + "\n"
         print(entry)
         try:
