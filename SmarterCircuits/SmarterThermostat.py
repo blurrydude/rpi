@@ -126,10 +126,9 @@ class Thermostat:
         time.sleep(2)
         self.post = False
         self.log("begin cycling")
+        self.load_settings()
         while True:
             try:
-                if self.settings_loaded is not True:
-                    self.mcp.mqtt.publish("smarter_circuits/info/"+self.room,"settings please")
                 self.cycle()
             except:
                 self.log("BAD CYCLE!!!")
