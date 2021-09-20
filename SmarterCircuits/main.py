@@ -371,9 +371,9 @@ class SmarterCircuitsMCP:
         if self.circuit_authority is not True:
             return
         for circuit in self.config.circuits:
-            if self.mode in circuit.on_modes:
+            if self.mode.lower() in (string.lower() for string in circuit.on_modes):
                 self.execute_command("turn on "+circuit.name.lower())
-            if self.mode in circuit.off_modes:
+            if self.mode.lower() in (string.lower() for string in circuit.off_modes):
                 self.execute_command("turn off "+circuit.name.lower())
     
     def battery_status_check(self, sensor):
