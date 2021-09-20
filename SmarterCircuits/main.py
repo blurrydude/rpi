@@ -324,6 +324,7 @@ class SmarterCircuitsMCP:
         #print(topic+": "+message)
         if "smarter_circuits/shellylogins" in topic:
             filepath = os.path.dirname(os.path.realpath(__file__))+"/shellylogins.json"
+            self.mqtt.publish("smarter_circuits/info/"+self.name,"received shelly logins")
             with open(filepath, "w") as write_file:
                 write_file.write(message)
             self.config.load_http_keys()
