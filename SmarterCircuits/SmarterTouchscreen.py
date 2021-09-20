@@ -89,7 +89,7 @@ class Touchscreen:
         r = 2
         c = 0
         for key in data.keys():
-            labels.append(SmartLabel(1,0,key+": "+data[key],"Times",16,"black","white",5,5))
+            labels.append(SmartLabel(r,c,key+": "+data[key],"Times",16,"black","white",5,5))
             if c == 2:
                 r = r + 1
                 c = 0
