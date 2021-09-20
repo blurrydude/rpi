@@ -104,7 +104,7 @@ class SmarterCircuitsMCP:
                 self.ticks = self.ticks + 1
             except Exception as e: 
                 error = str(e)
-                SmarterLog.log("SmarterCircuitsMCP",error)
+                SmarterLog.log("SmarterCircuitsMCP","main_loop error: "+error)
                 self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
             time.sleep(1)
 

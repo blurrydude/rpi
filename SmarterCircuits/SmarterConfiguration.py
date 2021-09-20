@@ -58,6 +58,7 @@ class SmarterConfig:
         self.log("load")
         self.load_config()
         self.load_circuits()
+        self.load_http_keys()
         self.load_motion_sensors()
         self.load_ht_sensors()
         self.load_door_sensors()
@@ -92,11 +93,15 @@ class SmarterConfig:
 
     def load_http_keys(self):
         self.log("load_http_keys")
+        if os.path.exists(self.http_keys_file) is False:
+            self.log("no http keys file to load")
+            return
         key_data = open(self.http_keys_file)
         keys = json.load(key_data)
         for circuit in self.circuits:
             if circuit.id in keys.keys():
                 circuit.http_key = keys[circuit.id]
+        self.log("loaded http keys")
 
     def load_motion_sensors(self):
         self.log("load_motion_sensors")
