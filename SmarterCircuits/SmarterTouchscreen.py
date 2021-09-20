@@ -83,14 +83,14 @@ class Touchscreen:
         self.title.text.set("Shades")
         buttons = [
             SmartButton(0,0,"Main Menu",self.main_screen,"",1,"Times",16,"darkorange","black",5,5),
-            SmartButton(1,1,"All Open",lambda d="first": self.open_shade(d),"",2,"Times",20,"darkorange","black",5,5),
-            SmartButton(2,1,"All Closed",lambda d="first": self.close_shade(d),"",2,"Times",20,"darkblue","white",5,5),
-            SmartButton(3,0,"Left Open",lambda d="first": self.open_shade(d),"",2,"Times",20,"darkorange","black",5,5),
-            SmartButton(3,1,"Center Open",lambda d="first": self.close_shade(d),"",2,"Times",20,"darkorange","black",5,5),
-            SmartButton(3,2,"Right Open",lambda d="second": self.open_shade(d),"",2,"Times",20,"darkorange","black",5,5),
-            SmartButton(3,0,"Left Closed",lambda d="second": self.close_shade(d),"",2,"Times",20,"darkblue","white",5,5),
-            SmartButton(3,1,"Center Closed",lambda d="third": self.open_shade(d),"",2,"Times",20,"darkblue","white",5,5),
-            SmartButton(3,2,"Right Closed",lambda d="third": self.close_shade(d),"",2,"Times",20,"darkblue","white",5,5),
+            SmartButton(1,1,"Open All",lambda d="first": self.open_shade(d),"",2,"Times",20,"darkorange","black",5,5),
+            SmartButton(2,1,"Close All",lambda d="first": self.close_shade(d),"",2,"Times",20,"darkblue","white",5,5),
+            SmartButton(3,0,"Open Left",lambda d="first": self.open_shade(d),"",2,"Times",20,"darkorange","black",5,5),
+            SmartButton(3,1,"Open Center",lambda d="first": self.close_shade(d),"",2,"Times",20,"darkorange","black",5,5),
+            SmartButton(3,2,"Open Right",lambda d="second": self.open_shade(d),"",2,"Times",20,"darkorange","black",5,5),
+            SmartButton(4,0,"Close Left",lambda d="second": self.close_shade(d),"",2,"Times",20,"darkblue","white",5,5),
+            SmartButton(4,1,"Close Center",lambda d="third": self.open_shade(d),"",2,"Times",20,"darkblue","white",5,5),
+            SmartButton(4,2,"Close Right",lambda d="third": self.close_shade(d),"",2,"Times",20,"darkblue","white",5,5),
         ]
         labels = []
 
