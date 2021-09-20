@@ -85,7 +85,7 @@ class Touchscreen:
             power = circuit.status.relay.power
             data[circuit.name] = str(round(power,2)) + " W"
             total = total + power
-        labels.append(SmartLabel(1,0,"Total: "+str(total)+" W","Times",24,"black","white",5,5))
+        labels.append(SmartLabel(1,0,"Total: "+str(round(total,2))+" W","Times",24,"black","white",5,5))
         r = 2
         c = 0
         for key in data.keys():
