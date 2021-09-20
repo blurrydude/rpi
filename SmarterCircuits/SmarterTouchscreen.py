@@ -50,8 +50,7 @@ class Touchscreen:
         self.main_screen()
     
     def set_mode(self, mode):
-        command = "set mode " + mode.lower()
-        self.mcp.mqtt.publish("smarter_circuits/command",command)
+        self.mcp.mqtt.publish("smarter_circuits/mode",mode.lower())
         self.main_screen()
     
     def screen_wipe(self, buttons, labels):
