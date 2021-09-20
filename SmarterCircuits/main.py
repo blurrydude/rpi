@@ -181,12 +181,17 @@ class SmarterCircuitsMCP:
         exit()
     
     def on_message(self, client, userdata, message):
-        topic = message.topic
-        text = str(message.payload.decode("utf-8"))
-        if topic.startswith("shellies"):
-            self.handle_shelly_message(topic, text)
-        if topic.startswith("smarter_circuits"):
-            self.handle_smarter_circuits_message(topic, text)
+        try:
+            topic = message.topic
+            text = str(message.payload.decode("utf-8"))
+            if topic.startswith("shellies"):
+                self.handle_shelly_message(topic, text)
+            if topic.startswith("smarter_circuits"):
+                self.handle_smarter_circuits_message(topic, text)
+        except Exception as e: 
+            error = str(e)
+            SmarterLog.log("SmarterCircuitsMCP",error)
+            self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
     
     def handle_shelly_message(self, topic, message):
         #print(topic+": "+message)
