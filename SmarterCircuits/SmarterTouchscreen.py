@@ -83,13 +83,17 @@ class Touchscreen:
         total = 0.0
         for circuit in self.mcp.config.circuits:
             power = circuit.status.relay.power
-            data[circuit.name] = str(round(power,2)) + " W"
+            data[circuit.name] = {"power":str(round(power,2)) + " W","on":circuit.status.relay.on}
             total = total + power
-        labels.append(SmartLabel(1,0,"Total: "+str(round(total,2))+" W","Times",24,"black","white",5,5))
+        labels.append(SmartLabel(1,1,"Total: "+str(round(total,2))+" W","Times",24,"black","white",5,5))
         r = 2
         c = 0
         for key in data.keys():
-            labels.append(SmartLabel(r,c,key+": "+data[key],"Times",16,"black","white",5,5))
+            datum = data[key]
+            color = "white"
+            if datum["on"] is True:
+                color = "cyan"
+            labels.append(SmartLabel(r,c,key+": "+datum["power"],"Times",16,"black","white",5,5))
             if c == 2:
                 r = r + 1
                 c = 0
