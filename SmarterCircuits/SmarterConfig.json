@@ -3,7 +3,7 @@
     "topics":["shellies/#"],
     "command_endpoint":"https://api.idkline.com/control/",
     "use_api": false,
-    "touchscreens":["garagecontrolpi","dayroompi","kitchenpi","hallwaypi","ian-ThinkPad-W540"],
+    "touchscreens":["garagecontrolpi","dayroompi","kitchenpi","hallwaypi","ian-ThinkPad-W540","xpi"],
     "thermostats":["gameroomthermopi","hallwaythermopi"],
     "update_files": ["main.py","ShellyDevices.py","SmarterCircuitsMQTT.py","SmarterConfiguration.py","SmarterLogging.py"],
     "thermostat_update_files": ["SmarterThermostat.py"],
