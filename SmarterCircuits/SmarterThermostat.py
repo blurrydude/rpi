@@ -285,7 +285,10 @@ class Thermostat:
     def cycle(self):
         self.read_sensor()
         if self.state.temperature is None or self.state.temperature == 0:
+            self.halt()
             self.state.status = "sensor_fail"
+            self.report()
+            return
 
         if self.state.temperature is None:
             self.halt()
