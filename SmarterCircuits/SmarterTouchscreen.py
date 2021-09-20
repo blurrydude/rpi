@@ -53,6 +53,7 @@ class Touchscreen:
     
     def make_sure(self,circuit:RelayModule,expected_state):
         if circuit.http_key == "":
+            SmarterLog.log("SmarterTouchscreen","make_sure: no key to check "+circuit["id"]+"("+circuit["name"]+") "+expected_state)
             return
         SmarterLog.log("SmarterTouchscreen","make_sure: "+circuit["id"]+"("+circuit["name"]+") "+expected_state)
         data = circuit.http_status()
