@@ -135,6 +135,7 @@ class SmarterCircuitsMCP:
                     #thermoset_command(tc["command"])
                     donothing = True
                 else:
+                    SmarterLog.log("SmarterCircuitsMCP","time command: "+tc["command"])
                     self.execute_command(tc["command"])
 
     def time_check(self, now, check):
