@@ -40,6 +40,7 @@ class SmarterCircuitsMCP:
         self.civil_twilight_begin = ""
         self.motion_detected = []
         self.source_modified = 0
+        self.last_log_dump_hour = 0
         self.start()
 
     def start(self):
@@ -101,12 +102,24 @@ class SmarterCircuitsMCP:
                     self.check_solar_data(day)
                     self.check_circuit_authority()
                     self.do_time_commands(now, day)
+                    self.do_log_dump()
                 self.ticks = self.ticks + 1
             except Exception as e: 
                 error = str(e)
                 SmarterLog.log("SmarterCircuitsMCP","main_loop error: "+error)
                 self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
             time.sleep(1)
+
+    def do_log_dump(self):
+        previouslogfiledate = (datetime.now()-timedelta(hours=1)).strftime("%Y%m%d%H")
+        previouslogfilepath = os.path.dirname(os.path.realpath(__file__))+"/logs/SmarterCircuits_"+previouslogfiledate+".log"
+        currenthour = datetime.now().hour
+        if self.last_log_dump_hour != currenthour:
+            self.last_log_dump_hour = currenthour
+            f = open(previouslogfilepath)
+            t = f.read()
+            SmarterLog.send_email("smartercircuits@gmail.com","Logfile "+previouslogfiledate,t)
+
 
     def check_solar_data(self, day):
         if day != self.last_day:
@@ -316,6 +329,8 @@ class SmarterCircuitsMCP:
         while now < auto_off_time:
             now = datetime.now()
             time.sleep(1)
+            
+        SmarterLog.log("SmarterCircuitsMCP","Time's up: "+sensor.name)
         for command in sensor.commands:
             if self.conditions_met(command.conditions) is True:
                 self.execute_command(command.stop)
