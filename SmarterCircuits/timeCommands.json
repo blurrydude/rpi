@@ -92,7 +92,7 @@
         "command": "thermoset hallway temperature_high_setting 72"
     },
     {
-        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:07:30",
+        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:07:35",
         "command": "switch to morning mode"
     }
 ]
