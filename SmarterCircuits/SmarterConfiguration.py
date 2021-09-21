@@ -15,11 +15,14 @@ class SmarterConfig:
         self.ht_sensors_file = home_dir+"thsensors.json"
         self.door_sensors_file = home_dir+"doorsensors.json"
         self.secrets_file = home_dir+"secrets.json"
+        self.time_commands_file = home_dir+"timeCommands.json"
         self.smarter_config_modified = 0.0
         self.circuits_config_modified = 0.0
         self.motion_sensors_config_modified = 0.0
         self.ht_sensors_config_modified = 0.0
         self.door_sensors_config_modified = 0.0
+        self.secrets_modified = 0.0
+        self.time_commands_modified = 0.0
         self.brokers = []
         self.topics = []
         self.circuits = []
@@ -63,6 +66,7 @@ class SmarterConfig:
         self.load_motion_sensors()
         self.load_ht_sensors()
         self.load_door_sensors()
+        self.load_time_commands()
         self.loaded = True
 
     def load_config(self):
@@ -123,6 +127,11 @@ class SmarterConfig:
             ht_sensor = HumidityTemperatureSensor(sensor["id"], sensor["ip_address"], sensor["name"])
             self.ht_sensors[ht_sensor.id] = ht_sensor
 
+    def load_time_commands(self):
+        self.log("load_ht_sensors")
+        time_commands_data = open(self.time_commands_file)
+        self.time_commands = json.load(time_commands_data)
+
     def load_door_sensors(self):
         self.log("load_door_sensors")
         door_sensor_data = open(self.door_sensors_file)
@@ -137,6 +146,16 @@ class SmarterConfig:
         now_motion_sensors_config_modified = os.stat(self.motion_sensors_file).st_mtime
         now_ht_sensors_config_modified = os.stat(self.ht_sensors_file).st_mtime
         now_door_sensors_config_modified = os.stat(self.door_sensors_file).st_mtime
+        now_time_commands_config_modified = os.stat(self.time_commands_file).st_mtime
+        now_secrets_config_modified = os.stat(self.secrets_file).st_mtime
+
+        if now_time_commands_config_modified != self.time_commands_modified:
+            self.time_commands_modified = now_time_commands_config_modified
+            self.load_time_commands()
+
+        if now_secrets_config_modified != self.secrets_modified:
+            self.secrets_modified = now_secrets_config_modified
+            self.load_secrets()
 
         if now_smarter_config_modified != self.smarter_config_modified:
             self.smarter_config_modified = now_smarter_config_modified
