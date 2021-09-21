@@ -14,6 +14,7 @@ import json
 from datetime import datetime, timedelta
 import requests
 import os
+import traceback
 
 class SmarterCircuitsMCP:
     def __init__(self, name, ip_address, model):
@@ -106,8 +107,11 @@ class SmarterCircuitsMCP:
                 self.ticks = self.ticks + 1
             except Exception as e: 
                 error = str(e)
+                tb = traceback.format_exc()
                 SmarterLog.log("SmarterCircuitsMCP","main_loop error: "+error)
+                SmarterLog.log("SmarterCircuitsMCP","main_loop traceback: "+tb)
                 self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
+                self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
             time.sleep(1)
 
     def do_log_dump(self):
