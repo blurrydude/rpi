@@ -407,37 +407,48 @@ class SmarterCircuitsMCP:
                     for circuit in self.config.circuits:
                         if circuit.name.replace(" ","") == s[1]:
                             device = circuit
-                for attr, value in device.__dict__.items():
-                    if attr == s[2]:
-                        target_value = value
+                if device is not None:
+                    for attr, value in device.__dict__.items():
+                        if attr == s[2]:
+                            if len(s) > 3:
+                                for sattr, svalue in value.__dict__.items():
+                                    if sattr == s[3]:
+                                        if len(s) > 4:
+                                            for ssattr, ssvalue in svalue.__dict__.items():
+                                                if ssattr == s[4]:
+                                                    target_value = ssvalue
+                                        else:
+                                            target_value = svalue
+                            else:
+                                target_value = value
             else:
                 for attr, value in self.__dict__.items():
                     if attr == condition.prop:
                         target_value = value
             
             if condition.comparitor == "=":
-                if str(target_value) != condition.value:
+                if str(target_value) != str(condition.value):
                     return False
             if condition.comparitor == "!=":
-                if str(target_value) == condition.value:
+                if str(target_value) == str(condition.value):
                     return False
             if condition.comparitor == ">":
-                if str(target_value) <= condition.value:
+                if float(target_value) <= float(condition.value):
                     return False
             if condition.comparitor == ">=":
-                if str(target_value) < condition.value:
+                if float(target_value) < float(condition.value):
                     return False
             if condition.comparitor == "<":
-                if str(target_value) >= condition.value:
+                if float(target_value) >= float(condition.value):
                     return False
             if condition.comparitor == "<=":
-                if str(target_value) > condition.value:
+                if float(target_value) > float(condition.value):
                     return False
             if condition.comparitor == "in":
-                if str(target_value) in condition.value:
+                if str(target_value) in str(condition.value):
                     return False
             if condition.comparitor == "not in":
-                if str(target_value) not in condition.value:
+                if str(target_value) not in str(condition.value):
                     return False
         return True
 

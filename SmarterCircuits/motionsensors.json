@@ -5,7 +5,7 @@
             "start":"turn on guest bathroom",
             "stop":"turn off guest bathroom",
             "conditions": [
-                {"prop":"motion.GuestBathroom.lux","comparitor":"<","value":"2000"},
+                {"prop":"motion.GuestBathroom.status.lux","comparitor":"<=","value":"2000"},
                 {"prop":"mode","comparitor":"!=","value":"day"}
             ]
         }],
