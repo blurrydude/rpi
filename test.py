@@ -77,7 +77,7 @@ class NotifyService:
         try:
             smtp_server = smtplib.SMTP('smtp.mailgun.com', 587)
             smtp_server.starttls()
-            smtp_server.login("postmaster@sandboxab162af263364a6a843fe4c0fc03483f.mailgun.org", "0a569105db8ddbdfb17ee4b9e4f150f2-45f7aa85-029a5394")
+            smtp_server.login()
             smtp_server.sendmail('house@smartercirctuis.com', to, email_text)
             smtp_server.quit()
             print ("Email sent successfully!")
