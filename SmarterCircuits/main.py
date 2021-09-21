@@ -343,7 +343,7 @@ class SmarterCircuitsMCP:
             self.mqtt.publish("smarter_circuits/info/"+self.name,"received shelly logins")
             with open(filepath, "w") as write_file:
                 write_file.write(message)
-            self.config.load_http_keys()
+            self.config.load_secrets()
         if "smarter_circuits/peers" in topic:
             self.received_peer_data(json.loads(message))
         if "smarter_circuits/mode" in topic and self.mode != message:

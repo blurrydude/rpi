@@ -14,7 +14,7 @@ class SmarterConfig:
         self.motion_sensors_file = home_dir+"motionsensors.json"
         self.ht_sensors_file = home_dir+"thsensors.json"
         self.door_sensors_file = home_dir+"doorsensors.json"
-        self.http_keys_file = home_dir+"shellylogins.json"
+        self.secrets_file = home_dir+"shellylogins.json"
         self.smarter_config_modified = 0.0
         self.circuits_config_modified = 0.0
         self.motion_sensors_config_modified = 0.0
@@ -23,7 +23,7 @@ class SmarterConfig:
         self.brokers = []
         self.topics = []
         self.circuits = []
-        self.http_keys = {}
+        self.secrets = {}
         self.motion_sensors = {}
         self.ht_sensors = {}
         self.door_sensors = {}
@@ -59,7 +59,7 @@ class SmarterConfig:
         self.log("load")
         self.load_config()
         self.load_circuits()
-        self.load_http_keys()
+        self.load_secrets()
         self.load_motion_sensors()
         self.load_ht_sensors()
         self.load_door_sensors()
@@ -91,13 +91,13 @@ class SmarterConfig:
         for circuit in circuit_list:
             self.circuits.append(RelayModule(circuit["id"],circuit["ip_address"],circuit["name"],circuit["relay_id"],circuit["location"],circuit["zones"],circuit["on_modes"],circuit["off_modes"]))
 
-    def load_http_keys(self):
-        self.log("load_http_keys")
-        if os.path.exists(self.http_keys_file) is False:
+    def load_secrets(self):
+        self.log("load_secrets")
+        if os.path.exists(self.secrets_file) is False:
             self.log("no http keys file to load")
             return
-        key_data = open(self.http_keys_file)
-        self.http_keys = json.load(key_data)
+        key_data = open(self.secrets_file)
+        self.secrets = json.load(key_data)
         self.log("loaded http keys")
 
     def load_motion_sensors(self):
