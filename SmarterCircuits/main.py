@@ -321,6 +321,8 @@ class SmarterCircuitsMCP:
             return
         if sensor.id in self.motion_detected:
             return
+        if sensor.status.motion is not True:
+            return
         self.motion_detected.append(sensor.id)
         for command in sensor.commands:
             if self.conditions_met(command.conditions) is True:
