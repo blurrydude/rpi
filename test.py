@@ -22,7 +22,7 @@ import os
 
 #set_mqtt = "settings/mqtt?mqtt_server=192.168.1.200:1883"
 
-# passwords = json.load(open("SmarterCircuits/shellylogins.json"))
+# passwords = json.load(open("SmarterCircuits/secrets.json"))
 # circuits = json.load(open("SmarterCircuits/circuits.json"))
 # motion_sensors = json.load(open("SmarterCircuits/motionsensors.json"))
 # door_sensors = json.load(open("SmarterCircuits/doorsensors.json"))

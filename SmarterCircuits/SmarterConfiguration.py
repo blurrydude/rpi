@@ -14,7 +14,7 @@ class SmarterConfig:
         self.motion_sensors_file = home_dir+"motionsensors.json"
         self.ht_sensors_file = home_dir+"thsensors.json"
         self.door_sensors_file = home_dir+"doorsensors.json"
-        self.secrets_file = home_dir+"shellylogins.json"
+        self.secrets_file = home_dir+"secrets.json"
         self.smarter_config_modified = 0.0
         self.circuits_config_modified = 0.0
         self.motion_sensors_config_modified = 0.0
