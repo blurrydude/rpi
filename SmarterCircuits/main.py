@@ -138,6 +138,8 @@ class SmarterCircuitsMCP:
     def do_time_commands(self, now, day):
         if self.circuit_authority is False:
             return
+        if len(self.config.time_commands)== 0:
+            SmarterLog.log("SmarterCircuitsMCP","no time commands")
         for tc in self.config.time_commands:
             check = tc["days_time"].lower()
             if day.lower() not in check:
@@ -407,7 +409,7 @@ class SmarterCircuitsMCP:
         if sensor.status.battery < 42:
             SmarterLog.log("BATTERY STATUS","Battery Low: "+sensor.id)
             if self.circuit_authority is True:
-                SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",sensor.name+" battery at "+str(sensor.status.battery)+"%")
+                SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",sensor.name+" battery at "+str(sensor.status.battery)+"%","smartercircuits@gmail.com",sensor.name+" battery at "+str(sensor.status.battery)+"%")
     
     def conditions_met(self, conditions):
         for condition in conditions:
