@@ -118,7 +118,7 @@ class SmarterCircuitsMCP:
             self.last_log_dump_hour = currenthour
             f = open(previouslogfilepath)
             t = f.read()
-            SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com","Logfile "+previouslogfiledate,t)
+            SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",self.name+" logfile "+previouslogfiledate,t)
 
 
     def check_solar_data(self, day):
@@ -406,7 +406,8 @@ class SmarterCircuitsMCP:
     def battery_status_check(self, sensor):
         if sensor.status.battery < 42:
             SmarterLog.log("BATTERY STATUS","Battery Low: "+sensor.id)
-            SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",sensor.name+" battery at "+str(sensor.status.battery)+"%")
+            if self.circuit_authority is True:
+                SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",sensor.name+" battery at "+str(sensor.status.battery)+"%")
     
     def conditions_met(self, conditions):
         for condition in conditions:
