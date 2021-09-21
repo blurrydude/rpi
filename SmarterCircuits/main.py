@@ -140,7 +140,7 @@ class SmarterCircuitsMCP:
             return
         for tc in self.config.time_commands:
             check = tc["days_time"].lower()
-            if day not in check:
+            if day.lower() not in check:
                 continue
             if self.time_check(now,check) is True:
                 if "thermoset" in tc["command"]:
