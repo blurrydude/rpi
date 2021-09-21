@@ -298,7 +298,7 @@ class SmarterCircuitsMCP:
             self.handle_motion(sensor)
 
     def handle_motion(self, sensor:MotionSensor):
-        SmarterLog.log("SmarterCircuitsMCP","Motion detected: "+sensor.room)
+        SmarterLog.log("SmarterCircuitsMCP","Motion detected: "+sensor.name)
         if self.circuit_authority is not True:
             return
         if sensor.id in self.motion_detected:
@@ -391,6 +391,7 @@ class SmarterCircuitsMCP:
     def battery_status_check(self, sensor):
         if sensor.status.battery < 42:
             SmarterLog.log("BATTERY STATUS","Battery Low: "+sensor.id)
+            SmarterLog.send_email("smartercircuits@gmail.com",sensor.name+" battery at "+str(sensor.status.battery)+"%")
     
     def conditions_met(self, conditions):
         for condition in conditions:
@@ -401,7 +402,7 @@ class SmarterCircuitsMCP:
                 if s[0] == "motion":
                     for sensor_id in self.config.motion_sensors.keys():
                         sensor = self.config.motion_sensors[sensor_id]
-                        if sensor.room.replace(" ","") == s[1]:
+                        if sensor.name.replace(" ","") == s[1]:
                             device = sensor
                 if s[0] == "circuit":
                     for circuit in self.config.circuits:

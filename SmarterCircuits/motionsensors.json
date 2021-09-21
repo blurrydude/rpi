@@ -1,6 +1,6 @@
 [
     {
-        "room":"Guest Bathroom",
+        "name":"Guest Bathroom",
         "commands": [{
             "start":"turn on guest bathroom",
             "stop":"turn off guest bathroom",
@@ -15,7 +15,7 @@
         "ip_address":"192.168.1.150"
     },
     {
-        "room":"Master Bathroom",
+        "name":"Master Bathroom",
         "commands": [
             {
                 "start":"turn on master bath",
@@ -40,7 +40,7 @@
         "ip_address":"192.168.1.151"
     },
     {
-        "room":"Kitchen",
+        "name":"Kitchen",
         "commands": [{
             "start":"turn on kitchen",
             "stop":"turn off kitchen",
@@ -56,7 +56,7 @@
         "ip_address":"192.168.1.152"
     },
     {
-        "room":"Garage",
+        "name":"Garage",
         "commands": [{
             "start":"turn on shop lights",
             "stop":"turn off shop lights",
@@ -72,7 +72,7 @@
         "ip_address":"192.168.1.153"
     },
     {
-        "room":"Stairway",
+        "name":"Stairway",
         "commands": [{
             "start":"turn on stairway",
             "stop":"turn off stairway",
@@ -84,7 +84,7 @@
         "ip_address":"192.168.1.154"
     },
     {
-        "room":"Deck",
+        "name":"Deck",
         "commands": [{
             "start":"turn on the deck fountain",
             "stop":"turn off the deck fountain",

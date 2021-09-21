@@ -89,8 +89,7 @@ class SmarterConfig:
         circuit_list = json.load(circuit_data)
         self.circuits = []
         for circuit in circuit_list:
-            #TODO: fix room
-            self.circuits.append(RelayModule(circuit["id"],circuit["ip_address"],circuit["name"],circuit["relay_id"],circuit["location"],"",circuit["zones"],circuit["on_modes"],circuit["off_modes"]))
+            self.circuits.append(RelayModule(circuit["id"],circuit["ip_address"],circuit["name"],circuit["relay_id"],circuit["location"],circuit["zones"],circuit["on_modes"],circuit["off_modes"]))
 
     def load_http_keys(self):
         self.log("load_http_keys")
@@ -106,7 +105,7 @@ class SmarterConfig:
         motion_sensor_data = open(self.motion_sensors_file)
         motion_sensor_list = json.load(motion_sensor_data)
         for sensor in motion_sensor_list:
-            motion_sensor = MotionSensor(sensor["id"],sensor["ip_address"],sensor["room"],sensor["auto_off"],sensor["off_time_minutes"])
+            motion_sensor = MotionSensor(sensor["id"],sensor["ip_address"],sensor["name"],sensor["auto_off"],sensor["off_time_minutes"])
             for com in sensor["commands"]:
                 conditions = []
                 for con in com["conditions"]:

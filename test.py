@@ -42,17 +42,44 @@ import os
 #     power = data["meters"][int(circuit["relay_id"])]["power"]
 #     print(id+": "+str(ison)+" - "+str(power))
 
-class SubThing:
-    def __init__(self):
-        self.subattrA = "a"
-        self.subattrB = "b"
+# class SubThing:
+#     def __init__(self):
+#         self.subattrA = "a"
+#         self.subattrB = "b"
 
-class Thing:
-    def __init__(self):
-        self.attrA = "a"
-        self.attrB = SubThing()
+# class Thing:
+#     def __init__(self):
+#         self.attrA = "a"
+#         self.attrB = SubThing()
 
-thing = Thing()
-for attr, value in thing.__dict__.items():
-    print(attr)
-    print(type(value) == object)
+# thing = Thing()
+# for attr, value in thing.__dict__.items():
+#     print(attr)
+#     print(type(value) == object)
+
+import smtplib
+
+to = ['smartercircuits@gmail.com']
+subject = 'Lorem ipsum dolor sit amet'
+body = 'consectetur adipiscing elit'
+
+class NotifyService:
+    @staticmethod
+    def send_email(to, subject, body):
+        email_text = """\
+        From: %s
+        To: %s
+        Subject: %s
+
+        %s
+        """ % ('house@smartercirctuis.com', ", ".join(to), subject, body)
+
+        try:
+            smtp_server = smtplib.SMTP('smtp.mailgun.com', 587)
+            smtp_server.starttls()
+            smtp_server.login("postmaster@sandboxab162af263364a6a843fe4c0fc03483f.mailgun.org", "0a569105db8ddbdfb17ee4b9e4f150f2-45f7aa85-029a5394")
+            smtp_server.sendmail('house@smartercirctuis.com', to, email_text)
+            smtp_server.quit()
+            print ("Email sent successfully!")
+        except Exception as ex:
+            print ("Something went wrong….",ex)

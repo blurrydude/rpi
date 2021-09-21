@@ -3,14 +3,13 @@ import requests
 import json
 from requests.models import HTTPBasicAuth
 class RelayModule:
-    def __init__(self, id, ip_address, name, relay_id, location, room, zones, on_modes, off_modes):
+    def __init__(self, id, ip_address, name, relay_id, location, zones, on_modes, off_modes):
         self.id = id
         self.ip_address = ip_address
         self.name = name
         self.relay_id = relay_id
         self.rollershutter = id.__contains__("switch25")
         self.location = location
-        self.room = room
         self.zones = zones
         self.on_modes = on_modes
         self.off_modes = off_modes
@@ -87,10 +86,10 @@ class HumidityTemperatureSensorStatus:
         self.battery = 0
 
 class MotionSensor:
-    def __init__(self, id, ip_address, room, auto_off, off_time_minutes):
+    def __init__(self, id, ip_address, name, auto_off, off_time_minutes):
         self.id = id
         self.ip_address = ip_address
-        self.room = room
+        self.name = name
         self.commands = []
         self.auto_off = auto_off
         self.off_time_minutes = off_time_minutes

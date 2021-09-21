@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
 import os
+import smtplib
 
 class SmarterLog:
     @staticmethod
@@ -23,3 +24,23 @@ class SmarterLog:
                 write_file.write(entry)
         except:
             print("shit")
+
+    @staticmethod
+    def send_email(to, subject, body):
+        email_text = """\
+        From: %s
+        To: %s
+        Subject: %s
+
+        %s
+        """ % ('house@smartercirctuis.com', ", ".join(to), subject, body)
+
+        try:
+            smtp_server = smtplib.SMTP('smtp.mailgun.com', 587)
+            smtp_server.starttls()
+            smtp_server.login("postmaster@sandboxab162af263364a6a843fe4c0fc03483f.mailgun.org", "0a569105db8ddbdfb17ee4b9e4f150f2-45f7aa85-029a5394")
+            smtp_server.sendmail('house@smartercirctuis.com', to, email_text)
+            smtp_server.quit()
+            SmarterLog.log("SmarterLogging", "Email sent successfully!")
+        except Exception as ex:
+            SmarterLog.log("SmarterLogging", "Failed to send email notification: "+str(ex))
