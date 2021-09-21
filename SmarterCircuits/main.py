@@ -118,7 +118,7 @@ class SmarterCircuitsMCP:
             self.last_log_dump_hour = currenthour
             f = open(previouslogfilepath)
             t = f.read()
-            SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",self.name+" logfile "+previouslogfiledate,t)
+            SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",self.name+" log file "+previouslogfiledate,t)
 
 
     def check_solar_data(self, day):
