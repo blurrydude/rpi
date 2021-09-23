@@ -1,5 +1,6 @@
 import time
 import _thread
+import json
 try:
     import pifacedigitalio as p
     libraries_available = True
