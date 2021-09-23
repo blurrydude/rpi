@@ -36,6 +36,10 @@ class SmarterConfig:
         self.touchscreen_update_files = []
         self.thermostat = False
         self.thermostat_update_files = []
+        self.rollershade = False
+        self.rollershade_update_files = []
+        self.rollerdoor = False
+        self.rollerdoor_update_files = []
         self.running = False
         self.loaded = False
         self.command_endpoint = ""
@@ -86,6 +90,12 @@ class SmarterConfig:
         self.thermostat = self.mcp.name in config["thermostats"]
         if self.thermostat is True:
             SmarterLog.log("SmarterConfiguration","I am a thermostat")
+        self.rollershade = self.mcp.name in config["rollershades"]
+        if self.rollershade is True:
+            SmarterLog.log("SmarterConfiguration","I am a rollershade")
+        self.rollerdoor = self.mcp.name in config["rollerdoors"]
+        if self.rollerdoor is True:
+            SmarterLog.log("SmarterConfiguration","I am a rollerdoor")
 
     def load_circuits(self):
         self.log("load_circuits")

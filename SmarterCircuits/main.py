@@ -1,3 +1,5 @@
+from SmarterRollershade import Rollershade, RollershadeState
+from SmarterRollerdoor import Rollerdoor, RollerdoorState
 import time
 time.sleep(15)
 from ShellyDevices import RelayModule, DoorWindowSensor, HumidityTemperatureSensor, MotionSensor, CommandCondition
@@ -31,7 +33,11 @@ class SmarterCircuitsMCP:
         self.touchscreen = None
         self.peers = []
         self.thermostats = {}
+        self.rollershades = {}
+        self.rollerdoors = {}
         self.thermostat = None
+        self.rollershade = None
+        self.rollerdoor = None
         self.last_seen = {}
         self.last_day = ""
         self.solar_data = False
@@ -56,6 +62,10 @@ class SmarterCircuitsMCP:
             self.thermostat = Thermostat(self)
         if self.config.touchscreen is True:
             self.touchscreen = Touchscreen(self)
+        if self.config.rollershade is True:
+            self.touchscreen = Rollershade(self,self.name)
+        if self.config.rollerdoor is True:
+            self.rollerdoor = Rollerdoor(self,self.name)
         else:
             while self.running is True:
                 time.sleep(1)
@@ -123,7 +133,6 @@ class SmarterCircuitsMCP:
             f = open(previouslogfilepath)
             t = f.read()
             SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",self.name+" log file "+previouslogfiledate,t)
-
 
     def check_solar_data(self, day):
         if day != self.last_day:
@@ -354,6 +363,10 @@ class SmarterCircuitsMCP:
             self.config.load_secrets()
         if "smarter_circuits/peers" in topic:
             self.received_peer_data(json.loads(message))
+        if "smarter_circuits/rollershade" in topic:
+            self.received_rollershade_data(topic, message)
+        if "smarter_circuits/rollerdoor" in topic:
+            self.received_rollerdoor_data(topic, message)
         if "smarter_circuits/mode" in topic and self.mode != message:
             self.mode = message
             self.handle_mode_change()
@@ -401,6 +414,34 @@ class SmarterCircuitsMCP:
                 time.sleep(0.5)
                 self.mqtt.publish("smarter_circuits/thermosettings/"+room, "settings_from_circuit_authority:true")
     
+    def received_rollershade_data(self, topic, message):
+        s = topic.split("/")
+        name = s[2]
+        mode = s[3]
+        if mode == "state":
+            if name not in self.rollershades.keys():
+                self.rollershades[name] = RollershadeState(name)
+            self.rollershades[name].shade_up = json.loads(message)
+        if mode == "command" and self.config.rollershade is True and name == self.name:
+            d = message.split(":")
+            addy = int(d[0])
+            state = int(d[1])
+            self.rollershade.set_state(addy, state)
+
+    def received_rollerdoor_data(self, topic, message):
+        s = topic.split("/")
+        name = s[2]
+        mode = s[3]
+        if mode == "state":
+            if name not in self.rollerdoors.keys():
+                self.rollerdoors[name] = RollerdoorState(name)
+            self.rollerdoors[name].door_open = json.loads(message)
+        if mode == "command" and self.config.rollerdoor is True and name == self.name:
+            d = message.split(":")
+            addy = int(d[0])
+            state = int(d[1])
+            self.rollerdoor.set_state(addy, state)
+
     def handle_mode_change(self):
         SmarterLog.log("SmarterCircuitsMCP","mode set to "+self.mode)
         if self.circuit_authority is not True:

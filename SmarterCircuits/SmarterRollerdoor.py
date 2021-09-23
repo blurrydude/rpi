@@ -1,0 +1,48 @@
+import time
+import pifacedigitalio as p
+import _thread
+
+class RollerdoorState:
+    def __init__(self, name, door_open):
+        self.name = name
+        self.door_open = door_open
+
+class Rollerdoor:
+    def __init__(self, mcp, name):
+        self.mcp = mcp
+        self.name = name
+        p.init()
+        self.door_open = [
+            str(p.digital_read(0)) == "1",
+            str(p.digital_read(1)) == "1"
+        ]
+        self.state_change()
+        _thread.start_new_thread(self.monitor, ())
+    
+    def monitor(self):
+        while self.mcp.running is True:
+            door_open = [
+                str(p.digital_read(0)) == "1",
+                str(p.digital_read(1)) == "1"
+            ]
+            if self.door_open != door_open:
+                self.door_open = door_open
+                self.state_change()
+    
+    def emulate_button_press(self, bay):
+        p.digital_write(bay,1)
+        time.sleep(1)
+        p.digital_write(bay,0)
+
+    def state_change(self):
+        self.mcp.mqtt.publish("smarter_circuits/rollerdoor/"+self.name+"/state",json.dumps(self.door_open))
+
+    def set_state(self, bay, state):
+        to_open = state == 1
+        self.door_open = [
+            str(p.digital_read(0)) == "1",
+            str(p.digital_read(1)) == "1"
+        ]
+        if to_open == self.door_open[bay]:
+            return
+        _thread.start_new_thread(self.emulate_button_press, (bay,))
