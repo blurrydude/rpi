@@ -1,6 +1,10 @@
 import time
-import pifacedigitalio as p
 import _thread
+try:
+    import pifacedigitalio as p
+    libraries_available = True
+except:
+    libraries_available = False
 
 class RollerdoorState:
     def __init__(self, name, door_open):

@@ -1,10 +1,13 @@
 import json
-import board
-from adafruit_motorkit import MotorKit
-import RPi.GPIO as GPIO
 import time
 import _thread
-
+try:
+    import board
+    from adafruit_motorkit import MotorKit
+    import RPi.GPIO as GPIO
+    libraries_available = True
+except:
+    libraries_available = False
 class RollershadeState:
     def __init__(self, name):
         self.name = name
