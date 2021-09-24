@@ -11,9 +11,9 @@ except:
     libraries_available = False
 
 class RollerdoorState:
-    def __init__(self, name, door_open):
+    def __init__(self, name):
         self.name = name
-        self.door_open = door_open
+        self.door_open = [False,False]
 
 class Rollerdoor:
     def __init__(self, mcp, name):
