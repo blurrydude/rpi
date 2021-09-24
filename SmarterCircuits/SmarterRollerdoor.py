@@ -1,6 +1,8 @@
 import time
 import _thread
 import json
+from SmarterLogging import SmarterLog
+import traceback
 try:
     import pifacedigitalio as p
     libraries_available = True
@@ -26,13 +28,21 @@ class Rollerdoor:
     
     def monitor(self):
         while self.mcp.running is True:
-            door_open = [
-                str(p.digital_read(0)) == "1",
-                str(p.digital_read(1)) == "1"
-            ]
-            if self.door_open != door_open:
-                self.door_open = door_open
-                self.state_change()
+            try:
+                door_open = [
+                    str(p.digital_read(0)) == "1",
+                    str(p.digital_read(1)) == "1"
+                ]
+                if self.door_open != door_open:
+                    self.door_open = door_open
+                    self.state_change()
+            except Exception as e: 
+                error = str(e)
+                tb = traceback.format_exc()
+                SmarterLog.log("SmarterCircuitsMCP","main_loop error: "+error)
+                SmarterLog.log("SmarterCircuitsMCP","main_loop traceback: "+tb)
+                self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
+                self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
     
     def emulate_button_press(self, bay):
         p.digital_write(bay,1)
