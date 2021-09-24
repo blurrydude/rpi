@@ -27,11 +27,18 @@ class Rollerdoor:
         _thread.start_new_thread(self.monitor, ())
     
     def monitor(self):
+        while self.mcp.mqtt.connected is not True:
+            time.sleep(1)
+        while self.mcp.config.loaded is not True:
+            time.sleep(1)
+
         while self.mcp.running is True:
             try:
+                bay_door_0 = str(p.digital_read(0)) == "1"
+                bay_door_1 = str(p.digital_read(1)) == "1"
                 door_open = [
-                    str(p.digital_read(0)) == "1",
-                    str(p.digital_read(1)) == "1"
+                    bay_door_0,
+                    bay_door_1
                 ]
                 if self.door_open != door_open:
                     self.door_open = door_open
