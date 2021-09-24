@@ -29,29 +29,29 @@ class Rollerdoor:
     
     def monitor(self):
         #SmarterLog.log("SmarterRollerdoor")
-        while self.mcp.mqtt.connected is not True:
-            time.sleep(1)
-        while self.mcp.config.loaded is not True:
-            time.sleep(1)
+        # while self.mcp.mqtt.connected is not True:
+        #     time.sleep(1)
+        # while self.mcp.config.loaded is not True:
+        #     time.sleep(1)
 
         while self.mcp.running is True:
-            try:
-                bay_door_0 = str(p.digital_read(0)) == "1"
-                bay_door_1 = str(p.digital_read(1)) == "1"
-                door_open = [
-                    bay_door_0,
-                    bay_door_1
-                ]
-                if self.door_open != door_open:
-                    self.door_open = door_open
-                    self.state_change()
-            except Exception as e: 
-                error = str(e)
-                tb = traceback.format_exc()
-                #SmarterLog.log("SmarterRollerdoor","main_loop error: "+error)
-                #SmarterLog.log("SmarterRollerdoor","main_loop traceback: "+tb)
-                self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
-                self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
+            # try:
+            #     bay_door_0 = str(p.digital_read(0)) == "1"
+            #     bay_door_1 = str(p.digital_read(1)) == "1"
+            #     door_open = [
+            #         bay_door_0,
+            #         bay_door_1
+            #     ]
+            #     if self.door_open != door_open:
+            #         self.door_open = door_open
+            #         self.state_change()
+            # except Exception as e: 
+            #     error = str(e)
+            #     tb = traceback.format_exc()
+            #     #SmarterLog.log("SmarterRollerdoor","main_loop error: "+error)
+            #     #SmarterLog.log("SmarterRollerdoor","main_loop traceback: "+tb)
+            #     self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
+            #     self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
             time.sleep(1)
     
     def emulate_button_press(self, bay):
