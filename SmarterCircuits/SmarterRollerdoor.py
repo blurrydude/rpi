@@ -25,7 +25,7 @@ class Rollerdoor:
             str(p.digital_read(1)) == "1"
         ]
         self.state_change()
-        _thread.start_new_thread(self.monitor, ())
+        #_thread.start_new_thread(self.monitor, ())
     
     def monitor(self):
         #SmarterLog.log("SmarterRollerdoor")
@@ -63,11 +63,11 @@ class Rollerdoor:
         self.mcp.mqtt.publish("smarter_circuits/rollerdoor/"+self.name+"/state",json.dumps(self.door_open))
 
     def set_state(self, bay, state):
-        to_open = state == 1
-        self.door_open = [
-            str(p.digital_read(0)) == "1",
-            str(p.digital_read(1)) == "1"
-        ]
-        if to_open == self.door_open[bay]:
-            return
+        # to_open = state == 1
+        # self.door_open = [
+        #     str(p.digital_read(0)) == "1",
+        #     str(p.digital_read(1)) == "1"
+        # ]
+        # if to_open == self.door_open[bay]:
+        #     return
         _thread.start_new_thread(self.emulate_button_press, (bay,))
