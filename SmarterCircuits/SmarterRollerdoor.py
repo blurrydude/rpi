@@ -28,7 +28,7 @@ class Rollerdoor:
         _thread.start_new_thread(self.monitor, ())
     
     def monitor(self):
-        SmarterLog.log("SmarterRollerdoor")
+        #SmarterLog.log("SmarterRollerdoor")
         while self.mcp.mqtt.connected is not True:
             time.sleep(1)
         while self.mcp.config.loaded is not True:
@@ -48,8 +48,8 @@ class Rollerdoor:
             except Exception as e: 
                 error = str(e)
                 tb = traceback.format_exc()
-                SmarterLog.log("SmarterRollerdoor","main_loop error: "+error)
-                SmarterLog.log("SmarterRollerdoor","main_loop traceback: "+tb)
+                #SmarterLog.log("SmarterRollerdoor","main_loop error: "+error)
+                #SmarterLog.log("SmarterRollerdoor","main_loop traceback: "+tb)
                 self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
                 self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
             time.sleep(1)
