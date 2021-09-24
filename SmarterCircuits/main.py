@@ -125,14 +125,17 @@ class SmarterCircuitsMCP:
             time.sleep(1)
 
     def do_log_dump(self):
-        previouslogfiledate = (datetime.now()-timedelta(hours=1)).strftime("%Y%m%d%H")
-        previouslogfilepath = os.path.dirname(os.path.realpath(__file__))+"/logs/SmarterCircuits_"+previouslogfiledate+".log"
-        currenthour = datetime.now().hour
-        if self.last_log_dump_hour != currenthour:
-            self.last_log_dump_hour = currenthour
-            f = open(previouslogfilepath)
-            t = f.read()
-            SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",self.name+" log file "+previouslogfiledate,t)
+        try:
+            previouslogfiledate = (datetime.now()-timedelta(hours=1)).strftime("%Y%m%d%H")
+            previouslogfilepath = os.path.dirname(os.path.realpath(__file__))+"/logs/SmarterCircuits_"+previouslogfiledate+".log"
+            currenthour = datetime.now().hour
+            if self.last_log_dump_hour != currenthour:
+                self.last_log_dump_hour = currenthour
+                f = open(previouslogfilepath)
+                t = f.read()
+                SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",self.name+" log file "+previouslogfiledate,t)
+        except:
+            print("probably no file")
 
     def check_solar_data(self, day):
         if day != self.last_day:
@@ -562,35 +565,35 @@ class SmarterCircuitsMCP:
 
         elif "first shade" in command:
             if "open" in command:
-                command_list.append({"t":"pi/rollerpi/commands","c":"0:0"})
+                command_list.append({"t":"smarter_circuits/rollershades/rollerpi/command","c":"0:0"})
             else:
-                command_list.append({"t":"pi/rollerpi/commands","c":"0:1"})
+                command_list.append({"t":"smarter_circuits/rollershades/rollerpi/command","c":"0:1"})
         elif "second shade" in command:
             if "open" in command:
-                command_list.append({"t":"pi/rollerpi/commands","c":"1:0"})
+                command_list.append({"t":"smarter_circuits/rollershades/rollerpi/command","c":"1:0"})
             else:
-                command_list.append({"t":"pi/rollerpi/commands","c":"1:1"})
+                command_list.append({"t":"smarter_circuits/rollershades/rollerpi/command","c":"1:1"})
         elif "third shade" in command:
             if "open" in command:
-                command_list.append({"t":"pi/rollerpi/commands","c":"2:0"})
+                command_list.append({"t":"smarter_circuits/rollershades/rollerpi/command","c":"2:0"})
             else:
-                command_list.append({"t":"pi/rollerpi/commands","c":"2:1"})
+                command_list.append({"t":"smarter_circuits/rollershades/rollerpi/command","c":"2:1"})
         elif "shade" in command:
             if "open" in command:
-                command_list.append({"t":"pi/rollerpi/commands","c":"5:0"})
+                command_list.append({"t":"smarter_circuits/rollershades/rollerpi/command","c":"5:0"})
             else:
-                command_list.append({"t":"pi/rollerpi/commands","c":"5:1"})
+                command_list.append({"t":"smarter_circuits/rollershades/rollerpi/command","c":"5:1"})
 
         elif "shop door" in command:
             if "open" in command:
-                command_list.append({"t":"pi/baydoorpi/commands","c":"1:1"})
+                command_list.append({"t":"smarter_circuits/rollerdoors/baydoorpi/command","c":"1:1"})
             if ("close" in command or "shut" in command):
-                command_list.append({"t":"pi/baydoorpi/commands","c":"1:0"})
+                command_list.append({"t":"smarter_circuits/rollerdoors/baydoorpi/command","c":"1:0"})
         elif "garage door" in command:
             if "open" in command:
-                command_list.append({"t":"pi/baydoorpi/commands","c":"0:1"})
+                command_list.append({"t":"smarter_circuits/rollerdoors/baydoorpi/command","c":"0:1"})
             if "close" in command or "shut" in command:
-                command_list.append({"t":"pi/baydoorpi/commands","c":"0:0"})
+                command_list.append({"t":"smarter_circuits/rollerdoors/baydoorpi/command","c":"0:0"})
 
         for cmd in command_list:
             self.mqtt.publish(cmd["t"],cmd["c"])
