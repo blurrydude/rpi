@@ -43,6 +43,7 @@ class Rollerdoor:
                 SmarterLog.log("SmarterCircuitsMCP","main_loop traceback: "+tb)
                 self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
                 self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
+            time.sleep(1)
     
     def emulate_button_press(self, bay):
         p.digital_write(bay,1)
