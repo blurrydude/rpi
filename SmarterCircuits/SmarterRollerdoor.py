@@ -25,7 +25,7 @@ class Rollerdoor:
             str(p.digital_read(1)) == "1"
         ]
         self.state_change()
-        #_thread.start_new_thread(self.monitor, ())
+        _thread.start_new_thread(self.monitor, ())
     
     def monitor(self):
         #SmarterLog.log("SmarterRollerdoor")
