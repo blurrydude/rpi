@@ -51,7 +51,7 @@ class SmarterCircuitsMCP:
         self.start()
 
     def start(self):
-        SmarterLog.log("SmarterCircuits","starting...")
+        SmarterLog.log("SmarterCircuitsMCP","starting...")
         self.running = True
         self.config = SmarterConfiguration.SmarterConfig(self)
         while self.config.loaded is False:
@@ -59,12 +59,16 @@ class SmarterCircuitsMCP:
         self.mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(self.config.brokers,["shellies/#","smarter_circuits/#"],self.on_message)
         _thread.start_new_thread(self.main_loop, ())
         if self.config.thermostat is True:
+            SmarterLog.log("SmarterCircuitsMCP","instantiating thermostat...")
             self.thermostat = Thermostat(self)
         if self.config.touchscreen is True:
+            SmarterLog.log("SmarterCircuitsMCP","instantiating touchscreen...")
             self.touchscreen = Touchscreen(self)
         if self.config.rollershade is True:
+            SmarterLog.log("SmarterCircuitsMCP","instantiating rollershade...")
             self.touchscreen = Rollershade(self,self.name)
         if self.config.rollerdoor is True:
+            SmarterLog.log("SmarterCircuitsMCP","instantiating rollerdoor...")
             self.rollerdoor = Rollerdoor(self,self.name)
         else:
             while self.running is True:
@@ -199,16 +203,16 @@ class SmarterCircuitsMCP:
             self.circuit_authority = False
 
     def stop(self, restart = False):
-        SmarterLog.log("SmarterCircuits","stopping...")
+        SmarterLog.log("SmarterCircuitsMCP","stopping...")
         if restart is True:
             self.mqtt.publish("smarter_circuits/info/"+self.name,"restarting...")
         self.running = False
         self.config.stop()
         self.mqtt.stop()
         time.sleep(5)
-        SmarterLog.log("SmarterCircuits","stopped.")
+        SmarterLog.log("SmarterCircuitsMCP","stopped.")
         if restart is True:
-            SmarterLog.log("SmarterCircuits","restarting...")
+            SmarterLog.log("SmarterCircuitsMCP","restarting...")
             os.system('sudo reboot now')
         exit()
     
@@ -610,7 +614,7 @@ class SmarterCircuitsMCP:
                 p.timestamp = peer["timestamp"]
                 found = True
         if found is not True:
-            SmarterLog.log("SmarterCircuits","new peer "+peer["name"])
+            SmarterLog.log("SmarterCircuitsMCP","new peer "+peer["name"])
             self.peers.append(SmarterCircuitsPeer(peer["id"],peer["name"],peer["ip_address"],peer["model"],peer["circuit_authority"],peer["timestamp"],peer["thermostat"],peer["rollershade"],peer["rollerdoor"]))
     
     def convert_suntime(self, jdata, winter):
