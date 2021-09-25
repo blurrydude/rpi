@@ -26,7 +26,7 @@ class Rollerdoor:
             str(p.digital_read(1)) == "1"
         ]
         self.state_change()
-        _thread.start_new_thread(self.monitor, ())
+        #_thread.start_new_thread(self.monitor, ())
 
     def stop(self):
         self.running = False
@@ -66,4 +66,5 @@ class Rollerdoor:
         # ]
         # if to_open == self.door_open[bay]:
         #     return
+        self.read_state()
         _thread.start_new_thread(self.emulate_button_press, (bay,))
