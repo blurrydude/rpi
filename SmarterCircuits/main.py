@@ -611,7 +611,7 @@ class SmarterCircuitsMCP:
                 found = True
         if found is not True:
             SmarterLog.log("SmarterCircuits","new peer "+peer["name"])
-            self.peers.append(SmarterCircuitsPeer(peer["id"],peer["name"],peer["ip_address"],peer["model"],peer["circuit_authority"],peer["timestamp"]))
+            self.peers.append(SmarterCircuitsPeer(peer["id"],peer["name"],peer["ip_address"],peer["model"],peer["circuit_authority"],peer["timestamp"],peer["thermostat"],peer["rollershade"],peer["rollerdoor"]))
     
     def convert_suntime(self, jdata, winter):
         a = jdata.split(' ')
