@@ -36,6 +36,7 @@ class Rollerdoor:
             if self.door_open != door_open:
                 self.door_open = door_open
                 self.state_change()
+            time.sleep(1)
 
     def stop(self):
         self.running = False
