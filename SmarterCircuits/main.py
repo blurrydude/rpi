@@ -179,7 +179,7 @@ class SmarterCircuitsMCP:
     
     def send_peer_data(self):
         timestamp = datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-        self.mqtt.publish("smarter_circuits/peers/"+self.name,SmarterCircuitsPeer(self.id, self.name, self.ip_address, self.model, self.circuit_authority, timestamp).toJSON())
+        self.mqtt.publish("smarter_circuits/peers/"+self.name,SmarterCircuitsPeer(self.id, self.name, self.ip_address, self.model, self.circuit_authority, timestamp, self.config.thermostat, self.config.rollershade, self.config.rollerdoor).toJSON())
 
     def check_circuit_authority(self):
         now = datetime.now()
@@ -640,13 +640,16 @@ class SmarterCircuitsMCP:
         return o
 
 class SmarterCircuitsPeer:
-    def __init__(self, id, name, ip_address, model, circuit_authority, timestamp):
+    def __init__(self, id, name, ip_address, model, circuit_authority, timestamp, thermostat, rollershade, rollerdoor):
         self.id = id
         self.name = name
         self.ip_address = ip_address
         self.model = model
         self.circuit_authority = circuit_authority
         self.timestamp = timestamp
+        self.thermostat = thermostat
+        self.rollershade = rollershade
+        self.rollerdoor = rollerdoor
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__, 
             sort_keys=True, indent=4)
