@@ -433,7 +433,11 @@ class SmarterCircuitsMCP:
             d = message.split(":")
             addy = int(d[0])
             state = int(d[1])
-            self.rollershade.set_state(addy, state)
+            if self.rollershade is None:
+                SmarterLog("SmarterCircuitsMCP","rollershade is null")
+                self.mqtt.publish("smarter_circuits/info/"+self.name, "rollershade is null")
+            else:
+                self.rollershade.set_state(addy, state)
 
     def received_rollerdoor_data(self, topic, message):
         s = topic.split("/")
@@ -447,7 +451,19 @@ class SmarterCircuitsMCP:
             d = message.split(":")
             addy = int(d[0])
             state = int(d[1])
-            self.rollerdoor.set_state(addy, state)
+            if self.rollerdoor is None:
+                SmarterLog("SmarterCircuitsMCP","rollerdoor is null, try to reinstantiate")
+                self.mqtt.publish("smarter_circuits/info/"+self.name, "rollerdoor is null, try to reinstantiate")
+                try:
+                    self.rollerdoor = Rollerdoor(self,self.name)
+                    self.rollerdoor.set_state(addy, state)
+                except Exception as e:
+                    error = str(e)
+                    SmarterLog.log("SmarterCircuitsMCP",error)
+                    SmarterLog("SmarterCircuitsMCP","failed to reinstantiate rollerdoor")
+                    self.mqtt.publish("smarter_circuits/info/"+self.name, "failed to reinstantiate rollerdoor")
+            else:
+                self.rollerdoor.set_state(addy, state)
 
     def handle_mode_change(self):
         SmarterLog.log("SmarterCircuitsMCP","mode set to "+self.mode)
