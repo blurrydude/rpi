@@ -26,40 +26,28 @@ class Rollerdoor:
             str(p.digital_read(1)) == "1"
         ]
         self.state_change()
-        while self.running is True:
-            bay_door_0 = str(p.digital_read(0)) == "1"
-            bay_door_1 = str(p.digital_read(1)) == "1"
-            door_open = [
-                bay_door_0,
-                bay_door_1
-            ]
-            if self.door_open != door_open:
-                self.door_open = door_open
-                self.state_change()
-            time.sleep(1)
+        _thread.start_new_thread(self.monitor, ())
 
     def stop(self):
         self.running = False
+
+    def read_state(self):
+        bay_door_0 = str(p.digital_read(0)) == "1"
+        bay_door_1 = str(p.digital_read(1)) == "1"
+        door_open = [
+            bay_door_0,
+            bay_door_1
+        ]
+        if self.door_open != door_open:
+            self.door_open = door_open
+            self.state_change()
     
     def monitor(self):
         while self.running is True:
-            # try:
-            # bay_door_0 = str(p.digital_read(0)) == "1"
-            # bay_door_1 = str(p.digital_read(1)) == "1"
-            # door_open = [
-            #     bay_door_0,
-            #     bay_door_1
-            # ]
-            # if self.door_open != door_open:
-            #     self.door_open = door_open
-            #     self.state_change()
-            # except Exception as e: 
-            #     error = str(e)
-            #     tb = traceback.format_exc()
-            #     SmarterLog.log("SmarterRollerdoor","main_loop error: "+error)
-            #     SmarterLog.log("SmarterRollerdoor","main_loop traceback: "+tb)
-            #     self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
-            #     self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
+            try:
+                self.read_state()
+            except:
+                donothing = True
             time.sleep(1)
     
     def emulate_button_press(self, bay):
