@@ -452,7 +452,7 @@ class SmarterCircuitsMCP:
             addy = int(d[0])
             state = int(d[1])
             if self.rollerdoor is None:
-                SmarterLog("SmarterCircuitsMCP","rollerdoor is null, try to reinstantiate")
+                SmarterLog.log("SmarterCircuitsMCP","rollerdoor is null, try to reinstantiate")
                 self.mqtt.publish("smarter_circuits/info/"+self.name, "rollerdoor is null, try to reinstantiate")
                 try:
                     self.rollerdoor = Rollerdoor(self,self.name)
@@ -460,7 +460,7 @@ class SmarterCircuitsMCP:
                 except Exception as e:
                     error = str(e)
                     SmarterLog.log("SmarterCircuitsMCP",error)
-                    SmarterLog("SmarterCircuitsMCP","failed to reinstantiate rollerdoor")
+                    SmarterLog.log("SmarterCircuitsMCP","failed to reinstantiate rollerdoor")
                     self.mqtt.publish("smarter_circuits/info/"+self.name, "failed to reinstantiate rollerdoor")
             else:
                 self.rollerdoor.set_state(addy, state)
