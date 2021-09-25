@@ -66,7 +66,7 @@ class SmarterCircuitsMCP:
             self.touchscreen = Touchscreen(self)
         if self.config.rollershade is True:
             SmarterLog.log("SmarterCircuitsMCP","instantiating rollershade...")
-            self.touchscreen = Rollershade(self,self.name)
+            self.rollershade = Rollershade(self,self.name)
         if self.config.rollerdoor is True:
             SmarterLog.log("SmarterCircuitsMCP","instantiating rollerdoor...")
             self.rollerdoor = Rollerdoor(self,self.name)
