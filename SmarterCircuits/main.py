@@ -430,6 +430,7 @@ class SmarterCircuitsMCP:
                 self.rollershades[name] = RollershadeState(name)
             self.rollershades[name].shade_up = json.loads(message)
         if mode == "command" and self.config.rollershade is True and name == self.name:
+            SmarterLog("SmarterCircuitsMCP","rollershade command "+message)
             d = message.split(":")
             addy = int(d[0])
             state = int(d[1])
