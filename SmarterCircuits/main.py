@@ -137,7 +137,7 @@ class SmarterCircuitsMCP:
             data = datetime.now().strftime("%Y%m%d%H%M")
             logfile = os.path.dirname(os.path.realpath(__file__))+"/logs/Thermostat_"+(datetime.now()).strftime("%Y%m%d")+".log"
             for thermo in self.thermostats:
-                data = data + ":" + thermo.name + "=" + self.binarize(thermo.state.heat_on) + self.binarize(thermo.state.ac_on) + self.binarize(thermo.state.fan_on) + self.binarize(thermo.state.whf_on) + "|" + str(thermo.state.temperature) + "|" + str(thermo.state.humidity)
+                data = data + ":" + thermo.room + "=" + self.binarize(thermo.state.heat_on) + self.binarize(thermo.state.ac_on) + self.binarize(thermo.state.fan_on) + self.binarize(thermo.state.whf_on) + "|" + str(thermo.state.temperature) + "|" + str(thermo.state.humidity)
             mode = "a"
             if os.path.exists(logfile) is False:
                 mode = "w"
