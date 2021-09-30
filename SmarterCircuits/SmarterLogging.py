@@ -39,7 +39,7 @@ class SmarterLog:
             smtp_server = smtplib.SMTP('smtp.mailgun.com', 587)
             smtp_server.starttls()
             smtp_server.login(smtp_user, smtp_pass)
-            smtp_server.sendmail('house@smartercirctuis.com', to, email_text)
+            smtp_server.sendmail('house@smartercirctuis.com', [to], email_text)
             smtp_server.quit()
             SmarterLog.log("SmarterLogging", "Email sent successfully!")
         except Exception as ex:
