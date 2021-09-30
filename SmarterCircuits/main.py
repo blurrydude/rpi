@@ -153,6 +153,9 @@ class SmarterCircuitsMCP:
 
     def do_log_dump(self):
         try:
+            old_dates = []
+            for i in range(7,15):
+                old_dates.append((datetime.now()-timedelta(days=i)).strftime("%Y%m%d"))
             previouslogfiledate = (datetime.now()-timedelta(hours=1)).strftime("%Y%m%d%H")
             previouslogfilepath = os.path.dirname(os.path.realpath(__file__))+"/logs/SmarterCircuits_"+previouslogfiledate+".log"
             currenthour = datetime.now().hour
@@ -161,6 +164,11 @@ class SmarterCircuitsMCP:
                 f = open(previouslogfilepath)
                 t = f.read()
                 SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",self.name+" log file "+previouslogfiledate,t)
+            logs_dir = os.path.dirname(os.path.realpath(__file__))+"/logs/"
+            for file in os.listdir(logs_dir):
+                for old_date in old_dates:
+                    if old_date in file:
+                        os.remove(file)
         except:
             print("probably no file")
 
