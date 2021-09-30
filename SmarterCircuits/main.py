@@ -48,6 +48,7 @@ class SmarterCircuitsMCP:
         self.motion_detected = []
         self.source_modified = 0
         self.last_log_dump_hour = 0
+        self.thermostat_history = []
         self.start()
 
     def start(self):
@@ -118,6 +119,7 @@ class SmarterCircuitsMCP:
                     self.check_circuit_authority()
                     self.do_time_commands(now, day)
                     self.do_log_dump()
+                    self.log_temp_data()
                 self.ticks = self.ticks + 1
             except Exception as e: 
                 error = str(e)
@@ -127,6 +129,27 @@ class SmarterCircuitsMCP:
                 self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
                 self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
             time.sleep(1)
+    
+    def log_temp_data(self):
+        if self.circuit_authority is False:
+            return
+        try:
+            data = datetime.now().strftime("%Y%m%d%H%M")
+            logfile = os.path.dirname(os.path.realpath(__file__))+"/logs/Thermostat_"+datetime.now().strftime("%Y%m%d")+".log"
+            for thermo in self.thermostats:
+                data = data + ":" + thermo.name + "=" + self.binarize(thermo.state.heat_on) + self.binarize(thermo.state.ac_on) + self.binarize(thermo.state.fan_on) + self.binarize(thermo.state.whf_on) + "|" + str(thermo.state.temperature) + "|" + str(thermo.state.humidity)
+            mode = "a"
+            if os.path.exists(logfile) is False:
+                mode = "w"
+            with open(logfile,mode) as write_file:
+                write_file.write(data+"\n")
+        except:
+            print("nope")
+
+    def binarize(b):
+        if b is True:
+            return "1"
+        return "0"
 
     def do_log_dump(self):
         try:
@@ -430,12 +453,12 @@ class SmarterCircuitsMCP:
                 self.rollershades[name] = RollershadeState(name)
             self.rollershades[name].shade_up = json.loads(message)
         if mode == "command" and self.config.rollershade is True and name == self.name:
-            SmarterLog("SmarterCircuitsMCP","rollershade command "+message)
+            SmarterLog.log("SmarterCircuitsMCP","rollershade command "+message)
             d = message.split(":")
             addy = int(d[0])
             state = int(d[1])
             if self.rollershade is None:
-                SmarterLog("SmarterCircuitsMCP","rollershade is null")
+                SmarterLog.log("SmarterCircuitsMCP","rollershade is null")
                 self.mqtt.publish("smarter_circuits/info/"+self.name, "rollershade is null")
             else:
                 self.rollershade.set_state(addy, state)

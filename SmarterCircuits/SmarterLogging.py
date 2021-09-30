@@ -33,7 +33,7 @@ class SmarterLog:
         Subject: %s
 
         %s
-        """ % ('house@smartercirctuis.com', ", ".join(to), subject, body)
+        """ % ('house@smartercircuits.com', to, subject, body)
 
         try:
             smtp_server = smtplib.SMTP('smtp.mailgun.com', 587)
