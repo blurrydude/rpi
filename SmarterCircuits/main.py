@@ -135,7 +135,7 @@ class SmarterCircuitsMCP:
             return
         try:
             data = datetime.now().strftime("%Y%m%d%H%M")
-            logfile = os.path.dirname(os.path.realpath(__file__))+"/logs/Thermostat_"+datetime.now().strftime("%Y%m%d")+".log"
+            logfile = os.path.dirname(os.path.realpath(__file__))+"/logs/Thermostat_"+(datetime.now()).strftime("%Y%m%d")+".log"
             for thermo in self.thermostats:
                 data = data + ":" + thermo.name + "=" + self.binarize(thermo.state.heat_on) + self.binarize(thermo.state.ac_on) + self.binarize(thermo.state.fan_on) + self.binarize(thermo.state.whf_on) + "|" + str(thermo.state.temperature) + "|" + str(thermo.state.humidity)
             mode = "a"
@@ -168,7 +168,7 @@ class SmarterCircuitsMCP:
             for file in os.listdir(logs_dir):
                 for old_date in old_dates:
                     if old_date in file:
-                        os.remove(file)
+                        os.remove(logs_dir+file)
         except:
             print("probably no file")
 
