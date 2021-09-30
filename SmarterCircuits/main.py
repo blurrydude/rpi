@@ -143,8 +143,13 @@ class SmarterCircuitsMCP:
                 mode = "w"
             with open(logfile,mode) as write_file:
                 write_file.write(data+"\n")
-        except:
-            print("nope")
+        except Exception as e: 
+            error = str(e)
+            tb = traceback.format_exc()
+            SmarterLog.log("SmarterCircuitsMCP","log_temp_data error: "+error)
+            SmarterLog.log("SmarterCircuitsMCP","log_temp_data traceback: "+tb)
+            self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
+            self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
 
     def binarize(b):
         if b is True:
@@ -158,19 +163,25 @@ class SmarterCircuitsMCP:
                 old_dates.append((datetime.now()-timedelta(days=i)).strftime("%Y%m%d"))
             previouslogfiledate = (datetime.now()-timedelta(hours=1)).strftime("%Y%m%d%H")
             previouslogfilepath = os.path.dirname(os.path.realpath(__file__))+"/logs/SmarterCircuits_"+previouslogfiledate+".log"
-            currenthour = datetime.now().hour
-            if self.last_log_dump_hour != currenthour:
-                self.last_log_dump_hour = currenthour
-                f = open(previouslogfilepath)
-                t = f.read()
-                SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",self.name+" log file "+previouslogfiledate,t)
+            if os.path.exists(previouslogfilepath):
+                currenthour = datetime.now().hour
+                if self.last_log_dump_hour != currenthour:
+                    self.last_log_dump_hour = currenthour
+                    f = open(previouslogfilepath)
+                    t = f.read()
+                    SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",self.name+" log file "+previouslogfiledate,t)
             logs_dir = os.path.dirname(os.path.realpath(__file__))+"/logs/"
             for file in os.listdir(logs_dir):
                 for old_date in old_dates:
                     if old_date in file:
                         os.remove(logs_dir+file)
-        except:
-            print("probably no file")
+        except Exception as e: 
+            error = str(e)
+            tb = traceback.format_exc()
+            SmarterLog.log("SmarterCircuitsMCP","do_log_dump error: "+error)
+            SmarterLog.log("SmarterCircuitsMCP","do_log_dump traceback: "+tb)
+            self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
+            self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
 
     def check_solar_data(self, day):
         if day != self.last_day:
