@@ -152,7 +152,7 @@ class SmarterCircuitsMCP:
             self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
             self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
 
-    def binarize(b):
+    def binarize(self, b):
         if b is True:
             return "1"
         return "0"
