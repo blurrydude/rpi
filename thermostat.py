@@ -220,7 +220,7 @@ def halt():
 
 def getMode():
     try:
-        r =requests.get('https://api.idkline.com/getmode')
+        r =requests.get('https://{YOUR API HERE}/getmode')
         data = json.loads(r.text)
         return data["mode"].lower()
     except:
@@ -374,7 +374,7 @@ def stop_ventilating():
 def sendCommand(command):
     print("sending command: "+command)
     try:
-        r =requests.get('https://api.idkline.com/control/'+command)
+        r =requests.get('https://{YOUR API HERE}/control/'+command)
         print(str(r.status_code))
     except:
         print('failed to send command')
@@ -423,7 +423,7 @@ def load_settings():
     global system_disabled
 
     try:
-        r =requests.get('https://api.idkline.com/thermosettings/'+room)
+        r =requests.get('https://{YOUR API HERE}/thermosettings/'+room)
         j = r.text
         s = json.loads(j)
         failed_read_halt_limit = s["failed_read_halt_limit"]
@@ -441,7 +441,8 @@ def load_settings():
         extra_circulation_circuits = s["extra_circulation_circuits"]
         humidification_circuits = s["humidification_circuits"]
         system_disabled = s["system_disabled"]
-        #log("loaded thermosettings.json")
+        if temperature_high_setting <= temperature_low_setting:
+            temperature_high_setting = temperature_low_setting + swing_temp_offset + 1
     except:
         print('failed to get thermosettings')
         log("failed to load thermosettings.json")
@@ -467,7 +468,7 @@ def report_readings():
     if whf_state is True:
         w = "on"
     try:
-        r =requests.get('https://api.idkline.com/reportreadings/'+room+':{0:0.1f}:{1:0.1f}:{2}:{3}:{4}:{5}:{6}:{7}:{8}'.format(temp, hum,cool,circ,h,w,status,start_stage.strftime("%m~%d~%Y, %H-%M-%S"),last_circulation.strftime("%m~%d~%Y, %H-%M-%S")))
+        r =requests.get('https://{YOUR API HERE}/reportreadings/'+room+':{0:0.1f}:{1:0.1f}:{2}:{3}:{4}:{5}:{6}:{7}:{8}'.format(temp, hum,cool,circ,h,w,status,start_stage.strftime("%m~%d~%Y, %H-%M-%S"),last_circulation.strftime("%m~%d~%Y, %H-%M-%S")))
         print("report response: "+str(r.status_code))
     except:
         print('failed to send readings')
