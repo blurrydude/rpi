@@ -275,7 +275,7 @@ def cycle():
         cool_down()
         return
     
-    if round(temperature) > temperature_high_setting - swing_temp_offset and ac_state is True: # this is half of my mercury switch/magnet for delaying a "swing" state
+    if round(temperature) > temperature_high_setting - swing_temp_offset and ac_state is True: # cool beyond the on limit
         cool_down()
         return
     
@@ -283,7 +283,7 @@ def cycle():
         warm_up()
         return
     
-    if round(temperature) < temperature_low_setting + swing_temp_offset and heat_state is True: # this is the other half of my mercury switch/magnet for delaying a "swing" state
+    if round(temperature) < temperature_low_setting + swing_temp_offset and heat_state is True: # heat beyond the on limit
         warm_up()
         return
     
