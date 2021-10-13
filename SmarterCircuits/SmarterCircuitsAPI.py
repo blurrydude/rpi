@@ -34,26 +34,26 @@ class SmarterAPI:
             output = []
             for circuit in self.mcp.config.circuits:
                 output.append({
-                    "id": self.id,
-                    "ip_address": self.ip_address,
-                    "name": self.name,
-                    "relay_id": self.relay_id,
-                    "rollershutter": self.rollershutter,
-                    "location": self.location,
-                    "zones": self.zones,
-                    "on_modes": self.on_modes,
-                    "off_modes": self.off_modes,
+                    "id": circuit.id,
+                    "ip_address": circuit.ip_address,
+                    "name": circuit.name,
+                    "relay_id": circuit.relay_id,
+                    "rollershutter": circuit.rollershutter,
+                    "location": circuit.location,
+                    "zones": circuit.zones,
+                    "on_modes": circuit.on_modes,
+                    "off_modes": circuit.off_modes,
                     "status": {
                         "relay": {
-                            "on": self.status.relay.on,
-                            "power": self.status.relay.power,
-                            "energy": self.status.relay.energy
+                            "on": circuit.status.relay.on,
+                            "power": circuit.status.relay.power,
+                            "energy": circuit.status.relay.energy
                         },
-                        "temperature": self.status.temperature,
-                        "temperature_f": self.status.temperature_f,
-                        "overtemperature": self.status.overtemperature,
-                        "temperature_status": self.status.temperature_status,
-                        "voltage": self.status.voltage
+                        "temperature": circuit.status.temperature,
+                        "temperature_f": circuit.status.temperature_f,
+                        "overtemperature": circuit.status.overtemperature,
+                        "temperature_status": circuit.status.temperature_status,
+                        "voltage": circuit.status.voltage
                     }
                 })
             return output
