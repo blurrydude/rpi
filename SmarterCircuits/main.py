@@ -1,3 +1,4 @@
+from SmarterCircuitsAPI import SmarterAPI
 from SmarterRollershade import Rollershade, RollershadeState
 from SmarterRollerdoor import Rollerdoor, RollerdoorState
 import time
@@ -30,6 +31,7 @@ class SmarterCircuitsMCP:
         self.circuit_authority = False
         self.config = None
         self.mqtt = None
+        self.api = None
         self.touchscreen = None
         self.peers = []
         self.thermostats = {}
@@ -72,6 +74,7 @@ class SmarterCircuitsMCP:
             SmarterLog.log("SmarterCircuitsMCP","instantiating rollerdoor...")
             self.rollerdoor = Rollerdoor(self,self.name)
         else:
+            self.api = SmarterAPI(self)
             while self.running is True:
                 time.sleep(1)
             self.stop()
