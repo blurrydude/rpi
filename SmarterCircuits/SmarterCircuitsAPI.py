@@ -12,11 +12,11 @@ class SmarterAPI:
         self.app = FlaskAPI(__name__)
         self.cors = CORS(self.app, resources={r"/*": {"origins": "*"}})
 
-        @self.app.route('/pistates',methods=['GET'])
-        def pistates():
-            output = []
+        @self.app.route('/state',methods=['GET'])
+        def state():
+            peers = []
             for peer in self.mcp.peers:
-                output.append({
+                peers.append({
                     "id": peer.id,
                     "name": peer.name,
                     "ip_address": peer.ip_address,
@@ -27,13 +27,37 @@ class SmarterAPI:
                     "rollershade": peer.rollershade,
                     "rollerdoor": peer.rollerdoor
                 })
-            return output
-        
-        @self.app.route('/states',methods=['GET'])
-        def states():
-            output = []
+            thermostats = []
+            for thermostat in self.mcp.thermostats:
+                thermostats.append({
+                    "room": thermostat.room,
+                    "settings": {
+                        "failed_read_halt_limit": thermostat.settings.failed_read_halt_limit,
+                        "temperature_high_setting": thermostat.settings.temperature_high_setting,
+                        "temperature_low_setting": thermostat.settings.temperature_low_setting,
+                        "humidity_setting": thermostat.settings.humidity_setting,
+                        "air_circulation_minutes": thermostat.settings.air_circulation_minutes,
+                        "circulation_cycle_minutes": thermostat.settings.circulation_cycle_minutes,
+                        "ventilation_cycle_minutes": thermostat.settings.ventilation_cycle_minutes,
+                        "stage_limit_minutes": thermostat.settings.stage_limit_minutes,
+                        "stage_cooldown_minutes": thermostat.settings.stage_cooldown_minutes,
+                        "use_whole_house_fan": thermostat.settings.use_whole_house_fan,
+                        "system_disabled": thermostat.settings.system_disabled,
+                        "swing_temp_offset": thermostat.settings.swing_temp_offset
+                    },
+                    "state": {
+                        "temperature": thermostat.state.temperature,
+                        "humidity": thermostat.state.humidity,
+                        "heat_on": thermostat.state.heat_on,
+                        "ac_on": thermostat.state.ac_on,
+                        "fan_on": thermostat.state.fan_on,
+                        "whf_on": thermostat.state.whf_on,
+                        "status": thermostat.state.status
+                    }
+                })
+            circuits = []
             for circuit in self.mcp.config.circuits:
-                output.append({
+                circuits.append({
                     "id": circuit.id,
                     "ip_address": circuit.ip_address,
                     "name": circuit.name,
@@ -56,7 +80,18 @@ class SmarterAPI:
                         "voltage": circuit.status.voltage
                     }
                 })
-            return output
+            rollershades = []
+            for rollershade in self.mcp.rollershades:
+                rollershades.append({
+                    "name": rollershade.name,
+                    "shade_up": rollershade.shade_up
+                })
+            return {
+                "peers": peers,
+                "thermostats": thermostats,
+                "rollershades": rollershades,
+                "circuits": circuits
+            }
         
         @self.app.route('/control/<text>')
         def control(text):
