@@ -61,6 +61,7 @@ class SmarterCircuitsMCP:
             time.sleep(1)
         self.mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(self.config.brokers,["shellies/#","smarter_circuits/#"],self.on_message)
         _thread.start_new_thread(self.main_loop, ())
+        self.api = SmarterAPI(self)
         if self.config.thermostat is True:
             SmarterLog.log("SmarterCircuitsMCP","instantiating thermostat...")
             self.thermostat = Thermostat(self)
@@ -74,7 +75,6 @@ class SmarterCircuitsMCP:
             SmarterLog.log("SmarterCircuitsMCP","instantiating rollerdoor...")
             self.rollerdoor = Rollerdoor(self,self.name)
         else:
-            self.api = SmarterAPI(self)
             while self.running is True:
                 time.sleep(1)
             self.stop()
