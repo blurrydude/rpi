@@ -28,7 +28,8 @@ class SmarterAPI:
                     "rollerdoor": peer.rollerdoor
                 })
             thermostats = []
-            for thermostat in self.mcp.thermostats:
+            for thermokey in self.mcp.thermostats.keys():
+                thermostat = self.mcp.thermostats[thermokey]
                 thermostats.append({
                     "room": thermostat.room,
                     "settings": {
@@ -81,7 +82,8 @@ class SmarterAPI:
                     }
                 })
             rollershades = []
-            for rollershade in self.mcp.rollershades:
+            for rollershadekey in self.mcp.rollershades.keys():
+                rollershade = self.mcp.rollershades[rollershadekey]
                 rollershades.append({
                     "name": rollershade.name,
                     "shade_up": rollershade.shade_up
