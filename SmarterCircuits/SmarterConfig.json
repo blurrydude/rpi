@@ -7,7 +7,7 @@
     "thermostats":["gameroomthermopi","hallwaythermopi"],
     "rollershades":["rollerpi"],
     "rollerdoors":["baydoorpi"],
-    "update_files": ["main.py","ShellyDevices.py","SmarterCircuitsMQTT.py","SmarterConfiguration.py","SmarterLogging.py"],
+    "update_files": ["main.py","ShellyDevices.py","SmarterCircuitsMQTT.py","SmarterCircuitsAPI.py","SmarterConfiguration.py","SmarterLogging.py"],
     "thermostat_update_files": ["SmarterThermostat.py"],
     "touchscreen_update_files": ["SmarterTouchscreen.py"],
     "rollershade_update_files": ["SmarterRollershade.py"],
