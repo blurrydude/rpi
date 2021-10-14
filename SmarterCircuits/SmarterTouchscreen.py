@@ -213,13 +213,13 @@ class Touchscreen:
             thermostat = self.mcp.thermostats[room]
             setting = str(thermostat.settings.temperature_low_setting) + "/" + str(thermostat.settings.temperature_high_setting)
             state = ""
-            if thermostat.status.heat_on is True:
+            if thermostat.state.heat_on is True:
                 state = state + "H"
-            if thermostat.status.ac_on is True:
+            if thermostat.state.ac_on is True:
                 state = state + "A"
-            if thermostat.status.fan_on is True:
+            if thermostat.state.fan_on is True:
                 state = state + "F"
-            if thermostat.status.whf_on is True:
+            if thermostat.state.whf_on is True:
                 state = state + "W"
             labels.append(SmartLabel(r,0,room.upper()+ " " + setting,"Times",16,"black","white",5,5))
             labels.append(SmartLabel(r,1,str(round(thermostat.state.temperature,1))+"F","Times",24,"black","red",5,5))
