@@ -41,115 +41,7 @@ export class StatusService {
   }
 
   public getStatus() {
-    return this.http.get(this.baseurl+"webstates", this.options)
-      .pipe(
-        catchError(err => {
-          return this.handleError(err);
-        })
-      );
-  }
-
-  public getPiStatus() {
-    return this.http.get(this.baseurl+"pistates", this.options)
-      .pipe(
-        catchError(err => {
-          return this.handleError(err);
-        })
-      );
-  }
-
-  public getPassiveReadings() {
-    return this.http.get(this.baseurl+"getpassivereadings", this.options)
-      .pipe(
-        catchError(err => {
-          return this.handleError(err);
-        })
-      );
-  }
-
-  public getReadings() {
-    return this.http.get(this.baseurl+"getreadings", this.options)
-      .pipe(
-        catchError(err => {
-          return this.handleError(err);
-        })
-      );
-  }
-
-  public getTemplog(hours: number) {
-    return this.http.get(this.baseurl+"gettemplogforhours/"+hours, this.options)
-      .pipe(
-        catchError(err => {
-          return this.handleError(err);
-        })
-      );
-  }
-
-  public getPowerlog(hours: number) {
-    return this.http.get(this.baseurl+"getpowerlogforhours/"+hours, this.options)
-      .pipe(
-        catchError(err => {
-          return this.handleError(err);
-        })
-      );
-  }
-
-  public getDoors() {
-    return this.http.get(this.baseurl+"getdoors", this.options)
-      .pipe(
-        catchError(err => {
-          return this.handleError(err);
-        })
-      );
-  }
-
-  public getMode() {
-    return this.http.get(this.baseurl+"getmode", this.options)
-      .pipe(
-        catchError(err => {
-          return this.handleError(err);
-        })
-      );
-  }
-
-  public getRollers() {
-    return this.http.get(this.baseurl+"getrollers", this.options)
-      .pipe(
-        catchError(err => {
-          return this.handleError(err);
-        })
-      );
-  }
-
-  public getMotionSensors() {
-    return this.http.get(this.baseurl+"getmotionsensors", this.options)
-      .pipe(
-        catchError(err => {
-          return this.handleError(err);
-        })
-      );
-  }
-
-  public getCheckins() {
-    return this.http.get(this.baseurl+"checkins", this.options)
-      .pipe(
-        catchError(err => {
-          return this.handleError(err);
-        })
-      );
-  }
-
-  public getShellies() {
-    return this.http.get(this.baseurl+"getshellies", this.options)
-      .pipe(
-        catchError(err => {
-          return this.handleError(err);
-        })
-      );
-  }
-
-  public getSysMonLog() {
-    return this.http.get(this.baseurl+"getsysmonlog", this.options)
+    return this.http.get(this.baseurl+"state", this.options)
       .pipe(
         catchError(err => {
           return this.handleError(err);
@@ -184,22 +76,6 @@ export class StatusService {
     let opts = { headers: httpHeaders, params: new HttpParams() };
     console.log(opts)
     return this.http.get(this.baseurl+"webcontrol/"+command, opts)
-      .pipe(
-        catchError(err => {
-          return this.handleError(err);
-        })
-      );
-  }
-
-  public sendThermosettings(room: string, temp_low: number, temp_high: number, humidity: number, circ_min: number, hum_circ_min: number, stage_limit: number, stage_cooldown: number, swing_temp_offset: number, vent_min: number, system_disabled: boolean) {
-    let httpHeaders = new HttpHeaders({
-      "user":this.user,
-      "auth":this.auth
-    });
-
-    let opts = { headers: httpHeaders, params: new HttpParams() };
-    console.log(opts)
-    return this.http.get(this.baseurl+"webthermoset/"+room+"-"+temp_low+"-"+temp_high+"-"+humidity+"-"+circ_min+"-"+hum_circ_min+"-"+stage_limit+"-"+stage_cooldown+"-"+swing_temp_offset+"-"+vent_min+"-"+system_disabled, opts)
       .pipe(
         catchError(err => {
           return this.handleError(err);

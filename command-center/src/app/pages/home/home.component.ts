@@ -7,18 +7,7 @@ import { GoogleChartComponent } from 'angular-google-charts';
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
-    @Output() status: object = {};
-    @Output() pistatus: object = {};
-    @Output() readings: object = {};
-    @Output() checkins: object = {};
-    @Output() motionsensors: object = {};
-    @Output() thsensors: object = {};
-    @Output() doors: object = {};
-    @Output() rollers: object = {};
-    @Output() totalPower: number = 0.0;
-    @Output() sysmonlog: any = [];
-    @Output() apilog: any = [];
-    @Output() mode: any = [];
+    @Output() status: SystemState = new SystemState({});
     @Output() fast: boolean = true;
     @Output() live: boolean = true;
     @Output() local: boolean = true;
@@ -709,13 +698,13 @@ export class HomeComponent implements OnInit {
         let b = p[1]*this.scale + 8;
         if(clickX >= l && clickX <= r && clickY >= t && clickY <= b) {
           console.log(c+" clicked!");
-          for (const [k, v] of Object.entries(this.status)) {
-            if(k == c) {
-              console.log(v);
-              let state = v["state"] == "on" ? "off" : "on";
-              this.command("turn "+k.toLowerCase()+" "+state);
-            }
-          }
+          // for (const [k, v] of Object.entries(this.status)) {
+          //   if(k == c) {
+          //     console.log(v);
+          //     let state = v["state"] == "on" ? "off" : "on";
+          //     this.command("turn "+k.toLowerCase()+" "+state);
+          //   }
+          // }
         }
       }
     }
@@ -788,12 +777,12 @@ export class HomeComponent implements OnInit {
           let state = "off";
           let power = "0 W";
           let circuitname = this.housecircuits[cindex];
-          for (const [k, v] of Object.entries(this.status)) {
-            if(k == circuitname) {
-              state = v["state"];
-              power = v["power"] + " W";
+          this.status.circuits?.forEach(circuit => {
+            if(circuit.name == circuitname) {
+              state = circuit.status.relay.on ? "on" : "off";
+              power = circuit.status.relay.power + " W";
             }
-          }
+          });
           //this.context.fillText(cindex+'',x+3,y+3);
           let shape = [[0,0]];
           if(circuitname.indexOf("Fan")> -1) {
@@ -892,27 +881,9 @@ export class HomeComponent implements OnInit {
       ];
     }
 
-    public sendThermosettings(room: string, temp_low: number, temp_high: number, humidity: number, circ_min: number, hum_circ_min: number, stage_limit: number, stage_cooldown: number, swing_temp_offset: number, vent_min: number, system_disabled: boolean) {
-      this.httpMessageService.sendThermosettings(room,temp_low,temp_high,humidity,circ_min,hum_circ_min, stage_limit, stage_cooldown, swing_temp_offset, vent_min, system_disabled).toPromise().then(smsg => {
-        setTimeout(()=>{this.load(this.httpMessageService,false)},500);
-      });
-    }
-
     public command(com: string) {
       this.httpMessageService.sendCommand(com).toPromise().then(smsg => {
         setTimeout(()=>{this.load(this.httpMessageService,false)},3000);
-      });
-    }
-
-    public getLogs() {
-      this.httpMessageService.getSysMonLog().toPromise().then(lmsg => {
-        this.sysmonlog = lmsg;
-      });
-    }
-
-    public getApiLogs() {
-      this.httpMessageService.getApiLog().toPromise().then(lmsg => {
-        this.apilog = lmsg;
       });
     }
 
@@ -920,122 +891,167 @@ export class HomeComponent implements OnInit {
       if(main_loop == true) setTimeout(()=>{this.load(httpMessageService, true)},this.fast?5000:15000);
       if(this.live == false && this.firstLoad == false) return;
       if(this.firstLoad == true) this.firstLoad = false;
-      this.httpMessageService.getMode().toPromise().then(mmsg => {
-        this.mode = mmsg;
-      });
-      this.httpMessageService.getMotionSensors().toPromise().then(hmsg => {
-        this.motionsensors = hmsg;
-      });
-      if(this.logtick == 0) {
-        this.httpMessageService.getTemplog(this.loghours).toPromise().then(hmsg => {
-          let data: any = hmsg;
-          let chart1data = [];
-          let chart4data = [];
-          for (const v of data) {
-            v[3] = (v[3] == 1 ? 4 : v[3]) + 50;
-            v[4] = (v[4] == 1 ? 6 : v[4]) + 50;
-            v[5] = (v[5] == 1 ? 8 : v[5]) + 50;
-            v[6] = (v[6] == 1 ? 10 : v[6]) + 50;
-
-            v[9] =  (v[9] == 1 ? 12 : v[9]) + 50;
-            v[10] = (v[10] == 1 ? 14 : v[10]) + 50;
-            v[11] = (v[11] == 1 ? 16 : v[11]) + 50;
-            v[12] = (v[12] == 1 ? 18 : v[12]) + 50;
-
-            if(v[1]>0&&v[7]>0) {
-              chart1data.push([v[0],v[1],v[7],v[13],v[15],v[3],v[4],v[5],v[9],v[10],v[11],v[12]]);
-              chart4data.push([v[0],v[2],v[8],v[14],v[16]]);
-            }
-          }
-          this.chartData.data = chart1data;
-          this.chartData.data = Object.assign([], this.chartData.data);
-          this.chartData4.data = chart4data;
-          this.chartData4.data = Object.assign([], this.chartData4.data);
-        });
-        this.httpMessageService.getPowerlog(this.loghours).toPromise().then(hmsg => {
-          let data: any = hmsg;
-          let chart2data = [];
-          for (const v of data) {
-            chart2data.push(v);
-          }
-          this.chartData2.data = hmsg;
-          this.chartData2.data = Object.assign([], this.chartData2.data);
-          let last = this.chartData2.data[this.chartData2.data.length-1];
-          this.chartData3.data = [["Power",
-            //last[last.length-1]
-            {
-              v:Math.round((last[last.length-1]/1000)*100),
-              f:last[last.length-1]+" W"
-            }
-          ]];
-          this.chartData3.data = Object.assign([], this.chartData3.data);
-        });
-        this.logtick = this.fast == true ? 12 : 4;
-      } else {
-        this.logtick--;
-      }
-      this.httpMessageService.getReadings().toPromise().then(rmsg => {
-        this.readings = rmsg;
-        this.httpMessageService.getPassiveReadings().toPromise().then(prmsg => {
-          this.thsensors = prmsg;
-        });
-      });
-      this.httpMessageService.getDoors().toPromise().then(dmsg => {
-        this.doors = dmsg;
-      });
-      this.httpMessageService.getRollers().toPromise().then(bmsg => {
-        this.rollers = bmsg;
-      });
-
       this.httpMessageService.getStatus().toPromise().then(msg => {
-        this.status = msg;
+        this.status = new SystemState(msg);
         this.redraw();
-        this.totalPower = 0.0;
-        for (const [k, v] of Object.entries(this.status)) {
-          if(this.chartData2.columnNames.indexOf(k)===-1) {
-            this.chartData2.columnNames.push(k);
-          }
-          this.totalPower += parseFloat(v["power"])
-        }
-        if(this.chartData2.columnNames.indexOf("Total")===-1) {
-          this.chartData2.columnNames.push("Total");
-        }
-        this.httpMessageService.getPiStatus().toPromise().then(smsg => {
-          this.pistatus = smsg;
-          for (const [k, v] of Object.entries(this.pistatus)) {
-            let s = v["heartbeat"].split('_');
-            let d = s[0].split('/');
-            let t = s[1];
-            let ms = Date.parse(d[2]+"-"+d[0]+"-"+d[1]+"T"+t+".000-04:00");
-            let dt = new Date(ms);
-            let n = new Date();
-            let c = n.getTime() - ms;
-            v["class"] = c > 150000 ? "text-danger" : c < 0 ? "text-info" : "text-success";
-            v["heartbeat"] = dt;
-          }
-          this.httpMessageService.getCheckins().toPromise().then(cmsg => {
-            this.checkins = cmsg;
-            for (const [k, v] of Object.entries(this.checkins)) {
-              for (const [sk, sv] of Object.entries(this.status)) {
-                if(k != sk) continue;
-                if(v.indexOf("NONCOMM") > -1) {
-                  sv["checkin"] = "fas fa-tired"
-                  continue;
-                }
-                let s = v.split(', ');
-                let d = s[0].split('/');
-                let t = s[1];
-                let ms = Date.parse(d[2]+"-"+d[0]+"-"+d[1]+"T"+t+".000-04:00");
-                let dt = new Date(ms);
-                let n = new Date();
-                let c = n.getTime() - ms;
-                sv["checkin"] = c > 150000 ? "fas fa-dizzy" : c < 0 ? "far fa-question-circle" : "fas fa-signal";
-                sv["heartbeat"] = dt;
-              }
-            }
-          });
-        });
+        // this.totalPower = 0.0;
+        // for (const [k, v] of Object.entries(this.status)) {
+        //   if(this.chartData2.columnNames.indexOf(k)===-1) {
+        //     this.chartData2.columnNames.push(k);
+        //   }
+        //   this.totalPower += parseFloat(v["power"])
+        // }
+        // if(this.chartData2.columnNames.indexOf("Total")===-1) {
+        //   this.chartData2.columnNames.push("Total");
+        // }
       });
     }
-    
+}
+export class SystemState {
+  peers?: (PeersEntity)[] | null;
+  thermostats?: (ThermostatsEntity)[] | null;
+  rollershades?: (RollershadesEntity)[] | null;
+  circuits?: (CircuitsEntity)[] | null;
+  public constructor(d: any) {
+    this.peers = d.peers;
+    this.thermostats = d.thermostats;
+    this.rollershades = d.rollershades;
+    this.circuits = d.circuits;
+  }
+}
+export class PeersEntity {
+  id: number;
+  name: string;
+  ip_address: string;
+  model: string;
+  circuit_authority: boolean;
+  timestamp: string;
+  thermostat: boolean;
+  rollershade: boolean;
+  rollerdoor: boolean;
+  public constructor(d: any) {
+    this.id = d.id;
+    this.name = d.name;
+    this.ip_address = d.ip_address;
+    this.model = d.model;
+    this.circuit_authority = d.circuit_authority;
+    this.timestamp = d.timestamp;
+    this.thermostat = d.thermostat;
+    this.rollershade = d.rollershade;
+    this.rollerdoor = d.rollerdoor;
+  }
+}
+export class ThermostatsEntity {
+  room: string;
+  settings: Settings;
+  state: State;
+  public constructor(d: any) {
+    this.room = d.room;
+    this.settings = d.settings;
+    this.state = d.state;
+  }
+}
+export class Settings {
+  failed_read_halt_limit: number;
+  temperature_high_setting: number;
+  temperature_low_setting: number;
+  humidity_setting: number;
+  air_circulation_minutes: number;
+  circulation_cycle_minutes: number;
+  ventilation_cycle_minutes: number;
+  stage_limit_minutes: number;
+  stage_cooldown_minutes: number;
+  use_whole_house_fan: boolean;
+  system_disabled: boolean;
+  swing_temp_offset: number;
+  public constructor(d: any) {
+    this.failed_read_halt_limit = d.failed_read_halt_limit;
+    this.temperature_high_setting = d.temperature_high_setting;
+    this.temperature_low_setting = d.temperature_low_setting;
+    this.humidity_setting = d.humidity_setting;
+    this.air_circulation_minutes = d.air_circulation_minutes;
+    this.circulation_cycle_minutes = d.circulation_cycle_minutes;
+    this.ventilation_cycle_minutes = d.ventilation_cycle_minutes;
+    this.stage_limit_minutes = d.stage_limit_minutes;
+    this.stage_cooldown_minutes = d.stage_cooldown_minutes;
+    this.use_whole_house_fan = d.use_whole_house_fan;
+    this.system_disabled = d.system_disabled;
+    this.swing_temp_offset = d.swing_temp_offset;
+  }
+}
+export class State {
+  temperature: number;
+  humidity: number;
+  heat_on: boolean;
+  ac_on: boolean;
+  fan_on: boolean;
+  whf_on: boolean;
+  status: string;
+  public constructor(d: any) {
+    this.temperature = d.temperature;
+    this.humidity = d.humidity;
+    this.heat_on = d.heat_on;
+    this.ac_on = d.ac_on;
+    this.fan_on = d.fan_on;
+    this.whf_on = d.whf_on;
+    this.status = d.status;
+  }
+}
+export class RollershadesEntity {
+  name: string;
+  shade_up?: (boolean)[] | null;
+  public constructor(d: any) {
+    this.name = d.name;
+    this.shade_up = d.shade_up;
+  }
+}
+export class CircuitsEntity {
+  id: string;
+  ip_address: string;
+  name: string;
+  relay_id: string;
+  rollershutter: boolean;
+  location: string;
+  zones?: (string | null)[] | null;
+  on_modes?: (string | null)[] | null;
+  off_modes?: (string | null)[] | null;
+  status: Status;
+  public constructor(d: any) {
+    this.id = d.id;
+    this.ip_address = d.ip_address;
+    this.name = d.name;
+    this.relay_id = d.relay_id;
+    this.rollershutter = d.rollershutter;
+    this.location = d.location;
+    this.zones = d.zones;
+    this.on_modes = d.on_modes;
+    this.off_modes = d.off_modes;
+    this.status = d.status;
+  }
+}
+export class Status {
+  relay: Relay;
+  temperature: string | number;
+  temperature_f: number;
+  overtemperature: number;
+  temperature_status: string;
+  voltage: number;
+  public constructor(d: any) {
+    this.relay = d.relay;
+    this.temperature = d.temperature;
+    this.temperature_f = d.temperature_f;
+    this.overtemperature = d.overtemperature;
+    this.temperature_status = d.temperature_status;
+    this.voltage = d.voltage;
+  }
+}
+export class Relay {
+  on: boolean;
+  power: number;
+  energy: number;
+  public constructor(d: any) {
+    this.on = d.on;
+    this.power = d.power;
+    this.energy = d.energy;
+  }
 }
