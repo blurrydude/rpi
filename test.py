@@ -84,10 +84,13 @@
 #         except Exception as ex:
 #             print ("Something went wrong….",ex)
 
-thing1 = [True,True]
-thing2 = [True,True]
-thing3 = [False,True]
-test12 = thing1 == thing2
-test23 = thing2 == thing3
-print(test12)
-print(test23)
+# thing1 = [True,True]
+# thing2 = [True,True]
+# thing3 = [False,True]
+# test12 = thing1 == thing2
+# test23 = thing2 == thing3
+# print(test12)
+# print(test23)
+import requests
+r =requests.get('https://api.idkline.com/state')
+print(r.text)
