@@ -698,13 +698,12 @@ export class HomeComponent implements OnInit {
         let b = p[1]*this.scale + 8;
         if(clickX >= l && clickX <= r && clickY >= t && clickY <= b) {
           console.log(c+" clicked!");
-          // for (const [k, v] of Object.entries(this.status)) {
-          //   if(k == c) {
-          //     console.log(v);
-          //     let state = v["state"] == "on" ? "off" : "on";
-          //     this.command("turn "+k.toLowerCase()+" "+state);
-          //   }
-          // }
+          this.status.circuits?.forEach(circuit => {
+            if(circuit.name == c) {
+              let state = circuit.status.relay.on ? "off" : "on";
+              this.command("turn "+circuit.name.toLowerCase()+" "+state);
+            }
+          });
         }
       }
     }
