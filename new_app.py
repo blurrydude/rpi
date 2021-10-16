@@ -86,15 +86,6 @@ def sms(message, to):
             time.sleep(1)
             sms(message, to)
 
-def on_message(client, userdata, message):
-    circuit_authority = get_circuit_authority()
-    topic = message.topic
-    text = str(message.payload.decode("utf-8"))
-    name = topic.split("/")[2]
-    peer = json.loads(text)
-    if peer["circuit_authority"] is True and circuit_authority != peer["ip_address"]:
-        set_circuit_authority(peer["ip_address"])
-
 def set_circuit_authority(ip_address):
     with open('home/pi/circuit_authority.txt', 'w') as write_file:
         write_file.write(ip_address)
@@ -102,26 +93,20 @@ def set_circuit_authority(ip_address):
 def get_circuit_authority():
     return open('home/pi/circuit_authority.txt').read()
 
-def connectMqtt():
-    global client
-    client.connect("192.168.1.200")
-    client.on_message = on_message
-    client.on_disconnect = connectMqtt
-    client.subscribe("smarter_circuits/peers/#")
-    client.loop_start()
-
 def mosquittoDo(topic, command):
     global received
     global result
     try:
+        client = mqtt.Client()
+        client.connect("192.168.1.200")
         client.publish(topic,command)
+        client.disconnect()
     except:
         print('failed')
     return 'OK'
 
 app = FlaskAPI(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
-client = mqtt.Client()
 
 allowed_senders = ["+19377893750","+19377166465"]
 
@@ -219,8 +204,11 @@ def notify(data):
     sms(data,"+19377166465")
     return 'OK'
 
+@app.route('/circuitauthority/<ip_address>')
+def notify(ip_address):
+    set_circuit_authority(ip_address)
+
 if __name__ == '__main__':
-    connectMqtt()
     if dev is False:
         app.run(debug=False, port=8080, host='192.168.1.201')
     else:
