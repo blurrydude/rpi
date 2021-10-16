@@ -87,13 +87,20 @@ def sms(message, to):
             sms(message, to)
 
 def on_message(client, userdata, message):
-    global circuit_authority
+    circuit_authority = get_circuit_authority()
     topic = message.topic
     text = str(message.payload.decode("utf-8"))
     name = topic.split("/")[2]
     peer = json.loads(text)
     if peer["circuit_authority"] is True and circuit_authority != peer["ip_address"]:
-        circuit_authority = peer["ip_address"]
+        set_circuit_authority(peer["ip_address"])
+
+def set_circuit_authority(ip_address):
+    with open('home/pi/circuit_authority.txt', 'w') as write_file:
+        write_file.write(ip_address)
+
+def get_circuit_authority():
+    return open('home/pi/circuit_authority.txt').read()
 
 def connectMqtt():
     global client
@@ -117,7 +124,6 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 client = mqtt.Client()
 
 allowed_senders = ["+19377893750","+19377166465"]
-circuit_authority = "192.168.1.224"
 
 def checktoken(request):
     username = request.headers["user"]
@@ -173,12 +179,14 @@ def debug():
 
 @app.route('/state',methods=['GET'])
 def state():
+    circuit_authority = get_circuit_authority()
     r =requests.get('http://'+circuit_authority+':8080/state')
     states = json.loads(r.text)
     return states
 
 @app.route('/circuitauthority',methods=['GET'])
 def circuitauthority():
+    circuit_authority = get_circuit_authority()
     return circuit_authority
 
 @app.route('/webcontrol/<text>')
