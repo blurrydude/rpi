@@ -30,16 +30,16 @@
                 </div>
                 <div class="row" *ngIf="httpMessageService.auth!=''">
                   <div class="col-6">
-                    <button class="btn btn-sm btn-primary my-1 w-100" ngClick="set_command(thermostat.name, '', thermostat.settings.temperature_high_setting-1)">Lower High</button>
+                    <button class="btn btn-sm btn-primary my-1 w-100" (click)="set_command(thermostat.room, 'temperature_high_setting', thermostat.settings.temperature_high_setting-1)">Lower High</button>
                   </div>
                   <div class="col-6">
-                    <button class="btn btn-sm btn-danger my-1 w-100" ngClick="set_command(thermostat.name, '', thermostat.settings.temperature_high_setting+1)">Raise High</button>
+                    <button class="btn btn-sm btn-danger my-1 w-100" (click)="set_command(thermostat.room, 'temperature_high_setting', thermostat.settings.temperature_high_setting+1)">Raise High</button>
                   </div>
                   <div class="col-6">
-                    <button class="btn btn-sm btn-primary my-1 w-100" ngClick="set_command(thermostat.name, '', thermostat.settings.temperature_low_setting-1)">Lower Low</button>
+                    <button class="btn btn-sm btn-primary my-1 w-100" (click)="set_command(thermostat.room, 'temperature_low_setting', thermostat.settings.temperature_low_setting-1)">Lower Low</button>
                   </div>
                   <div class="col-6">
-                    <button class="btn btn-sm btn-danger my-1 w-100" ngClick="set_command(thermostat.name, '', thermostat.settings.temperature_low_setting+1)">Raise Low</button>
+                    <button class="btn btn-sm btn-danger my-1 w-100" (click)="set_command(thermostat.room, 'temperature_low_setting', thermostat.settings.temperature_low_setting+1)">Raise Low</button>
                   </div>
                 </div>
               </div>

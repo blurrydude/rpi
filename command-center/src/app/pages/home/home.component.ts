@@ -882,6 +882,7 @@ export class HomeComponent implements OnInit {
 
     public command(com: string) {
       this.httpMessageService.sendCommand(com).toPromise().then(smsg => {
+        console.log("sent: "+com);
         setTimeout(()=>{this.load(this.httpMessageService,false)},1000);
       });
     }
