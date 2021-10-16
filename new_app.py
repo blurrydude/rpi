@@ -94,7 +94,6 @@ def on_message(client, userdata, message):
     peer = json.loads(text)
     if peer["circuit_authority"] is True and circuit_authority != peer["ip_address"]:
         circuit_authority = peer["ip_address"]
-        log("circuit authority set: "+circuit_authority)
 
 def connectMqtt():
     global client
