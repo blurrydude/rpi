@@ -87,11 +87,11 @@ def sms(message, to):
             sms(message, to)
 
 def set_circuit_authority(ip_address):
-    with open('home/pi/circuit_authority.txt', 'w') as write_file:
+    with open('/home/pi/circuit_authority.txt', 'w') as write_file:
         write_file.write(ip_address)
 
 def get_circuit_authority():
-    return open('home/pi/circuit_authority.txt').read()
+    return open('/home/pi/circuit_authority.txt').read()
 
 def mosquittoDo(topic, command):
     global received
