@@ -86,22 +86,39 @@ def sms(message, to):
             time.sleep(1)
             sms(message, to)
 
+def on_message(client, userdata, message):
+    global circuit_authority
+    topic = message.topic
+    text = str(message.payload.decode("utf-8"))
+    name = topic.split("/")[2]
+    peer = json.loads(message)
+    if peer["circuit_authority"] is True and circuit_authority != peer["ip_address"]:
+        circuit_authority = peer["ip_address"]
+        log("circuit authority set: "+circuit_authority)
+
+def connectMqtt():
+    global client
+    client.connect("192.168.1.200")
+    client.on_message = on_message
+    client.on_disconnect = connectMqtt
+    client.subscribe("smarter_circuits/peers/#")
+    client.loop_start()
+
 def mosquittoDo(topic, command):
     global received
     global result
     try:
-        client = mqtt.Client()
-        client.connect("192.168.1.200")
         client.publish(topic,command)
-        client.disconnect()
     except:
         print('failed')
     return 'OK'
 
 app = FlaskAPI(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
+client = mqtt.Client()
 
 allowed_senders = ["+19377893750","+19377166465"]
+circuit_authority = "192.168.1.224"
 
 def checktoken(request):
     username = request.headers["user"]
@@ -157,10 +174,13 @@ def debug():
 
 @app.route('/state',methods=['GET'])
 def state():
-    # TODO: Make this dynamic by searching for circuit authority through known peers. Will need monitor thread.
-    r =requests.get('http://192.168.1.226:8080/state')
+    r =requests.get('http://'+circuit_authority+':8080/state')
     states = json.loads(r.text)
     return states
+
+@app.route('/circuitauthority',methods=['GET'])
+def circuitauthority():
+    return circuit_authority
 
 @app.route('/webcontrol/<text>')
 def webcontrol(text):
@@ -193,6 +213,7 @@ def notify(data):
     return 'OK'
 
 if __name__ == '__main__':
+    connectMqtt()
     if dev is False:
         app.run(debug=False, port=8080, host='192.168.1.201')
     else:
