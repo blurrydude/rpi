@@ -91,6 +91,37 @@
 # test23 = thing2 == thing3
 # print(test12)
 # print(test23)
-import requests
-r =requests.get('https://api.idkline.com/state')
-print(r.text)
+
+# import requests
+# r =requests.get('https://api.idkline.com/state')
+# print(r.text)
+
+import paho.mqtt.client as mqtt
+import json
+import time
+
+client = mqtt.Client()
+
+circuit_authority = "192.168.1.224"
+
+def on_message(client, userdata, message):
+    global circuit_authority
+    topic = message.topic
+    text = str(message.payload.decode("utf-8"))
+    name = topic.split("/")[2]
+    peer = json.loads(text)
+    if peer["circuit_authority"] is True and circuit_authority != peer["ip_address"]:
+        circuit_authority = peer["ip_address"]
+        print("circuit authority set: "+circuit_authority)
+
+def connectMqtt():
+    global client
+    client.connect("192.168.1.200")
+    client.on_message = on_message
+    client.on_disconnect = connectMqtt
+    client.subscribe("smarter_circuits/peers/#")
+    client.loop_start()
+    while True:
+        time.sleep(1)
+
+connectMqtt()

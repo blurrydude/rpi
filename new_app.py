@@ -91,7 +91,7 @@ def on_message(client, userdata, message):
     topic = message.topic
     text = str(message.payload.decode("utf-8"))
     name = topic.split("/")[2]
-    peer = json.loads(message)
+    peer = json.loads(text)
     if peer["circuit_authority"] is True and circuit_authority != peer["ip_address"]:
         circuit_authority = peer["ip_address"]
         log("circuit authority set: "+circuit_authority)
