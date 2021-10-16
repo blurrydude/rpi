@@ -661,6 +661,11 @@ class SmarterCircuitsMCP:
                 command_list.append({"t":"smarter_circuits/rollerdoors/baydoorpi/command","c":"0:1"})
             if "close" in command or "shut" in command:
                 command_list.append({"t":"smarter_circuits/rollerdoors/baydoorpi/command","c":"0:0"})
+        elif "set" in command:
+            s = command.split(' ')
+            room = s[1]
+            setting = s[2]
+            command_list.append({"t":"smarter_circuits/thermosettings/"+room,"c":setting})
 
         for cmd in command_list:
             self.mqtt.publish(cmd["t"],cmd["c"])

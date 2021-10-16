@@ -882,8 +882,12 @@ export class HomeComponent implements OnInit {
 
     public command(com: string) {
       this.httpMessageService.sendCommand(com).toPromise().then(smsg => {
-        setTimeout(()=>{this.load(this.httpMessageService,false)},3000);
+        setTimeout(()=>{this.load(this.httpMessageService,false)},1000);
       });
+    }
+
+    public set_command(room: string, setting: string, value: any) {
+      this.command("set "+room+" "+setting+":"+value);
     }
 
     public load(httpMessageService: StatusService, main_loop: boolean) {
