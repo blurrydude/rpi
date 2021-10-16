@@ -245,6 +245,10 @@ class SmarterCircuitsMCP:
             if self.circuit_authority is not True:
                 SmarterLog.log("SmarterCircuitsMCP","I am circuit authority")
                 self.circuit_authority = True
+                try:
+                    requests.get("https://api.idkline.com/circuitauthority/"+self.ip_address)
+                except:
+                    SmarterLog.log("SmarterCircuitsMCP","Couldn't tell the API I'm circuit authority")
         else:
             self.circuit_authority = False
 

@@ -205,7 +205,7 @@ def notify(data):
     return 'OK'
 
 @app.route('/circuitauthority/<ip_address>')
-def notify(ip_address):
+def circuitauthorityset(ip_address):
     set_circuit_authority(ip_address)
 
 if __name__ == '__main__':
