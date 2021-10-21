@@ -68,10 +68,10 @@
         <h3>LTC Miner Speeds:</h3>
         <div *ngFor="let miner of minerStatus" class="mb-3">
           <h5>{{miner['STATS'][1]['GHS av']}} MH/s </h5>
-          <span class="mx-2">{{(miner['STATS'][1]['GHS av']*0.000003159)|number:'1.1-10'}} LTC</span>
+          <span class="mx-2">{{(miner['STATS'][1]['GHS av']*0.000003159)|number:'1.1-10'}} LTC per hour</span>
           <br/>
           <span>GROSS &middot;</span>
-          <span class="mx-2">{{(miner['STATS'][1]['GHS av']*0.000003159*ltcPrice['data']['amount'])|currency}} an hour @ {{ltcPrice['data']['amount']|currency}}/LTC</span>
+          <span class="mx-2">{{(miner['STATS'][1]['GHS av']*0.000003159*ltcPrice['data']['amount'])|currency}} per hour @ {{ltcPrice['data']['amount']|currency}}/LTC</span>
           <small>{{(miner['STATS'][1]['GHS av']*0.00007581*ltcPrice['data']['amount'])|currency}} per day</small>
           <br/>
           <span>Electric (@ $0.08/kWh) &middot; $0.064 per hour &middot; </span>
