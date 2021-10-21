@@ -71,6 +71,10 @@
         <span>&nbsp;&middot;&nbsp;</span>
         <small>{{(poolStatus['user']['expected_24h_rewards']*ltcPrice['data']['amount'])|currency}}</small>
         <br/>
+        <small class="text-muted">{{(((poolStatus['user']['expected_24h_rewards']*ltcPrice['data']['amount'])-((poolStatus['user']['expected_24h_rewards']*ltcPrice['data']['amount'])*0.25))/4)|currency}} net quarter share per day</small>
+        <span>&nbsp;&middot;&nbsp;</span>
+        <small class="text-muted">{{(((poolStatus['user']['expected_24h_rewards']*ltcPrice['data']['amount'])-((poolStatus['user']['expected_24h_rewards']*ltcPrice['data']['amount'])*0.25))*30/4)|currency}} net quarter share per month</small>
+        <br/>
         Hash Rate: {{(poolStatus['user']['hash_rate']/1000)|number:'4.1-2'}} MH/s 
         <span>&nbsp;&middot;&nbsp;</span>
         <small>{{((poolStatus['user']['hash_rate']/1000*0.000003159)*ltcPrice['data']['amount'])|currency}} per hour</small>
@@ -80,7 +84,10 @@
         <small>{{(poolStatus['user']['past_24h_rewards']*ltcPrice['data']['amount'])|currency}}</small>
         <br/>
         Total Rewards: <small>{{(poolStatus['user']['total_rewards']-55.82397517)}}</small>
-        <h4 class="text-success">{{((poolStatus['user']['total_rewards']-55.82397517)*ltcPrice['data']['amount'])|currency}}</h4>
+        <h4 class="text-info">{{((poolStatus['user']['total_rewards']-55.82397517)*ltcPrice['data']['amount'])|currency}}</h4>
+        <small class="text-warning">-{{((poolStatus['user']['total_rewards']-55.82397517)*ltcPrice['data']['amount']*0.25)|currency}} tax</small>
+        <h4 class="text-success">{{(((poolStatus['user']['total_rewards']-55.82397517)*ltcPrice['data']['amount'])-((poolStatus['user']['total_rewards']-55.82397517)*ltcPrice['data']['amount']*0.25))|currency}}</h4>
+        <small class="text-muted">{{(((poolStatus['user']['total_rewards']-55.82397517)*ltcPrice['data']['amount'])-((poolStatus['user']['total_rewards']-55.82397517)*ltcPrice['data']['amount']*0.25))/4|currency}} quarter share</small>
         <br/>
         <!--Lifetime Rewards: {{(poolStatus['user']['total_rewards'])}} <small>({{(poolStatus['user']['total_rewards']*ltcPrice['data']['amount'])|currency}})</small>-->
         <h3>LTC Miner Speeds:</h3>
@@ -110,6 +117,11 @@
           <small>{{(miner['STATS'][1]['GHS av']*0.00007581*ltcPrice['data']['amount'])-1.536-(((miner['STATS'][1]['GHS av']*0.00007581*ltcPrice['data']['amount'])-1.536)*0.25)|currency}} per day</small>
           <span>&nbsp;&middot;&nbsp;</span>
           <small>{{(miner['STATS'][1]['GHS av']*0.0022743*ltcPrice['data']['amount'])-46.08-(((miner['STATS'][1]['GHS av']*0.0022743*ltcPrice['data']['amount'])-46.08)*0.25)|currency}} per month</small>
+          <br/>
+          <span class="text-muted">NET per quarter share&middot;</span>
+          <small class="text-muted">{{((miner['STATS'][1]['GHS av']*0.00007581*ltcPrice['data']['amount'])-1.536-(((miner['STATS'][1]['GHS av']*0.00007581*ltcPrice['data']['amount'])-1.536)*0.25))/4|currency}} per day</small>
+          <span class="text-muted">&nbsp;&middot;&nbsp;</span>
+          <small class="text-muted">{{((miner['STATS'][1]['GHS av']*0.0022743*ltcPrice['data']['amount'])-46.08-(((miner['STATS'][1]['GHS av']*0.0022743*ltcPrice['data']['amount'])-46.08)*0.25))/4|currency}} per month</small>
         </div>
       </div>
     </div>
