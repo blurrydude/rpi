@@ -210,6 +210,7 @@ def circuitauthorityset(ip_address):
 
 @app.route('/getminers')
 def getminers():
+    miners = []
     IPS = ('192.168.1.40','192.168.1.41','192.168.1.42','192.168.1.43')
     for IP in IPS:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -221,7 +222,9 @@ def getminers():
         x = data.split("id\":1}")
         y = x[0].replace("}{","},{")+"id\":1}"
         s.close()
-        return y
+        miner = json.loads(y)
+        miners.append(miner)
+    return miners
 
 if __name__ == '__main__':
     if dev is False:
