@@ -62,5 +62,38 @@
         </div>
       </div>
     </div>
+
+    <div class="row mt-3 mb-2 text-info text-center">
+      <div class="col-md-12">
+        <h3>LTC Miner Speeds:</h3>
+        <div *ngFor="let miner of minerStatus" class="mb-3">
+          <h5>{{miner['STATS'][1]['GHS av']}} MH/s </h5>
+          <span class="mx-2">{{(miner['STATS'][1]['GHS av']*0.000003159)|number:'1.1-10'}} LTC</span>
+          <br/>
+          <span>GROSS &middot;</span>
+          <span class="mx-2">{{(miner['STATS'][1]['GHS av']*0.000003159*ltcPrice['data']['amount'])|currency}} an hour @ {{ltcPrice['data']['amount']|currency}}/LTC</span>
+          <small>{{(miner['STATS'][1]['GHS av']*0.00007581*ltcPrice['data']['amount'])|currency}} per day</small>
+          <br/>
+          <span>Electric (@ $0.08/kWh) &middot; $0.064 per hour &middot; </span>
+          <small>$1.536 per day</small>
+          <br/>
+          <span>Profit &middot;</span>
+          <small>{{(miner['STATS'][1]['GHS av']*0.00007581*ltcPrice['data']['amount'])-1.536|currency}} per day</small>
+          <span>&nbsp;&middot;&nbsp;</span>
+          <small>{{(miner['STATS'][1]['GHS av']*0.0022743*ltcPrice['data']['amount'])-46.08|currency}} per month</small>
+          <br/>
+          <span>Tax &middot;</span>
+          <small>{{(((miner['STATS'][1]['GHS av']*0.00007581*ltcPrice['data']['amount'])-1.536)*0.25)|currency}} per day</small>
+          <span>&nbsp;&middot;&nbsp;</span>
+          <small>{{(((miner['STATS'][1]['GHS av']*0.0022743*ltcPrice['data']['amount'])-46.08)*0.25)|currency}} per month</small>
+          <br/>
+          <span>NET &middot;</span>
+          <small>{{(miner['STATS'][1]['GHS av']*0.00007581*ltcPrice['data']['amount'])-1.536-(((miner['STATS'][1]['GHS av']*0.00007581*ltcPrice['data']['amount'])-1.536)*0.25)|currency}} per day</small>
+          <span>&nbsp;&middot;&nbsp;</span>
+          <small>{{(miner['STATS'][1]['GHS av']*0.0022743*ltcPrice['data']['amount'])-46.08-(((miner['STATS'][1]['GHS av']*0.0022743*ltcPrice['data']['amount'])-46.08)*0.25)|currency}} per month</small>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

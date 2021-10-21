@@ -8,6 +8,8 @@ import { GoogleChartComponent } from 'angular-google-charts';
 })
 export class HomeComponent implements OnInit {
     @Output() status: SystemState = new SystemState({});
+    @Output() minerStatus: any = {};
+    @Output() ltcPrice: any = {};
     @Output() fast: boolean = true;
     @Output() live: boolean = true;
     @Output() local: boolean = true;
@@ -17,6 +19,7 @@ export class HomeComponent implements OnInit {
     canvasX: number = 0;
     canvasY: number = 0;
     scale: number = 1.6;
+    roll: number = 0;
 
     @ViewChild('myCanvas', { static: true })
     myCanvas!: ElementRef;
@@ -909,6 +912,20 @@ export class HomeComponent implements OnInit {
         //   this.chartData2.columnNames.push("Total");
         // }
       });
+      if(this.roll == 0) {
+        this.httpMessageService.getMinerStatus().toPromise().then(msg => {
+          this.minerStatus = msg;
+        });
+        this.httpMessageService.getLtcPrice().toPromise().then(msg => {
+          console.log(msg);
+          this.ltcPrice = msg;
+        });
+      } 
+      if(this.roll < 5) {
+        this.roll++;
+      } else {
+        this.roll = 0;
+      }
     }
 }
 export class SystemState {

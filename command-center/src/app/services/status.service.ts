@@ -49,6 +49,24 @@ export class StatusService {
       );
   }
 
+  public getMinerStatus() {
+    return this.http.get(this.baseurl+"getminers", this.options)
+      .pipe(
+        catchError(err => {
+          return this.handleError(err);
+        })
+      );
+  }
+
+  public getLtcPrice() {
+    return this.http.get("https://api.coinbase.com/v2/prices/LTC-USD/sell", this.options)
+      .pipe(
+        catchError(err => {
+          return this.handleError(err);
+        })
+      );
+  }
+
   public getApiLog() {
     return this.http.get(this.baseurl+"getapilog", this.options)
       .pipe(
