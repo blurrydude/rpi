@@ -216,12 +216,12 @@ def getminers():
         s.connect((IP, 4028))
         c = "{\"command\":\"stats\"}"
         s.send(c.encode('utf-8'))
-        data = s.recv(2048)
+        data = s.recv(2048).decode('utf-8')
         data = format(data)
         x = data.split("id\":1}")
         y = x[0].replace("}{","},{")+"id\":1}"
         s.close()
-        return y.decode("utf-8")
+        return y
 
 if __name__ == '__main__':
     if dev is False:

@@ -135,7 +135,8 @@ for IP in IPS:
     s.connect((IP, 4028))
     c = "{\"command\":\"stats\"}"
     s.send(c.encode('utf-8'))
-    data = s.recv(2048)
+    data = s.recv(2048).decode('utf-8')
+    # f.close()
     data = format(data)
     x = data.split("id\":1}")
     y = x[0].replace("}{","},{")+"id\":1}"
