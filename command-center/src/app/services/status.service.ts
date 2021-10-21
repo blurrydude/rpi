@@ -13,6 +13,8 @@ export class StatusService {
   public auth: string = '';
   public user: string = '';
   private baseurl: string;
+  private thing1: string = '240aab02f31767b';
+  private thing2: string = 'db4a18d03e3fe8ffb';
   // private byCompanyUrl: string;
   // private triageDetailUrl: string;
   // private loanCalculationUrl: string;
@@ -60,6 +62,15 @@ export class StatusService {
 
   public getLtcPrice() {
     return this.http.get("https://api.coinbase.com/v2/prices/LTC-USD/sell", this.options)
+      .pipe(
+        catchError(err => {
+          return this.handleError(err);
+        })
+      );
+  }
+
+  public getPoolStatus() {
+    return this.http.get("https://www.litecoinpool.org/api?api_key="+this.thing1+this.thing2, this.options)
       .pipe(
         catchError(err => {
           return this.handleError(err);

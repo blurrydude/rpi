@@ -10,6 +10,7 @@ export class HomeComponent implements OnInit {
     @Output() status: SystemState = new SystemState({});
     @Output() minerStatus: any = {};
     @Output() ltcPrice: any = {};
+    @Output() poolStatus: any = {};
     @Output() fast: boolean = true;
     @Output() live: boolean = true;
     @Output() local: boolean = true;
@@ -917,8 +918,10 @@ export class HomeComponent implements OnInit {
           this.minerStatus = msg;
         });
         this.httpMessageService.getLtcPrice().toPromise().then(msg => {
-          console.log(msg);
           this.ltcPrice = msg;
+        });
+        this.httpMessageService.getPoolStatus().toPromise().then(msg => {
+          this.poolStatus = msg;
         });
       } 
       if(this.roll < 5) {
