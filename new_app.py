@@ -208,6 +208,21 @@ def notify(data):
 def circuitauthorityset(ip_address):
     set_circuit_authority(ip_address)
 
+@app.route('/getminers')
+def getminers():
+    IPS = ('192.168.1.40','192.168.1.41','192.168.1.42','192.168.1.43')
+    for IP in IPS:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((IP, 4028))
+        c = "{\"command\":\"stats\"}"
+        s.send(c.encode('utf-8'))
+        data = s.recv(2048)
+        data = format(data)
+        x = data.split("id\":1}")
+        y = x[0].replace("}{","},{")+"id\":1}"
+        s.close()
+        return y.decode("utf-8")
+
 if __name__ == '__main__':
     if dev is False:
         app.run(debug=False, port=8080, host='192.168.1.201')

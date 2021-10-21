@@ -96,32 +96,60 @@
 # r =requests.get('https://api.idkline.com/state')
 # print(r.text)
 
-import paho.mqtt.client as mqtt
-import json
-import time
+# import paho.mqtt.client as mqtt
+# import json
+# import time
 
-client = mqtt.Client()
+# client = mqtt.Client()
 
-circuit_authority = "192.168.1.224"
+# circuit_authority = "192.168.1.224"
 
-def on_message(client, userdata, message):
-    global circuit_authority
-    topic = message.topic
-    text = str(message.payload.decode("utf-8"))
-    name = topic.split("/")[2]
-    peer = json.loads(text)
-    if peer["circuit_authority"] is True and circuit_authority != peer["ip_address"]:
-        circuit_authority = peer["ip_address"]
-        print("circuit authority set: "+circuit_authority)
+# def on_message(client, userdata, message):
+#     global circuit_authority
+#     topic = message.topic
+#     text = str(message.payload.decode("utf-8"))
+#     name = topic.split("/")[2]
+#     peer = json.loads(text)
+#     if peer["circuit_authority"] is True and circuit_authority != peer["ip_address"]:
+#         circuit_authority = peer["ip_address"]
+#         print("circuit authority set: "+circuit_authority)
 
-def connectMqtt():
-    global client
-    client.connect("192.168.1.200")
-    client.on_message = on_message
-    client.on_disconnect = connectMqtt
-    client.subscribe("smarter_circuits/peers/#")
-    client.loop_start()
-    while True:
-        time.sleep(1)
+# def connectMqtt():
+#     global client
+#     client.connect("192.168.1.200")
+#     client.on_message = on_message
+#     client.on_disconnect = connectMqtt
+#     client.subscribe("smarter_circuits/peers/#")
+#     client.loop_start()
+#     while True:
+#         time.sleep(1)
 
-connectMqtt()
+# connectMqtt()
+
+import socket
+from urllib import request, parse
+
+IPS = ('192.168.1.40','192.168.1.41','192.168.1.42','192.168.1.43')
+for IP in IPS:
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((IP, 4028))
+    c = "{\"command\":\"stats\"}"
+    s.send(c.encode('utf-8'))
+    data = s.recv(2048)
+    data = format(data)
+    x = data.split("id\":1}")
+    y = x[0].replace("}{","},{")+"id\":1}"
+    s.close()
+    # f = open(IP.replace(".","_")+".json", "w")
+    # f.write(y)
+    # f.close()
+    #y = y.encode('utf-8')
+    print(y)
+    #URL = "https://script.google.com/a/blurrydude.com/macros/s/AKfycbxT-EbiUIEFF8oldf30E-8CxQQHyYx_wK3xxl6Ui4lQ/dev"
+    # URL = "https://script.google.com/macros/s/AKfycbxDlO5-s2uKougMR5axSUF-aTRxRlVbvkbWT8o-N3SyBKpfBd0n/exec"
+    # PARAMS = parse.urlencode({'data':y,'miner':IP.replace(".","_")}).encode()
+    # req = request.Request(URL,data=PARAMS)
+    # res = request.urlopen(req)
+    # print (res.read())
+
+exit()
