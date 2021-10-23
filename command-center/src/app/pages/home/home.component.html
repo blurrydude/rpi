@@ -68,8 +68,34 @@
         <h2>1 LTC = {{ltcPrice['data']['amount']|currency}}</h2>
         <h3>LTC Pool Data:</h3>
         Expected 24H Reward: {{(poolStatus['user']['expected_24h_rewards'])}} 
-        <span>&nbsp;&middot;&nbsp;</span>
-        <small>{{(poolStatus['user']['expected_24h_rewards']*ltcPrice['data']['amount'])|currency}}</small>
+        <br/>
+        <small>
+          net @ {{ltcPrice['data']['amount']|currency}}:
+          {{(((poolStatus['user']['expected_24h_rewards']*ltcPrice['data']['amount'])*0.75)-1.54)|currency}} daily
+          &nbsp;&middot;&nbsp;
+          {{(((poolStatus['user']['expected_24h_rewards']*ltcPrice['data']['amount'])*0.75)-1.54)*30|currency}} monthly
+        </small>
+        <br/>
+        <small>
+          net @ $150: 
+          {{(((poolStatus['user']['expected_24h_rewards']*150)*0.75)-1.54)|currency}} daily
+          &nbsp;&middot;&nbsp;
+          {{(((poolStatus['user']['expected_24h_rewards']*150)*0.75)-1.54)*30|currency}} monthly
+        </small>
+        <br/>
+        <small>
+          net @ $120: 
+          {{(((poolStatus['user']['expected_24h_rewards']*120)*0.75)-1.54)|currency}} daily
+          &nbsp;&middot;&nbsp;
+          {{(((poolStatus['user']['expected_24h_rewards']*120)*0.75)-1.54)*30|currency}} monthly
+        </small>
+        <br/>
+        <small>
+          net @ $90: 
+          {{(((poolStatus['user']['expected_24h_rewards']*90)*0.75)-1.54)|currency}} daily
+          &nbsp;&middot;&nbsp;
+          {{(((poolStatus['user']['expected_24h_rewards']*90)*0.75)-1.54)*30|currency}} monthly
+        </small>
         <br/>
         <small class="text-muted">{{(((poolStatus['user']['expected_24h_rewards']*ltcPrice['data']['amount'])-((poolStatus['user']['expected_24h_rewards']*ltcPrice['data']['amount'])*0.25))/4)|currency}} net quarter share per day</small>
         <span>&nbsp;&middot;&nbsp;</span>
@@ -85,6 +111,9 @@
         <br/>
         Total Rewards: <small>{{(poolStatus['user']['total_rewards']-55.82397517)}}</small>
         <h4 class="text-info">{{((poolStatus['user']['total_rewards']-55.82397517)*ltcPrice['data']['amount'])|currency}}</h4>
+        <h5 class="text-muted">{{((poolStatus['user']['total_rewards']-55.82397517)*150)*0.75|currency}} net @ $150</h5>
+        <h5 class="text-muted">{{((poolStatus['user']['total_rewards']-55.82397517)*120)*0.75|currency}} net @ $120</h5>
+        <h5 class="text-muted">{{((poolStatus['user']['total_rewards']-55.82397517)*90)*0.75|currency}} net @ $90</h5>
         <small class="text-warning">-{{((poolStatus['user']['total_rewards']-55.82397517)*ltcPrice['data']['amount']*0.25)|currency}} tax</small>
         <h4 class="text-success">{{(((poolStatus['user']['total_rewards']-55.82397517)*ltcPrice['data']['amount'])-((poolStatus['user']['total_rewards']-55.82397517)*ltcPrice['data']['amount']*0.25))|currency}}</h4>
         <small class="text-muted">{{(((poolStatus['user']['total_rewards']-55.82397517)*ltcPrice['data']['amount'])-((poolStatus['user']['total_rewards']-55.82397517)*ltcPrice['data']['amount']*0.25))/4|currency}} quarter share</small>
