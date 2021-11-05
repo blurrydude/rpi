@@ -27,20 +27,21 @@ class SmarterLog:
 
     @staticmethod
     def send_email(smtp_user, smtp_pass, to, subject, body):
-        email_text = """\
-        From: %s
-        To: %s
-        Subject: %s
+        # email_text = """\
+        # From: %s
+        # To: %s
+        # Subject: %s
 
-        %s
-        """ % ('house@smartercircuits.com', to, subject, body)
+        # %s
+        # """ % ('house@smartercircuits.com', to, subject, body)
 
-        try:
-            smtp_server = smtplib.SMTP('smtp.mailgun.com', 587)
-            smtp_server.starttls()
-            smtp_server.login(smtp_user, smtp_pass)
-            smtp_server.sendmail('house@smartercirctuis.com', [to], email_text)
-            smtp_server.quit()
-            SmarterLog.log("SmarterLogging", "Email sent successfully!")
-        except Exception as ex:
-            SmarterLog.log("SmarterLogging", "Failed to send email notification: "+str(ex))
+        # try:
+        #     smtp_server = smtplib.SMTP('smtp.mailgun.com', 587)
+        #     smtp_server.starttls()
+        #     smtp_server.login(smtp_user, smtp_pass)
+        #     smtp_server.sendmail('house@smartercirctuis.com', [to], email_text)
+        #     smtp_server.quit()
+        #     SmarterLog.log("SmarterLogging", "Email sent successfully!")
+        # except Exception as ex:
+        #     SmarterLog.log("SmarterLogging", "Failed to send email notification: "+str(ex))
+        doNothing = True

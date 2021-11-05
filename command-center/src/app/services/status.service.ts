@@ -60,8 +60,17 @@ export class StatusService {
       );
   }
 
-  public getLtcPrice() {
-    return this.http.get("https://api.coinbase.com/v2/prices/LTC-USD/sell", this.options)
+  public getCoinPrice(pair: string) {
+    return this.http.get("https://api.coinbase.com/v2/prices/"+pair+"/sell", this.options)
+      .pipe(
+        catchError(err => {
+          return this.handleError(err);
+        })
+      );
+  }
+
+  public getExchangeRates(coin: string) {
+    return this.http.get("https://api.coinbase.com/v2/exchange-rates?currency="+coin, this.options)
       .pipe(
         catchError(err => {
           return this.handleError(err);
