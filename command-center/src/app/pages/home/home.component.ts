@@ -920,6 +920,7 @@ export class HomeComponent implements OnInit {
       if(this.roll == 0) {
         this.httpMessageService.getMinerStatus().toPromise().then(msg => {
           this.minerStatus = msg;
+          console.log(this.minerStatus)
         });
         this.httpMessageService.getCoinPrice("LTC-USD").toPromise().then(msg => {
           this.ltcPrice = msg;
