@@ -62,7 +62,7 @@
         </div>
       </div>
     </div>
-<!--
+
     <div class="row mt-3 mb-2 text-light text-center">
       <div class="col-md-12">
         <h2>1 LTC = {{ltcPrice['data']['amount']|currency}} ({{ltcExchange['data']['rates']['USDT']}})
@@ -155,10 +155,11 @@
           <small class="text-muted">{{((miner['STATS'][1]['GHS av']*0.00007581*ltcPrice['data']['amount'])-1.536-(((miner['STATS'][1]['GHS av']*0.00007581*ltcPrice['data']['amount'])-1.536)*0.25))/4|currency}} per day</small>
           <span class="text-muted">&nbsp;&middot;&nbsp;</span>
           <small class="text-muted">{{((miner['STATS'][1]['GHS av']*0.0022743*ltcPrice['data']['amount'])-46.08-(((miner['STATS'][1]['GHS av']*0.0022743*ltcPrice['data']['amount'])-46.08)*0.25))/4|currency}} per month</small>
+        -->
         </div>
       </div>
     </div>
-  -->
+  
   <div *ngFor="let miner of minerStatus" class="mb-3">
     PCB 1: {{miner['STATS'][1]['temp2_1']}}<br/>
     PCB 2: {{miner['STATS'][1]['temp2_2']}}<br/>
