@@ -242,6 +242,8 @@ class SmarterCircuitsMCP:
         for peer in self.peers:
             if peer.id in self.last_seen.keys() and self.last_seen[peer.id] < now - timedelta(minutes=2):
                 continue
+            if "192" not in peer.ip_address:
+                continue
             peer_last_octet = int(peer.ip_address.split('.')[3])
             if peer_last_octet > highest_ip:
                 highest_ip = peer_last_octet
