@@ -233,6 +233,10 @@ class SmarterCircuitsMCP:
 
     def check_circuit_authority(self):
         now = datetime.now()
+        if "192" not in self.ip_address:
+            self.ip_address = subprocess.check_output(['hostname', '-I']).decode("utf-8").replace("\n","").split(' ')[0]
+            if "192" not in self.ip_address:
+                return
         last_octet = int(self.ip_address.split('.')[3])
         highest_ip = last_octet
         for peer in self.peers:

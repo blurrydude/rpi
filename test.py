@@ -126,31 +126,189 @@
 
 # connectMqtt()
 
-import socket
-from urllib import request, parse
+# import socket
+# from urllib import request, parse
 
-IPS = ('192.168.1.40','192.168.1.41','192.168.1.42','192.168.1.43')
-for IP in IPS:
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect((IP, 4028))
-    c = "{\"command\":\"stats\"}"
-    s.send(c.encode('utf-8'))
-    data = s.recv(2048).decode('utf-8')
-    # f.close()
-    data = format(data)
-    x = data.split("id\":1}")
-    y = x[0].replace("}{","},{")+"id\":1}"
-    s.close()
-    # f = open(IP.replace(".","_")+".json", "w")
-    # f.write(y)
-    # f.close()
-    #y = y.encode('utf-8')
-    print(y)
-    #URL = "https://script.google.com/a/blurrydude.com/macros/s/AKfycbxT-EbiUIEFF8oldf30E-8CxQQHyYx_wK3xxl6Ui4lQ/dev"
-    # URL = "https://script.google.com/macros/s/AKfycbxDlO5-s2uKougMR5axSUF-aTRxRlVbvkbWT8o-N3SyBKpfBd0n/exec"
-    # PARAMS = parse.urlencode({'data':y,'miner':IP.replace(".","_")}).encode()
-    # req = request.Request(URL,data=PARAMS)
-    # res = request.urlopen(req)
-    # print (res.read())
+# IPS = ('192.168.1.40','192.168.1.41','192.168.1.42','192.168.1.43')
+# for IP in IPS:
+#     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#     s.connect((IP, 4028))
+#     c = "{\"command\":\"stats\"}"
+#     s.send(c.encode('utf-8'))
+#     data = s.recv(2048).decode('utf-8')
+#     # f.close()
+#     data = format(data)
+#     x = data.split("id\":1}")
+#     y = x[0].replace("}{","},{")+"id\":1}"
+#     s.close()
+#     # f = open(IP.replace(".","_")+".json", "w")
+#     # f.write(y)
+#     # f.close()
+#     #y = y.encode('utf-8')
+#     print(y)
+#     #URL = "https://script.google.com/a/blurrydude.com/macros/s/AKfycbxT-EbiUIEFF8oldf30E-8CxQQHyYx_wK3xxl6Ui4lQ/dev"
+#     # URL = "https://script.google.com/macros/s/AKfycbxDlO5-s2uKougMR5axSUF-aTRxRlVbvkbWT8o-N3SyBKpfBd0n/exec"
+#     # PARAMS = parse.urlencode({'data':y,'miner':IP.replace(".","_")}).encode()
+#     # req = request.Request(URL,data=PARAMS)
+#     # res = request.urlopen(req)
+#     # print (res.read())
 
-exit()
+# exit()
+
+# import subprocess
+
+# stuff = [
+#     #"https://winsupplyinc.visualstudio.com/DefaultCollection/ACA/_git/ACA",
+#     "ACA_ParseAck",
+#     "ACAExportFromOnBase",
+#     "ACAManifest",
+#     "AcqPayroll",
+#     "AIMHandler",
+#     "AMDA",
+#     "AMDAConcatenator",
+#     "AnnualReportConcatenation",
+#     "AnnualReportImport",
+#     "APPDUpdateOB",
+#     "APPortalAPI",
+#     "APVendorMerge",
+#     "ArchiveCompany",
+#     "AreaLeaderEmail",
+#     "BI-RDL",
+#     "CloudOCR_ParseXML",
+#     "CloudOCR_VendorFile",
+#     "CopyReceiver",
+#     "DeletedDoubleCheck",
+#     "DocumentData",
+#     "DocumentValidationOBandMF",
+#     "DW_SQLServerObjects",
+#     "e941Helper",
+#     "e941Processor",
+#     "FITServices",
+#     "FixVIRMismatch",
+#     "FootnoteData",
+#     "GetOBDocumentData",
+#     "ImportLIFO",
+#     "IOWN_CreateDummyInvoices",
+#     "IOWNProcessor",
+#     "IOWNReconciliation",
+#     "IOWNSummary",
+#     "IRSCaller",
+#     "IRSTransmission",
+#     "ItemReassign",
+#     "LIFOParsing",
+#     "LocalCompanyInformationUpdate",
+#     "LoggingService",
+#     "OBStorageService",
+#     "OBTauliaWebService",
+#     "ODWInvoiceImport",
+#     "OnBase%20Disk%20Validation",
+#     "OnBase%20Health%20Check",
+#     "OnBase.Utilities.OBCheckRunAudit",
+#     "OnBase_ImportWCMS",
+#     "OnBaseDataMigration",
+#     "OnbaseEditor",
+#     "OnBaseUserCopy",
+#     "ParseEDI",
+#     "ParsePayments",
+#     "ParsePayments_CorrectItemNums",
+#     "ParsePayments_UpdateOnBase",
+#     "POSync",
+#     "Processors.Rebates.PopulateVendors",
+#     "R2R%20Import",
+#     "Rebates_FindPayables",
+#     "Rebates_VendorReportProcessor",
+#     "REMS_CompanyInfoUpdate",
+#     "RoadmapImport",
+#     "Service.WSS.BackorderManagement",
+#     "ServiceCheck",
+#     "Services.Lookup.DocumentData",
+#     "Services.Mainframe.DirectDeposit",
+#     "Services.Mainframe.GetCurrentFinancialPeriod",
+#     "Services.OnBase.DebitMemo",
+#     "Services.OnBase.DebitMemoCore",
+#     "Services.OnBase.DocumentData",
+#     "Services.OnBase.DocumentUpload",
+#     "Services.OnBase.GetDebitMemoList",
+#     "Services.OnBase.GetUserGroups",
+#     "Services.OnBase.GLAccount",
+#     "Services.OnBase.InvoiceNbr",
+#     "Services.OnBase.InvoiceTerms",
+#     "Services.OnBase.IOWN",
+#     "Services.OnBase.LocalCompanyInfo",
+#     "Services.OnBase.LocalCompanyLookup",
+#     "Services.OnBase.MatchableDebits",
+#     "Services.OnBase.MTR",
+#     "Services.OnBase.ReconciliationToReceiver",
+#     "Services.OnBase.UPSData",
+#     "Services.OnBase.ValidateVendor",
+#     "Services.OnBase.VEA",
+#     "Services.OnBase.VendorAutocomplete",
+#     "Services.OnBase.VendorAutofillUpdates",
+#     "Services.OnBase.VendorLocations",
+#     "Services.OnBase.VendorLookup",
+#     "Services.OnBase.VendorUpdate",
+#     "Services.OnBase.WIPA_ForceMatch",
+#     "Services.OnBase.WIPA_VIR",
+#     "Services.OnBase.WISE_DebitMemo",
+#     "Services.RebatesManagement",
+#     "Services.REMS.LocalCompanyFinancials",
+#     "Services.REMS.PIFTransmission",
+#     "Services.REMS.REMSData",
+#     "Services.Taulia.BusinessUnit",
+#     "Services.Taulia.EarlyPayment",
+#     "Services.Taulia.Invoices",
+#     "Services.Taulia.Payment",
+#     "Services.Taulia.PurchaseOrder",
+#     "Services.Taulia.Supplier",
+#     "Services.WebpageToPDF",
+#     "Services.WSS.JCIForecast",
+#     "TauliaDynamicDiscountReport",
+#     "TauliaUtil_Invoice",
+#     "TauliaUtil_PO",
+#     "tcaccessTest",
+#     "Test",
+#     "TWM_MatchEngineLegacy",
+#     "UnitySchedulerErrorNotifications",
+#     "UnityTaskSchedulerAutoClearError",
+#     "UpdateMFVendorData",
+#     "UpdateTTMAutofill",
+#     "UpdateVendorInfoForms",
+#     "UPSInvoiceProcessing",
+#     "Utility.APEDI_Audit",
+#     "Utility.IOWN_GetCompanyData",
+#     "Utility.IOWNReconciliation",
+#     "Utility.UpdateKeyword",
+#     "VoidReissueProcessing",
+#     "What",
+#     "Win.Taulia.Standard",
+#     "WinReportService",
+#     "WIPA_MatchEngine",
+#     "WIPA_MatchEngineExtreme"
+# ]
+
+# for thing in stuff:
+#     place = thing.split('/')
+#     place = place[len(place)-1]
+#     subprocess.call("git clone https://winsupplyinc.visualstudio.com/DefaultCollection/"+thing+"/_git/"+thing+" C:/WINREPO/"+place)
+
+import os
+rootdir = 'C:/WINREPO/'
+
+term = "https://onbasews1.winwholesale.com/"#GetCurrentFinancialPeriod/api/financial/period"
+
+targets = []
+
+for subdir, dirs, files in os.walk(rootdir):
+    for file in files:
+        p = os.path.join(subdir, file)
+        if file.endswith(".cs"):
+            try:
+                f = open(p,mode='r')
+                text = f.read().lower()
+                f.close()
+                if term.lower() in text:
+                    targets.append(p)
+            except:
+                print("can't read "+p)
+
+print(targets)
