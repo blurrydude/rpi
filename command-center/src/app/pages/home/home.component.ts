@@ -10,6 +10,10 @@ export class HomeComponent implements OnInit {
     @Output() status: SystemState = new SystemState({});
     @Output() minerStatus: any = {};
     @Output() ltcPrice: any = {};
+    @Output() tezosPrice: any = {};
+    @Output() algoPrice: any = {};
+    @Output() tezosExchange: any = {};
+    @Output() ltcExchange: any = {};
     @Output() poolStatus: any = {};
     @Output() fast: boolean = true;
     @Output() live: boolean = true;
@@ -916,9 +920,22 @@ export class HomeComponent implements OnInit {
       if(this.roll == 0) {
         this.httpMessageService.getMinerStatus().toPromise().then(msg => {
           this.minerStatus = msg;
+          console.log(this.minerStatus)
         });
-        this.httpMessageService.getLtcPrice().toPromise().then(msg => {
+        this.httpMessageService.getCoinPrice("LTC-USD").toPromise().then(msg => {
           this.ltcPrice = msg;
+        });
+        this.httpMessageService.getCoinPrice("ALGO-USD").toPromise().then(msg => {
+          this.algoPrice = msg;
+        });
+        this.httpMessageService.getCoinPrice("XTZ-USD").toPromise().then(msg => {
+          this.tezosPrice = msg;
+        });
+        this.httpMessageService.getExchangeRates("XTZ").toPromise().then(msg => {
+          this.tezosExchange = msg;
+        });
+        this.httpMessageService.getExchangeRates("LTC").toPromise().then(msg => {
+          this.ltcExchange = msg;
         });
         this.httpMessageService.getPoolStatus().toPromise().then(msg => {
           this.poolStatus = msg;

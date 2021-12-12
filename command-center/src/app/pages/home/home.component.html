@@ -65,7 +65,11 @@
 
     <div class="row mt-3 mb-2 text-light text-center">
       <div class="col-md-12">
-        <h2>1 LTC = {{ltcPrice['data']['amount']|currency}}</h2>
+        <h2>1 LTC = {{ltcPrice['data']['amount']|currency}} ({{ltcExchange['data']['rates']['USDT']}})
+          = {{ltcExchange['data']['rates']['XTZ']}} XTZ {{ltcExchange['data']['rates']['XTZ']*tezosPrice['data']['amount']|currency}}
+        </h2>
+        <h2>1 ALGO = {{algoPrice['data']['amount']|currency}}</h2>
+        <h2>1 XTZ = {{tezosPrice['data']['amount']|currency}}</h2>
         <h3>LTC Pool Data:</h3>
         Expected 24H Reward: {{(poolStatus['user']['expected_24h_rewards'])}} 
         <br/>
@@ -118,13 +122,13 @@
         <h4 class="text-success">{{(((poolStatus['user']['total_rewards']-55.82397517)*ltcPrice['data']['amount'])-((poolStatus['user']['total_rewards']-55.82397517)*ltcPrice['data']['amount']*0.25))|currency}}</h4>
         <small class="text-muted">{{(((poolStatus['user']['total_rewards']-55.82397517)*ltcPrice['data']['amount'])-((poolStatus['user']['total_rewards']-55.82397517)*ltcPrice['data']['amount']*0.25))/4|currency}} quarter share</small>
         <br/>
-        <!--Lifetime Rewards: {{(poolStatus['user']['total_rewards'])}} <small>({{(poolStatus['user']['total_rewards']*ltcPrice['data']['amount'])|currency}})</small>-->
+        Lifetime Rewards: {{(poolStatus['user']['total_rewards'])}} <small>({{(poolStatus['user']['total_rewards']*ltcPrice['data']['amount'])|currency}})</small>
         <h3>LTC Miner Speeds:</h3>
         <div *ngFor="let miner of minerStatus" class="mb-3">
           <h5>{{miner['STATS'][1]['GHS av']}} MH/s </h5>
           <span class="mx-2">{{(miner['STATS'][1]['GHS av']*0.000003159)|number:'1.1-10'}} LTC per hour</span>
           <br/>
-          <span>GROSS &middot;</span>
+          <!-- <span>GROSS &middot;</span>
           <span class="mx-2">{{(miner['STATS'][1]['GHS av']*0.000003159*ltcPrice['data']['amount'])|currency}} per hour</span>
           <span>&nbsp;&middot;&nbsp;</span>
           <small>{{(miner['STATS'][1]['GHS av']*0.00007581*ltcPrice['data']['amount'])|currency}} per day</small>
@@ -151,9 +155,19 @@
           <small class="text-muted">{{((miner['STATS'][1]['GHS av']*0.00007581*ltcPrice['data']['amount'])-1.536-(((miner['STATS'][1]['GHS av']*0.00007581*ltcPrice['data']['amount'])-1.536)*0.25))/4|currency}} per day</small>
           <span class="text-muted">&nbsp;&middot;&nbsp;</span>
           <small class="text-muted">{{((miner['STATS'][1]['GHS av']*0.0022743*ltcPrice['data']['amount'])-46.08-(((miner['STATS'][1]['GHS av']*0.0022743*ltcPrice['data']['amount'])-46.08)*0.25))/4|currency}} per month</small>
+        -->
         </div>
       </div>
     </div>
-
+  
+  <div *ngFor="let miner of minerStatus" class="mb-3">
+    PCB 1: {{miner['STATS'][1]['temp2_1']}}<br/>
+    PCB 2: {{miner['STATS'][1]['temp2_2']}}<br/>
+    PCB 3: {{miner['STATS'][1]['temp2_3']}}<br/>
+    PCB 4: {{miner['STATS'][1]['temp2_4']}}<br/>
+    Fan 1: {{miner['STATS'][1]['fan1']}}<br/>
+    Fan 2: {{miner['STATS'][1]['fan2']}}<br/>
+    MH/s 5s avg: {{miner['STATS'][1]['GHS 5s']}}
+  </div>
   </div>
 </div>
