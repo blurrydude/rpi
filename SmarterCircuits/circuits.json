@@ -78,10 +78,10 @@
     "zones":["Exterior", "Deck"]}, 
 
     {"location":"","ip_address":"192.168.1.112",
-    "id": "shelly1pm-8CAAB55F83AA", "relay_id":"0", "name":"Circulating Fan",
+    "id": "shelly1pm-8CAAB55F83AA", "relay_id":"0", "name":"Switch System",
     "on_modes": [],
     "off_modes":["Alert"],
-    "zones":["Ventilation"]}, 
+    "zones":["Garage"]}, 
 
     {"location":"","ip_address":"192.168.1.113",
     "id": "shelly1pm-8CAAB55F8173", "relay_id":"0", "name":"Day Room Light",
