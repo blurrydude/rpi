@@ -12,7 +12,7 @@ myname = socket.gethostname()
 myip = subprocess.check_output(['hostname', '-I'])
 ############# CONFIG #############
 listentopic = "commands"
-broker = "192.168.1.200"
+broker = "192.168.2.200"
 led_count = 16
 ##################################
 if myname == "windowpi":

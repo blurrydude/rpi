@@ -207,7 +207,7 @@ reverse_lookup = {} #I can't figure out a better or faster way
 text_var = {}
 myname = socket.gethostname()
 ############# CONFIG #############
-broker = "192.168.1.200"
+broker = "192.168.2.200"
 button_height = 1
 base_font = ("Times", 12)
 header_font = ("Times", 16)

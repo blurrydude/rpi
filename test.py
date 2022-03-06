@@ -20,7 +20,7 @@
 
 # #print(os.path.dirname(os.path.realpath(__file__)))
 
-# #set_mqtt = "settings/mqtt?mqtt_server=192.168.1.200:1883"
+# #set_mqtt = "settings/mqtt?mqtt_server=192.168.2.200:1883"
 
 # # passwords = json.load(open("SmarterCircuits/secrets.json"))
 # # circuits = json.load(open("SmarterCircuits/circuits.json"))
@@ -116,7 +116,7 @@
 
 # def connectMqtt():
 #     global client
-#     client.connect("192.168.1.200")
+#     client.connect("192.168.2.200")
 #     client.on_message = on_message
 #     client.on_disconnect = connectMqtt
 #     client.subscribe("smarter_circuits/peers/#")

@@ -185,7 +185,7 @@ colors = [
 
 myname = socket.gethostname()
 ############# CONFIG #############
-broker = "192.168.1.200"
+broker = "192.168.2.200"
 button_height = 2
 button_width = 20
 ##################################

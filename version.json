@@ -1,12 +1,12 @@
 {
-    "command_garage": "1.0.7",
-    "command_light": "0.1.4",
-    "mqtt_rgb": "0.1.6",
-    "command_whitenoise": "0.1.5",
-    "new_interface": "0.4.4",
-    "app": "2.5.3",
-    "command_center": "1.5.5",
-    "thermostat": "0.3.7",
-    "system_monitor" : "0.1.8",
-    "roller": "0.0.5"
+    "command_garage": "1.0.8",
+    "command_light": "0.1.5",
+    "mqtt_rgb": "0.1.7",
+    "command_whitenoise": "0.1.6",
+    "new_interface": "0.4.5",
+    "app": "2.5.4",
+    "command_center": "1.5.6",
+    "thermostat": "0.3.8",
+    "system_monitor" : "0.1.9",
+    "roller": "0.0.6"
 }

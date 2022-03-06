@@ -6,7 +6,7 @@ import socket
 
 myname = socket.gethostname()
 ############# CONFIG #############
-broker = "192.168.1.200"
+broker = "192.168.2.200"
 live = True
 ##################################
 last_press = 0
