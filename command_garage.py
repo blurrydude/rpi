@@ -68,7 +68,7 @@ if __name__ == "__main__":
     p.init()
     client.on_message = on_message
     client.on_disconnect = on_disconnect
-    client.connect('192.168.1.200')
+    client.connect('192.168.2.200')
     topic = 'smarter_circuits/baydoors/command'
     #print('subscribing to '+topic)
     client.subscribe(topic)

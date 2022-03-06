@@ -75,7 +75,7 @@ def sendCommand(command):
 
 if __name__ == "__main__":
     client.on_message = on_message
-    client.connect('192.168.1.200')
+    client.connect('192.168.2.200')
     for sensor in sensors:
         topic = 'shellies/'+sensor["address"]+'/status'
         print('subscribing to '+topic)

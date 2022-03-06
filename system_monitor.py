@@ -67,7 +67,7 @@ def initializeMqtt():
     log('initializeMqtt')
     client.on_message = on_message
     client.on_disconnect = on_disconnect
-    client.connect('192.168.1.200')
+    client.connect('192.168.2.200')
     client.subscribe('shellies/#')
     client.subscribe('pi/#')
     client.loop_start()

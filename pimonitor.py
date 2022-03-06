@@ -32,7 +32,7 @@ def on_message(client, userdata, message):
 
 if __name__ == "__main__":
     client.on_message = on_message
-    client.connect('192.168.1.200')
+    client.connect('192.168.2.200')
     client.subscribe('pi/#')
     client.loop_start()
     while running is True:

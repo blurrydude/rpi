@@ -137,7 +137,7 @@ if __name__ == "__main__":
         sendReport("ir", "closed")
     client.on_message = on_message
     client.on_disconnect = on_disconnect
-    client.connect('192.168.1.200')
+    client.connect('192.168.2.200')
     topic = 'pi/' + myname + '/commands'
     #print('subscribing to '+topic)
     client.subscribe(topic)
