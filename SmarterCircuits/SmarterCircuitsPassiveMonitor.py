@@ -102,7 +102,7 @@ class SmarterCircuitsPassiveMonitor:
             for i in range(len(wrapped)):
                 labels.append(SmartLabel(i+1,1,wrapped[i],"Times",38,"black","white",5,5))
             self.screen_wipe(labels)
-            self.tonegen.play(44100, 2, 1)
+            self.tonegen.play(440, 2, 1)
             _thread.start_new_thread(self.screen_open, ())
             _thread.start_new_thread(self.screen_close_timer, ())
 
