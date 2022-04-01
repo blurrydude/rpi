@@ -3,7 +3,7 @@
     "command_light": "0.2.6",
     "mqtt_rgb": "0.2.8",
     "command_whitenoise": "0.2.7",
-    "new_interface": "0.5.6",
+    "new_interface": "0.6.6",
     "app": "2.6.6",
     "command_center": "1.6.8",
     "thermostat": "0.4.9",
