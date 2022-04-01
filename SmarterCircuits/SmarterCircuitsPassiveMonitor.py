@@ -113,12 +113,18 @@ class SmarterCircuitsPassiveMonitor:
         if self.display_on is False:
             os.system("echo 'on 0.0.0.0' | cec-client -s -d 1")
             self.display_on = True
-            time.sleep(2000)
-            self.tonegen.play(440, 1, 0.5)
-            time.sleep(500)
-            self.tonegen.play(880, 1, 0.5)
-            time.sleep(500)
-            self.tonegen.play(990, 1, 0.5)
+        time.sleep(5)
+        self.tonegen.play(440, 1, 0.5)
+        time.sleep(0.5)
+        self.tonegen.play(880, 1, 0.5)
+        time.sleep(0.5)
+        self.tonegen.play(990, 1, 0.5)
+        time.sleep(0.5)
+        self.tonegen.play(440, 1, 0.5)
+        time.sleep(0.5)
+        self.tonegen.play(880, 1, 0.5)
+        time.sleep(0.5)
+        self.tonegen.play(990, 1, 0.5)
 
     def screen_close_timer(self):
         time.sleep(90)
