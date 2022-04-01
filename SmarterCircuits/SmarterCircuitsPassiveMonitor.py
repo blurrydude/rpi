@@ -1,3 +1,4 @@
+import textwrap
 from time import sleep
 import SmarterCircuitsMQTT
 import os
@@ -22,9 +23,6 @@ class SmarterCircuitsPassiveMonitor:
         self.window.attributes("-fullscreen", 1)
         self.window.geometry(str(width)+"x"+str(height))
         self.window.configure(bg='black')
-        self.window.columnconfigure(0, minsize=width*0.1)
-        self.window.columnconfigure(1, minsize=width*0.8)
-        self.window.columnconfigure(2, minsize=width*0.1)
         self.window.mainloop()
     
     def stop(self):
@@ -39,20 +37,27 @@ class SmarterCircuitsPassiveMonitor:
             if text == "closecloseclose":
                 self.stop()
                 return
-            if self.display_on is False:
-                os.system("echo 'on 0.0.0.0' | cec-client -s -d 1")
-                self.display_on = True
             # print("alerting: "+text)
             # pyautogui.alert(text, "HOUSE ALERT")
+            labels = []
+            wrapped = textwrap.wrap(text,32).split("\n")
+            for i in range(len(wrapped)):
+                labels.append(SmartLabel(i+1,1,wrapped[i],"Times",32,"black","white",5,5))
             self.screen_wipe([
-                SmartLabel(1,1,text,"Times",32,"black","white",5,5)
+                
             ])
+            _thread.start_new_thread(self.screen_open, ())
             _thread.start_new_thread(self.screen_close_timer, ())
 
         except Exception as e: 
             error = str(e)
             print(error)
     
+    def screen_open(self):
+        if self.display_on is False:
+            os.system("echo 'on 0.0.0.0' | cec-client -s -d 1")
+            self.display_on = True
+
     def screen_close_timer(self):
         time.sleep(30)
         if self.display_on is True:
