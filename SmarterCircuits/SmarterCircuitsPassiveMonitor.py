@@ -6,6 +6,12 @@ import time
 class SmarterCircuitsPassiveMonitor:
     def __init__(self):
         self.mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(["192.168.2.200"],["notifications"],self.on_message)
+        self.running = True
+        self.start()
+
+    def start(self):
+        while self.running is True:
+            time.sleep(1)
     
     def on_message(self, client, userdata, message):
         try:
@@ -19,3 +25,6 @@ class SmarterCircuitsPassiveMonitor:
         except Exception as e: 
             error = str(e)
             print(error)
+
+if __name__ == "__main__":
+    scpm = SmarterCircuitsPassiveMonitor()
