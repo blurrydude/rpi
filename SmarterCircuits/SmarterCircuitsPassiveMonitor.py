@@ -35,6 +35,9 @@ class SmarterCircuitsPassiveMonitor:
         try:
             topic = message.topic
             text = str(message.payload.decode("utf-8"))
+            if text == "closecloseclose":
+                self.stop()
+                return
             if self.display_on is False:
                 os.system("echo 'on 0.0.0.0' | cec-client -s -d 1")
                 self.display_on = True
