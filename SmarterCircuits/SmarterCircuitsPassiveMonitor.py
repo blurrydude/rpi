@@ -47,7 +47,7 @@ class SmarterCircuitsPassiveMonitor:
             self.screen_wipe([
                 SmartLabel(1,1,text,"Times",32,"black","white",5,5)
             ])
-            _thread.start_new_thread(self.start_listening, ())
+            _thread.start_new_thread(self.screen_close_timer, ())
 
         except Exception as e: 
             error = str(e)
