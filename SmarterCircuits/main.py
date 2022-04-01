@@ -410,6 +410,7 @@ class SmarterCircuitsMCP:
         while now < auto_off_time:
             now = datetime.now()
             time.sleep(1)
+        time.sleep(1)
             
         SmarterLog.log("SmarterCircuitsMCP","Time's up: "+sensor.name)
         for command in sensor.commands:
