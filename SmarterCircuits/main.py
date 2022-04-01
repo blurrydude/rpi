@@ -537,8 +537,8 @@ class SmarterCircuitsMCP:
     def battery_status_check(self, sensor):
         if sensor.status.battery < 50:
             SmarterLog.log("BATTERY STATUS","Battery Low: "+sensor.id+"("+sensor.name+")")
-            if self.circuit_authority is True:
-                self.mqtt.publish("notifications","Battery Low: "+sensor.id+"("+sensor.name+")")
+            # if self.circuit_authority is True:
+                #self.mqtt.publish("notifications","Battery Low: "+sensor.id+"("+sensor.name+")")
                 #SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",sensor.name+" battery at "+str(sensor.status.battery)+"%",sensor.name+" battery at "+str(sensor.status.battery)+"%")
     
     def conditions_met(self, conditions):
