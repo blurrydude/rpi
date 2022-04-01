@@ -114,6 +114,7 @@ class SmarterCircuitsPassiveMonitor:
             os.system("echo 'on 0.0.0.0' | cec-client -s -d 1")
             self.display_on = True
         time.sleep(5)
+        print('\a')
         self.tonegen.play(440, 1, 0.5)
         time.sleep(0.5)
         self.tonegen.play(880, 1, 0.5)
