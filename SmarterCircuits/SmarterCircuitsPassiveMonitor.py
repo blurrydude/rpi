@@ -11,6 +11,7 @@ class SmarterCircuitsPassiveMonitor:
         self.running = True
         self.window = tk.Tk()
         self.labels = []
+        self.display_on = False
         self.start()
 
     def start(self):
@@ -20,6 +21,9 @@ class SmarterCircuitsPassiveMonitor:
         self.window.attributes("-fullscreen", 1)
         self.window.geometry(str(width)+"x"+str(height))
         self.window.configure(bg='black')
+        self.window.columnconfigure(0, minsize=width*0.1)
+        self.window.columnconfigure(1, minsize=width*0.8)
+        self.window.columnconfigure(2, minsize=width*0.1)
         self.window.mainloop()
     
     def stop(self):
@@ -31,14 +35,18 @@ class SmarterCircuitsPassiveMonitor:
         try:
             topic = message.topic
             text = str(message.payload.decode("utf-8"))
-            os.system("echo 'on 0.0.0.0' | cec-client -s -d 1")
+            if self.display_on is False:
+                os.system("echo 'on 0.0.0.0' | cec-client -s -d 1")
+                self.display_on = True
             # print("alerting: "+text)
             # pyautogui.alert(text, "HOUSE ALERT")
             self.screen_wipe([
-                SmartLabel(1,1,text,"Times",24,"black","white",5,5)
+                SmartLabel(2,2,text,"Times",32,"black","white",5,5)
             ])
             time.sleep(30)
-            os.system("echo 'standby 0.0.0.0' | cec-client -s -d 1")
+            if self.display_on is True:
+                os.system("echo 'standby 0.0.0.0' | cec-client -s -d 1")
+                self.display_on = False
 
         except Exception as e: 
             error = str(e)
