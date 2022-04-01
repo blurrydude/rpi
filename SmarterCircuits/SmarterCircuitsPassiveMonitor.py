@@ -4,6 +4,7 @@ import os
 import time
 import pyautogui
 import tkinter as tk
+import _thread
 
 class SmarterCircuitsPassiveMonitor:
     def __init__(self):
@@ -46,14 +47,17 @@ class SmarterCircuitsPassiveMonitor:
             self.screen_wipe([
                 SmartLabel(1,1,text,"Times",32,"black","white",5,5)
             ])
-            time.sleep(30)
-            if self.display_on is True:
-                os.system("echo 'standby 0.0.0.0' | cec-client -s -d 1")
-                self.display_on = False
+            _thread.start_new_thread(self.start_listening, ())
 
         except Exception as e: 
             error = str(e)
             print(error)
+    
+    def screen_close_timer(self):
+        time.sleep(30)
+        if self.display_on is True:
+            os.system("echo 'standby 0.0.0.0' | cec-client -s -d 1")
+            self.display_on = False
     
     def screen_wipe(self, labels):
         self.clear()
