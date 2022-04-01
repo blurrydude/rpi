@@ -44,7 +44,7 @@ class SmarterCircuitsPassiveMonitor:
             # print("alerting: "+text)
             # pyautogui.alert(text, "HOUSE ALERT")
             self.screen_wipe([
-                SmartLabel(2,2,text,"Times",32,"black","white",5,5)
+                SmartLabel(1,1,text,"Times",32,"black","white",5,5)
             ])
             time.sleep(30)
             if self.display_on is True:
