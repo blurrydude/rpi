@@ -57,19 +57,20 @@ class SmarterCircuitsPassiveMonitor:
             os.system("echo 'on 0.0.0.0' | cec-client -s -d 1")
             self.display_on = True
         time.sleep(5)
-        beep(sound="ping")
+        
+        beepy.beep(sound="ping")
         time.sleep(0.5)
-        beep(sound="ping")
+        beepy.beep(sound="ping")
         time.sleep(0.5)
-        beep(sound="ping")
+        beepy.beep(sound="ping")
         time.sleep(0.5)
-        beep(sound="ping")
+        beepy.beep(sound="ping")
         time.sleep(0.5)
-        beep(sound="ping")
+        beepy.beep(sound="ping")
         time.sleep(0.5)
-        beep(sound="ping")
+        beepy.beep(sound="ping")
         time.sleep(0.5)
-        beep(sound="ping")
+        beepy.beep(sound="ping")
 
     def screen_close_timer(self):
         time.sleep(90)
