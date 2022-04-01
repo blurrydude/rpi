@@ -102,7 +102,6 @@ class SmarterCircuitsPassiveMonitor:
             for i in range(len(wrapped)):
                 labels.append(SmartLabel(i+1,1,wrapped[i],"Times",38,"black","white",5,5))
             self.screen_wipe(labels)
-            self.tonegen.play(440, 2, 1)
             _thread.start_new_thread(self.screen_open, ())
             _thread.start_new_thread(self.screen_close_timer, ())
 
@@ -114,6 +113,12 @@ class SmarterCircuitsPassiveMonitor:
         if self.display_on is False:
             os.system("echo 'on 0.0.0.0' | cec-client -s -d 1")
             self.display_on = True
+            time.sleep(2000)
+            self.tonegen.play(440, 1, 0.5)
+            time.sleep(500)
+            self.tonegen.play(440, 1, 0.5)
+            time.sleep(500)
+            self.tonegen.play(440, 1, 0.5)
 
     def screen_close_timer(self):
         time.sleep(90)
