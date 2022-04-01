@@ -2,6 +2,7 @@ from time import sleep
 import SmarterCircuitsMQTT
 import os
 import time
+import pyautogui
 
 class SmarterCircuitsPassiveMonitor:
     def __init__(self):
@@ -18,7 +19,8 @@ class SmarterCircuitsPassiveMonitor:
             topic = message.topic
             text = str(message.payload.decode("utf-8"))
             os.system("echo 'on 0.0.0.0' | cec-client -s -d 1")
-            print(text)
+            print("alerting: "+text)
+            pyautogui.alert(text, "HOUSE ALERT")
             time.sleep(30)
             os.system("echo 'standby 0.0.0.0' | cec-client -s -d 1")
 
