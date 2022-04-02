@@ -45,8 +45,9 @@ class SmarterCircuitsPassiveMonitor:
             for i in range(len(wrapped)):
                 labels.append(SmartLabel(i+1,1,wrapped[i],"Times",38,"black","white",5,5))
             self.screen_wipe(labels)
-            _thread.start_new_thread(self.screen_open, ())
-            _thread.start_new_thread(self.screen_close_timer, ())
+            if self.display_on == False:
+                _thread.start_new_thread(self.screen_open, ())
+                _thread.start_new_thread(self.screen_close_timer, ())
 
         except Exception as e: 
             error = str(e)
@@ -72,7 +73,7 @@ class SmarterCircuitsPassiveMonitor:
         beepy.beep(sound="ping")
 
     def screen_close_timer(self):
-        time.sleep(90)
+        time.sleep(120)
         if self.display_on is True:
             os.system("echo 'standby 0.0.0.0' | cec-client -s -d 1")
             self.display_on = False
