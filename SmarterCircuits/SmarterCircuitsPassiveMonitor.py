@@ -15,6 +15,7 @@ class SmarterCircuitsPassiveMonitor:
         self.window = tk.Tk()
         self.labels = []
         self.display_on = False
+        self.screen_timer = 0
         self.start()
 
     def start(self):
@@ -57,26 +58,30 @@ class SmarterCircuitsPassiveMonitor:
         if self.display_on is False:
             os.system("echo 'on 0.0.0.0' | cec-client -s -d 1")
             self.display_on = True
-        time.sleep(5)
-        beepy.beep(sound="ping")
-        time.sleep(0.5)
-        beepy.beep(sound="ping")
-        time.sleep(0.5)
-        beepy.beep(sound="ping")
-        time.sleep(0.5)
-        beepy.beep(sound="ping")
-        time.sleep(0.5)
-        beepy.beep(sound="ping")
-        time.sleep(0.5)
-        beepy.beep(sound="ping")
-        time.sleep(0.5)
-        beepy.beep(sound="ping")
+        # time.sleep(5)
+        # beepy.beep(sound="ping")
+        # time.sleep(0.5)
+        # beepy.beep(sound="ping")
+        # time.sleep(0.5)
+        # beepy.beep(sound="ping")
+        # time.sleep(0.5)
+        # beepy.beep(sound="ping")
+        # time.sleep(0.5)
+        # beepy.beep(sound="ping")
+        # time.sleep(0.5)
+        # beepy.beep(sound="ping")
+        # time.sleep(0.5)
+        # beepy.beep(sound="ping")
 
     def screen_close_timer(self):
-        time.sleep(120)
-        if self.display_on is True:
+        if self.screen_timer >= 120:
+            self.screen_timer = 0
             os.system("echo 'standby 0.0.0.0' | cec-client -s -d 1")
             self.display_on = False
+        else:
+            self.screen_timer = self.screen_timer + 1
+            time.sleep(1)
+            self.screen_close_timer()
     
     def screen_wipe(self, labels):
         self.clear()
