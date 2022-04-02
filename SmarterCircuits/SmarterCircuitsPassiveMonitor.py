@@ -44,7 +44,7 @@ class SmarterCircuitsPassiveMonitor:
             labels = []
             wrapped = textwrap.wrap(text,24)#.split("\n")
             for i in range(len(wrapped)):
-                labels.append(SmartLabel(i+1,1,wrapped[i],"Times",48,"black","white",5,5))
+                labels.append(SmartLabel(i+1,1,wrapped[i],"Times",56,"black","white",5,5))
             self.screen_wipe(labels)
             if self.display_on == False:
                 _thread.start_new_thread(self.screen_open, ())
