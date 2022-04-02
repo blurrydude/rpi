@@ -42,9 +42,9 @@ class SmarterCircuitsPassiveMonitor:
             # print("alerting: "+text)
             # pyautogui.alert(text, "HOUSE ALERT")
             labels = []
-            wrapped = textwrap.wrap(text,32)#.split("\n")
+            wrapped = textwrap.wrap(text,24)#.split("\n")
             for i in range(len(wrapped)):
-                labels.append(SmartLabel(i+1,1,wrapped[i],"Times",38,"black","white",5,5))
+                labels.append(SmartLabel(i+1,1,wrapped[i],"Times",48,"black","white",5,5))
             self.screen_wipe(labels)
             if self.display_on == False:
                 _thread.start_new_thread(self.screen_open, ())
