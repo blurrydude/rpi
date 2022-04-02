@@ -49,6 +49,8 @@ class SmarterCircuitsPassiveMonitor:
             if self.display_on == False:
                 _thread.start_new_thread(self.screen_open, ())
                 _thread.start_new_thread(self.screen_close_timer, ())
+            else:
+                self.screen_timer = 120
 
         except Exception as e: 
             error = str(e)
