@@ -533,6 +533,10 @@ class SmarterCircuitsMCP:
                 self.execute_command("turn on "+circuit.name.lower())
             if self.mode.lower() in (string.lower() for string in circuit.off_modes):
                 self.execute_command("turn off "+circuit.name.lower())
+            if self.mode == "night":
+                self.execute_command("close shades")
+            if self.mode == "morning":
+                self.execute_command("open shades")
     
     def battery_status_check(self, sensor):
         if sensor.status.battery < 50:
