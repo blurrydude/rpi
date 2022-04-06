@@ -46,6 +46,7 @@ class SmarterMQTTClient:
     def subscribe_to_topics(self):
         self.log("subscribe_to_topics")
         for topic in self.topics:
+            self.log("subscribe to "+topic)
             self.client.subscribe(topic)
 
     def on_connect(self, client, userdata, flags, rc):
