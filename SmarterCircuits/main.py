@@ -74,10 +74,10 @@ class SmarterCircuitsMCP:
         if self.config.rollerdoor is True:
             SmarterLog.log("SmarterCircuitsMCP","instantiating rollerdoor...")
             self.rollerdoor = Rollerdoor(self,self.name)
-        else:
-            while self.running is True:
-                time.sleep(1)
-            self.stop()
+        #else:
+        while self.running is True:
+            time.sleep(1)
+        self.stop()
     
     def check_for_updates(self):
         modified = 0
