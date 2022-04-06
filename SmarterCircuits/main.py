@@ -502,6 +502,7 @@ class SmarterCircuitsMCP:
         s = topic.split("/")
         name = s[2]
         mode = s[3]
+        SmarterLog.log("SmarterCircuitsMCP","received_rollerdoor_data: "+name+" "+mode)
         if mode == "state":
             if name not in self.rollerdoors.keys():
                 self.rollerdoors[name] = RollerdoorState(name)
