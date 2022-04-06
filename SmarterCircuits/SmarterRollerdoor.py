@@ -51,6 +51,7 @@ class Rollerdoor:
             time.sleep(1)
     
     def emulate_button_press(self, bay):
+        SmarterLog.log("Rollerdoor","Pressing button for bay "+str(bay+1))
         p.digital_write(bay,1)
         time.sleep(1)
         p.digital_write(bay,0)
