@@ -104,7 +104,7 @@
         "commands": [{
             "start":"turn on deck rail",
             "stop":"turn off deck rail",
-            "conditions": []
+            "conditions": [{"prop":"mode","comparitor":"=","value":"night"},{"prop":"mode","comparitor":"=","value":"midnight"}]
         }],
         "id":"shellymotionsensor-60A42395F69E",
         "auto_off":true,
