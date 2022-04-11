@@ -84,6 +84,34 @@
         "ip_address":"192.168.1.154"
     },
     {
+        "name":"Game Room",
+        "commands": [{
+            "start":"turn on game room",
+            "stop":"turn off game room",
+            "conditions": []
+        },{
+            "start":"turn on game tables",
+            "stop":"turn off game tables",
+            "conditions": []
+        }],
+        "id":"shellymotionsensor-60A423C67472",
+        "auto_off":true,
+        "off_time_minutes":"30",
+        "ip_address":"192.168.2.58"
+    },
+    {
+        "name":"Critter Cam",
+        "commands": [{
+            "start":"turn on deck rail",
+            "stop":"turn off deck rail",
+            "conditions": []
+        }],
+        "id":"shellymotionsensor-60A42395F69E",
+        "auto_off":true,
+        "off_time_minutes":"5",
+        "ip_address":"192.168.2.56"
+    },
+    {
         "name":"Deck",
         "commands": [{
             "start":"turn on the deck fountain",
