@@ -91,8 +91,8 @@ class Touchscreen:
             SmartButton(2,1,"Modes",self.mode_screen,"",2,"Times",20,"darkgreen","white",5,5),
             SmartButton(3,1,"Thermostat",self.thermostat_screen,"",2,"Times",20,"magenta","black",5,5),
             SmartButton(4,1,"Shades",self.roller_screen,"",2,"Times",20,"darkorange","black",5,5),
-            SmartButton(5,1,"Doors",self.door_screen,"",2,"Times",20,"green","black",5,5),
-            SmartButton(6,1,"Info",self.status_screen,"",2,"Times",20,"purple","black",5,5),
+            #SmartButton(5,1,"Doors",self.door_screen,"",2,"Times",20,"green","black",5,5),
+            SmartButton(5,1,"Info",self.status_screen,"",2,"Times",20,"purple","black",5,5),
         ]
         labels = []
 

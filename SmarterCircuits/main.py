@@ -74,10 +74,10 @@ class SmarterCircuitsMCP:
         if self.config.rollerdoor is True:
             SmarterLog.log("SmarterCircuitsMCP","instantiating rollerdoor...")
             self.rollerdoor = Rollerdoor(self,self.name)
-        else:
-            while self.running is True:
-                time.sleep(1)
-            self.stop()
+        #else:
+        while self.running is True:
+            time.sleep(1)
+        self.stop()
     
     def check_for_updates(self):
         modified = 0
@@ -410,6 +410,7 @@ class SmarterCircuitsMCP:
         while now < auto_off_time:
             now = datetime.now()
             time.sleep(1)
+        time.sleep(1)
             
         SmarterLog.log("SmarterCircuitsMCP","Time's up: "+sensor.name)
         for command in sensor.commands:
@@ -501,6 +502,7 @@ class SmarterCircuitsMCP:
         s = topic.split("/")
         name = s[2]
         mode = s[3]
+        SmarterLog.log("SmarterCircuitsMCP","received_rollerdoor_data: "+name+" "+mode)
         if mode == "state":
             if name not in self.rollerdoors.keys():
                 self.rollerdoors[name] = RollerdoorState(name)
@@ -532,12 +534,17 @@ class SmarterCircuitsMCP:
                 self.execute_command("turn on "+circuit.name.lower())
             if self.mode.lower() in (string.lower() for string in circuit.off_modes):
                 self.execute_command("turn off "+circuit.name.lower())
+            if self.mode == "night":
+                self.execute_command("close shades")
+            if self.mode == "morning":
+                self.execute_command("open shades")
     
     def battery_status_check(self, sensor):
-        if sensor.status.battery < 42:
+        if sensor.status.battery < 50:
             SmarterLog.log("BATTERY STATUS","Battery Low: "+sensor.id+"("+sensor.name+")")
-            if self.circuit_authority is True:
-                SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",sensor.name+" battery at "+str(sensor.status.battery)+"%",sensor.name+" battery at "+str(sensor.status.battery)+"%")
+            # if self.circuit_authority is True:
+                #self.mqtt.publish("notifications","Battery Low: "+sensor.id+"("+sensor.name+")")
+                #SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",sensor.name+" battery at "+str(sensor.status.battery)+"%",sensor.name+" battery at "+str(sensor.status.battery)+"%")
     
     def conditions_met(self, conditions):
         for condition in conditions:

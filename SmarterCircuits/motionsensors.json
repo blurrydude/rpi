@@ -11,7 +11,7 @@
         }],
         "id":"shellymotionsensor-60A423BECB98",
         "auto_off":true,
-        "off_time_minutes":"15",
+        "off_time_minutes":"30",
         "ip_address":"192.168.1.150"
     },
     {

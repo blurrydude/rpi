@@ -52,6 +52,10 @@ class Rollershade:
         self.state_change()
 
     def set_state(self, addy, state):
+        if addy == 5:
+            for i in range(3):
+                self.set_state(i, state)
+            return
         if self.moving[addy] is True:
             return
         if addy >= len(self.read_pins):
