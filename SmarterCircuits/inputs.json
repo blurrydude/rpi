@@ -10,11 +10,91 @@
         },
         {
             "long_push": [
-                "switch to day mode"
+                "open the shades"
             ],
             "single_push": [
-                "switch to night mode"
+                "close the shades"
             ]
+        },
+        {
+            "long_push": ["turn off the living room lamp"],
+            "single_push": ["turn on the living room lamp"]
+        },
+        {
+            "long_push": ["turn off the kitchen"],
+            "single_push": ["turn on the kitchen"]
+        }
+    ],
+    "shellyplusi4-1": [
+        {
+            "long_push": ["turn off the bar"],
+            "single_push": ["turn on the bar"]
+        },
+        {
+            "long_push": ["turn off the dining room"],
+            "single_push": ["turn on the dining room"]
+        },
+        {
+            "long_push": ["turn off the day room lamp"],
+            "single_push": ["turn on the day room lamp"]
+        },
+        {
+            "long_push": ["turn off the game room"],
+            "single_push": ["turn on the game room"]
+        }
+    ],
+    "shellyplusi4-2": [
+        {
+            "long_push": ["turn off the deck rail"],
+            "single_push": ["turn on the deck rail"]
+        },
+        {
+            "long_push": ["turn off the deck light"],
+            "single_push": ["turn on the deck light"]
+        },
+        {
+            "long_push": ["turn off the stairway"],
+            "single_push": ["turn on the stairway"]
+        },
+        {
+            "long_push": ["turn off the shop light"],
+            "single_push": ["turn on the shop light"]
+        }
+    ],
+    "shellyplusi4-3": [
+        {
+            "long_push": ["turn off the storage room"],
+            "single_push": ["turn on the storage room"]
+        },
+        {
+            "long_push": ["turn off the laundry room"],
+            "single_push": ["turn on the laundry room"]
+        },
+        {
+            "long_push": ["turn off the guest bathroom"],
+            "single_push": ["turn on the guest bathroom"]
+        },
+        {
+            "long_push": ["turn off the bedroom lamp"],
+            "single_push": ["turn on the bedroom lamp"]
+        }
+    ],
+    "shellyplusi4-4": [
+        {
+            "long_push": ["turn off the gym"],
+            "single_push": ["turn on the gym"]
+        },
+        {
+            "long_push": ["turn off the library"],
+            "single_push": ["turn on the library"]
+        },
+        {
+            "long_push": ["turn off the porch"],
+            "single_push": ["turn on the porch"]
+        },
+        {
+            "long_push": ["turn off the lamp post"],
+            "single_push": ["turn on the lamp post"]
         }
     ]
 }
