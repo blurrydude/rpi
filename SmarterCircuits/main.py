@@ -301,7 +301,7 @@ class SmarterCircuitsMCP:
             self.handle_shelly_ht_message(id, topic.replace("shellies/"+id+"/",""), message)
         if "motion" in id:
             self.handle_shelly_motion_message(id, topic.replace("shellies/"+id+"/",""), message)
-        if "shellyplusi4" in id:
+        if "shellyplusi4" in id and self.circuit_authority is True:
             self.handle_shelly_i4_message(message)
         return
     
