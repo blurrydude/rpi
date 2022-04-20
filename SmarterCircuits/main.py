@@ -312,7 +312,7 @@ class SmarterCircuitsMCP:
         cid = data["params"]["events"][0]["id"]
         if "push" not in evnt:
             return
-        iconfig = json.load(open("inputs.json"))
+        iconfig = json.load(open(os.path.dirname(os.path.realpath(__file__))+"/"+"inputs.json"))
         commands = iconfig[src][cid][evnt]
         for command in commands:
             self.mqtt.publish("smarter_circuits/command",command)
