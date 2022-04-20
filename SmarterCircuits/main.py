@@ -1,3 +1,4 @@
+from SmarterCircuitsWebService import SmarterCircuitsWeb
 from SmarterCircuitsAPI import SmarterAPI
 from SmarterRollershade import Rollershade, RollershadeState
 from SmarterRollerdoor import Rollerdoor, RollerdoorState
@@ -51,6 +52,7 @@ class SmarterCircuitsMCP:
         self.source_modified = 0
         self.last_log_dump_hour = 0
         self.thermostat_history = []
+        self.web_server = SmarterCircuitsWeb(ip_address, 8081)
         self.start()
 
     def start(self):
@@ -75,9 +77,10 @@ class SmarterCircuitsMCP:
             SmarterLog.log("SmarterCircuitsMCP","instantiating rollerdoor...")
             self.rollerdoor = Rollerdoor(self,self.name)
         #else:
-        while self.running is True:
-            time.sleep(1)
-        self.stop()
+        # while self.running is True:
+        #     time.sleep(1)
+        # self.stop()
+        self.web_server.start()
     
     def check_for_updates(self):
         modified = 0
@@ -298,7 +301,21 @@ class SmarterCircuitsMCP:
             self.handle_shelly_ht_message(id, topic.replace("shellies/"+id+"/",""), message)
         if "motion" in id:
             self.handle_shelly_motion_message(id, topic.replace("shellies/"+id+"/",""), message)
+        if "shellyplusi4" in id:
+            self.handle_shelly_i4_message(message)
         return
+    
+    def handle_shelly_i4_message(self, message):
+        data = json.loads(message)
+        src = data["src"]
+        evnt = data["params"]["events"][0]["event"]
+        cid = data["params"]["events"][0]["id"]
+        if "push" not in evnt:
+            return
+        iconfig = json.load(open("inputs.json"))
+        commands = iconfig[src][cid][evnt]
+        for command in commands:
+            self.mqtt.publish("smarter_circuits/command",command)
 
     def handle_shelly_relay_message(self, id, subtopic, message):
         for circuit in self.config.circuits:
@@ -746,8 +763,14 @@ class SmarterCircuitsPeer:
 
 if __name__ == "__main__":
     myname = socket.gethostname()
-    myip = subprocess.check_output(['hostname', '-I']).decode("utf-8").replace("\n","").split(' ')[0]
-    uname = subprocess.check_output(['uname','-m']).decode("utf-8").replace("\n","")
+    try:
+        myip = subprocess.check_output(['hostname', '-I']).decode("utf-8").replace("\n","").split(' ')[0]
+    except:
+        myip = "localhost"
+    try:
+        uname = subprocess.check_output(['uname','-m']).decode("utf-8").replace("\n","")
+    except:
+        uname = "x86"
     model = "pc"
     if uname.__contains__("arm"):
         model = subprocess.check_output(['cat','/proc/device-tree/model']).decode("utf-8").replace("\n","")

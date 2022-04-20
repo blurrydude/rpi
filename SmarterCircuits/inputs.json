@@ -1,0 +1,22 @@
+{
+    "shellyplusi4-083af200fe38": [
+        {
+            "long_push": [
+                "turn off the game room",
+                "turn off the game tables"
+            ],
+            "single_push": [
+                "turn on the game room",
+                "turn on the game tables"
+            ]
+        },
+        {
+            "long_push": [
+                "switch to day mode"
+            ],
+            "single_push": [
+                "switch to night mode"
+            ]
+        }
+    ]
+}
