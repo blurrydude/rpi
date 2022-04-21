@@ -3,13 +3,13 @@
     {
         "short": {
             "0": ["turn on the shower fan"],
-            "1": ["turn on the living room lamp"],
-            "01": ["turn on the guest bathroom"]
+            "1": ["open the shades"],
+            "01": ["switch to night mode"]
         },
         "long": {
             "0": ["turn off the shower fan"],
-            "1": ["turn off the living room lamp"],
-            "01": ["turn off the guest bathroom"]
+            "1": ["close the shades"],
+            "01": ["ignore"]
         }
     }
 }
