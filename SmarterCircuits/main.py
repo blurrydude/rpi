@@ -315,7 +315,8 @@ class SmarterCircuitsMCP:
         iconfig = json.load(open(os.path.dirname(os.path.realpath(__file__))+"/"+"inputs.json"))
         commands = iconfig[src][cid][evnt]
         for command in commands:
-            self.mqtt.publish("smarter_circuits/command",command)
+            if command != "ignore":
+                self.mqtt.publish("smarter_circuits/command",command)
 
     def handle_shelly_relay_message(self, id, subtopic, message):
         for circuit in self.config.circuits:
