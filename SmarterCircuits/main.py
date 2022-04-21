@@ -53,6 +53,7 @@ class SmarterCircuitsMCP:
         self.last_log_dump_hour = 0
         self.thermostat_history = []
         self.web_server = SmarterCircuitsWeb(ip_address, 8081)
+        self.buttons = {}
         self.start()
 
     def start(self):
@@ -310,13 +311,29 @@ class SmarterCircuitsMCP:
         src = data["src"]
         evnt = data["params"]["events"][0]["event"]
         cid = data["params"]["events"][0]["id"]
-        if "push" not in evnt:
-            return
-        iconfig = json.load(open(os.path.dirname(os.path.realpath(__file__))+"/"+"inputs.json"))
-        commands = iconfig[src][cid][evnt]
-        for command in commands:
-            if command != "ignore":
-                self.mqtt.publish("smarter_circuits/command",command)
+        bid = src + str(cid)
+        if evnt == "btn_down":
+            self.buttons[bid] = "down"
+        if evnt == "long_push":
+            self.buttons[bid] = "long"
+        if evnt == "btn_up":
+            pressed = ""
+            longed = ""
+            for k in self.buttons:
+                i = k[len(k)-1]
+                if self.buttons[k] == "down":
+                    pressed = pressed + i
+                if self.buttons[k] == "long":
+                    longed = longed + i
+            self.buttons = {}
+            iconfig = json.load(open(os.path.dirname(os.path.realpath(__file__))+"/"+"inputs.json"))
+            if pressed == "":
+                commands = iconfig[src]["long"][longed]
+            else:
+                commands = iconfig[src]["short"][pressed]
+            for command in commands:
+                if command != "ignore":
+                    self.mqtt.publish("smarter_circuits/command",command)
 
     def handle_shelly_relay_message(self, id, subtopic, message):
         for circuit in self.config.circuits:
