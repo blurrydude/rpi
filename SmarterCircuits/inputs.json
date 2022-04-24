@@ -2,14 +2,76 @@
     "shellyplusi4-083af200fe38": 
     {
         "short": {
-            "0": ["turn on the shower fan"],
-            "1": ["open the shades"],
-            "01": ["switch to night mode"]
+            "0": ["switch 1"],
+            "1": ["switch 2"],
+            "2": ["switch 3"],
+            "3": ["switch 4"]
         },
         "long": {
-            "0": ["turn off the shower fan"],
-            "1": ["close the shades"],
-            "01": ["ignore"]
+            "0": ["switch "],
+            "1": ["switch "],
+            "2": ["switch "],
+            "3": ["switch "]
+        }
+    },
+    "shellyplusi4-083af200a500": 
+    {
+        "short": {
+            "0": ["switch 5"],
+            "1": ["switch 6"],
+            "2": ["switch 7"],
+            "3": ["switch 8"]
+        },
+        "long": {
+            "0": ["switch "],
+            "1": ["switch "],
+            "2": ["switch "],
+            "3": ["switch "]
+        }
+    },
+    "shellyplusi4-083af200d788": 
+    {
+        "short": {
+            "0": ["switch 9"],
+            "1": ["switch 10"],
+            "2": ["switch 11"],
+            "3": ["switch 12"]
+        },
+        "long": {
+            "0": ["switch "],
+            "1": ["switch "],
+            "2": ["switch "],
+            "3": ["switch "]
+        }
+    },
+    "shellyplusi4-083af200fe60": 
+    {
+        "short": {
+            "0": ["switch 13"],
+            "1": ["switch 14"],
+            "2": ["switch 15"],
+            "3": ["switch 16"]
+        },
+        "long": {
+            "0": ["switch "],
+            "1": ["switch "],
+            "2": ["switch "],
+            "3": ["switch "]
+        }
+    },
+    "shellyplusi4-083af200ff20": 
+    {
+        "short": {
+            "0": ["switch 17"],
+            "1": ["switch 18"],
+            "2": ["switch 19"],
+            "3": ["switch 20"]
+        },
+        "long": {
+            "0": ["switch "],
+            "1": ["switch "],
+            "2": ["switch "],
+            "3": ["switch "]
         }
     }
 }
