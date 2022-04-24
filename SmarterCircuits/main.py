@@ -784,7 +784,7 @@ if __name__ == "__main__":
     try:
         myip = subprocess.check_output(['hostname', '-I']).decode("utf-8").replace("\n","").split(' ')[0]
     except:
-        myip = "localhost"
+        myip = "127.0.0.1"
     try:
         uname = subprocess.check_output(['uname','-m']).decode("utf-8").replace("\n","")
     except:
