@@ -1,0 +1,15 @@
+{
+    "shellyplusi4-083af200fe38": 
+    {
+        "short": {
+            "0": ["turn on the shower fan"],
+            "1": ["open the shades"],
+            "01": ["switch to night mode"]
+        },
+        "long": {
+            "0": ["turn off the shower fan"],
+            "1": ["close the shades"],
+            "01": ["ignore"]
+        }
+    }
+}
