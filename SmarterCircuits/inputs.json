@@ -2,76 +2,76 @@
     "shellyplusi4-083af200fe38": 
     {
         "short": {
-            "0": ["switch 1"],
+            "0": ["turn on the master bath"], 
             "1": ["switch 2"],
-            "2": ["switch 3"],
+            "2": ["turn on the shower fan"],
             "3": ["switch 4"]
         },
         "long": {
-            "0": ["switch "],
-            "1": ["switch "],
-            "2": ["switch "],
-            "3": ["switch "]
+            "0": ["turn off the master bath"], 
+            "1": ["switch 2"],
+            "2": ["turn off the shower fan"],
+            "3": ["switch 4"]
         }
     },
     "shellyplusi4-083af200a500": 
     {
         "short": {
-            "0": ["switch 5"],
-            "1": ["switch 6"],
-            "2": ["switch 7"],
+            "0": ["turn on the gym lamp"],
+            "1": ["turn on the guest bathroom"],
+            "2": ["turn on the library"],
             "3": ["switch 8"]
         },
         "long": {
-            "0": ["switch "],
-            "1": ["switch "],
-            "2": ["switch "],
-            "3": ["switch "]
+            "0": ["turn off the gym lamp"],
+            "1": ["turn off the guest bathroom"],
+            "2": ["turn off the library"],
+            "3": ["switch 8"]
         }
     },
     "shellyplusi4-083af200d788": 
     {
         "short": {
-            "0": ["switch 9"],
-            "1": ["switch 10"],
-            "2": ["switch 11"],
-            "3": ["switch 12"]
+            "0": ["turn on the living room lamp"],
+            "1": ["turn on the day room fan"],
+            "2": ["turn on the kitchen"],
+            "3": ["turn on the porch light"]
         },
         "long": {
-            "0": ["switch "],
-            "1": ["switch "],
-            "2": ["switch "],
-            "3": ["switch "]
+            "0": ["turn off the living room lamp"],
+            "1": ["turn off the day room fan"],
+            "2": ["turn off the kitchen"],
+            "3": ["turn off the porch light"]
         }
     },
     "shellyplusi4-083af200fe60": 
     {
         "short": {
-            "0": ["switch 13"],
-            "1": ["switch 14"],
-            "2": ["switch 15"],
+            "0": ["turn on the bedroom lamp"],
+            "1": ["turn on the deck rail"],
+            "2": ["turn on the under cabinet"],
             "3": ["switch 16"]
         },
         "long": {
-            "0": ["switch "],
-            "1": ["switch "],
-            "2": ["switch "],
-            "3": ["switch "]
+            "0": ["turn off the bedroom lamp"],
+            "1": ["turn off the deck rail"],
+            "2": ["turn off the under cabinet"],
+            "3": ["switch 16"]
         }
     },
     "shellyplusi4-083af200ff20": 
     {
         "short": {
-            "0": ["switch 17"],
-            "1": ["switch 18"],
+            "0": ["turn on the lamp post"],
+            "1": ["turn on the dining room"],
             "2": ["switch 19"],
-            "3": ["switch 20"]
+            "3": ["turn on the bar"]
         },
         "long": {
-            "0": ["switch "],
-            "1": ["switch "],
-            "2": ["switch "],
-            "3": ["switch "]
+            "0": ["turn off the lamp post"],
+            "1": ["turn off the dining room"],
+            "2": ["switch 19"],
+            "3": ["turn off the bar"]
         }
     }
 }
