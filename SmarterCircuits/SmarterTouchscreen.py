@@ -211,11 +211,6 @@ class Touchscreen:
         c = len(self.mcp.thermostats)
         for room in self.mcp.thermostats.keys():
             thermostat = self.mcp.thermostats[room]
-            setting = "will heat if cooler than " + str(thermostat.settings.temperature_low_setting) + " or cool if warmer than " + str(thermostat.settings.temperature_high_setting)
-            labels.append(SmartLabel(r,0,room.upper() + " is currently "+str(round(thermostat.state.temperature,1))+"F","Times",16,"black","white",5,5))
-            r = r + 1
-            labels.append(SmartLabel(r,0,setting,"Times",16,"black","white",5,5))
-            r = r + 1
             state = ""
             if thermostat.state.heat_on is True:
                 state = state + "heating"
@@ -225,7 +220,12 @@ class Touchscreen:
                 state = state + "circulating air (no heating or cooling)"
             else:
                 state = state + "idle"
-            labels.append(SmartLabel(r,0,room.upper() + " is currently "+state,"Times",16,"black","white",5,5))
+            labels.append(SmartLabel(r,0,room.upper(),"Times",16,"black","white",5,5))
+            labels.append(SmartLabel(r,1,"currently "+str(round(thermostat.state.temperature,1))+"F","Times",16,"black","white",5,5))
+            labels.append(SmartLabel(r,2,state,"Times",16,"black","white",5,5))
+            r = r + 1
+            labels.append(SmartLabel(r,1,"heat if cooler than " + str(thermostat.settings.temperature_low_setting),"Times",16,"black","white",5,5))
+            labels.append(SmartLabel(r,2,"cool if warmer than " + str(thermostat.settings.temperature_high_setting),"Times",16,"black","white",5,5))
             # labels.append(SmartLabel(r,1,str(round(thermostat.state.temperature,1))+"F","Times",24,"black","red",5,5))
             # labels.append(SmartLabel(r,2,str(round(thermostat.state.humidity,1))+"% - "+state,"Times",24,"black","blue",5,5))
             r = r + 1
