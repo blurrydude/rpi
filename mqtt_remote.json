@@ -1,0 +1,14 @@
+[
+    {
+        "short": { "on": ["turn on the game room","turn on the game tables"], "off": ["turn off the game room","turn off the game tables"] },
+        "long": { "on": ["close the shades"], "off": ["open the shades"] }
+    },
+    {
+        "short": { "on": ["turn on the kitchen"], "off": ["turn off the kitchen"] },
+        "long": { "on": ["turn on the bar"], "off": ["turn off the bar"] }
+    },
+    {
+        "short": { "on": ["turn on the storage room"], "off": ["turn off the storage room"] },
+        "long": { "on": ["turn on the workbench fan"], "off": ["turn off the workbench fan"] }
+    }
+]
