@@ -207,5 +207,11 @@
     "id": "shellypro4pm-84cca87fa8a4", "relay_id":"0", "name":"Cabinet Light",
     "on_modes": ["Alert"],
     "off_modes":["Dark","Night","Midnight"],
+    "zones":["Game Room"]}, 
+
+    {"location":"","ip_address":"192.168.2.128",
+    "id": "shellypro4pm-84cca87fa8a4", "relay_id":"1", "name":"Cabinet Projector",
+    "on_modes": [],
+    "off_modes":[],
     "zones":["Game Room"]}
 ]
