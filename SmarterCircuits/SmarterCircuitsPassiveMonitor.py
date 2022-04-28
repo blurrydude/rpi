@@ -61,6 +61,8 @@ class SmarterCircuitsPassiveMonitor:
     
     def screen_open(self):
         if self.display_on is False:
+            self.mqtt.publish("smarter_circuits/command","turn on cabinet projector")
+            time.sleep(3)
             os.system("echo 'on 0.0.0.0' | cec-client -s -d 1")
             self.display_on = True
         # time.sleep(5)
@@ -82,6 +84,8 @@ class SmarterCircuitsPassiveMonitor:
         if self.screen_timer >= 120:
             self.screen_timer = 0
             os.system("echo 'standby 0.0.0.0' | cec-client -s -d 1")
+            time.sleep(5)
+            self.mqtt.publish("smarter_circuits/command","turn off cabinet projector")
             self.display_on = False
         else:
             self.screen_timer = self.screen_timer + 1
