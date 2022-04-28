@@ -8,7 +8,7 @@
         "long": { "on": ["turn on the bar"], "off": ["turn off the bar"] }
     },
     {
-        "short": { "on": ["turn on the storage room"], "off": ["turn off the storage room"] },
+        "short": { "on": ["turn on the cabinet light"], "off": ["turn off the cabinet light"] },
         "long": { "on": ["turn on the workbench fan"], "off": ["turn off the workbench fan"] }
     }
 ]
