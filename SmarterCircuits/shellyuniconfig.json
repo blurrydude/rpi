@@ -26,10 +26,10 @@
         },
         "button_c": {
             "short": { 
-                "default": ["turn on the storage room"]
+                "default": ["turn on the garage lights"]
             },
             "long": { 
-                "default": ["turn off the storage room"]
+                "default": ["turn off the garage lights"]
             }
         }
     }
