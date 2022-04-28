@@ -26,10 +26,13 @@
         },
         "button_c": {
             "short": { 
-                "default": ["show status"]
+                "default": ["turn on the deck fountain"],
+                "evening": ["turn on the deck rail"],
+                "night": ["turn on the deck light"],
+                "midnight": ["turn on the deck light"]
             },
             "long": { 
-                "default": ["turn on the garage lights"]
+                "default": ["show status"]
             }
         }
     }
