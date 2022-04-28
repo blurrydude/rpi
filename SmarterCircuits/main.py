@@ -120,6 +120,7 @@ class SmarterCircuitsMCP:
                     self.send_peer_data()
                     self.check_for_updates()
                 if self.last_notification < datetime.now() - timedelta(minutes=30):
+                    self.last_notification = datetime.now()
                     self.send_system_state()
                 now = datetime.now().strftime("%H:%M")
                 day = datetime.now().strftime("%a").lower()
