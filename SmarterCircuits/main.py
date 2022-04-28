@@ -335,6 +335,7 @@ class SmarterCircuitsMCP:
                     states = states + "0"
             if states == "" or states == "00":
                 return
+            self.switch_states[sid] = {"0":{"on":False},"1":{"on":False}}
             long = "short"
             if last_on < datetime.now() - timedelta(seconds=2):
                 long = "long"
