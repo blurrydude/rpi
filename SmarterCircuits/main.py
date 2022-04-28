@@ -54,8 +54,8 @@ class SmarterCircuitsMCP:
         self.thermostat_history = []
         self.web_server = SmarterCircuitsWeb(ip_address, 8081)
         self.buttons = {}
-        self.start()
         self.switch_states = {}
+        self.start()
 
     def start(self):
         SmarterLog.log("SmarterCircuitsMCP","starting...")
