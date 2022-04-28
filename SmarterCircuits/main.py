@@ -145,7 +145,10 @@ class SmarterCircuitsMCP:
         data = ""
         for thermokey in self.thermostats.keys():
             thermo = self.thermostats[thermokey]
-            data = data + ":" + thermo.room + "=" + self.binarize(thermo.state.heat_on) + self.binarize(thermo.state.ac_on) + self.binarize(thermo.state.fan_on) + self.binarize(thermo.state.whf_on) + "|" + str(thermo.state.temperature) + "|" + str(thermo.state.humidity) +"\\n"
+            data = data + thermo.room.upper() + ": " + str(round(thermo.state.temperature,1)) + " F " + str(round(thermo.state.humidity,1)) +"%\\n"
+        for sensor_id in self.config.ht_sensors.keys():
+            sensor = self.config.ht_sensors[sensor_id]
+            data = data + sensor.name.upper() + ": " + str(round(sensor.status.temperature,1)) + " F " + str(round(sensor.status.humidity,1)) +"%\\n"
         self.mqtt.publish("notifications",data)
     
     def log_temp_data(self):
@@ -188,7 +191,7 @@ class SmarterCircuitsMCP:
                     self.last_log_dump_hour = currenthour
                     f = open(previouslogfilepath)
                     t = f.read()
-                    SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",self.name+" log file "+previouslogfiledate,t)
+                    #SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",self.name+" log file "+previouslogfiledate,t)
             logs_dir = os.path.dirname(os.path.realpath(__file__))+"/logs/"
             for file in os.listdir(logs_dir):
                 for old_date in old_dates:
