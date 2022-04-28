@@ -9,8 +9,8 @@
             "long":["turn off the kitchen", "turn off the under cabinet"]
         },
         "button_c": {
-            "short": ["turn on the cabinet light"],
-            "long":["turn off the cabinet light"]
+            "short": ["turn on the master bath"],
+            "long":["turn off the master bath"]
         }
     }
 }
