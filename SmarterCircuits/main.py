@@ -55,6 +55,7 @@ class SmarterCircuitsMCP:
         self.web_server = SmarterCircuitsWeb(ip_address, 8081)
         self.buttons = {}
         self.switch_states = {}
+        self.last_notification = datetime.now() - timedelta(minutes=28)
         self.start()
 
     def start(self):
@@ -118,7 +119,8 @@ class SmarterCircuitsMCP:
                 if self.ticks in [0,10,20,30,40,50]:
                     self.send_peer_data()
                     self.check_for_updates()
-                
+                if self.last_notification < datetime.now() - timedelta(minutes=30):
+                    self.send_system_state()
                 now = datetime.now().strftime("%H:%M")
                 day = datetime.now().strftime("%a").lower()
                 if self.ticks >= 59:
@@ -137,6 +139,13 @@ class SmarterCircuitsMCP:
                 self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
                 self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
             time.sleep(1)
+    
+    def send_system_state(self):
+        data = ""
+        for thermokey in self.thermostats.keys():
+            thermo = self.thermostats[thermokey]
+            data = data + ":" + thermo.room + "=" + self.binarize(thermo.state.heat_on) + self.binarize(thermo.state.ac_on) + self.binarize(thermo.state.fan_on) + self.binarize(thermo.state.whf_on) + "|" + str(thermo.state.temperature) + "|" + str(thermo.state.humidity) +"\\n"
+        self.mqtt.publish("notifications",data)
     
     def log_temp_data(self):
         if self.circuit_authority is False:
@@ -630,8 +639,8 @@ class SmarterCircuitsMCP:
     def battery_status_check(self, sensor):
         if sensor.status.battery < 50:
             SmarterLog.log("BATTERY STATUS","Battery Low: "+sensor.id+"("+sensor.name+")")
-            # if self.circuit_authority is True:
-                #self.mqtt.publish("notifications","Battery Low: "+sensor.id+"("+sensor.name+")")
+            if self.circuit_authority is True:
+                self.mqtt.publish("notifications","Battery Low: "+sensor.id+"("+sensor.name+")")
                 #SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",sensor.name+" battery at "+str(sensor.status.battery)+"%",sensor.name+" battery at "+str(sensor.status.battery)+"%")
     
     def conditions_met(self, conditions):

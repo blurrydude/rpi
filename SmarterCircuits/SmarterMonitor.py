@@ -90,7 +90,6 @@ class SmarterMonitor:
             print(device+" "+id+" was not found.")
 
     def process_state(self):
-        
         self.write_state()
 
 if __name__ == "__main__":
