@@ -1,6 +1,7 @@
 {
     "shellyplusi4-083af200fe38": 
     {
+        "hex_enabled": false,
         "short": {
             "0": ["turn on the master bath"], 
             "1": ["turn on the garage lights"],
@@ -16,6 +17,7 @@
     },
     "shellyplusi4-083af200a500": 
     {
+        "hex_enabled": false,
         "short": {
             "0": ["turn on the gym lamp"],
             "1": ["turn on the guest bathroom"],
@@ -31,6 +33,7 @@
     },
     "shellyplusi4-083af200d788": 
     {
+        "hex_enabled": false,
         "short": {
             "0": ["turn on the living room lamp"],
             "1": ["turn on the day room fan"],
@@ -46,6 +49,7 @@
     },
     "shellyplusi4-083af200fe60": 
     {
+        "hex_enabled": false,
         "short": {
             "0": ["turn on the bedroom lamp"],
             "1": ["turn on the deck rail"],
@@ -61,6 +65,7 @@
     },
     "shellyplusi4-083af200ff20": 
     {
+        "hex_enabled": false,
         "short": {
             "0": ["turn on the lamp post"],
             "1": ["turn on the dining room"],
@@ -73,5 +78,78 @@
             "2": ["switch 19"],
             "3": ["turn off the bar"]
         }
+    },
+    "shellyplusi4-00000000": 
+    {
+        "hex_enabled": true,
+        "hex_value": {
+            "0": "1",
+            "1": "2",
+            "2": "3",
+            "3": "4"
+        }
+    },
+    "shellyplusi4-11111111": 
+    {
+        "hex_enabled": true,
+        "hex_value": {
+            "0": "5",
+            "1": "6",
+            "2": "7",
+            "3": "8"
+        }
+    },
+    "shellyplusi4-22222222": 
+    {
+        "hex_enabled": true,
+        "hex_value": {
+            "0": "9",
+            "1": "A",
+            "2": "B",
+            "3": "C"
+        }
+    },
+    "shellyplusi4-33333333": 
+    {
+        "hex_enabled": true,
+        "hex_value": {
+            "0": "D",
+            "1": "E",
+            "2": "F",
+            "3": "0"
+        }
+    },
+    "hex_commands": {
+        "1": [],
+        "2": [],
+        "3": [],
+        "4": [],
+        "5": [],
+        "6": [],
+        "7": [],
+        "8": [],
+        "9": [],
+        "A": [],
+        "B": [],
+        "C": [],
+        "D": [],
+        "E": [],
+        "F": [],
+        "10": [],
+        "11": [],
+        "12": [],
+        "13": [],
+        "14": [],
+        "15": [],
+        "16": [],
+        "17": [],
+        "18": [],
+        "19": [],
+        "1A": [],
+        "1B": [],
+        "1C": [],
+        "1D": [],
+        "1E": [],
+        "1F": []
     }
 }

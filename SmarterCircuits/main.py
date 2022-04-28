@@ -56,6 +56,8 @@ class SmarterCircuitsMCP:
         self.buttons = {}
         self.switch_states = {}
         self.last_notification = datetime.now() - timedelta(minutes=28)
+        self.hex_waiting = False
+        self.hex_command = ""
         self.start()
 
     def start(self):
@@ -377,10 +379,33 @@ class SmarterCircuitsMCP:
     def handle_shelly_i4_message(self, message):
         if self.circuit_authority is False:
             return
+        iconfigs = json.load(open(os.path.dirname(os.path.realpath(__file__))+"/"+"inputs.json"))
         data = json.loads(message)
         src = data["src"]
         evnt = data["params"]["events"][0]["event"]
         cid = data["params"]["events"][0]["id"]
+        iconfig = iconfigs[src]
+        commands = []
+        if iconfig["hex_enabled"] is True:
+            d = iconfig[src]["hex_value"][cid]
+            if self.hex_waiting is False:
+                if d == "0":
+                    self.hex_waiting = True
+                    self.hex_command = ""
+                    return
+                else:
+                    commands = iconfigs["hex_commands"][d]
+            elif len(self.hex_command) < 2:
+                self.hex_command = self.hex_command + iconfig[src]["hex_value"][cid]
+            if len(self.hex_command) == 2:
+                self.hex_waiting = False
+                if self.hex_command in iconfigs["hex_commands"]:
+                    commands = iconfigs["hex_commands"][self.hex_command]
+                self.hex_command = ""
+            for command in commands:
+                if command != "ignore":
+                    self.mqtt.publish("smarter_circuits/command",command)
+            return
         bid = src + str(cid)
         if evnt == "btn_down":
             self.buttons[bid] = "down"
@@ -396,11 +421,10 @@ class SmarterCircuitsMCP:
                 if self.buttons[k] == "long":
                     longed = longed + i
             self.buttons = {}
-            iconfig = json.load(open(os.path.dirname(os.path.realpath(__file__))+"/"+"inputs.json"))
             if pressed == "":
-                commands = iconfig[src]["long"][longed]
+                commands = iconfig["long"][longed]
             else:
-                commands = iconfig[src]["short"][pressed]
+                commands = iconfig["short"][pressed]
             for command in commands:
                 if command != "ignore":
                     self.mqtt.publish("smarter_circuits/command",command)
@@ -648,7 +672,7 @@ class SmarterCircuitsMCP:
         if sensor.status.battery < 50:
             SmarterLog.log("BATTERY STATUS","Battery Low: "+sensor.id+"("+sensor.name+")")
             if self.circuit_authority is True:
-                self.mqtt.publish("notifications","Battery Low: "+sensor.id+"("+sensor.name+")")
+                self.mqtt.publish("notifications","Battery Low\n"+sensor.id+"\n("+sensor.name+")")
                 #SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",sensor.name+" battery at "+str(sensor.status.battery)+"%",sensor.name+" battery at "+str(sensor.status.battery)+"%")
     
     def conditions_met(self, conditions):
