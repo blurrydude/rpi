@@ -326,7 +326,8 @@ class SmarterCircuitsMCP:
         else:
             states = ""
             last_on = datetime.now()
-            for relay in self.switch_states[sid]:
+            for r in self.switch_states[sid]:
+                relay = self.switch_states[sid][r]
                 if relay["on"] is True:
                     states = states + "1"
                     last_on = relay["last_on"]
