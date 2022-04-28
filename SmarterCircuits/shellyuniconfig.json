@@ -3,12 +3,12 @@
         "button_a": {
             "short": { 
                 "default": ["turn on the game room","turn on the game tables"],
-                "night": ["turn on the game room"] ,
+                "night": ["turn on the game room"],
                 "midnight": ["turn on the game room"] 
             },
             "long": { 
-                "default": ["turn off the game room","turn off the game tables"] ,
-                "night": ["turn off the game room"] ,
+                "default": ["turn off the game room","turn off the game tables"],
+                "night": ["turn off the game room"],
                 "midnight": ["turn off the game room"] 
             }
         },
@@ -19,21 +19,17 @@
                 "midnight": ["turn on the under cabinet"]
             },
             "long": { 
-                "default": ["turn off the kitchen", "turn off the under cabinet"] ,
+                "default": ["turn off the kitchen", "turn off the under cabinet"],
                 "night": ["turn off the under cabinet"],
                 "midnight": ["turn off the under cabinet"]
             }
         },
         "button_c": {
             "short": { 
-                "default": ["switch to night mode"],
-                "night": ["turn on the shower fan"],
-                "midnight": ["turn on the shower fan"]
+                "default": ["turn on the storage room"]
             },
             "long": { 
-                "default": ["switch to day mode"],
-                "night": ["turn off the shower fan"],
-                "midnight": ["turn off the shower fan"] 
+                "default": ["turn off the storage room"]
             }
         }
     }
