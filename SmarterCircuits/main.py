@@ -55,6 +55,7 @@ class SmarterCircuitsMCP:
         self.web_server = SmarterCircuitsWeb(ip_address, 8081)
         self.buttons = {}
         self.start()
+        self.switch_states = {}
 
     def start(self):
         SmarterLog.log("SmarterCircuitsMCP","starting...")
@@ -304,9 +305,52 @@ class SmarterCircuitsMCP:
             self.handle_shelly_motion_message(id, topic.replace("shellies/"+id+"/",""), message)
         if "shellyplusi4" in id and self.circuit_authority is True:
             self.handle_shelly_i4_message(message)
+        if "shellyuni" in id and "input" in topic:
+            self.handle_shelly_uni_message(id, topic, message)
         return
     
+    def handle_shelly_uni_message(self, id, topic, message):
+        if self.circuit_authority is False:
+            return
+        alluniconfig = json.load(open(os.path.dirname(os.path.realpath(__file__))+"/shellyuniconfig.json"))
+        sid = id.split('-')[-1]
+        rid = topic.split('/')[-1]
+        uniconfig = alluniconfig[sid]
+        if sid not in self.switch_states.keys():
+            self.switch_states[sid] = {"0":{"on":False},"1":{"on":False}}
+        if message == "1":
+            self.switch_states[sid][rid] = {
+                "last_on": datetime.now(),
+                "on": True
+            }
+        else:
+            states = ""
+            last_on = datetime.now()
+            for relay in self.switch_states[sid]:
+                if relay["on"] is True:
+                    states = states + "1"
+                    last_on = relay["last_on"]
+                else:
+                    states = states + "0"
+            if states == "" or states == "00":
+                return
+            long = "short"
+            if last_on < datetime.now() - timedelta(seconds=2):
+                long = "long"
+            commands = []
+            if states == "10":
+                commands = uniconfig["button_a"][long]
+            if states == "01":
+                commands = uniconfig["button_b"][long]
+            if states == "11":
+                commands = uniconfig["button_c"][long]
+            for command in commands:
+                if command != "ignore":
+                    self.mqtt.publish("smarter_circuits/command",command)
+    
     def handle_shelly_i4_message(self, message):
+        if self.circuit_authority is False:
+            return
         data = json.loads(message)
         src = data["src"]
         evnt = data["params"]["events"][0]["event"]

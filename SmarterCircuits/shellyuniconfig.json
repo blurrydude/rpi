@@ -1,0 +1,16 @@
+{
+    "C45BBE5FE891": {
+        "button_a": {
+            "short": ["turn on the game room","turn on the game tables"],
+            "long":["turn off the game room","turn off the game tables"]
+        },
+        "button_b": {
+            "short": ["turn on the kitchen", "turn on the under cabinet"],
+            "long":["turn off the kitchen", "turn off the under cabinet"]
+        },
+        "button_c": {
+            "short": ["turn on the cabinet light"],
+            "long":["turn off the cabinet light"]
+        }
+    }
+}
