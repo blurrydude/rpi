@@ -26,10 +26,10 @@
         },
         "button_c": {
             "short": { 
-                "default": ["turn on the garage lights"]
+                "default": ["show status"]
             },
             "long": { 
-                "default": ["turn off the garage lights"]
+                "default": ["turn on the garage lights"]
             }
         }
     }

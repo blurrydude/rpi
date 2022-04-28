@@ -119,9 +119,9 @@ class SmarterCircuitsMCP:
                 if self.ticks in [0,10,20,30,40,50]:
                     self.send_peer_data()
                     self.check_for_updates()
-                if self.last_notification < datetime.now() - timedelta(minutes=30):
-                    self.last_notification = datetime.now()
-                    self.send_system_state()
+                # if self.last_notification < datetime.now() - timedelta(minutes=30):
+                #     self.last_notification = datetime.now()
+                #     self.send_system_state()
                 now = datetime.now().strftime("%H:%M")
                 day = datetime.now().strftime("%a").lower()
                 if self.ticks >= 59:
@@ -717,10 +717,15 @@ class SmarterCircuitsMCP:
             SmarterLog.log("SmarterCircuitsMCP",'failed to send command')
 
     def execute_command(self, command):
+        if self.circuit_authority is False:
+            return
         SmarterLog.log("SmarterCircuitsMCP","executing command: "+command)
         command = command.lower()
         com = "off"
         command_list = []
+        if "show status" in command:
+            self.send_system_state()
+            return
         if " on" in command:
             com = "on"
         if "zone" in command or "area" in command or "all of the" in command:
