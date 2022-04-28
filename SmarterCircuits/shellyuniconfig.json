@@ -1,16 +1,40 @@
 {
     "C45BBE5FE891": {
         "button_a": {
-            "short": ["turn on the game room","turn on the game tables"],
-            "long":["turn off the game room","turn off the game tables"]
+            "short": { 
+                "default": ["turn on the game room","turn on the game tables"],
+                "night": ["turn on the game room"] ,
+                "midnight": ["turn on the game room"] 
+            },
+            "long": { 
+                "default": ["turn off the game room","turn off the game tables"] ,
+                "night": ["turn off the game room"] ,
+                "midnight": ["turn off the game room"] 
+            }
         },
         "button_b": {
-            "short": ["turn on the kitchen", "turn on the under cabinet"],
-            "long":["turn off the kitchen", "turn off the under cabinet"]
+            "short": { 
+                "default": ["turn on the kitchen", "turn on the under cabinet"],
+                "night": ["turn on the under cabinet"],
+                "midnight": ["turn on the under cabinet"]
+            },
+            "long": { 
+                "default": ["turn off the kitchen", "turn off the under cabinet"] ,
+                "night": ["turn off the under cabinet"],
+                "midnight": ["turn off the under cabinet"]
+            }
         },
         "button_c": {
-            "short": ["turn on the master bath"],
-            "long":["turn off the master bath"]
+            "short": { 
+                "default": ["switch to night mode"],
+                "night": ["turn on the shower fan"],
+                "midnight": ["turn on the shower fan"]
+            },
+            "long": { 
+                "default": ["switch to day mode"],
+                "night": ["turn off the shower fan"],
+                "midnight": ["turn off the shower fan"] 
+            }
         }
     }
 }

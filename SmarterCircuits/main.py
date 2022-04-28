@@ -339,12 +339,19 @@ class SmarterCircuitsMCP:
             if last_on < datetime.now() - timedelta(seconds=2):
                 long = "long"
             commands = []
+            m = self.mode.lower()
             if states == "10":
-                commands = uniconfig["button_a"][long]
+                if m not in uniconfig["button_a"][long].keys():
+                    m = "default"
+                commands = uniconfig["button_a"][long][m]
             if states == "01":
-                commands = uniconfig["button_b"][long]
+                if m not in uniconfig["button_b"][long].keys():
+                    m = "default"
+                commands = uniconfig["button_b"][long][m]
             if states == "11":
-                commands = uniconfig["button_c"][long]
+                if m not in uniconfig["button_c"][long].keys():
+                    m = "default"
+                commands = uniconfig["button_c"][long][m]
             for command in commands:
                 if command != "ignore":
                     self.mqtt.publish("smarter_circuits/command",command)
