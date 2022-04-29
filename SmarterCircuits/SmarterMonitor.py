@@ -65,7 +65,7 @@ class SmarterMonitor:
     
     def write_state(self):
         print("try write")
-        self.publish("smarter_circuits/full_system_state", json.dumps(self.full_state))
+        self.publish("full_system_report", json.dumps(self.full_state))
 
     def handle_shelly_message(self, topic, rawdata):
         identity = topic[0].split('-')
@@ -95,6 +95,6 @@ class SmarterMonitor:
 if __name__ == "__main__":
     monitor = SmarterMonitor()
     while monitor.running is True:
-        time.sleep(30)
+        time.sleep(10)
         monitor.process_state()
     exit()

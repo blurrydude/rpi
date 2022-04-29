@@ -154,19 +154,7 @@ class SmarterCircuitsMCP:
         power = 0.0
         for circuit in self.config.circuits:
             power = power + circuit.status.relay.power
-        data = data + "System Power Usage: "+str(power)+" W\\nSending Full System Report"
-        self.mqtt.publish("notifications",data)
-        full_system_report = {
-            "peers": self.peers,
-            "circuits": self.config.circuits,
-            "ht_sensors": self.config.ht_sensors,
-            "motion_sensors": self.config.motion_sensors,
-            "thermostats": self.thermostats,
-            "rollerdoors": self.rollerdoors,
-            "rollershades": self.rollershades,
-            "mode": self.mode
-        }
-        self.mqtt.publish("full_system_report",full_system_report)
+        data = data + "System Power Usage: "+str(power)+" W\\nCurrent Mode: " + self.mode.upper()
     
     def log_temp_data(self):
         if self.circuit_authority is False:
