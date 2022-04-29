@@ -79,7 +79,7 @@
             "3": ["turn off the bar"]
         }
     },
-    "shellyplusi4-00000000": 
+    "shellyplusi4-083af200df3c": 
     {
         "hex_enabled": true,
         "hex_value": {
@@ -89,7 +89,7 @@
             "3": "4"
         }
     },
-    "shellyplusi4-11111111": 
+    "shellyplusi4-083af200b62c": 
     {
         "hex_enabled": true,
         "hex_value": {
@@ -99,7 +99,7 @@
             "3": "8"
         }
     },
-    "shellyplusi4-22222222": 
+    "shellyplusi4-083af200ff40": 
     {
         "hex_enabled": true,
         "hex_value": {
@@ -109,7 +109,7 @@
             "3": "C"
         }
     },
-    "shellyplusi4-33333333": 
+    "shellyplusi4-083af2013d5c": 
     {
         "hex_enabled": true,
         "hex_value": {
@@ -120,21 +120,21 @@
         }
     },
     "hex_commands": {
-        "1": [],
-        "2": [],
-        "3": [],
-        "4": [],
-        "5": [],
-        "6": [],
-        "7": [],
-        "8": [],
-        "9": [],
-        "A": [],
-        "B": [],
-        "C": [],
-        "D": [],
-        "E": [],
-        "F": [],
+        "1": ["HEX 1"],
+        "2": ["HEX 2"],
+        "3": ["HEX 3"],
+        "4": ["HEX 4"],
+        "5": ["HEX 5"],
+        "6": ["HEX 6"],
+        "7": ["HEX 7"],
+        "8": ["HEX 8"],
+        "9": ["HEX 9"],
+        "A": ["HEX A"],
+        "B": ["HEX B"],
+        "C": ["HEX C"],
+        "D": ["HEX D"],
+        "E": ["HEX E"],
+        "F": ["HEX F"],
         "10": [],
         "11": [],
         "12": [],
