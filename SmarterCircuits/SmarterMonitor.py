@@ -71,8 +71,10 @@ class SmarterMonitor:
     
     def handle_smarter_circuits_message(self, topic, rawdata):
         if topic[0] == "command":
-            if "restart monitor program" in rawdata:
-                self.restart()
+            if "monitor program" in rawdata and "restart" in rawdata:
+                self.shutdown(True)
+            if "monitor program" in rawdata and "stop" in rawdata:
+                self.shutdown(False)
 
     def start_listening(self):
         self.client.connect('192.168.2.200')
@@ -225,13 +227,14 @@ class SmarterMonitor:
             self.last_sent_alert = False
             self.client.publish("notifications","No alerts as of "+datetime.now().strftime("%X"))
     
-    def restart(self):
+    def shutdown(self, restart):
         self.client.publish("notifications","Monitor restarting")
         self.client.loop_stop()
         self.client.disconnect()
         home_dir = os.path.dirname(os.path.realpath(__file__))+"/"
         os.system('cd '+home_dir+' && git pull --all')
-        os.execv(sys.executable, ['python3'] + sys.argv)
+        if restart is True:
+            os.execv(sys.executable, ['python3'] + sys.argv)
         self.running = False
         exit()
 
