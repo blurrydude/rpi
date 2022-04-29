@@ -391,20 +391,20 @@ class SmarterCircuitsMCP:
         iconfig = iconfigs[src]
         commands = []
         if iconfig["hex_enabled"] is True:
-            d = iconfig[src]["hex_value"][cid]
+            d = iconfig["hex_value"][cid]
             if self.hex_waiting is False:
                 if d == "0":
                     self.hex_waiting = True
                     self.hex_command = ""
                     return
                 else:
-                    commands = iconfigs["hex_commands"][d]
+                    commands = iconfig["hex_commands"][d]
             elif len(self.hex_command) < 2:
-                self.hex_command = self.hex_command + iconfig[src]["hex_value"][cid]
+                self.hex_command = self.hex_command + iconfig["hex_value"][cid]
             if len(self.hex_command) == 2:
                 self.hex_waiting = False
-                if self.hex_command in iconfigs["hex_commands"]:
-                    commands = iconfigs["hex_commands"][self.hex_command]
+                if self.hex_command in iconfig["hex_commands"]:
+                    commands = iconfig["hex_commands"][self.hex_command]
                 self.hex_command = ""
             for command in commands:
                 if command != "ignore":
