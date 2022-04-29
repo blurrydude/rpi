@@ -166,7 +166,7 @@ class SmarterCircuitsMCP:
             "rollershades": self.rollershades,
             "mode": self.mode
         }
-        self.mqtt.publish("full_system_report",json.dumps(full_system_report))
+        self.mqtt.publish("full_system_report",full_system_report)
     
     def log_temp_data(self):
         if self.circuit_authority is False:
