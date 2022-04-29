@@ -198,6 +198,7 @@ class SmarterMonitor:
                     alerts.append(device["name"] + " batt @ "+str(device["status"]["bat"])+"%")
         self.write_state()
         if len(alerts) > 0:
+            alerts.append("Total: "+str(round(total_current,1))+"W")
             notify = ""
             for i in range(len(alerts)):
                 notify = notify + alerts[i] + '\\n'
@@ -206,6 +207,7 @@ class SmarterMonitor:
 if __name__ == "__main__":
     monitor = SmarterMonitor()
     while monitor.running is True:
-        time.sleep(10)
+        time.sleep(15)
         monitor.process_state()
+        time.sleep(15)
     exit()
