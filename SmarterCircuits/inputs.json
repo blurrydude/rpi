@@ -137,7 +137,7 @@
         "F": ["turn on the guest bathroom"],
         "10": ["ignore"],
         "11": ["switch to night mode"],
-        "12": ["ignore"],
+        "12": ["report temperature"],
         "13": ["turn on the storage room"],
         "14": ["turn off the storage room"],
         "15": ["turn on the laundry room"],
