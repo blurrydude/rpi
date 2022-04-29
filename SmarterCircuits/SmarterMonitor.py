@@ -126,7 +126,7 @@ class SmarterMonitor:
                 v = float(device["voltage"])
                 c = p * v
                 if c > 50:
-                    alerts.append(name[0] + " using " + round(str(c),1) + "W")
+                    alerts.append(name[0] + " using " + str(round(c,1)) + "W")
                 current = current + c
                 self.circuit_states[name[0]]["watts"] = c
             if "temperature_f" in device.keys():
@@ -137,7 +137,7 @@ class SmarterMonitor:
                 v = float(device["voltage"])
                 c = p * v
                 if c > 50:
-                    alerts.append(name[1] + " using " + round(str(c),1) + "W")
+                    alerts.append(name[1] + " using " + str(round(c,1)) + "W")
                 current = current + c
                 self.circuit_states[name[1]]["watts"] = c
             if "overtemperature" in device.keys() and device["overtemperature"] != "0":
@@ -156,7 +156,7 @@ class SmarterMonitor:
                 v = 120.0
                 c = p * v
                 if c > 50:
-                    alerts.append(name + " using " + round(str(c),1) + "W")
+                    alerts.append(name + " using " + str(round(c,1)) + "W")
                 current = current + c
                 self.circuit_states[name]["watts"] = c
             if "temperature_f" in device.keys():
@@ -178,7 +178,7 @@ class SmarterMonitor:
                     current = current + c
                     name = did + "-" + str(switch["id"])
                     if c > 50:
-                        alerts.append(name + " using " + round(str(c),1) + "W")
+                        alerts.append(name + " using " + str(round(c,1)) + "W")
                     self.circuit_states[name] = {
                         "watts": c,
                         "temp": switch["temperature"]["tF"]
