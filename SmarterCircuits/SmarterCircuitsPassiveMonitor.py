@@ -1,5 +1,6 @@
 import textwrap
 from time import sleep
+from datetime import datetime, timedelta
 import SmarterCircuitsMQTT
 import os
 import time
@@ -16,7 +17,19 @@ class SmarterCircuitsPassiveMonitor:
         self.labels = []
         self.display_on = False
         self.screen_timer = 0
+        self.last_display = datetime.now()
+        _thread.start_new_thread(self.sleep_timer, ())
         self.start()
+
+    def sleep_timer(self):
+        while self.running is True:
+            time.sleep(1)
+            if datetime.now() > self.last_display + timedelta(seconds=30):
+                self.do_display([datetime.now().strftime("%x %X")])
+            if datetime.now() > self.last_display + timedelta(seconds=40):
+                self.do_display([])
+                self.last_display = datetime.now()
+
 
     def start(self):
         width = self.window.winfo_screenwidth()
