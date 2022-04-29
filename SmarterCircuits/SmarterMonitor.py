@@ -196,7 +196,7 @@ class SmarterMonitor:
                 device = self.full_state["shellymotionsensor"][did]
                 if "name" not in device.keys():
                     continue
-                if device["status"]["bat"] < 50:
+                if device["status"]["bat"] < 30:
                     alerts.append(device["name"] + " batt @ "+str(device["status"]["bat"])+"%")
         self.write_state()
         if len(alerts) > 0:
