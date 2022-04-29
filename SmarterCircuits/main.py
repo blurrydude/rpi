@@ -390,7 +390,7 @@ class SmarterCircuitsMCP:
         cid = str(data["params"]["events"][0]["id"])
         iconfig = iconfigs[src]
         commands = []
-        if iconfig["hex_enabled"] is True:
+        if iconfig["hex_enabled"] is True and evnt == "btn_up":
             d = iconfig["hex_value"][cid]
             if self.hex_waiting is False:
                 if d == "0":
@@ -399,6 +399,7 @@ class SmarterCircuitsMCP:
                     self.hex_command = ""
                     return
                 else:
+                    self.mqtt.publish("notifications","HEX: "+self.hex_command)
                     commands = iconfigs["hex_commands"][d]
             elif len(self.hex_command) < 2:
                 self.hex_command = self.hex_command + iconfig["hex_value"][cid]
