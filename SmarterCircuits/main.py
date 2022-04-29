@@ -399,16 +399,22 @@ class SmarterCircuitsMCP:
                     self.hex_command = ""
                     return
                 else:
-                    self.mqtt.publish("notifications","HEX: "+d + " execute")
+                    m = "HEX: "+d + " execute"
                     commands = iconfigs["hex_commands"][d]
+                    for command in commands:
+                        m = m + "\\n" + command
+                    self.mqtt.publish("notifications",m)
             elif len(self.hex_command) < 2:
                 self.hex_command = self.hex_command + iconfig["hex_value"][cid]
                 self.mqtt.publish("notifications","HEX: "+self.hex_command)
             if len(self.hex_command) == 2:
                 self.hex_waiting = False
-                self.mqtt.publish("notifications","HEX: "+self.hex_command + " execute")
+                m = "HEX: "+self.hex_command + " execute"
                 if self.hex_command in iconfigs["hex_commands"]:
                     commands = iconfigs["hex_commands"][self.hex_command]
+                    for command in commands:
+                        m = m + "\\n" + command
+                self.mqtt.publish("notifications",m)
                 self.hex_command = ""
             for command in commands:
                 if command != "ignore":
