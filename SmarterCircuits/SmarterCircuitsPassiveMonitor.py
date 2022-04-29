@@ -60,6 +60,7 @@ class SmarterCircuitsPassiveMonitor:
             else:
                 wrapped = textwrap.wrap(text,24)
             
+            self.last_display = datetime.now()
             self.do_display(wrapped)
             # if self.display_on == False:
             #     _thread.start_new_thread(self.screen_open, ())
