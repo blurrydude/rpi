@@ -79,6 +79,8 @@ class SmarterMonitor:
                 self.shutdown(True)
             if "monitor program" in rawdata and "stop" in rawdata:
                 self.shutdown(False)
+            if "report temperature" in rawdata:
+                self.report_temperatures()
 
     def start_listening(self):
         self.client.connect('192.168.2.200')
@@ -242,6 +244,20 @@ class SmarterMonitor:
         elif self.last_sent_alert is True:
             self.last_sent_alert = False
             self.notify("No alerts as of "+datetime.now().strftime("%X"))
+    
+    def report_temperatures(self):
+        message = "Temperature Report:"
+        if "shellyht" in self.full_state.keys():
+            for did in self.full_state["shellyht"]:
+                device = self.full_state["shellyht"][did]
+                if "name" not in device.keys():
+                    continue
+                if "sensor_temperature" not in device.keys():
+                    continue
+                if "sensor_humidity" not in device.keys():
+                    continue
+                message = message + "\\n" + device["name"] + ": " + str(device["sensor_temperature"]) + "F " + str(device["sensor_humidity"]) +"%"
+                
     
     def shutdown(self, restart):
         mess = "Monitor "
