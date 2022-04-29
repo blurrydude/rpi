@@ -149,7 +149,7 @@ class SmarterMonitor:
                 if "name" not in device.keys():
                     continue
                 lh = device["last_heard"]
-                last_heard = now - datetime(int(lh[0:4]),int(lh[4:2]),int(lh[6:2]),int(lh[8:2]),int(lh[10:2]),int(lh[12:2]))
+                last_heard = now - datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
                 if last_heard > timedelta(minutes=10):
                     alerts.append(device["name"] + "\\nlast heard\\n"+str(last_heard))
                 current = 0.0
@@ -183,7 +183,8 @@ class SmarterMonitor:
                 device = self.full_state["shelly1pm"][did]
                 if "name" not in device.keys():
                     continue
-                last_heard = now - device["last_heard"]
+                lh = device["last_heard"]
+                last_heard = now - datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
                 if last_heard > timedelta(minutes=10):
                     alerts.append(device["name"] + "\\nlast heard\\n"+str(last_heard))
                 current = 0.0
@@ -206,7 +207,8 @@ class SmarterMonitor:
             for did in self.full_state["shellypro4pm"]:
                 device = self.full_state["shellypro4pm"][did]
                 current = 0.0
-                last_heard = now - device["last_heard"]
+                lh = device["last_heard"]
+                last_heard = now - datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
                 if last_heard > timedelta(minutes=10):
                     alerts.append(device["name"] + "\\nlast heard\\n"+str(last_heard))
                 for i in range(4):
@@ -234,7 +236,8 @@ class SmarterMonitor:
                 device = self.full_state["shellymotionsensor"][did]
                 if "name" not in device.keys():
                     continue
-                last_heard = now - device["last_heard"]
+                lh = device["last_heard"]
+                last_heard = now - datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
                 if last_heard > timedelta(minutes=10):
                     alerts.append(device["name"] + "\\nlast heard\\n"+str(last_heard))
                 if device["status"]["bat"] < self.battery_limit:
@@ -245,7 +248,8 @@ class SmarterMonitor:
                 device = self.full_state["shellyht"][did]
                 if "name" not in device.keys():
                     continue
-                last_heard = now - device["last_heard"]
+                lh = device["last_heard"]
+                last_heard = now - datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
                 if last_heard > timedelta(minutes=60):
                     alerts.append(device["name"] + "\\nlast heard\\n"+str(last_heard))
                 if int(device["sensor_battery"]) < self.battery_limit:
@@ -280,7 +284,9 @@ class SmarterMonitor:
                 message = message + str(device["sensor_humidity"]) +"%"
                 if "last_heard" not in device.keys():
                     continue
-                message = message + "\\n" + str(device["last_heard"])
+                lh = device["last_heard"]
+                last_heard = datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
+                message = message + "\\n" + last_heard.strftime('%x %X')
         self.notify(message)
     
     def shutdown(self, restart):
