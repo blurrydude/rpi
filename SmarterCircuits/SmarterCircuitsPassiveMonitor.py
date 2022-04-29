@@ -42,14 +42,12 @@ class SmarterCircuitsPassiveMonitor:
                 return
             # print("alerting: "+text)
             # pyautogui.alert(text, "HOUSE ALERT")
-            labels = []
             if "\\n" in text:
                 wrapped = text.split('\\n')
             else:
                 wrapped = textwrap.wrap(text,24)
-            for i in range(len(wrapped)):
-                labels.append(SmartLabel(i+1,0,wrapped[i],"Times",64,"black","white",5,5))
-            self.screen_wipe(labels)
+            
+            self.do_display(wrapped)
             # if self.display_on == False:
             #     _thread.start_new_thread(self.screen_open, ())
             #     _thread.start_new_thread(self.screen_close_timer, ())
@@ -59,6 +57,22 @@ class SmarterCircuitsPassiveMonitor:
         except Exception as e: 
             error = str(e)
             print(error)
+    
+    def do_display(self, wrapped):
+        labels = []
+        if len(wrapped) > 7:
+            newwrap = wrapped[:7]
+            for i in range(7):
+                wrapped.pop(0)
+            for i in range(len(newwrap)):
+                labels.append(SmartLabel(i+1,0,wrapped[i],"Times",64,"black","white",5,5))
+            self.screen_wipe(labels)
+            time.sleep(3)
+            self.do_display(wrapped)
+        else:
+            for i in range(len(wrapped)):
+                labels.append(SmartLabel(i+1,0,wrapped[i],"Times",64,"black","white",5,5))
+            self.screen_wipe(labels)
     
     def screen_open(self):
         if self.display_on is False:
