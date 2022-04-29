@@ -416,6 +416,13 @@ class SmarterCircuitsMCP:
                 self.hex_command = ""
                 self.mqtt.publish("notifications","HEX Search: "+self.hex_command)
                 return
+            if self.hex_command == "01":
+                self.hex_waiting = False
+                self.hex_command = ""
+                m = ""
+                for command in iconfigs["hex_commands"]:
+                    m = m + "\\n" + command
+                self.mqtt.publish("notifications",m)
             if len(self.hex_command) == 2 and self.hex_search is True:
                 self.hex_waiting = False
                 self.hex_search = False
