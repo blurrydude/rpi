@@ -257,7 +257,7 @@ class SmarterMonitor:
                 if "sensor_humidity" not in device.keys():
                     continue
                 message = message + "\\n" + device["name"] + ": " + str(device["sensor_temperature"]) + "F " + str(device["sensor_humidity"]) +"%"
-                
+        self.notify(message)
     
     def shutdown(self, restart):
         mess = "Monitor "
