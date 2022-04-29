@@ -150,7 +150,7 @@ class SmarterMonitor:
                     continue
                 lh = device["last_heard"]
                 last_heard = now - datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
-                if last_heard > timedelta(minutes=10):
+                if last_heard > timedelta(hours=6):
                     alerts.append(device["name"] + "\\nlast heard\\n"+str(last_heard))
                 current = 0.0
                 name = device["name"].split('/')
@@ -185,7 +185,7 @@ class SmarterMonitor:
                     continue
                 lh = device["last_heard"]
                 last_heard = now - datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
-                if last_heard > timedelta(minutes=10):
+                if last_heard > timedelta(hours=6):
                     alerts.append(device["name"] + "\\nlast heard\\n"+str(last_heard))
                 current = 0.0
                 name = device["name"]
@@ -209,7 +209,7 @@ class SmarterMonitor:
                 current = 0.0
                 lh = device["last_heard"]
                 last_heard = now - datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
-                if last_heard > timedelta(minutes=10):
+                if last_heard > timedelta(hours=6):
                     alerts.append(device["name"] + "\\nlast heard\\n"+str(last_heard))
                 for i in range(4):
                     sid = "status_switch:"+str(i)
@@ -238,7 +238,7 @@ class SmarterMonitor:
                     continue
                 lh = device["last_heard"]
                 last_heard = now - datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
-                if last_heard > timedelta(minutes=10):
+                if last_heard > timedelta(hours=6):
                     alerts.append(device["name"] + "\\nlast heard\\n"+str(last_heard))
                 if device["status"]["bat"] < self.battery_limit:
                     alerts.append(device["name"] + " Motion batt @ "+str(device["status"]["bat"])+"%")
@@ -250,7 +250,7 @@ class SmarterMonitor:
                     continue
                 lh = device["last_heard"]
                 last_heard = now - datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
-                if last_heard > timedelta(minutes=60):
+                if last_heard > timedelta(hours=6):
                     alerts.append(device["name"] + "\\nlast heard\\n"+str(last_heard))
                 if int(device["sensor_battery"]) < self.battery_limit:
                     alerts.append(device["name"] + " HT batt @ "+str(device["sensor_battery"])+"%")
