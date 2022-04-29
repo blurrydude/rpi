@@ -1,4 +1,5 @@
 #! /usr/bin/env python3
+from datetime import datetime
 import os
 import paho.mqtt.client as mqtt
 import _thread
@@ -16,6 +17,7 @@ class SmarterMonitor:
         self.name_lookup = {
             "C45BBE5FE891": "Little Remote"
         }
+        self.last_sent_alert = False
         self.ignore_fields = [
             "relay_0_energy",
             "relay_1_energy",
@@ -198,11 +200,15 @@ class SmarterMonitor:
                     alerts.append(device["name"] + " batt @ "+str(device["status"]["bat"])+"%")
         self.write_state()
         if len(alerts) > 0:
+            self.last_sent_alert = True
             alerts.append("Total: "+str(round(total_current,1))+"W")
             notify = ""
             for i in range(len(alerts)):
                 notify = notify + alerts[i] + '\\n'
             self.client.publish("notifications",notify)
+        elif self.last_sent_alert is True:
+            self.last_sent_alert = False
+            self.client.publish("notifications","No alerts as of "+datetime.now().strftime("%X"))
 
 if __name__ == "__main__":
     monitor = SmarterMonitor()
