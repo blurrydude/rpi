@@ -232,6 +232,8 @@ class SmarterMonitor:
         home_dir = os.path.dirname(os.path.realpath(__file__))+"/"
         os.system('cd '+home_dir+' && git pull --all')
         os.execv(sys.executable, ['python3'] + sys.argv)
+        self.running = False
+        exit()
 
 if __name__ == "__main__":
     monitor = SmarterMonitor()
