@@ -384,7 +384,7 @@ class SmarterCircuitsMCP:
 
         src = data["src"]
         evnt = data["params"]["events"][0]["event"]
-        cid = data["params"]["events"][0]["id"]
+        cid = str(data["params"]["events"][0]["id"])
         iconfig = iconfigs[src]
         commands = []
         if iconfig["hex_enabled"] is True:
