@@ -422,8 +422,8 @@ class SmarterCircuitsMCP:
                 self.hex_command = ""
                 m = ""
                 for hex in iconfigs["hex_commands"]:
-                    if len(hex) > 2:
-                        break
+                    if len(hex) > 1:
+                        continue
                     m = m + "\\n" + hex + ": " + iconfigs["hex_commands"][hex]
                 self.mqtt.publish("notifications",m)
                 return
