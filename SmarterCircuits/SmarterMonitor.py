@@ -226,7 +226,7 @@ class SmarterMonitor:
                 device = self.full_state["shellyht"][did]
                 if "name" not in device.keys():
                     continue
-                if device["sensor_battery"] < 30:
+                if int(device["sensor_battery"]) < 30:
                     alerts.append(device["name"] + " HT batt @ "+str(device["sensor_battery"])+"%")
 
         self.write_state()
