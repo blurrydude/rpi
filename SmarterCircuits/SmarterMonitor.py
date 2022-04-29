@@ -16,6 +16,17 @@ class SmarterMonitor:
         self.name_lookup = {
             "C45BBE5FE891": "Little Remote"
         }
+        self.ignore_fields = [
+            "relay_0_energy",
+            "relay_1_energy",
+            "events_rpc",
+            "input_0",
+            "input_1",
+            "source",
+            "output",
+            "apower",
+            "aenergy"
+        ]
         self.load_configs()
         _thread.start_new_thread(self.start_listening, ())
 
@@ -80,8 +91,15 @@ class SmarterMonitor:
         if id not in self.full_state[device].keys():
             self.full_state[device][id] = {}
         field_name = str(topic).replace(', ','_').replace("'",'').replace('[','').replace(']','')
+        if field_name in self.ignore_fields:
+            return
         if value[0] == "{":
-            self.full_state[device][id][field_name] = json.loads(value)
+            obj = json.loads(value)
+            nobj = {}
+            for key in obj:
+                if key not in self.ignore_fields:
+                    nobj[key] = obj[key]
+            self.full_state[device][id][field_name] = nobj
         else:
             self.full_state[device][id][field_name] = value
         try:
@@ -95,6 +113,6 @@ class SmarterMonitor:
 if __name__ == "__main__":
     monitor = SmarterMonitor()
     while monitor.running is True:
-        time.sleep(10)
+        time.sleep(30)
         monitor.process_state()
     exit()
