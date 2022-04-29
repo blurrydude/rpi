@@ -266,6 +266,7 @@ class SmarterMonitor:
         else:
             mess = mess + "stopping"
         self.notify(mess)
+        time.sleep(2)
         self.client.loop_stop()
         self.client.disconnect()
         home_dir = os.path.dirname(os.path.realpath(__file__))+"/"
