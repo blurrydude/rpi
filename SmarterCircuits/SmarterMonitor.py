@@ -65,7 +65,7 @@ class SmarterMonitor:
 
     def start_listening(self):
         self.client.connect('192.168.2.200')
-        print("client connected.")
+        print("client connected at "+datetime.now().strftime("%x %X"))
         self.client.subscribe("shellies/#")
         self.client.subscribe("smarter_circuits/#")
         self.client.loop_start()
@@ -78,7 +78,7 @@ class SmarterMonitor:
         self.client.publish(topic, message)
     
     def write_state(self):
-        print("try write")
+        print("publish reports at "+datetime.now().strftime("%x %X"))
         self.publish("full_system_report", json.dumps(self.full_state))
         self.publish("circuit_states", json.dumps(self.circuit_states))
 
