@@ -154,8 +154,19 @@ class SmarterCircuitsMCP:
         power = 0.0
         for circuit in self.config.circuits:
             power = power + circuit.status.relay.power
-        data = data + "System Power Usage: "+str(power)+" W"
+        data = data + "System Power Usage: "+str(power)+" W\\nSending Full System Report"
         self.mqtt.publish("notifications",data)
+        full_system_report = {
+            "peers": self.peers,
+            "circuits": self.config.circuits,
+            "ht_sensors": self.config.ht_sensors,
+            "motion_sensors": self.config.motion_sensors,
+            "thermostats": self.thermostats,
+            "rollerdoors": self.rollerdoors,
+            "rollershades": self.rollershades,
+            "mode": self.mode
+        }
+        self.mqtt.publish("full_system_report",json.dumps(full_system_report))
     
     def log_temp_data(self):
         if self.circuit_authority is False:
@@ -673,8 +684,7 @@ class SmarterCircuitsMCP:
             SmarterLog.log("BATTERY STATUS","Battery Low: "+sensor.id+"("+sensor.name+")")
             if self.circuit_authority is True:
                 self.mqtt.publish("notifications","Battery Low\n"+sensor.id+"\n("+sensor.name+")")
-                #SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",sensor.name+" battery at "+str(sensor.status.battery)+"%",sensor.name+" battery at "+str(sensor.status.battery)+"%")
-    
+
     def conditions_met(self, conditions):
         for condition in conditions:
             target_value = None
