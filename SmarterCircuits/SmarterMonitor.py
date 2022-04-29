@@ -120,7 +120,7 @@ class SmarterMonitor:
             if id in self.name_lookup.keys():
                 mess = mess + "\\n"+self.name_lookup[id]
             self.notify(mess)
-        self.full_state[device][id]["last_heard"] = datetime.now()
+        self.full_state[device][id]["last_heard"] = datetime.now().strftime('%Y%m%d%H%M%S')
         field_name = str(topic).replace(', ','_').replace("'",'').replace('[','').replace(']','')
         if field_name in self.ignore_fields:
             return
@@ -148,7 +148,8 @@ class SmarterMonitor:
                 device = self.full_state["shellyswitch25"][did]
                 if "name" not in device.keys():
                     continue
-                last_heard = now - device["last_heard"]
+                lh = device["last_heard"]
+                last_heard = now - datetime(int(lh[0:4]),int(lh[4:2]),int(lh[6:2]),int(lh[8:2]),int(lh[10:2]),int(lh[12:2]))
                 if last_heard > timedelta(minutes=10):
                     alerts.append(device["name"] + "\\nlast heard\\n"+str(last_heard))
                 current = 0.0
