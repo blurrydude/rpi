@@ -671,7 +671,7 @@ class SmarterCircuitsMCP:
         if sensor.status.battery < 50:
             SmarterLog.log("BATTERY STATUS","Battery Low: "+sensor.id+"("+sensor.name+")")
             if self.circuit_authority is True:
-                self.mqtt.publish("notifications","Battery Low\n"+sensor.id+"\n("+sensor.name+")")
+                self.mqtt.publish("notifications","Battery at "+str(sensor.status.battery)+"%\\n"+sensor.id+"\\n("+sensor.name+")")
 
     def conditions_met(self, conditions):
         for condition in conditions:
