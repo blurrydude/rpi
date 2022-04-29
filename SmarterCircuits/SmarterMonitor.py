@@ -12,7 +12,7 @@ running = True
 
 class SmarterMonitor:
     def __init__(self):
-        self.power_limit = 75
+        self.power_limit = 80
         self.battery_limit = 30
         self.client = mqtt.Client()
         self.client.on_message = self.on_message
