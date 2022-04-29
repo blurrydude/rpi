@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 from datetime import datetime
 import os
+import sys
 import paho.mqtt.client as mqtt
 import _thread
 import time
@@ -62,6 +63,14 @@ class SmarterMonitor:
         if topic[0] == "shellies":
             topic.pop(0)
             self.handle_shelly_message(topic, rawdata)
+        if topic[0] == "smarter_circuits":
+            topic.pop(0)
+            self.handle_smarter_circuits_message(topic, rawdata)
+    
+    def handle_smarter_circuits_message(self, topic, rawdata):
+        if topic[0] == "monitor":
+            if rawdata == "restart":
+                self.restart()
 
     def start_listening(self):
         self.client.connect('192.168.2.200')
@@ -209,6 +218,14 @@ class SmarterMonitor:
         elif self.last_sent_alert is True:
             self.last_sent_alert = False
             self.client.publish("notifications","No alerts as of "+datetime.now().strftime("%X"))
+    
+    def restart(self):
+        self.client.publish("notifications","Monitor restarting")
+        self.client.loop_stop()
+        self.client.disconnect()
+        home_dir = os.path.dirname(os.path.realpath(__file__))+"/"
+        os.system('cd '+home_dir+' && git pull --all')
+        os.execv(sys.executable, ['python3'] + sys.argv)
 
 if __name__ == "__main__":
     monitor = SmarterMonitor()
