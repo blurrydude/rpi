@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
+import random
 import sys
 import paho.mqtt.client as mqtt
 import _thread
@@ -19,6 +20,7 @@ class SmarterMonitor:
             "C45BBE5FE891": "Little Remote"
         }
         self.last_sent_alert = False
+        self.last_notification = datetime.now()
         self.ignore_fields = [
             "relay_0_energy",
             "relay_1_energy",
@@ -113,7 +115,7 @@ class SmarterMonitor:
             mess = "Detected\\n"+device+"\\n"+id
             if id in self.name_lookup.keys():
                 mess = mess + "\\n"+self.name_lookup[id]
-            self.client.publish("notifications", mess)
+            self.notify( mess)
         field_name = str(topic).replace(', ','_').replace("'",'').replace('[','').replace(']','')
         if field_name in self.ignore_fields:
             return
@@ -226,6 +228,7 @@ class SmarterMonitor:
                     continue
                 if device["sensor_battery"] < 30:
                     alerts.append(device["name"] + " HT batt @ "+str(device["sensor_battery"])+"%")
+
         self.write_state()
         if len(alerts) > 0:
             self.last_sent_alert = True
@@ -233,10 +236,10 @@ class SmarterMonitor:
             notify = ""
             for i in range(len(alerts)):
                 notify = notify + alerts[i] + '\\n'
-            self.client.publish("notifications",notify)
+            self.notify(notify)
         elif self.last_sent_alert is True:
             self.last_sent_alert = False
-            self.client.publish("notifications","No alerts as of "+datetime.now().strftime("%X"))
+            self.notify("No alerts as of "+datetime.now().strftime("%X"))
     
     def shutdown(self, restart):
         mess = "Monitor "
@@ -244,7 +247,7 @@ class SmarterMonitor:
             mess = mess + "restarting"
         else:
             mess = mess + "stopping"
-        self.client.publish("notifications",mess)
+        self.notify(mess)
         self.client.loop_stop()
         self.client.disconnect()
         home_dir = os.path.dirname(os.path.realpath(__file__))+"/"
@@ -255,10 +258,33 @@ class SmarterMonitor:
         self.running = False
         exit()
 
+    def notify(self, message):
+        self.last_notification = datetime.now()
+        self.client.publish("notifications",message)
+    
+    def do_random(self):
+        message = random.choice([
+            "This aggression will not stand, man.",
+            "Careful, man, there's a beverage here.",
+            "Smokey, this is not Vietnam, this is bowling. There are rules.",
+            "Strikes and gutters, ups and downs.",
+            "Obviously, you are not a golfer.",
+            "I'm sticking to a strict alcohol regimen to keep my mind limber.",
+            "Forget about the fucking toe!",
+            "If you will it, it is no dream, Dude."
+        ])
+        self.notify(message)
+
 if __name__ == "__main__":
     monitor = SmarterMonitor()
+    tick = 0
     while monitor.running is True:
-        time.sleep(15)
-        monitor.process_state()
-        time.sleep(15)
+        if tick == 15:
+            monitor.process_state()
+        if tick == 30:
+            tick = 0
+        if monitor.last_notification < datetime.now() - timedelta(minutes=5):
+            monitor.do_random()
+        tick = tick + 1
+        time.sleep(1)
     exit()
