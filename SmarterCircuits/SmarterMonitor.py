@@ -116,6 +116,8 @@ class SmarterMonitor:
         if "shellyswitch25" in self.full_state.keys():
             for did in self.full_state["shellyswitch25"]:
                 device = self.full_state["shellyswitch25"][did]
+                if "name" not in device.keys():
+                    continue
                 current = 0.0
                 name = device["name"].split('/')
                 if name[0] not in self.circuit_states.keys():
@@ -149,6 +151,8 @@ class SmarterMonitor:
         if "shelly1pm" in self.full_state.keys():
             for did in self.full_state["shelly1pm"]:
                 device = self.full_state["shelly1pm"][did]
+                if "name" not in device.keys():
+                    continue
                 current = 0.0
                 name = device["name"]
                 if name not in self.circuit_states.keys():
@@ -187,12 +191,14 @@ class SmarterMonitor:
                             "temp": switch["temperature"]["tF"]
                         }
                 total_current = total_current + current
-                
+
         if "shellymotionsensor" in self.full_state.keys():
             for did in self.full_state["shellymotionsensor"]:
                 device = self.full_state["shellymotionsensor"][did]
+                if "name" not in device.keys():
+                    continue
                 if device["status"]["bat"] < 50:
-                    alerts.append(device.name + " batt @ "+str(device["status"]["bat"])+"%")
+                    alerts.append(device["name"] + " batt @ "+str(device["status"]["bat"])+"%")
         self.write_state()
         if len(alerts) > 0:
             notify = ""
