@@ -113,81 +113,86 @@ class SmarterMonitor:
         total_current = 0.0
         alerts = []
         
-        for did in self.full_state["shellyswitch25"]:
-            device = self.full_state["shellyswitch25"][did]
-            current = 0.0
-            name = device["name"].split('/')
-            if name[0] not in self.circuit_states.keys():
-                self.circuit_states[name[0]] = {}
-            if name[1] not in self.circuit_states.keys():
-                self.circuit_states[name[1]] = {}
-            if "relay_0_power" in device.keys() and "voltage" in device.keys():
-                p = float(device["relay_0_power"])
-                v = float(device["voltage"])
-                c = p * v
-                if c > 50:
-                    alerts.append(name[0] + " using " + str(round(c,1)) + "W")
-                current = current + c
-                self.circuit_states[name[0]]["watts"] = c
-            if "temperature_f" in device.keys():
-                self.circuit_states[name[0]]["temp"] = float(device["temperature_f"])
-                self.circuit_states[name[1]]["temp"] = float(device["temperature_f"])
-            if "relay_1_power" in device.keys() and "voltage" in device.keys():
-                p = float(device["relay_1_power"])
-                v = float(device["voltage"])
-                c = p * v
-                if c > 50:
-                    alerts.append(name[1] + " using " + str(round(c,1)) + "W")
-                current = current + c
-                self.circuit_states[name[1]]["watts"] = c
-            if "overtemperature" in device.keys() and device["overtemperature"] != "0":
-                alerts.append(name[0] + " over temp")
-                alerts.append(name[1] + " over temp")
-            total_current = total_current + current
-
-        for did in self.full_state["shelly1pm"]:
-            device = self.full_state["shelly1pm"][did]
-            current = 0.0
-            name = device["name"]
-            if name not in self.circuit_states.keys():
-                self.circuit_states[name] = {}
-            if "relay_0_power" in device.keys():
-                p = float(device["relay_0_power"])
-                v = 120.0
-                c = p * v
-                if c > 50:
-                    alerts.append(name + " using " + str(round(c,1)) + "W")
-                current = current + c
-                self.circuit_states[name]["watts"] = c
-            if "temperature_f" in device.keys():
-                self.circuit_states[name]["temp"] = float(device["temperature_f"])
-            if "overtemperature" in device.keys() and device["overtemperature"] != "0":
-                alerts.append(name + " over temp")
-            total_current = total_current + current
-
-        for did in self.full_state["shellypro4pm"]:
-            device = self.full_state["shellypro4pm"][did]
-            current = 0.0
-            for i in range(4):
-                sid = "status_switch:"+str(i)
-                if sid in device.keys():
-                    switch = device[sid]
-                    p = float(switch["current"])
-                    v = float(switch["voltage"])
+        if "shellyswitch25" in self.full_state.keys():
+            for did in self.full_state["shellyswitch25"]:
+                device = self.full_state["shellyswitch25"][did]
+                current = 0.0
+                name = device["name"].split('/')
+                if name[0] not in self.circuit_states.keys():
+                    self.circuit_states[name[0]] = {}
+                if name[1] not in self.circuit_states.keys():
+                    self.circuit_states[name[1]] = {}
+                if "relay_0_power" in device.keys() and "voltage" in device.keys():
+                    p = float(device["relay_0_power"])
+                    v = float(device["voltage"])
                     c = p * v
+                    if c > 50:
+                        alerts.append(name[0] + " using " + str(round(c,1)) + "W")
                     current = current + c
-                    name = did + "-" + str(switch["id"])
+                    self.circuit_states[name[0]]["watts"] = c
+                if "temperature_f" in device.keys():
+                    self.circuit_states[name[0]]["temp"] = float(device["temperature_f"])
+                    self.circuit_states[name[1]]["temp"] = float(device["temperature_f"])
+                if "relay_1_power" in device.keys() and "voltage" in device.keys():
+                    p = float(device["relay_1_power"])
+                    v = float(device["voltage"])
+                    c = p * v
+                    if c > 50:
+                        alerts.append(name[1] + " using " + str(round(c,1)) + "W")
+                    current = current + c
+                    self.circuit_states[name[1]]["watts"] = c
+                if "overtemperature" in device.keys() and device["overtemperature"] != "0":
+                    alerts.append(name[0] + " over temp")
+                    alerts.append(name[1] + " over temp")
+                total_current = total_current + current
+
+        if "shelly1pm" in self.full_state.keys():
+            for did in self.full_state["shelly1pm"]:
+                device = self.full_state["shelly1pm"][did]
+                current = 0.0
+                name = device["name"]
+                if name not in self.circuit_states.keys():
+                    self.circuit_states[name] = {}
+                if "relay_0_power" in device.keys():
+                    p = float(device["relay_0_power"])
+                    v = 120.0
+                    c = p * v
                     if c > 50:
                         alerts.append(name + " using " + str(round(c,1)) + "W")
-                    self.circuit_states[name] = {
-                        "watts": c,
-                        "temp": switch["temperature"]["tF"]
-                    }
-            total_current = total_current + current
-        for did in self.full_state["shellymotionsensor"]:
-            device = self.full_state["shellymotionsensor"][did]
-            if device["status"]["bat"] < 50:
-                alerts.append(device.name + " batt @ "+str(device["status"]["bat"])+"%")
+                    current = current + c
+                    self.circuit_states[name]["watts"] = c
+                if "temperature_f" in device.keys():
+                    self.circuit_states[name]["temp"] = float(device["temperature_f"])
+                if "overtemperature" in device.keys() and device["overtemperature"] != "0":
+                    alerts.append(name + " over temp")
+                total_current = total_current + current
+
+        if "shellypro4pm" in self.full_state.keys():
+            for did in self.full_state["shellypro4pm"]:
+                device = self.full_state["shellypro4pm"][did]
+                current = 0.0
+                for i in range(4):
+                    sid = "status_switch:"+str(i)
+                    if sid in device.keys():
+                        switch = device[sid]
+                        p = float(switch["current"])
+                        v = float(switch["voltage"])
+                        c = p * v
+                        current = current + c
+                        name = did + "-" + str(switch["id"])
+                        if c > 50:
+                            alerts.append(name + " using " + str(round(c,1)) + "W")
+                        self.circuit_states[name] = {
+                            "watts": c,
+                            "temp": switch["temperature"]["tF"]
+                        }
+                total_current = total_current + current
+                
+        if "shellymotionsensor" in self.full_state.keys():
+            for did in self.full_state["shellymotionsensor"]:
+                device = self.full_state["shellymotionsensor"][did]
+                if device["status"]["bat"] < 50:
+                    alerts.append(device.name + " batt @ "+str(device["status"]["bat"])+"%")
         self.write_state()
         if len(alerts) > 0:
             notify = ""
@@ -198,6 +203,6 @@ class SmarterMonitor:
 if __name__ == "__main__":
     monitor = SmarterMonitor()
     while monitor.running is True:
-        time.sleep(30)
+        time.sleep(5)
         monitor.process_state()
     exit()
