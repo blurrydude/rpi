@@ -24,6 +24,7 @@ class SmarterCircuitsPassiveMonitor:
 
         self.window.attributes("-fullscreen", 1)
         self.window.geometry(str(width)+"x"+str(height))
+        self.window.columnconfigure(0, minsize=width)
         self.window.configure(bg='black')
         self.window.mainloop()
     
@@ -47,13 +48,13 @@ class SmarterCircuitsPassiveMonitor:
             else:
                 wrapped = textwrap.wrap(text,24)
             for i in range(len(wrapped)):
-                labels.append(SmartLabel(i+1,1,wrapped[i],"Times",64,"black","white",5,5))
+                labels.append(SmartLabel(i+1,0,wrapped[i],"Times",64,"black","white",5,5))
             self.screen_wipe(labels)
-            if self.display_on == False:
-                _thread.start_new_thread(self.screen_open, ())
-                _thread.start_new_thread(self.screen_close_timer, ())
-            else:
-                self.screen_timer = 120
+            # if self.display_on == False:
+            #     _thread.start_new_thread(self.screen_open, ())
+            #     _thread.start_new_thread(self.screen_close_timer, ())
+            # else:
+            #     self.screen_timer = 120
 
         except Exception as e: 
             error = str(e)
