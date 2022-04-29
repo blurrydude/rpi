@@ -57,6 +57,7 @@ class SmarterCircuitsMCP:
         self.switch_states = {}
         self.last_notification = datetime.now() - timedelta(minutes=28)
         self.hex_waiting = False
+        self.hex_search = False
         self.hex_command = ""
         self.start()
 
@@ -407,7 +408,21 @@ class SmarterCircuitsMCP:
             elif len(self.hex_command) < 2:
                 self.hex_command = self.hex_command + iconfig["hex_value"][cid]
                 self.mqtt.publish("notifications","HEX: "+self.hex_command)
-            if len(self.hex_command) == 2:
+            if self.hex_command == "00":
+                self.hex_search = True
+                self.hex_command = ""
+                return
+            if len(self.hex_command) == 2 and self.hex_search is True:
+                self.hex_waiting = False
+                self.hex_search = False
+                m = "HEX: "+self.hex_command + " execute"
+                if self.hex_command in iconfigs["hex_commands"]:
+                    coms = iconfigs["hex_commands"][self.hex_command]
+                    for command in coms:
+                        m = m + "\\n" + command
+                self.mqtt.publish("notifications",m)
+                return
+            if len(self.hex_command) == 2 and self.hex_search is False:
                 self.hex_waiting = False
                 m = "HEX: "+self.hex_command + " execute"
                 if self.hex_command in iconfigs["hex_commands"]:
