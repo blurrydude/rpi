@@ -217,7 +217,15 @@ class SmarterMonitor:
                 if "name" not in device.keys():
                     continue
                 if device["status"]["bat"] < 30:
-                    alerts.append(device["name"] + " batt @ "+str(device["status"]["bat"])+"%")
+                    alerts.append(device["name"] + " Motion batt @ "+str(device["status"]["bat"])+"%")
+
+        if "shellyht" in self.full_state.keys():
+            for did in self.full_state["shellyht"]:
+                device = self.full_state["shellyht"][did]
+                if "name" not in device.keys():
+                    continue
+                if device["sensor_battery"] < 30:
+                    alerts.append(device["name"] + " HT batt @ "+str(device["sensor_battery"])+"%")
         self.write_state()
         if len(alerts) > 0:
             self.last_sent_alert = True
