@@ -236,7 +236,7 @@ class SmarterMonitor:
             mess = mess + "restarting"
         else:
             mess = mess + "stopping"
-        self.client.publish("notifications",)
+        self.client.publish("notifications",mess)
         self.client.loop_stop()
         self.client.disconnect()
         home_dir = os.path.dirname(os.path.realpath(__file__))+"/"
