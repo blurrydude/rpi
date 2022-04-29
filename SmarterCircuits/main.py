@@ -275,6 +275,7 @@ class SmarterCircuitsMCP:
             if self.circuit_authority is not True:
                 SmarterLog.log("SmarterCircuitsMCP","I am circuit authority")
                 self.circuit_authority = True
+                self.mqtt.publish("notifications",self.name+"\\nCircuit Authority")
                 try:
                     requests.get("https://api.idkline.com/circuitauthority/"+self.ip_address)
                     SmarterLog.log("SmarterCircuitsMCP","Told the API I am circuit authority")
