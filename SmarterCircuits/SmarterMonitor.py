@@ -250,13 +250,16 @@ class SmarterMonitor:
         if "shellyht" in self.full_state.keys():
             for did in self.full_state["shellyht"]:
                 device = self.full_state["shellyht"][did]
-                if "name" not in device.keys():
-                    continue
+                if "name" in device.keys():
+                    message = message + "\\n" + device["name"] + ": "
+                else:
+                    message = message + "\\n" + did + ": "
                 if "sensor_temperature" not in device.keys():
                     continue
+                message = message + str(device["sensor_temperature"]) + "F "
                 if "sensor_humidity" not in device.keys():
                     continue
-                message = message + "\\n" + device["name"] + ": " + str(device["sensor_temperature"]) + "F " + str(device["sensor_humidity"]) +"%"
+                message = message + str(device["sensor_humidity"]) +"%"
         self.notify(message)
     
     def shutdown(self, restart):
