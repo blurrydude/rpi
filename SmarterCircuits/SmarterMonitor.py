@@ -28,7 +28,9 @@ class SmarterMonitor:
             "source",
             "output",
             "apower",
-            "aenergy"
+            "aenergy",
+            "announce",
+            "info"
         ]
         self.circuit_states = {}
         self.load_configs()
@@ -103,6 +105,10 @@ class SmarterMonitor:
             self.full_state[device] = {}
         if id not in self.full_state[device].keys():
             self.full_state[device][id] = {}
+            mess = "Detected\\n"+device+"\\n"+id
+            if id in self.name_lookup.keys():
+                mess = mess + "\\n"+self.name_lookup[id]
+            self.client.publish("notifications", mess)
         field_name = str(topic).replace(', ','_').replace("'",'').replace('[','').replace(']','')
         if field_name in self.ignore_fields:
             return
