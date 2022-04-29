@@ -395,14 +395,17 @@ class SmarterCircuitsMCP:
             if self.hex_waiting is False:
                 if d == "0":
                     self.hex_waiting = True
+                    self.mqtt.publish("notifications","Waiting for hex input")
                     self.hex_command = ""
                     return
                 else:
                     commands = iconfig["hex_commands"][d]
             elif len(self.hex_command) < 2:
                 self.hex_command = self.hex_command + iconfig["hex_value"][cid]
+                self.mqtt.publish("notifications","HEX: "+self.hex_command)
             if len(self.hex_command) == 2:
                 self.hex_waiting = False
+                self.mqtt.publish("notifications","HEX: "+self.hex_command)
                 if self.hex_command in iconfig["hex_commands"]:
                     commands = iconfig["hex_commands"][self.hex_command]
                 self.hex_command = ""
