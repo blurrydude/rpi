@@ -124,10 +124,8 @@ class SmarterMonitor:
                     self.circuit_states[name[0]] = {}
                 if name[1] not in self.circuit_states.keys():
                     self.circuit_states[name[1]] = {}
-                if "relay_0_power" in device.keys() and "voltage" in device.keys():
-                    p = float(device["relay_0_power"])
-                    v = float(device["voltage"])
-                    c = p * v
+                if "relay_0_power" in device.keys():
+                    c = float(device["relay_0_power"])
                     if c > 50:
                         alerts.append(name[0] + " using " + str(round(c,1)) + "W")
                     current = current + c
@@ -135,10 +133,8 @@ class SmarterMonitor:
                 if "temperature_f" in device.keys():
                     self.circuit_states[name[0]]["temp"] = float(device["temperature_f"])
                     self.circuit_states[name[1]]["temp"] = float(device["temperature_f"])
-                if "relay_1_power" in device.keys() and "voltage" in device.keys():
-                    p = float(device["relay_1_power"])
-                    v = float(device["voltage"])
-                    c = p * v
+                if "relay_1_power" in device.keys():
+                    c = float(device["relay_1_power"])
                     if c > 50:
                         alerts.append(name[1] + " using " + str(round(c,1)) + "W")
                     current = current + c
@@ -158,9 +154,7 @@ class SmarterMonitor:
                 if name not in self.circuit_states.keys():
                     self.circuit_states[name] = {}
                 if "relay_0_power" in device.keys():
-                    p = float(device["relay_0_power"])
-                    v = 120.0
-                    c = p * v
+                    c = float(device["relay_0_power"])
                     if c > 50:
                         alerts.append(name + " using " + str(round(c,1)) + "W")
                     current = current + c
@@ -181,7 +175,10 @@ class SmarterMonitor:
                         switch = device[sid]
                         p = float(switch["current"])
                         v = float(switch["voltage"])
-                        c = p * v
+                        if p == 0:
+                            c = 0
+                        else:
+                            c = v * p
                         current = current + c
                         name = did + "-" + str(switch["id"])
                         if c > 50:
@@ -209,6 +206,6 @@ class SmarterMonitor:
 if __name__ == "__main__":
     monitor = SmarterMonitor()
     while monitor.running is True:
-        time.sleep(5)
+        time.sleep(10)
         monitor.process_state()
     exit()
