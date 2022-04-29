@@ -27,7 +27,9 @@ class SmarterMonitor:
             "source",
             "output",
             "apower",
-            "aenergy"
+            "aenergy",
+            "announce",
+            "info"
         ]
         self.circuit_states = {}
         self.load_configs()
