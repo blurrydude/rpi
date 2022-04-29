@@ -420,6 +420,7 @@ class SmarterCircuitsMCP:
             if self.hex_command == "01":
                 self.hex_waiting = False
                 self.hex_command = ""
+                self.mqtt.publish("notifications","Single Hex Commands")
                 m = ""
                 for hex in iconfigs["hex_commands"]:
                     if len(hex) > 1:
@@ -430,6 +431,7 @@ class SmarterCircuitsMCP:
             if self.hex_command == "02":
                 self.hex_waiting = False
                 self.hex_command = ""
+                self.mqtt.publish("notifications","Hex Commands")
                 m = ""
                 for hex in iconfigs["hex_commands"]:
                     m = m + "\\n" + hex + ": " + iconfigs["hex_commands"][hex]
