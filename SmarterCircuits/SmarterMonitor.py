@@ -70,8 +70,8 @@ class SmarterMonitor:
             self.handle_smarter_circuits_message(topic, rawdata)
     
     def handle_smarter_circuits_message(self, topic, rawdata):
-        if topic[0] == "monitor":
-            if rawdata == "restart":
+        if topic[0] == "command":
+            if "restart monitor program" in rawdata:
                 self.restart()
 
     def start_listening(self):
