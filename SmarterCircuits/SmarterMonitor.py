@@ -137,8 +137,8 @@ class SmarterMonitor:
                 current = current + c
                 self.circuit_states[name[1]]["watts"] = c
             if "overtemperature" in device.keys() and device["overtemperature"] != "0":
-                alerts.append(name[0] + " over temperature")
-                alerts.append(name[1] + " over temperature")
+                alerts.append(name[0] + " over temp")
+                alerts.append(name[1] + " over temp")
             total_current = total_current + current
 
         for did in self.full_state["shelly1pm"]:
@@ -156,7 +156,7 @@ class SmarterMonitor:
             if "temperature_f" in device.keys():
                 self.circuit_states[name]["temp"] = float(device["temperature_f"])
             if "overtemperature" in device.keys() and device["overtemperature"] != "0":
-                alerts.append(name + " over temperature")
+                alerts.append(name + " over temp")
             total_current = total_current + current
 
         for did in self.full_state["shellypro4pm"]:
@@ -175,10 +175,11 @@ class SmarterMonitor:
                         "watts": c,
                         "temp": switch["temperature"]["tF"]
                     }
+            total_current = total_current + current
         for did in self.full_state["shellymotionsensor"]:
             device = self.full_state["shellymotionsensor"][did]
             if device["status"]["bat"] < 50:
-                alerts.append(device.name + " motion battery at "+str(device["status"]["bat"])+"%")
+                alerts.append(device.name + " batt @ "+str(device["status"]["bat"])+"%")
         self.write_state()
         if len(alerts) > 0:
             notify = ""
