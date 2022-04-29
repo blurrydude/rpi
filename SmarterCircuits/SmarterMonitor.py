@@ -98,6 +98,9 @@ class SmarterMonitor:
     def handle_shelly_message(self, topic, rawdata):
         identity = topic[0].split('-')
         device = identity[0]
+        if len(identity) < 2:
+            print(device+" is not identity")
+            return
         id = identity[1].upper()
         topic.pop(0)
         self.handle_single_field_message(device, id, topic, rawdata)
@@ -228,7 +231,12 @@ class SmarterMonitor:
             self.client.publish("notifications","No alerts as of "+datetime.now().strftime("%X"))
     
     def shutdown(self, restart):
-        self.client.publish("notifications","Monitor restarting")
+        mess = "Monitor "
+        if restart is True:
+            mess = mess + "restarting"
+        else:
+            mess = mess + "stopping"
+        self.client.publish("notifications",)
         self.client.loop_stop()
         self.client.disconnect()
         home_dir = os.path.dirname(os.path.realpath(__file__))+"/"
