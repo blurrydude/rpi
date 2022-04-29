@@ -12,6 +12,8 @@ running = True
 
 class SmarterMonitor:
     def __init__(self):
+        self.power_limit = 75
+        self.battery_limit = 30
         self.client = mqtt.Client()
         self.client.on_message = self.on_message
         self.running = True
@@ -150,7 +152,7 @@ class SmarterMonitor:
                     self.circuit_states[name[1]] = {}
                 if "relay_0_power" in device.keys():
                     c = float(device["relay_0_power"])
-                    if c > 50:
+                    if c > self.power_limit:
                         alerts.append(name[0] + " using " + str(round(c,1)) + "W")
                     current = current + c
                     self.circuit_states[name[0]]["watts"] = c
@@ -159,7 +161,7 @@ class SmarterMonitor:
                     self.circuit_states[name[1]]["temp"] = float(device["temperature_f"])
                 if "relay_1_power" in device.keys():
                     c = float(device["relay_1_power"])
-                    if c > 50:
+                    if c > self.power_limit:
                         alerts.append(name[1] + " using " + str(round(c,1)) + "W")
                     current = current + c
                     self.circuit_states[name[1]]["watts"] = c
@@ -179,7 +181,7 @@ class SmarterMonitor:
                     self.circuit_states[name] = {}
                 if "relay_0_power" in device.keys():
                     c = float(device["relay_0_power"])
-                    if c > 50:
+                    if c > self.power_limit:
                         alerts.append(name + " using " + str(round(c,1)) + "W")
                     current = current + c
                     self.circuit_states[name]["watts"] = c
@@ -205,7 +207,7 @@ class SmarterMonitor:
                             c = v * p
                         current = current + c
                         name = did + "-" + str(switch["id"])
-                        if c > 50:
+                        if c > self.power_limit:
                             alerts.append(name + " using " + str(round(c,1)) + "W")
                         self.circuit_states[name] = {
                             "watts": c,
@@ -218,7 +220,7 @@ class SmarterMonitor:
                 device = self.full_state["shellymotionsensor"][did]
                 if "name" not in device.keys():
                     continue
-                if device["status"]["bat"] < 30:
+                if device["status"]["bat"] < self.battery_limit:
                     alerts.append(device["name"] + " Motion batt @ "+str(device["status"]["bat"])+"%")
 
         if "shellyht" in self.full_state.keys():
@@ -226,7 +228,7 @@ class SmarterMonitor:
                 device = self.full_state["shellyht"][did]
                 if "name" not in device.keys():
                     continue
-                if int(device["sensor_battery"]) < 30:
+                if int(device["sensor_battery"]) < self.battery_limit:
                     alerts.append(device["name"] + " HT batt @ "+str(device["sensor_battery"])+"%")
 
         self.write_state()
