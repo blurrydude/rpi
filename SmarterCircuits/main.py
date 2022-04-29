@@ -306,8 +306,11 @@ class SmarterCircuitsMCP:
                 self.handle_smarter_circuits_message(topic, text)
         except Exception as e: 
             error = str(e)
-            SmarterLog.log("SmarterCircuitsMCP",error)
+            tb = traceback.format_exc()
+            SmarterLog.log("SmarterCircuitsMCP","main_loop error: "+error)
+            SmarterLog.log("SmarterCircuitsMCP","main_loop traceback: "+tb)
             self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
+            self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
     
     def handle_shelly_message(self, topic, message):
         #print(topic+": "+message)
@@ -379,25 +382,31 @@ class SmarterCircuitsMCP:
         if self.circuit_authority is False:
             return
         iconfigs = json.load(open(os.path.dirname(os.path.realpath(__file__))+"/"+"inputs.json"))
+        self.mqtt.publish("debug",message)
         data = json.loads(message)
+
         src = data["src"]
         evnt = data["params"]["events"][0]["event"]
-        cid = data["params"]["events"][0]["id"]
+        cid = str(data["params"]["events"][0]["id"])
         iconfig = iconfigs[src]
         commands = []
-        if iconfig["hex_enabled"] is True:
-            d = iconfig[src]["hex_value"][cid]
+        if iconfig["hex_enabled"] is True and evnt == "btn_up":
+            d = iconfig["hex_value"][cid]
             if self.hex_waiting is False:
                 if d == "0":
                     self.hex_waiting = True
+                    self.mqtt.publish("notifications","Waiting for hex input")
                     self.hex_command = ""
                     return
                 else:
+                    self.mqtt.publish("notifications","HEX: "+d + " execute")
                     commands = iconfigs["hex_commands"][d]
             elif len(self.hex_command) < 2:
-                self.hex_command = self.hex_command + iconfig[src]["hex_value"][cid]
+                self.hex_command = self.hex_command + iconfig["hex_value"][cid]
+                self.mqtt.publish("notifications","HEX: "+self.hex_command)
             if len(self.hex_command) == 2:
                 self.hex_waiting = False
+                self.mqtt.publish("notifications","HEX: "+self.hex_command + " execute")
                 if self.hex_command in iconfigs["hex_commands"]:
                     commands = iconfigs["hex_commands"][self.hex_command]
                 self.hex_command = ""
