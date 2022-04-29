@@ -306,8 +306,11 @@ class SmarterCircuitsMCP:
                 self.handle_smarter_circuits_message(topic, text)
         except Exception as e: 
             error = str(e)
-            SmarterLog.log("SmarterCircuitsMCP",error)
+            tb = traceback.format_exc()
+            SmarterLog.log("SmarterCircuitsMCP","main_loop error: "+error)
+            SmarterLog.log("SmarterCircuitsMCP","main_loop traceback: "+tb)
             self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
+            self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
     
     def handle_shelly_message(self, topic, message):
         #print(topic+": "+message)
