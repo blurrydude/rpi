@@ -24,8 +24,9 @@ class SmarterCircuitsPassiveMonitor:
     def sleep_timer(self):
         while self.running is True:
             time.sleep(1)
-            if datetime.now() > self.last_display + timedelta(seconds=30):
-                self.do_display(["","",datetime.now().strftime("%x %X")])
+            if datetime.now() > self.last_display + timedelta(seconds=60):
+                self.last_display = datetime.now()
+                self.do_display(["","",self.last_display.strftime("%A"),self.last_display.strftime("%-I:%M %p"),self.last_display.strftime("%B %-d")])
             # if datetime.now() > self.last_display + timedelta(seconds=40):
             #     self.screen_wipe([])
             #     self.last_display = datetime.now()
