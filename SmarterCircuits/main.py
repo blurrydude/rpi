@@ -379,7 +379,9 @@ class SmarterCircuitsMCP:
         if self.circuit_authority is False:
             return
         iconfigs = json.load(open(os.path.dirname(os.path.realpath(__file__))+"/"+"inputs.json"))
+        self.mqtt.publish("debug",message)
         data = json.loads(message)
+
         src = data["src"]
         evnt = data["params"]["events"][0]["event"]
         cid = data["params"]["events"][0]["id"]
