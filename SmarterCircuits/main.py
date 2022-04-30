@@ -58,6 +58,8 @@ class SmarterCircuitsMCP:
         self.last_notification = datetime.now() - timedelta(minutes=28)
         self.hex_waiting = False
         self.hex_search = False
+        self.hex_input = False
+        self.hex_input_mode = ""
         self.hex_command = ""
         self.start()
 
@@ -446,6 +448,51 @@ class SmarterCircuitsMCP:
                         m = m + com + "\\n"
                 self.mqtt.publish("notifications",m)
                 return
+            if self.hex_command == "03":
+                self.hex_waiting = True
+                self.hex_input = True
+                self.hex_command = ""
+                self.hex_input_mode = "lowtemp"
+                self.mqtt.publish("notifications","Set Low Temperature")
+                return
+            if self.hex_command == "04":
+                self.hex_waiting = True
+                self.hex_input = True
+                self.hex_command = ""
+                self.hex_input_mode = "hightemp"
+                self.mqtt.publish("notifications","Set High Temperature")
+                return
+            if self.hex_command == "05":
+                self.hex_waiting = False
+                self.hex_input = False
+                self.hex_command = ""
+                m = ""
+                for circuit in self.config.circuits:
+                    m = m + circuit.name + ": " + str(circuit.status.relay.power) + "W\\n"
+                self.mqtt.publish("notifications",m)
+                return
+            if self.hex_command == "06":
+                self.hex_waiting = False
+                self.hex_input = False
+                self.hex_command = ""
+                m = self.mode
+                self.mqtt.publish("notifications",m)
+                return
+            
+            if len(self.hex_command) == 2 and self.hex_input is True:
+                self.hex_waiting = False
+                self.hex_input = False
+                if self.hex_input_mode == "lowtemp":
+                    self.mqtt.publish("smarter_circuits/thermosettings/hallway","temperature_low_setting:"+self.hex_command)
+                    self.mqtt.publish("smarter_circuits/thermosettings/gameroom","temperature_low_setting:"+self.hex_command)
+                    self.mqtt.publish("notifications","Low Temperature Set\\n"+self.hex_command)
+                if self.hex_input_mode == "hightemp":
+                    self.mqtt.publish("smarter_circuits/thermosettings/hallway","temperature_high_setting:"+self.hex_command)
+                    self.mqtt.publish("smarter_circuits/thermosettings/gameroom","temperature_high_setting:"+self.hex_command)
+                    self.mqtt.publish("notifications","High Temperature Set\\n"+self.hex_command)
+                self.hex_command = ""
+                return
+
             if len(self.hex_command) == 2 and self.hex_search is True:
                 self.hex_waiting = False
                 self.hex_search = False
