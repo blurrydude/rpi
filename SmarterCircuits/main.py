@@ -425,7 +425,10 @@ class SmarterCircuitsMCP:
                 for hex in iconfigs["hex_commands"].keys():
                     if len(hex) > 1:
                         continue
-                    m = m + "\\n" + hex + ": " + iconfigs["hex_commands"][hex]
+                    coms = iconfigs["hex_commands"][hex]
+                    m = m + "\\n" + hex + ": "
+                    for com in coms:
+                        m = m + com + "\\n"
                 self.mqtt.publish("notifications",m)
                 return
             if self.hex_command == "02":
@@ -434,7 +437,10 @@ class SmarterCircuitsMCP:
                 self.mqtt.publish("notifications","Hex Commands")
                 m = ""
                 for hex in iconfigs["hex_commands"].keys():
-                    m = m + "\\n" + hex + ": " + iconfigs["hex_commands"][hex]
+                    coms = iconfigs["hex_commands"][hex]
+                    m = m + "\\n" + hex + ": "
+                    for com in coms:
+                        m = m + com + "\\n"
                 self.mqtt.publish("notifications",m)
                 return
             if len(self.hex_command) == 2 and self.hex_search is True:
