@@ -426,9 +426,10 @@ class SmarterCircuitsMCP:
                     if len(hex) > 1:
                         continue
                     coms = iconfigs["hex_commands"][hex]
-                    m = m + hex.replace('A','-10').replace('B','-11').replace('C','-12').replace('D','-13').replace('E','-14').replace('F','-15') + ": "
+                    m = m + hex.replace('A','10').replace('B','11').replace('C','12').replace('D','13').replace('E','14').replace('F','15') + ": "
                     for com in coms:
                         m = m + com + "\\n"
+                    m = m + "16: Two Button Input Mode"
                 self.mqtt.publish("notifications",m)
                 return
             if self.hex_command == "02":
@@ -438,7 +439,9 @@ class SmarterCircuitsMCP:
                 m = ""
                 for hex in iconfigs["hex_commands"].keys():
                     coms = iconfigs["hex_commands"][hex]
-                    m = m + hex.replace('A','-10').replace('B','-11').replace('C','-12').replace('D','-13').replace('E','-14').replace('F','-15') + ": "
+                    if len(hex) == 2:
+                        hex = hex[0] + "-" + hex[1]
+                    m = m + hex.replace('0','16').replace('A','10').replace('B','11').replace('C','12').replace('D','13').replace('E','14').replace('F','15') + ": "
                     for com in coms:
                         m = m + com + "\\n"
                 self.mqtt.publish("notifications",m)
