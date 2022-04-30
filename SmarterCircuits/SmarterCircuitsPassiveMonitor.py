@@ -82,7 +82,7 @@ class SmarterCircuitsPassiveMonitor:
             for i in range(len(newwrap)):
                 labels.append(SmartLabel(i+1,0,newwrap[i],"Times",64,"black","white",5,5))
             self.screen_wipe(labels)
-            time.sleep(3)
+            time.sleep(5)
             self.do_display(wrapped)
         else:
             wrapcount = len(wrapped)
