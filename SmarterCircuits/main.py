@@ -429,7 +429,7 @@ class SmarterCircuitsMCP:
                     m = m + hex.replace('A','10').replace('B','11').replace('C','12').replace('D','13').replace('E','14').replace('F','15') + ": "
                     for com in coms:
                         m = m + com + "\\n"
-                    m = m + "16: Two Button Input Mode"
+                m = m + "16: Two Button Input Mode"
                 self.mqtt.publish("notifications",m)
                 return
             if self.hex_command == "02":
