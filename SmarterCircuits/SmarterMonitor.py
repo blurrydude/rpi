@@ -328,9 +328,9 @@ if __name__ == "__main__":
     monitor = SmarterMonitor()
     tick = 0
     while monitor.running is True:
-        if tick == 15:
-            monitor.process_state()
         if tick == 30:
+            monitor.process_state()
+        if tick == 60:
             tick = 0
         if monitor.last_notification < datetime.now() - timedelta(minutes=5):
             monitor.do_random()
