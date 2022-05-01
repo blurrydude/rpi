@@ -26,10 +26,10 @@
         },
         "button_c": {
             "short": { 
-                "default": ["turn on the deck fountain"],
+                "default": ["switch to night mode"],
                 "evening": ["turn on the deck rail"],
-                "night": ["turn on the deck light"],
-                "midnight": ["turn on the deck light"]
+                "night": ["turn on the guest bathroom"],
+                "midnight": ["turn on the guest bathroom"]
             },
             "long": { 
                 "default": ["show status"]
