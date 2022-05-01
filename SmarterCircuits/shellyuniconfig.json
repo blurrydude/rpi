@@ -32,7 +32,10 @@
                 "midnight": ["turn on the under cabinet"]
             },
             "long": { 
-                "default": ["report temperature"]
+                "default": ["report temperature"],
+                "evening": ["turn off the game room","turn off the game tables"],
+                "night": ["turn off the under cabinet"],
+                "midnight": ["turn off the under cabinet"]
             }
         }
     }
