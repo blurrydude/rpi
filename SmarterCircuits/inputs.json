@@ -6,13 +6,13 @@
             "0": ["turn on the shop light"], 
             "1": ["turn on the garage lights"],
             "2": ["turn on the workbench fan"],
-            "3": ["open the shop door"]
+            "3": ["turn on the storage room"]
         },
         "long": {
             "0": ["turn off the shop light"], 
             "1": ["turn off the garage lights"],
             "2": ["turn off the workbench fan"],
-            "3": ["close the shop door"]
+            "3": ["turn off the storage room"]
         }
     },
     "shellyplusi4-083af200fe38": 
