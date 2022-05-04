@@ -86,16 +86,16 @@
     {
         "name":"Game Room",
         "commands": [{
-            "start":"turn on game room",
-            "stop":"turn off game room",
+            "start":"",
+            "stop":"",
             "conditions": []
         },{
-            "start":"turn on game tables",
-            "stop":"turn off game tables",
+            "start":"",
+            "stop":"",
             "conditions": []
         }],
         "id":"shellymotionsensor-60A423C67472",
-        "auto_off":true,
+        "auto_off":false,
         "off_time_minutes":"30",
         "ip_address":"192.168.2.58"
     },
