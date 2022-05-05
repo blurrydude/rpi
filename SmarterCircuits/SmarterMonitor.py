@@ -12,8 +12,6 @@ running = True
 
 class SmarterMonitor:
     def __init__(self):
-        self.power_limit = 200
-        self.battery_limit = 30
         self.client = mqtt.Client()
         self.client.on_message = self.on_message
         self.running = True
@@ -139,19 +137,26 @@ class SmarterMonitor:
             print(device+" "+id+" was not found.")
 
     def process_state(self):
+        homedir = os.path.dirname(os.path.realpath(__file__))+"/"
         total_current = 0.0
         alerts = []
         now = datetime.now()
+
+        smconfig = json.load(open(homedir+"SmarterMonitorConfig.json"))
+        power_limit = smconfig["power_alert_limit"]
+        battery_limit = smconfig["battery_alert_limit"]
+        last_heard_alert = smconfig["last_heard_alert_limit"]
         
         if "shellyswitch25" in self.full_state.keys():
             for did in self.full_state["shellyswitch25"]:
                 device = self.full_state["shellyswitch25"][did]
                 if "name" not in device.keys():
                     continue
-                # lh = device["last_heard"]
-                # last_heard = now - datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
-                # if last_heard > timedelta(hours=6):
-                #     alerts.append(device["name"] + "\\nlast heard\\n"+str(last_heard))
+                if last_heard_alert > 0:
+                    lh = device["last_heard"]
+                    last_heard = now - datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
+                    if last_heard > timedelta(hours=last_heard_alert):
+                        alerts.append(device["name"] + "\\nlast heard\\n"+str(last_heard))
                 current = 0.0
                 name = device["name"].split('/')
                 if name[0] not in self.circuit_states.keys():
@@ -160,7 +165,7 @@ class SmarterMonitor:
                     self.circuit_states[name[1]] = {}
                 if "relay_0_power" in device.keys():
                     c = float(device["relay_0_power"])
-                    if c > self.power_limit:
+                    if c > power_limit:
                         alerts.append(name[0] + " using " + str(round(c,1)) + "W")
                     current = current + c
                     self.circuit_states[name[0]]["watts"] = c
@@ -169,7 +174,7 @@ class SmarterMonitor:
                     self.circuit_states[name[1]]["temp"] = float(device["temperature_f"])
                 if "relay_1_power" in device.keys():
                     c = float(device["relay_1_power"])
-                    if c > self.power_limit:
+                    if c > power_limit:
                         alerts.append(name[1] + " using " + str(round(c,1)) + "W")
                     current = current + c
                     self.circuit_states[name[1]]["watts"] = c
@@ -183,17 +188,18 @@ class SmarterMonitor:
                 device = self.full_state["shelly1pm"][did]
                 if "name" not in device.keys():
                     continue
-                # lh = device["last_heard"]
-                # last_heard = now - datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
-                # if last_heard > timedelta(hours=6):
-                #     alerts.append(device["name"] + "\\nlast heard\\n"+str(last_heard))
+                if last_heard_alert > 0:
+                    lh = device["last_heard"]
+                    last_heard = now - datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
+                    if last_heard > timedelta(hours=last_heard_alert):
+                        alerts.append(device["name"] + "\\nlast heard\\n"+str(last_heard))
                 current = 0.0
                 name = device["name"]
                 if name not in self.circuit_states.keys():
                     self.circuit_states[name] = {}
                 if "relay_0_power" in device.keys():
                     c = float(device["relay_0_power"])
-                    if c > self.power_limit:
+                    if c > power_limit:
                         alerts.append(name + " using " + str(round(c,1)) + "W")
                     current = current + c
                     self.circuit_states[name]["watts"] = c
@@ -207,10 +213,11 @@ class SmarterMonitor:
             for did in self.full_state["shellypro4pm"]:
                 device = self.full_state["shellypro4pm"][did]
                 current = 0.0
-                # lh = device["last_heard"]
-                # last_heard = now - datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
-                # if last_heard > timedelta(hours=6):
-                #     alerts.append(device["name"] + "\\nlast heard\\n"+str(last_heard))
+                if last_heard_alert > 0:
+                    lh = device["last_heard"]
+                    last_heard = now - datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
+                    if last_heard > timedelta(hours=last_heard_alert):
+                        alerts.append(device["name"] + "\\nlast heard\\n"+str(last_heard))
                 for i in range(4):
                     sid = "status_switch:"+str(i)
                     if sid in device.keys():
@@ -223,7 +230,7 @@ class SmarterMonitor:
                             c = v * p
                         current = current + c
                         name = did + "-" + str(switch["id"])
-                        if c > self.power_limit:
+                        if c > power_limit:
                             alerts.append(name + " using " + str(round(c,1)) + "W")
                         self.circuit_states[name] = {
                             "watts": c,
@@ -236,11 +243,12 @@ class SmarterMonitor:
                 device = self.full_state["shellymotionsensor"][did]
                 if "name" not in device.keys():
                     continue
-                # lh = device["last_heard"]
-                # last_heard = now - datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
-                # if last_heard > timedelta(hours=6):
-                #     alerts.append(device["name"] + "\\nlast heard\\n"+str(last_heard))
-                if device["status"]["bat"] < self.battery_limit:
+                if last_heard_alert > 0:
+                    lh = device["last_heard"]
+                    last_heard = now - datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
+                    if last_heard > timedelta(hours=last_heard_alert):
+                        alerts.append(device["name"] + "\\nlast heard\\n"+str(last_heard))
+                if device["status"]["bat"] < battery_limit:
                     alerts.append(device["name"] + " Motion batt @ "+str(device["status"]["bat"])+"%")
 
         if "shellyht" in self.full_state.keys():
@@ -248,11 +256,12 @@ class SmarterMonitor:
                 device = self.full_state["shellyht"][did]
                 if "name" not in device.keys():
                     continue
-                # lh = device["last_heard"]
-                # last_heard = now - datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
-                # if last_heard > timedelta(hours=6):
-                #     alerts.append(device["name"] + "\\nlast heard\\n"+str(last_heard))
-                if int(device["sensor_battery"]) < self.battery_limit:
+                if last_heard_alert > 0:
+                    lh = device["last_heard"]
+                    last_heard = now - datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
+                    if last_heard > timedelta(hours=last_heard_alert):
+                        alerts.append(device["name"] + "\\nlast heard\\n"+str(last_heard))
+                if int(device["sensor_battery"]) < battery_limit:
                     alerts.append(device["name"] + " HT batt @ "+str(device["sensor_battery"])+"%")
 
         self.write_state()

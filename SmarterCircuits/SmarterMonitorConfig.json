@@ -1,0 +1,5 @@
+{
+    "power_alert_limit": 200,
+    "battery_alert_limit": 30,
+    "last_heard_alert_limit": 24
+}
