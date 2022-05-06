@@ -28,38 +28,6 @@
         "command": "switch to day mode"
     },
     {
-        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:02:00",
-        "command": "turn on circulating fan"
-    },
-    {
-        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:05:00",
-        "command": "turn off circulating fan"
-    },
-    {
-        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:02:00",
-        "command": "turn on floor fan"
-    },
-    {
-        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:05:00",
-        "command": "turn off floor fan"
-    },
-    {
-        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:22:00",
-        "command": "turn on circulating fan"
-    },
-    {
-        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:00:00",
-        "command": "turn off circulating fan"
-    },
-    {
-        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:22:00",
-        "command": "turn on floor fan"
-    },
-    {
-        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:00:00",
-        "command": "turn off floor fan"
-    },
-    {
         "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunset",
         "command": "thermoset gameroom temperature_high_setting 72"
     },
@@ -90,9 +58,5 @@
     {
         "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunrise",
         "command": "thermoset hallway temperature_high_setting 72"
-    },
-    {
-        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:08:20",
-        "command": "switch to morning mode"
     }
 ]

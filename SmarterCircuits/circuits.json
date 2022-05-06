@@ -1,31 +1,31 @@
 [
     {"location":"","ip_address":"192.168.1.100",
     "id": "shelly1pm-8CAAB574C489",      "relay_id":"0", "name":"Fireplace",
-    "on_modes": ["Alert", "Dinner"],
+    "on_modes": ["Alert"],
     "off_modes":["Dark", "Night", "Day"],
     "zones":["Living Room", "Down Stairs"]}, 
 
     {"location":"","ip_address":"192.168.1.101", 
     "id": "shellyswitch25-8CAAB55F44D7", "relay_id":"0", "name":"Bedroom Lamp", 
-    "on_modes": ["Shower", "Evening", "Alert"],
+    "on_modes": ["Shower", "Alert"],
     "off_modes":["Dark", "Night", "Day"],
     "zones":["Master Bedroom", "Up Stairs"]},
 
     {"location":"","ip_address":"192.168.1.101",
     "id": "shellyswitch25-8CAAB55F44D7", "relay_id":"1", "name":"Library Lamp",
-    "on_modes": ["Alert", "Evening"],
+    "on_modes": ["Alert"],
     "off_modes":["Dark", "Night"],
     "zones":["Library", "Up Stairs"]}, 
 
     {"location":"","ip_address":"192.168.1.102",
     "id": "shelly1pm-84CCA8A11963",      "relay_id":"0", "name":"Lamp post",
     "on_modes": ["Evening", "Night", "Alert"],
-    "off_modes":["Morning", "Dark", "Lunch", "Day"],
+    "off_modes":["Morning", "Dark", "Midnight", "Lunch", "Day"],
     "zones":["Front Yard", "Exterior"]}, 
 
     {"location":"","ip_address":"192.168.1.103",
     "id": "shelly1pm-C82B961DD3B1",      "relay_id":"0", "name":"Game Room",
-    "on_modes": ["Morning", "Evening", "Alert", "Dinner"],
+    "on_modes": ["Alert"],
     "off_modes":["Dark", "Night", "Day"],
     "zones":["Game Room", "Down Stairs"]}, 
 
@@ -37,14 +37,14 @@
 
     {"location":"","ip_address":"192.168.1.105",
     "id": "shelly1pm-68C63AFB726B", "relay_id":"0", "name":"Game Tables",
-    "on_modes": ["Morning", "Evening", "Alert"],
+    "on_modes": ["Evening", "Alert"],
     "off_modes":["Dark", "Night", "Day"],
     "zones":["Game Room", "Down Stairs"]}, 
 
     {"location":"","ip_address":"192.168.1.106",
     "id": "shelly1pm-F4CFA2747F54", "relay_id":"0", "name":"Coffee Station",
-    "on_modes": ["Morning", "Lunch", "Dinner", "Evening", "Night", "Alert"],
-    "off_modes":["Dark", "Day"],
+    "on_modes": ["Morning", "Evening", "Night", "Alert"],
+    "off_modes":["Dark", "Day", "Midnight"],
     "zones":["Kitchen", "Counter", "Down Stairs"]}, 
 
     {"location":"","ip_address":"192.168.1.107",
@@ -85,7 +85,7 @@
 
     {"location":"","ip_address":"192.168.1.113",
     "id": "shelly1pm-8CAAB55F8173", "relay_id":"0", "name":"Day Room Light",
-    "on_modes": ["Morning", "Lunch", "Dinner", "Evening", "Alert"],
+    "on_modes": ["Alert"],
     "off_modes":["Dark", "Night", "Day"],
     "zones":["Down Stairs", "Day Room"]}, 
 
@@ -103,7 +103,7 @@
 
     {"location":"","ip_address":"192.168.1.116",
     "id": "shellyswitch25-8CAAB55F402F", "relay_id":"0", "name":"Hallway",
-    "on_modes": ["Morning", "Lunch", "Dinner", "Alert"],
+    "on_modes": ["Alert"],
     "off_modes":["Dark", "Night", "Day", "Evening"],
     "zones":["Hallway", "Up Stairs"]}, 
 
@@ -115,13 +115,13 @@
 
     {"location":"","ip_address":"192.168.1.117",
     "id": "shellyswitch25-8CAAB561DDCF", "relay_id":"0", "name":"Master Bath",
-    "on_modes": ["Morning", "Shower", "Evening", "Alert"],
+    "on_modes": ["Shower", "Alert"],
     "off_modes":["Dark", "Night"],
     "zones":["Master Bath", "Up Stairs"]}, 
 
     {"location":"","ip_address":"192.168.1.117",
     "id": "shellyswitch25-8CAAB561DDCF", "relay_id":"1", "name":"Stairway",
-    "on_modes": ["Morning", "Lunch", "Dinner", "Night", "Alert", "Day"],
+    "on_modes": ["Alert"],
     "off_modes":["Dark", "Evening", "Night"],
     "zones":["Garage"]}, 
 
@@ -133,19 +133,19 @@
 
     {"location":"","ip_address":"192.168.1.118",
     "id": "shellyswitch25-8CAAB55F405D", "relay_id":"1", "name":"Kitchen",
-    "on_modes": ["Morning", "Lunch", "Alert", "Dinner"],
+    "on_modes": ["Morning", "Alert"],
     "off_modes":["Dark", "Evening", "Night", "Day"],
     "zones":["Kitchen", "Down Stairs"]}, 
 
     {"location":"","ip_address":"192.168.1.119",
     "id": "shellyswitch25-8CAAB55F44D6", "relay_id":"0", "name":"Porch",
     "on_modes": ["Evening", "Night", "Alert"],
-    "off_modes":["Morning", "Dark", "Lunch", "Day"],
+    "off_modes":["Morning", "Dark", "Midnight", "Day"],
     "zones":["Front Yard", "Exterior"]}, 
 
     {"location":"","ip_address":"192.168.1.119",
     "id": "shellyswitch25-8CAAB55F44D6", "relay_id":"1", "name":"Dining Room",
-    "on_modes": ["Morning", "Lunch", "Alert", "Dinner"],
+    "on_modes": ["Alert", "Dinner"],
     "off_modes":["Dark", "Night", "Evening", "Day"],
     "zones":["Dining Room", "Down Stairs"]}, 
 
@@ -163,13 +163,13 @@
 
     {"location":"","ip_address":"192.168.1.121",
     "id": "shellyswitch25-8CAAB55F4553", "relay_id":"0", "name":"Gym Lamp",
-    "on_modes": ["Morning", "Evening", "Alert"],
-    "off_modes":["Dark", "Lunch", "Night"],
+    "on_modes": ["Alert"],
+    "off_modes":["Dark", "Night"],
     "zones":["Gym", "Up Stairs"]}, 
 
     {"location":"","ip_address":"192.168.1.121",
     "id": "shellyswitch25-8CAAB55F4553", "relay_id":"1", "name":"Bar",
-    "on_modes": ["Morning", "Lunch", "Dinner", "Evening", "Alert"],
+    "on_modes": ["Evening", "Alert"],
     "off_modes":["Dark", "Night", "Day"],
     "zones":["Kitchen", "Down Stairs"]}, 
 
@@ -181,14 +181,14 @@
 
     {"location":"","ip_address":"192.168.1.123",
     "id": "shelly1pm-68C63AFB6B0A", "relay_id":"0", "name":"Under Cabinet",
-    "on_modes": ["Morning", "Lunch", "Dinner", "Alert"],
+    "on_modes": ["Morning", "Alert"],
     "off_modes":["Dark", "Night", "Evening", "Day"],
     "zones":["Kitchen", "Counter", "Down Stairs"]}, 
 
     {"location":"","ip_address":"192.168.1.125",
     "id": "shelly1pm-C82B961DD3C5", "relay_id":"0", "name":"Guest Bathroom",
     "on_modes": ["Alert"],
-    "off_modes":["Dark", "Night"],
+    "off_modes":["Dark"],
     "zones":["Guest Bathroom", "Up Stairs"]}, 
 
     {"location":"","ip_address":"192.168.1.126",
@@ -199,8 +199,8 @@
 
     {"location":"","ip_address":"192.168.1.130",
     "id": "shelly1pm-F4CFA274807A", "relay_id":"0", "name":"Shop Light",
-    "on_modes": ["Alert"],
-    "off_modes":["Dark","Night","Midnight"],
+    "on_modes": ["Alert", "Morning"],
+    "off_modes":["Dark","Night","Day"],
     "zones":["Garage"]}, 
 
     {"location":"","ip_address":"192.168.2.128",

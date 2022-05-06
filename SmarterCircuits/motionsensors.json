@@ -5,8 +5,6 @@
             "start":"turn on guest bathroom",
             "stop":"turn off guest bathroom",
             "conditions": [
-                {"prop":"motion.GuestBathroom.status.lux","comparitor":"<=","value":"8000"},
-                {"prop":"mode","comparitor":"!=","value":"day"}
             ]
         }],
         "id":"shellymotionsensor-60A423BECB98",
@@ -41,17 +39,9 @@
     },
     {
         "name":"Kitchen",
-        "commands": [{
-            "start":"turn on kitchen",
-            "stop":"turn off kitchen",
-            "conditions": [{"prop":"mode","comparitor":"!=","value":"night"},{"prop":"mode","comparitor":"!=","value":"midnight"}]
-        },{
-            "start":"turn on under cabinet",
-            "stop":"turn off under cabinet",
-            "conditions": [{"prop":"mode","comparitor":"!=","value":"day"}]
-        }],
+        "commands": [],
         "id":"shellymotionsensor-60A42386E5BA",
-        "auto_off":true,
+        "auto_off":false,
         "off_time_minutes":"30",
         "ip_address":"192.168.1.152"
     },
@@ -80,7 +70,7 @@
         }],
         "id":"shellymotionsensor-60A423976276",
         "auto_off":true,
-        "off_time_minutes":"5",
+        "off_time_minutes":"3",
         "ip_address":"192.168.1.154"
     },
     {
@@ -102,8 +92,8 @@
     {
         "name":"Critter Cam",
         "commands": [{
-            "start":"turn on deck rail",
-            "stop":"turn off deck rail",
+            "start":"turn on deck light",
+            "stop":"turn off deck light",
             "conditions": [{"prop":"mode","comparitor":"=","value":"night"},{"prop":"mode","comparitor":"=","value":"midnight"}]
         }],
         "id":"shellymotionsensor-60A42395F69E",
@@ -117,14 +107,6 @@
             "start":"turn on the deck fountain",
             "stop":"turn off the deck fountain",
             "conditions": [{"prop":"mode","comparitor":"!=","value":"midnight"}]
-        },{
-            "start":"turn on the deck rail",
-            "stop":"turn off the deck rail",
-            "conditions": [{"prop":"mode","comparitor":"=","value":"night"}]
-        },{
-            "start":"turn on the deck light",
-            "stop":"turn off the deck light",
-            "conditions": [{"prop":"mode","comparitor":"=","value":"midnight"},{"prop":"mode","comparitor":"=","value":"night"}]
         },{
             "start":"turn on the day room light",
             "stop":"turn off the day room light",
