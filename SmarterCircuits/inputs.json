@@ -20,13 +20,13 @@
         "hex_enabled": false,
         "short": {
             "0": ["turn on the master bath"], 
-            "1": ["turn on the garage lights"],
+            "1": ["turn on the stairway"],
             "2": ["turn on the shower fan"],
             "3": ["switch 4"]
         },
         "long": {
             "0": ["turn off the master bath"], 
-            "1": ["turn off the garage lights"],
+            "1": ["turn off the stairway"],
             "2": ["turn off the shower fan"],
             "3": ["switch 4"]
         }
@@ -38,13 +38,13 @@
             "0": ["turn on the gym lamp"],
             "1": ["turn on the guest bathroom"],
             "2": ["turn on the library"],
-            "3": ["turn on the stairway"]
+            "3": ["turn on the garage lights"]
         },
         "long": {
             "0": ["turn off the gym lamp"],
             "1": ["turn off the guest bathroom"],
             "2": ["turn off the library"],
-            "3": ["turn off the stairway"]
+            "3": ["turn off the garage lights"]
         }
     },
     "shellyplusi4-083af200d788": 
