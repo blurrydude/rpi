@@ -98,7 +98,7 @@ class SmarterCircuitsMCP:
         SmarterLog.log(origin, message)
         
     def debug(self, message):
-        if self.config.loaded is False or self.mqtt.connected is False:
+        if self.config is None or self.mqtt is None or self.config.loaded is False or self.mqtt.connected is False:
             return
         self.mqtt.publish("debug/"+self.name,message)
 
