@@ -321,7 +321,7 @@ class SmarterCircuitsMCP:
                 self.handle_shelly_message(topic, text)
             if topic.startswith("smarter_circuits"):
                 self.handle_smarter_circuits_message(topic, text)
-            if topic == "remote_menu" and self.touchscreen is not None:
+            if topic == "remote_menu" and self.config.touchscreen is True:
                 self.handle_remote_menu(text)
         except Exception as e: 
             error = str(e)
@@ -332,20 +332,28 @@ class SmarterCircuitsMCP:
             self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
     
     def handle_remote_menu(self, text):
-        labels = []
-        if "\\n" in text:
-            wrapped = text.split('\\n')
-        else:
-            wrapped = textwrap.wrap(text,42)
-        if wrapped[-1] == "":
-            wrapped.pop(-1)
-        wrapcount = len(wrapped)
-        for i in range(wrapcount):
-            labels.append(SmartLabel(i+1,0,wrapped[i],"Times",24,"black","white",5,5))
-        buttons = [
-            SmartButton(0,0,"Main Menu",self.touchscreen.main_screen,"",1,"Times",16,"darkorange","black",5,5)
-        ]
-        self.touchscreen.screen_wipe(buttons,labels)
+        try:
+            labels = []
+            if "\\n" in text:
+                wrapped = text.split('\\n')
+            else:
+                wrapped = textwrap.wrap(text,42)
+            if wrapped[-1] == "":
+                wrapped.pop(-1)
+            wrapcount = len(wrapped)
+            for i in range(wrapcount):
+                labels.append(SmartLabel(i+1,0,wrapped[i],"Times",24,"black","white",5,5))
+            buttons = [
+                SmartButton(0,0,"Main Menu",self.touchscreen.main_screen,"",1,"Times",16,"darkorange","black",5,5)
+            ]
+            self.touchscreen.screen_wipe(buttons,labels)
+        except Exception as e: 
+            error = str(e)
+            tb = traceback.format_exc()
+            self.log("SmarterCircuitsMCP","handle_remote_menu error: "+error)
+            self.log("SmarterCircuitsMCP","handle_remote_menu traceback: "+tb)
+            self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
+            self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
 
     def handle_shelly_message(self, topic, message):
         #print(topic+": "+message)
