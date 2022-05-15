@@ -36,12 +36,13 @@ class RemoteHandler:
             self.send_menu(menu, value + " executed")
         
     def send_menu(self, menu, message = ""):
-        data = menu["title"]+"\\n"
+        if message == "":
+            data = message+"\\n"
+        else:
+            data = menu["title"]+"\\n"
         for k in menu["options"].keys():
             option = menu["options"][k]
             data = data + k + ": " + option["title"] + "\\n"
-        if message != "":
-            data = data + message
         self.mcp.mqtt.publish("notifications", data)
     
     def load_config(self):
