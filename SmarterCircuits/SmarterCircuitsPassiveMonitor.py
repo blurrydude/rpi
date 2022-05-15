@@ -22,6 +22,7 @@ class SmarterCircuitsPassiveMonitor:
         self.labels = []
         self.display_on = False
         self.screen_timer = 0
+        self.font_size = 32
         self.last_display = datetime.now()
         _thread.start_new_thread(self.sleep_timer, ())
         self.start()
@@ -99,7 +100,7 @@ class SmarterCircuitsPassiveMonitor:
             for i in range(7):
                 wrapped.pop(0)
             for i in range(len(newwrap)):
-                labels.append(SmartLabel(i+1,0,newwrap[i],"Times",64,"black","white",5,5))
+                labels.append(SmartLabel(i+1,0,newwrap[i],"Times",self.font_size,"black","white",5,5))
             self.screen_wipe(labels)
             time.sleep(5)
             self.do_display(wrapped)
@@ -107,9 +108,9 @@ class SmarterCircuitsPassiveMonitor:
             wrapcount = len(wrapped)
             need = 7 - wrapcount
             for i in range(wrapcount):
-                labels.append(SmartLabel(i+1,0,wrapped[i],"Times",64,"black","white",5,5))
+                labels.append(SmartLabel(i+1,0,wrapped[i],"Times",self.font_size,"black","white",5,5))
             for i in range(need):
-                labels.append(SmartLabel(i+wrapcount+1,0,"","Times",64,"black","white",5,5))
+                labels.append(SmartLabel(i+wrapcount+1,0,"","Times",self.font_size,"black","white",5,5))
             self.screen_wipe(labels)
     
     def screen_open(self):
