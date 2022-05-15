@@ -98,6 +98,8 @@ class SmarterCircuitsPassiveMonitor:
     def do_display(self, wrapped):
         labels = []
         lim = self.lines
+        if wrapped[-1] == "":
+            wrapped.pop(-1)
         if len(wrapped) > lim:
             newwrap = wrapped[:lim]
             for i in range(lim):
