@@ -12,7 +12,7 @@ import beepy
  
 class SmarterCircuitsPassiveMonitor:
     def __init__(self):
-        self.mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(["192.168.2.200"],["notifications"],self.on_message)
+        self.mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(["192.168.2.200"],["notifications","remote_menu"],self.on_message)
         self.running = True
         # self.cameras = [
         #     cv2.VideoCapture("http://192.168.0.201/videostream.cgi?user=viewer&pwd=viewer"),
