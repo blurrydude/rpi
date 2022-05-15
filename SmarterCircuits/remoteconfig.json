@@ -55,6 +55,11 @@
                     "title": "Modes",
                     "action": "nav",
                     "value": "modes"
+                },
+                "8": {
+                    "title": "Other",
+                    "action": "nav",
+                    "value": "other"
                 }
             }
         },
@@ -131,6 +136,15 @@
                 "3": { "title": "Midnight", "action": "command", "value": "switch to midnight mode" },
                 "4": { "title": "Dark", "action": "command", "value": "switch to dark mode" },
                 "5": { "title": "Alert", "action": "command", "value": "switch to alert mode" }
+            }
+        },
+        "other": {
+            "title": "Other",
+            "options": {
+                "1": { "title": "Open Shades", "action": "command", "value": "open the shades" },
+                "2": { "title": "Close Shades", "action": "command", "value": "close the shades" },
+                "3": { "title": "Temperature Report", "action": "command", "value": "report temperature" },
+                "4": { "title": "Restart Monitor", "action": "command", "value": "restart the monitor program" }
             }
         }
     }
