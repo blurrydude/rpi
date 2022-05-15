@@ -2,40 +2,36 @@
     "C45BBE5FE891": {
         "button_a": {
             "short": { 
-                "default": ["switch to night mode"],
-                "night": ["turn on the master bathroom"],
-                "midnight": ["turn on the master bathroom"] 
+                "default": ["turn on the master bathroom"]
             },
             "long": { 
-                "default": ["switch to day mode"],
-                "night": ["turn off the master bathroom"],
-                "midnight": ["turn off the master bathroom"] 
+                "default": ["turn off the master bathroom"] 
             }
         },
         "button_b": {
             "short": { 
                 "default": ["turn on the kitchen", "turn on the under cabinet"],
-                "night": ["turn on the guest bathroom"],
-                "midnight": ["turn on the guest bathroom"]
-            },
-            "long": { 
-                "default": ["turn off the kitchen", "turn off the under cabinet"],
-                "night": ["turn off the guest bathroom"],
-                "midnight": ["turn off the guest bathroom"]
-            }
-        },
-        "button_c": {
-            "short": { 
-                "default": ["turn on the game room","turn on the game tables"],
-                "evening": ["turn on the game room","turn on the game tables"],
                 "night": ["turn on the under cabinet"],
                 "midnight": ["turn on the under cabinet"]
             },
             "long": { 
-                "default": ["report temperature"],
-                "evening": ["turn off the game room","turn off the game tables"],
+                "default": ["turn off the kitchen", "turn off the under cabinet"],
                 "night": ["turn off the under cabinet"],
                 "midnight": ["turn off the under cabinet"]
+            }
+        },
+        "button_c": {
+            "short": { 
+                "default": ["switch to night mode"],
+                "evening": ["switch to night mode"],
+                "night": ["turn on the bedroom lamp"],
+                "midnight": ["turn on the bedroom lamp"]
+            },
+            "long": { 
+                "default": ["report temperature"],
+                "evening": ["turn off the game room","turn off the game tables"],
+                "night": ["turn off the bedroom lamp"],
+                "midnight": ["turn off the bedroom lamp"]
             }
         }
     }
