@@ -887,6 +887,23 @@ class SmarterCircuitsMCP:
                     continue
             self.mode = detected_mode
             self.handle_mode_change()
+        elif "toggle" in command:
+            for ci in range(0,len(self.config.circuits)):
+                c = self.config.circuits[ci]
+                if c.name.lower() in command or c.name.lower().replace("light","lamp") in command:
+                    com = "on"
+                    if c.status.relay.on is True:
+                        com = "off"
+                        c.status.relay.on = False
+                    if "pro4pm" in c.id:
+                        topic = "shellies/"+c.id+"/rpc"
+                        rid = int(c.relay_id)
+                        ison = com == "on"
+                        ncom = json.dumps({"id": rid, "src":"smarter circuits", "method": "Switch.Set", "params": {"id": rid, "on": ison} })
+                        command_list.append({"t":topic,"c":ncom})
+                    else:
+                        topic = "shellies/"+c.id+"/relay/"+c.relay_id+"/command"
+                        command_list.append({"t":topic,"c":com})
         elif "turn" in command:
             for ci in range(0,len(self.config.circuits)):
                 c = self.config.circuits[ci]
