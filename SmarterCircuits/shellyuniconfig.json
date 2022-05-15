@@ -10,28 +10,18 @@
         },
         "button_b": {
             "short": { 
-                "default": ["turn on the kitchen", "turn on the under cabinet"],
-                "night": ["turn on the under cabinet"],
-                "midnight": ["turn on the under cabinet"]
+                "default": ["turn on the bedroom lamp"]
             },
             "long": { 
-                "default": ["turn off the kitchen", "turn off the under cabinet"],
-                "night": ["turn off the under cabinet"],
-                "midnight": ["turn off the under cabinet"]
+                "default": ["turn off the bedroom lamp"]
             }
         },
         "button_c": {
             "short": { 
-                "default": ["switch to night mode"],
-                "evening": ["switch to night mode"],
-                "night": ["turn on the bedroom lamp"],
-                "midnight": ["turn on the bedroom lamp"]
+                "default": ["report temperature"]
             },
             "long": { 
-                "default": ["report temperature"],
-                "evening": ["turn off the game room","turn off the game tables"],
-                "night": ["turn off the bedroom lamp"],
-                "midnight": ["turn off the bedroom lamp"]
+                "default": ["switch to night mode"]
             }
         }
     }
