@@ -8,11 +8,16 @@ import pyautogui
 import tkinter as tk
 import _thread
 import beepy
+import cv2
  
 class SmarterCircuitsPassiveMonitor:
     def __init__(self):
         self.mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(["192.168.2.200"],["notifications"],self.on_message)
         self.running = True
+        self.cameras = [
+            cv2.VideoCapture("http://192.168.0.201/videostream.cgi?user=viewer&pwd=viewer"),
+            cv2.VideoCapture("http://192.168.0.200/videostream.cgi?user=viewer&pwd=viewer")
+        ]
         self.window = tk.Tk()
         self.labels = []
         self.display_on = False
@@ -51,6 +56,11 @@ class SmarterCircuitsPassiveMonitor:
         try:
             topic = message.topic
             text = str(message.payload.decode("utf-8"))
+            if "cap" in text:
+                d = text.split(':')
+                cam = int(d[1])
+                sec = int(d[2])
+                self.do_video_display(cam, sec)
             if text == "closecloseclose":
                 self.stop()
                 return
@@ -72,6 +82,15 @@ class SmarterCircuitsPassiveMonitor:
         except Exception as e: 
             error = str(e)
             print(error)
+    
+    def do_video_display(self, camera, seconds):
+        cap = self.cameras[camera]
+        now = datetime.now()
+        fps = [ 20.0, 20.0 ]
+        res = [(640, 480), (640, 480)]
+        while(now > datetime.now() - timedelta(seconds=seconds)):
+            ref, frame = cap.read()
+        cv2.destroyAllWindows()
     
     def do_display(self, wrapped):
         labels = []
