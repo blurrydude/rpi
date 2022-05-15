@@ -57,9 +57,9 @@
                     "value": "modes"
                 },
                 "8": {
-                    "title": "Other",
+                    "title": "Shades",
                     "action": "nav",
-                    "value": "other"
+                    "value": "shades"
                 }
             }
         },
@@ -138,13 +138,17 @@
                 "5": { "title": "Alert", "action": "command", "value": "switch to alert mode" }
             }
         },
-        "other": {
-            "title": "Other",
+        "shades": {
+            "title": "Shades",
             "options": {
-                "1": { "title": "Open Shades", "action": "command", "value": "open the shades" },
-                "2": { "title": "Close Shades", "action": "command", "value": "close the shades" },
-                "3": { "title": "Temperature Report", "action": "command", "value": "report temperature" },
-                "4": { "title": "Restart Monitor", "action": "command", "value": "restart the monitor program" }
+                "1": { "title": "Open Right Shade", "action": "command", "value": "open the first shade" },
+                "2": { "title": "Open Center Shade", "action": "command", "value": "open the second shade" },
+                "3": { "title": "Open Left Shade", "action": "command", "value": "open the third shade" },
+                "4": { "title": "Close Right Shade", "action": "command", "value": "close the first shade" },
+                "5": { "title": "Close Center Shade", "action": "command", "value": "close the second shade" },
+                "6": { "title": "Close Left Shade", "action": "command", "value": "close the third shade" },
+                "7": { "title": "Open Shades", "action": "command", "value": "open the shades" },
+                "8": { "title": "Close Shades", "action": "command", "value": "close the shades" }
             }
         }
     }
