@@ -11,8 +11,10 @@ class RemoteHandler:
         self.load_config()
     
     def handle_i4_message(self, raw_message):
-        self.load_config()
         message = Shellyi4Message(raw_message)
+        if message.event != "btn_up":
+            return
+        self.load_config()
         button_id = message.source + "-" + message.circuit_id
         button_char = self.config["buttons"][button_id]
         if button_char == "0":
