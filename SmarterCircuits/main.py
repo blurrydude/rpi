@@ -66,7 +66,7 @@ class SmarterCircuitsMCP:
         self.start()
 
     def start(self):
-        SmarterLog.log("SmarterCircuitsMCP","starting...")
+        self.log("SmarterCircuitsMCP","starting...")
         self.running = True
         self.config = SmarterConfiguration.SmarterConfig(self)
         while self.config.loaded is False:
@@ -76,16 +76,16 @@ class SmarterCircuitsMCP:
         _thread.start_new_thread(self.main_loop, ())
         self.api = SmarterAPI(self)
         if self.config.thermostat is True:
-            SmarterLog.log("SmarterCircuitsMCP","instantiating thermostat...")
+            self.log("SmarterCircuitsMCP","instantiating thermostat...")
             self.thermostat = Thermostat(self)
         if self.config.touchscreen is True:
-            SmarterLog.log("SmarterCircuitsMCP","instantiating touchscreen...")
+            self.log("SmarterCircuitsMCP","instantiating touchscreen...")
             self.touchscreen = Touchscreen(self)
         if self.config.rollershade is True:
-            SmarterLog.log("SmarterCircuitsMCP","instantiating rollershade...")
+            self.log("SmarterCircuitsMCP","instantiating rollershade...")
             self.rollershade = Rollershade(self,self.name)
         if self.config.rollerdoor is True:
-            SmarterLog.log("SmarterCircuitsMCP","instantiating rollerdoor...")
+            self.log("SmarterCircuitsMCP","instantiating rollerdoor...")
             self.rollerdoor = Rollerdoor(self,self.name)
         #else:
         # while self.running is True:
@@ -93,6 +93,15 @@ class SmarterCircuitsMCP:
         # self.stop()
         self.web_server.start()
     
+    def log(self, origin, message):
+        self.debug(origin+": "+message)
+        SmarterLog.log(origin, message)
+        
+    def debug(self, message):
+        if self.config.loaded is False or self.mqtt.connected is False:
+            return
+        self.mqtt.publish("debug/"+self.name,message)
+
     def check_for_updates(self):
         modified = 0
         for file in os.listdir(self.source_dir):
@@ -112,10 +121,10 @@ class SmarterCircuitsMCP:
             return
         if self.source_modified == 0:
             self.source_modified = modified
-            SmarterLog.log("SmarterCircuitsMCP","got last source modification: "+str(self.source_modified))
+            self.log("SmarterCircuitsMCP","got last source modification: "+str(self.source_modified))
             return
         self.source_modified = modified
-        SmarterLog.log("SmarterCircuitsMCP","restarting due to source modification: "+str(self.source_modified))
+        self.log("SmarterCircuitsMCP","restarting due to source modification: "+str(self.source_modified))
         self.stop(True)
     
     def main_loop(self):
@@ -142,8 +151,8 @@ class SmarterCircuitsMCP:
             except Exception as e: 
                 error = str(e)
                 tb = traceback.format_exc()
-                SmarterLog.log("SmarterCircuitsMCP","main_loop error: "+error)
-                SmarterLog.log("SmarterCircuitsMCP","main_loop traceback: "+tb)
+                self.log("SmarterCircuitsMCP","main_loop error: "+error)
+                self.log("SmarterCircuitsMCP","main_loop traceback: "+tb)
                 self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
                 self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
             time.sleep(1)
@@ -178,8 +187,8 @@ class SmarterCircuitsMCP:
         except Exception as e: 
             error = str(e)
             tb = traceback.format_exc()
-            SmarterLog.log("SmarterCircuitsMCP","log_temp_data error: "+error)
-            SmarterLog.log("SmarterCircuitsMCP","log_temp_data traceback: "+tb)
+            self.log("SmarterCircuitsMCP","log_temp_data error: "+error)
+            self.log("SmarterCircuitsMCP","log_temp_data traceback: "+tb)
             self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
             self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
 
@@ -210,8 +219,8 @@ class SmarterCircuitsMCP:
         except Exception as e: 
             error = str(e)
             tb = traceback.format_exc()
-            SmarterLog.log("SmarterCircuitsMCP","do_log_dump error: "+error)
-            SmarterLog.log("SmarterCircuitsMCP","do_log_dump traceback: "+tb)
+            self.log("SmarterCircuitsMCP","do_log_dump error: "+error)
+            self.log("SmarterCircuitsMCP","do_log_dump traceback: "+tb)
             self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
             self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
 
@@ -221,19 +230,19 @@ class SmarterCircuitsMCP:
             r = requests.get("https://api.sunrise-sunset.org/json?lat=39.68021508778703&lng=-84.17636552954109")
             j = r.json()
             self.sunrise = self.convert_suntime(j["results"]["sunrise"],False)
-            SmarterLog.log("SmarterCircuitsMCP","got sunrise time: "+self.sunrise)
+            self.log("SmarterCircuitsMCP","got sunrise time: "+self.sunrise)
             self.sunset = self.convert_suntime(j["results"]["sunset"],False)
-            SmarterLog.log("SmarterCircuitsMCP","got sunset time: "+self.sunset)
+            self.log("SmarterCircuitsMCP","got sunset time: "+self.sunset)
             self.civil_twilight_begin = self.convert_suntime(j["results"]["civil_twilight_begin"],False)
-            SmarterLog.log("SmarterCircuitsMCP","got civil_twilight_begin time: "+self.civil_twilight_begin)
+            self.log("SmarterCircuitsMCP","got civil_twilight_begin time: "+self.civil_twilight_begin)
             self.civil_twilight_end = self.convert_suntime(j["results"]["civil_twilight_end"],False)
-            SmarterLog.log("SmarterCircuitsMCP","got civil_twilight_end time: "+self.civil_twilight_end)
+            self.log("SmarterCircuitsMCP","got civil_twilight_end time: "+self.civil_twilight_end)
     
     def do_time_commands(self, now, day):
         if self.circuit_authority is False:
             return
         if len(self.config.time_commands)== 0:
-            SmarterLog.log("SmarterCircuitsMCP","no time commands")
+            self.log("SmarterCircuitsMCP","no time commands")
         for tc in self.config.time_commands:
             check = tc["days_time"].lower()
             if day.lower() not in check:
@@ -244,7 +253,7 @@ class SmarterCircuitsMCP:
                     #thermoset_command(tc["command"])
                     donothing = True
                 else:
-                    SmarterLog.log("SmarterCircuitsMCP","time command: "+tc["command"])
+                    self.log("SmarterCircuitsMCP","time command: "+tc["command"])
                     self.execute_command(tc["command"])
 
     def time_check(self, now, check):
@@ -277,28 +286,28 @@ class SmarterCircuitsMCP:
                 highest_ip = peer_last_octet
         if highest_ip == last_octet:
             if self.circuit_authority is not True:
-                SmarterLog.log("SmarterCircuitsMCP","I am circuit authority")
+                self.log("SmarterCircuitsMCP","I am circuit authority")
                 self.circuit_authority = True
                 self.mqtt.publish("notifications",self.name+"\\nCircuit Authority")
                 try:
                     requests.get("https://api.idkline.com/circuitauthority/"+self.ip_address)
-                    SmarterLog.log("SmarterCircuitsMCP","Told the API I am circuit authority")
+                    self.log("SmarterCircuitsMCP","Told the API I am circuit authority")
                 except:
-                    SmarterLog.log("SmarterCircuitsMCP","Could not tell the API I am circuit authority")
+                    self.log("SmarterCircuitsMCP","Could not tell the API I am circuit authority")
         else:
             self.circuit_authority = False
 
     def stop(self, restart = False):
-        SmarterLog.log("SmarterCircuitsMCP","stopping...")
+        self.log("SmarterCircuitsMCP","stopping...")
         if restart is True:
             self.mqtt.publish("smarter_circuits/info/"+self.name,"restarting...")
         self.running = False
         self.config.stop()
         self.mqtt.stop()
         time.sleep(5)
-        SmarterLog.log("SmarterCircuitsMCP","stopped.")
+        self.log("SmarterCircuitsMCP","stopped.")
         if restart is True:
-            SmarterLog.log("SmarterCircuitsMCP","restarting...")
+            self.log("SmarterCircuitsMCP","restarting...")
             os.system('sudo reboot now')
         exit()
     
@@ -313,8 +322,8 @@ class SmarterCircuitsMCP:
         except Exception as e: 
             error = str(e)
             tb = traceback.format_exc()
-            SmarterLog.log("SmarterCircuitsMCP","main_loop error: "+error)
-            SmarterLog.log("SmarterCircuitsMCP","main_loop traceback: "+tb)
+            self.log("SmarterCircuitsMCP","main_loop error: "+error)
+            self.log("SmarterCircuitsMCP","main_loop traceback: "+tb)
             self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
             self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
     
@@ -631,7 +640,7 @@ class SmarterCircuitsMCP:
             self.handle_motion(sensor)
 
     def handle_motion(self, sensor:MotionSensor):
-        SmarterLog.log("SmarterCircuitsMCP","Motion detected: "+sensor.name)
+        self.log("SmarterCircuitsMCP","Motion detected: "+sensor.name)
         if self.circuit_authority is not True:
             return
         if sensor.id in self.motion_detected:
@@ -654,7 +663,7 @@ class SmarterCircuitsMCP:
             time.sleep(1)
         time.sleep(1)
             
-        SmarterLog.log("SmarterCircuitsMCP","Time's up: "+sensor.name)
+        self.log("SmarterCircuitsMCP","Time's up: "+sensor.name)
         for command in sensor.commands:
             if self.conditions_met(command.conditions) is True:
                 self.execute_command(command.stop)
@@ -680,7 +689,7 @@ class SmarterCircuitsMCP:
         if "smarter_circuits/command" in topic and self.circuit_authority is True:
             self.execute_command(message)
         if "smarter_circuits/restart/"+self.name in topic:
-            SmarterLog.log("SmarterCircuitsMCP","received restart command")
+            self.log("SmarterCircuitsMCP","received restart command")
             self.mqtt.publish("smarter_circuits/info/"+self.name,"received restart command")
             self.stop(True)
         if "smarter_circuits/thermosettings/" in topic:
@@ -730,12 +739,12 @@ class SmarterCircuitsMCP:
                 self.rollershades[name] = RollershadeState(name)
             self.rollershades[name].shade_up = json.loads(message)
         if mode == "command" and self.config.rollershade is True and name == self.name:
-            SmarterLog.log("SmarterCircuitsMCP","rollershade command "+message)
+            self.log("SmarterCircuitsMCP","rollershade command "+message)
             d = message.split(":")
             addy = int(d[0])
             state = int(d[1])
             if self.rollershade is None:
-                SmarterLog.log("SmarterCircuitsMCP","rollershade is null")
+                self.log("SmarterCircuitsMCP","rollershade is null")
                 self.mqtt.publish("smarter_circuits/info/"+self.name, "rollershade is null")
             else:
                 self.rollershade.set_state(addy, state)
@@ -744,7 +753,7 @@ class SmarterCircuitsMCP:
         s = topic.split("/")
         name = s[2]
         mode = s[3]
-        SmarterLog.log("SmarterCircuitsMCP","received_rollerdoor_data: "+name+" "+mode)
+        self.log("SmarterCircuitsMCP","received_rollerdoor_data: "+name+" "+mode)
         if mode == "state":
             if name not in self.rollerdoors.keys():
                 self.rollerdoors[name] = RollerdoorState(name)
@@ -754,21 +763,21 @@ class SmarterCircuitsMCP:
             addy = int(d[0])
             state = int(d[1])
             if self.rollerdoor is None:
-                SmarterLog.log("SmarterCircuitsMCP","rollerdoor is null, try to reinstantiate")
+                self.log("SmarterCircuitsMCP","rollerdoor is null, try to reinstantiate")
                 self.mqtt.publish("smarter_circuits/info/"+self.name, "rollerdoor is null, try to reinstantiate")
                 try:
                     self.rollerdoor = Rollerdoor(self,self.name)
                     self.rollerdoor.set_state(addy, state)
                 except Exception as e:
                     error = str(e)
-                    SmarterLog.log("SmarterCircuitsMCP",error)
-                    SmarterLog.log("SmarterCircuitsMCP","failed to reinstantiate rollerdoor")
+                    self.log("SmarterCircuitsMCP",error)
+                    self.log("SmarterCircuitsMCP","failed to reinstantiate rollerdoor")
                     self.mqtt.publish("smarter_circuits/info/"+self.name, "failed to reinstantiate rollerdoor")
             else:
                 self.rollerdoor.set_state(addy, state)
 
     def handle_mode_change(self):
-        SmarterLog.log("SmarterCircuitsMCP","mode set to "+self.mode)
+        self.log("SmarterCircuitsMCP","mode set to "+self.mode)
         if self.circuit_authority is not True:
             return
         for circuit in self.config.circuits:
@@ -783,7 +792,7 @@ class SmarterCircuitsMCP:
     
     def battery_status_check(self, sensor):
         if sensor.status.battery < 50:
-            SmarterLog.log("BATTERY STATUS","Battery Low: "+sensor.id+"("+sensor.name+")")
+            self.log("BATTERY STATUS","Battery Low: "+sensor.id+"("+sensor.name+")")
             if self.circuit_authority is True:
                 self.mqtt.publish("notifications","Battery at "+str(sensor.status.battery)+"%\\n"+sensor.id+"\\n("+sensor.name+")")
 
@@ -849,18 +858,18 @@ class SmarterCircuitsMCP:
 
     def send_api_command(self, command):
         #TODO: remove API altogether from system
-        SmarterLog.log("SmarterCircuitsMCP","sending command: "+command)
+        self.log("SmarterCircuitsMCP","sending command: "+command)
         try:
             r =requests.get(self.config.command_endpoint+command)
-            SmarterLog.log("SmarterCircuitsMCP","command response: "+str(r.status_code))
+            self.log("SmarterCircuitsMCP","command response: "+str(r.status_code))
         except:
-            SmarterLog.log("SmarterCircuitsMCP",'failed to send command')
+            self.log("SmarterCircuitsMCP",'failed to send command')
 
     def execute_command(self, command):
         if self.circuit_authority is False:
             return
-        SmarterLog.log("SmarterCircuitsMCP","executing command: "+command)
-        self.mqtt.publish("debug",self.name +" execute_command: "+command)
+        self.log("SmarterCircuitsMCP","executing command: "+command)
+        self.debug("execute_command: "+command)
         command = command.lower()
         com = "off"
         command_list = []
@@ -971,7 +980,7 @@ class SmarterCircuitsMCP:
                 p.timestamp = peer["timestamp"]
                 found = True
         if found is not True:
-            SmarterLog.log("SmarterCircuitsMCP","new peer "+peer["name"])
+            self.log("SmarterCircuitsMCP","new peer "+peer["name"])
             self.peers.append(SmarterCircuitsPeer(peer["id"],peer["name"],peer["ip_address"],peer["model"],peer["circuit_authority"],peer["timestamp"],peer["thermostat"],peer["rollershade"],peer["rollerdoor"]))
     
     def convert_suntime(self, jdata, winter):
