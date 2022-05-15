@@ -74,7 +74,7 @@ class SmarterCircuitsMCP:
         while self.config.loaded is False:
             time.sleep(1)
         self.remote = RemoteHandler(self)
-        self.mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(self.config.brokers,["shellies/#","smarter_circuits/#"],self.on_message)
+        self.mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(self.config.brokers,["shellies/#","smarter_circuits/#","remote_menu"],self.on_message)
         _thread.start_new_thread(self.main_loop, ())
         self.api = SmarterAPI(self)
         if self.config.thermostat is True:
