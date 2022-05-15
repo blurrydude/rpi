@@ -1,0 +1,47 @@
+{
+    "buttons": {
+        "shellyplusi4-083af200df3c-0": "1",
+        "shellyplusi4-083af200df3c-1": "2",
+        "shellyplusi4-083af200df3c-2": "3",
+        "shellyplusi4-083af200df3c-3": "4",
+        "shellyplusi4-083af200b62c-0": "5",
+        "shellyplusi4-083af200b62c-1": "6",
+        "shellyplusi4-083af200b62c-2": "7",
+        "shellyplusi4-083af200b62c-3": "8",
+        "shellyplusi4-083af200ff40-0": "9",
+        "shellyplusi4-083af200ff40-1": "A",
+        "shellyplusi4-083af200ff40-2": "B",
+        "shellyplusi4-083af200ff40-3": "C",
+        "shellyplusi4-083af2013d5c-0": "D",
+        "shellyplusi4-083af2013d5c-1": "E",
+        "shellyplusi4-083af2013d5c-2": "F",
+        "shellyplusi4-083af2013d5c-3": "0"
+    },
+    "menus": {
+        "main": {
+            "title": "Main Menu",
+            "options": {
+                "1": {
+                    "title": "First Floor",
+                    "action": "nav",
+                    "value": "first_floor"
+                },
+                "2": {
+                    "title": "Second Floor",
+                    "action": "nav",
+                    "value": "second_floor"
+                },
+                "3": {
+                    "title": "Basement",
+                    "action": "nav",
+                    "value": "basement"
+                },
+                "4": {
+                    "title": "Exterior",
+                    "action": "nav",
+                    "value": "exterior"
+                }
+            }
+        }
+    }
+}
