@@ -296,6 +296,7 @@ class SmarterMonitor:
                 lh = device["last_heard"]
                 last_heard = datetime(int(lh[0:4]),int(lh[4:6]),int(lh[6:8]),int(lh[8:10]),int(lh[10:12]),int(lh[12:14]))
                 message = message + "\\n" + last_heard.strftime('%x %X')
+        time.sleep(2)
         self.notify(message)
     
     def shutdown(self, restart):
