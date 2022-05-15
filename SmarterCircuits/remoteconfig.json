@@ -42,6 +42,34 @@
                     "value": "exterior"
                 }
             }
+        },
+        "first_floor": {
+            "title": "First Floor",
+            "options": {
+                "1": {
+                    "title": "Game Room On",
+                    "action": "command",
+                    "value": "turn on the game room"
+                }
+            }
+        },
+        "second_floor": {
+            "title": "Second Floor",
+            "options": {
+                
+            }
+        },
+        "basement": {
+            "title": "Basement",
+            "options": {
+                
+            }
+        },
+        "exterior": {
+            "title": "Exterior",
+            "options": {
+                
+            }
         }
     }
 }
