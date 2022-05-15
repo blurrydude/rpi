@@ -35,7 +35,7 @@ class RemoteHandler:
         
     def send_menu(self, menu, message = ""):
         data = menu["title"]+"\n"
-        for k in menu["options"].keys:
+        for k in menu["options"].keys():
             option = menu["options"][k]
             data = data + k + ": " + option["title"] + "\n"
         if message != "":

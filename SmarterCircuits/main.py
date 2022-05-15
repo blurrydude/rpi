@@ -62,6 +62,7 @@ class SmarterCircuitsMCP:
         self.hex_input = False
         self.hex_input_mode = ""
         self.hex_command = ""
+        self.source_dir = os.path.dirname(os.path.realpath(__file__))+"/"
         self.start()
 
     def start(self):
@@ -94,8 +95,7 @@ class SmarterCircuitsMCP:
     
     def check_for_updates(self):
         modified = 0
-        source_dir = os.path.dirname(os.path.realpath(__file__))+"/"
-        for file in os.listdir(source_dir):
+        for file in os.listdir(self.source_dir):
             ignore_file = True
             if file in self.config.update_files:
                 ignore_file = False
@@ -105,7 +105,7 @@ class SmarterCircuitsMCP:
                 ignore_file = False
             if ignore_file is True:
                 continue
-            file_check = round(os.stat(source_dir+file).st_mtime,0)
+            file_check = round(os.stat(self.source_dir+file).st_mtime,0)
             if file_check > modified:
                 modified = file_check
         if modified == self.source_modified:
@@ -166,7 +166,7 @@ class SmarterCircuitsMCP:
             return
         try:
             data = datetime.now().strftime("%Y%m%d%H%M")
-            logfile = os.path.dirname(os.path.realpath(__file__))+"/logs/Thermostat_"+(datetime.now()).strftime("%Y%m%d")+".log"
+            logfile = self.source_dir+"logs/Thermostat_"+(datetime.now()).strftime("%Y%m%d")+".log"
             for thermokey in self.thermostats.keys():
                 thermo = self.thermostats[thermokey]
                 data = data + ":" + thermo.room + "=" + self.binarize(thermo.state.heat_on) + self.binarize(thermo.state.ac_on) + self.binarize(thermo.state.fan_on) + self.binarize(thermo.state.whf_on) + "|" + str(thermo.state.temperature) + "|" + str(thermo.state.humidity)
@@ -194,7 +194,7 @@ class SmarterCircuitsMCP:
             for i in range(7,15):
                 old_dates.append((datetime.now()-timedelta(days=i)).strftime("%Y%m%d"))
             previouslogfiledate = (datetime.now()-timedelta(hours=1)).strftime("%Y%m%d%H")
-            previouslogfilepath = os.path.dirname(os.path.realpath(__file__))+"/logs/SmarterCircuits_"+previouslogfiledate+".log"
+            previouslogfilepath = self.source_dir+"logs/SmarterCircuits_"+previouslogfiledate+".log"
             if os.path.exists(previouslogfilepath):
                 currenthour = datetime.now().hour
                 if self.last_log_dump_hour != currenthour:
@@ -202,7 +202,7 @@ class SmarterCircuitsMCP:
                     f = open(previouslogfilepath)
                     t = f.read()
                     #SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",self.name+" log file "+previouslogfiledate,t)
-            logs_dir = os.path.dirname(os.path.realpath(__file__))+"/logs/"
+            logs_dir = self.source_dir+"logs/"
             for file in os.listdir(logs_dir):
                 for old_date in old_dates:
                     if old_date in file:
@@ -339,7 +339,7 @@ class SmarterCircuitsMCP:
     def handle_shelly_uni_message(self, id, topic, message):
         if self.circuit_authority is False:
             return
-        alluniconfig = json.load(open(os.path.dirname(os.path.realpath(__file__))+"/shellyuniconfig.json"))
+        alluniconfig = json.load(open(self.source_dir+"shellyuniconfig.json"))
         sid = id.split('-')[-1]
         rid = topic.split('/')[-1]
         uniconfig = alluniconfig[sid]
@@ -388,7 +388,7 @@ class SmarterCircuitsMCP:
         if self.circuit_authority is False:
             return
         self.remote.handle_i4_message(message)
-        # iconfigs = json.load(open(os.path.dirname(os.path.realpath(__file__))+"/"+"inputs.json"))
+        # iconfigs = json.load(open(self.source_dir+"inputs.json"))
         # self.mqtt.publish("debug",message)
         # data = json.loads(message)
 
@@ -663,7 +663,7 @@ class SmarterCircuitsMCP:
     def handle_smarter_circuits_message(self, topic, message):
         #print(topic+": "+message)
         if "smarter_circuits/secrets" in topic:
-            filepath = os.path.dirname(os.path.realpath(__file__))+"/secrets.json"
+            filepath = self.source_dir+"secrets.json"
             self.mqtt.publish("smarter_circuits/info/"+self.name,"received secrets")
             with open(filepath, "w") as write_file:
                 write_file.write(message)
