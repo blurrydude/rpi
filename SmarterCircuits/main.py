@@ -341,7 +341,7 @@ class SmarterCircuitsMCP:
             wrapped.pop(-1)
         wrapcount = len(wrapped)
         for i in range(wrapcount):
-            labels.append(SmartLabel(i+1,0,wrapped[i],"Times",self.font_size,"black","white",5,5))
+            labels.append(SmartLabel(i+1,0,wrapped[i],"Times",24,"black","white",5,5))
         buttons = [
             SmartButton(0,0,"Main Menu",self.main_screen,"",1,"Times",16,"darkorange","black",5,5)
         ]
