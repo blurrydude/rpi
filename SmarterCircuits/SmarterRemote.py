@@ -36,7 +36,7 @@ class RemoteHandler:
             self.send_menu(menu, value + " executed")
         
     def send_menu(self, menu, message = ""):
-        if message == "":
+        if message != "":
             data = message+"\\n"
         else:
             data = menu["title"]+"\\n"
