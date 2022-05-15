@@ -687,6 +687,7 @@ class SmarterCircuitsMCP:
             self.mode = message
             self.handle_mode_change()
         if "smarter_circuits/command" in topic and self.circuit_authority is True:
+            self.log("SmarterCircuitsMCP","handling smarter circuits command: "+message)
             self.execute_command(message)
         if "smarter_circuits/restart/"+self.name in topic:
             self.log("SmarterCircuitsMCP","received restart command")
@@ -869,7 +870,6 @@ class SmarterCircuitsMCP:
         if self.circuit_authority is False:
             return
         self.log("SmarterCircuitsMCP","executing command: "+command)
-        self.debug("execute_command: "+command)
         command = command.lower()
         com = "off"
         command_list = []
