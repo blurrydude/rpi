@@ -40,6 +40,16 @@
                     "title": "Exterior",
                     "action": "nav",
                     "value": "exterior"
+                },
+                "5": {
+                    "title": "Ventilation",
+                    "action": "nav",
+                    "value": "ventilation"
+                },
+                "6": {
+                    "title": "HVAC",
+                    "action": "nav",
+                    "value": "hvac"
                 }
             }
         },
