@@ -34,10 +34,10 @@ class RemoteHandler:
             self.send_menu(menu, value + " executed")
         
     def send_menu(self, menu, message = ""):
-        data = menu["title"]+"\n"
+        data = menu["title"]+"\\n"
         for k in menu["options"].keys():
             option = menu["options"][k]
-            data = data + k + ": " + option["title"] + "\n"
+            data = data + k + ": " + option["title"] + "\\n"
         if message != "":
             data = data + message
         self.mcp.mqtt.publish("notifications", data)
