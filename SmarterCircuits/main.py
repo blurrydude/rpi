@@ -1,3 +1,4 @@
+from SmarterUI import SmartLabel, SmartButton
 from SmarterCircuitsWebService import SmarterCircuitsWeb
 from SmarterCircuitsAPI import SmarterAPI
 from SmarterRollershade import Rollershade, RollershadeState
@@ -20,6 +21,7 @@ from datetime import datetime, timedelta
 import requests
 import os
 import traceback
+import textwrap
 
 class SmarterCircuitsMCP:
     def __init__(self, name, ip_address, model):
@@ -319,6 +321,8 @@ class SmarterCircuitsMCP:
                 self.handle_shelly_message(topic, text)
             if topic.startswith("smarter_circuits"):
                 self.handle_smarter_circuits_message(topic, text)
+            if topic == "remote_menu" and self.touchscreen is not None:
+                self.handle_remote_menu(text)
         except Exception as e: 
             error = str(e)
             tb = traceback.format_exc()
@@ -327,6 +331,22 @@ class SmarterCircuitsMCP:
             self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
             self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
     
+    def handle_remote_menu(self, text):
+        labels = []
+        if "\\n" in text:
+            wrapped = text.split('\\n')
+        else:
+            wrapped = textwrap.wrap(text,42)
+        if wrapped[-1] == "":
+            wrapped.pop(-1)
+        wrapcount = len(wrapped)
+        for i in range(wrapcount):
+            labels.append(SmartLabel(i+1,0,wrapped[i],"Times",self.font_size,"black","white",5,5))
+        buttons = [
+            SmartButton(0,0,"Main Menu",self.main_screen,"",1,"Times",16,"darkorange","black",5,5)
+        ]
+        self.touchscreen.screen_wipe(buttons,labels)
+
     def handle_shelly_message(self, topic, message):
         #print(topic+": "+message)
         s = topic.split('/')

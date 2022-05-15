@@ -43,7 +43,7 @@ class RemoteHandler:
         for k in menu["options"].keys():
             option = menu["options"][k]
             data = data + k + ": " + option["title"] + "\\n"
-        self.mcp.mqtt.publish("notifications", data)
+        self.mcp.mqtt.publish("remote_menu", data)
     
     def load_config(self):
         self.config = json.load(open(os.path.dirname(os.path.realpath(__file__))+"/"+"remoteconfig.json"))
