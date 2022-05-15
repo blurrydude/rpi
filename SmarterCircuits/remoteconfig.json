@@ -50,6 +50,11 @@
                     "title": "HVAC",
                     "action": "nav",
                     "value": "hvac"
+                },
+                "7": {
+                    "title": "Modes",
+                    "action": "nav",
+                    "value": "modes"
                 }
             }
         },
@@ -69,19 +74,63 @@
         "second_floor": {
             "title": "Second Floor",
             "options": {
-                
+                "1": { "title": "Hallway", "action": "command", "value": "toggle the hallway" },
+                "2": { "title": "Guest Bathroom", "action": "command", "value": "toggle the guest bathroom" },
+                "3": { "title": "Bedroom Lamp", "action": "command", "value": "toggle the bedroom lamp" },
+                "4": { "title": "Master Bath", "action": "command", "value": "toggle the master bath" },
+                "5": { "title": "Library Lamp", "action": "command", "value": "toggle the library" },
+                "6": { "title": "Gym Lamp", "action": "command", "value": "toggle the gym" },
+                "7": { "title": "Floor Fan", "action": "command", "value": "toggle the floor fan" },
+                "8": { "title": "Shower Fan", "action": "command", "value": "toggle the shower fan" }
             }
         },
         "basement": {
             "title": "Basement",
             "options": {
-                
+                "1": { "title": "Shop Light", "action": "command", "value": "toggle the shop light" },
+                "2": { "title": "Stairway", "action": "command", "value": "toggle the stairway" },
+                "3": { "title": "Laundry Room", "action": "command", "value": "toggle the laundry room" },
+                "4": { "title": "Garage Overhead", "action": "command", "value": "toggle the garage lights" },
+                "5": { "title": "Storage Room", "action": "command", "value": "toggle the storage room" },
+                "6": { "title": "Workbench Fan", "action": "command", "value": "toggle the workbench fan" },
+                "7": { "title": "Open Shop Door", "action": "command", "value": "open the shop door" },
+                "8": { "title": "Close Shop Door", "action": "command", "value": "close the shop door" }
             }
         },
         "exterior": {
             "title": "Exterior",
             "options": {
-                
+                "1": { "title": "Lamp Post", "action": "command", "value": "toggle the lamp post" },
+                "2": { "title": "Porch Light", "action": "command", "value": "toggle the porch light" },
+                "3": { "title": "Deck Light", "action": "command", "value": "toggle the deck light" },
+                "4": { "title": "Deck Rail", "action": "command", "value": "toggle the deck rail" },
+                "5": { "title": "Deck Fountain", "action": "command", "value": "toggle the deck fountain" }
+            }
+        },
+        "ventilation": {
+            "title": "Ventilation",
+            "options": {
+                "1": { "title": "Whole House Fan", "action": "command", "value": "toggle the whole house fan" },
+                "2": { "title": "Day Room Fan", "action": "command", "value": "toggle the day room fan" },
+                "3": { "title": "Shower Fan", "action": "command", "value": "toggle the shower fan" },
+                "4": { "title": "Floor Fan", "action": "command", "value": "toggle the floor fan" },
+                "5": { "title": "Guest Bathroom", "action": "command", "value": "toggle the guest bathroom" }
+            }
+        },
+        "hvac": {
+            "title": "HVAC",
+            "options": {
+                "1": { "title": "DOESNT WORK", "action": "command", "value": "toggle the " }
+            }
+        },
+        "modes": {
+            "title": "Modes",
+            "options": {
+                "1": { "title": "Day", "action": "command", "value": "switch to day mode" },
+                "2": { "title": "Night", "action": "command", "value": "switch to night mode" },
+                "3": { "title": "Midnight", "action": "command", "value": "switch to midnight mode" },
+                "4": { "title": "Dark", "action": "command", "value": "switch to dark mode" },
+                "5": { "title": "Alert", "action": "command", "value": "switch to alert mode" }
             }
         }
     }
