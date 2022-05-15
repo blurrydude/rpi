@@ -860,6 +860,7 @@ class SmarterCircuitsMCP:
         if self.circuit_authority is False:
             return
         SmarterLog.log("SmarterCircuitsMCP","executing command: "+command)
+        self.mqtt.publish("debug",self.name +" execute_command: "+command)
         command = command.lower()
         com = "off"
         command_list = []
