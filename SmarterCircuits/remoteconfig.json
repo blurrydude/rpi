@@ -47,9 +47,9 @@
             "title": "First Floor",
             "options": {
                 "1": {
-                    "title": "Game Room On",
+                    "title": "Game Room",
                     "action": "command",
-                    "value": "turn on the game room"
+                    "value": "toggle the game room"
                 }
             }
         },
