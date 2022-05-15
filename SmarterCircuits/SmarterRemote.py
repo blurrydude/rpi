@@ -33,7 +33,7 @@ class RemoteHandler:
             return
         if action == "command":
             self.mcp.execute_command(value)
-            self.send_menu(menu, value + " executed")
+            #self.send_menu(menu, value + " executed")
         
     def send_menu(self, menu, message = ""):
         if message != "":
