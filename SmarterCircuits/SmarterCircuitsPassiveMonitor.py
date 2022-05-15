@@ -23,6 +23,8 @@ class SmarterCircuitsPassiveMonitor:
         self.display_on = False
         self.screen_timer = 0
         self.font_size = 32
+        self.line_char_width = 42
+        self.lines = 9
         self.last_display = datetime.now()
         _thread.start_new_thread(self.sleep_timer, ())
         self.start()
@@ -70,7 +72,7 @@ class SmarterCircuitsPassiveMonitor:
             if "\\n" in text:
                 wrapped = text.split('\\n')
             else:
-                wrapped = textwrap.wrap(text,24)
+                wrapped = textwrap.wrap(text,self.line_char_width)
             
             self.last_display = datetime.now()
             self.do_display(wrapped)
@@ -95,9 +97,10 @@ class SmarterCircuitsPassiveMonitor:
     
     def do_display(self, wrapped):
         labels = []
-        if len(wrapped) > 7:
-            newwrap = wrapped[:7]
-            for i in range(7):
+        lim = self.lines - 1
+        if len(wrapped) > lim:
+            newwrap = wrapped[:lim]
+            for i in range(lim):
                 wrapped.pop(0)
             for i in range(len(newwrap)):
                 labels.append(SmartLabel(i+1,0,newwrap[i],"Times",self.font_size,"black","white",5,5))
@@ -106,7 +109,7 @@ class SmarterCircuitsPassiveMonitor:
             self.do_display(wrapped)
         else:
             wrapcount = len(wrapped)
-            need = 7 - wrapcount
+            need = lim - wrapcount
             for i in range(wrapcount):
                 labels.append(SmartLabel(i+1,0,wrapped[i],"Times",self.font_size,"black","white",5,5))
             for i in range(need):
