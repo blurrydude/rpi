@@ -2,6 +2,7 @@ from SmarterCircuitsWebService import SmarterCircuitsWeb
 from SmarterCircuitsAPI import SmarterAPI
 from SmarterRollershade import Rollershade, RollershadeState
 from SmarterRollerdoor import Rollerdoor, RollerdoorState
+from SmarterRemote import RemoteHandler
 import time
 time.sleep(15)
 from ShellyDevices import RelayModule, DoorWindowSensor, HumidityTemperatureSensor, MotionSensor, CommandCondition
@@ -69,6 +70,7 @@ class SmarterCircuitsMCP:
         self.config = SmarterConfiguration.SmarterConfig(self)
         while self.config.loaded is False:
             time.sleep(1)
+        self.remote = RemoteHandler(self)
         self.mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(self.config.brokers,["shellies/#","smarter_circuits/#"],self.on_message)
         _thread.start_new_thread(self.main_loop, ())
         self.api = SmarterAPI(self)
@@ -385,159 +387,160 @@ class SmarterCircuitsMCP:
     def handle_shelly_i4_message(self, message):
         if self.circuit_authority is False:
             return
-        iconfigs = json.load(open(os.path.dirname(os.path.realpath(__file__))+"/"+"inputs.json"))
-        self.mqtt.publish("debug",message)
-        data = json.loads(message)
+        self.remote.handle_i4_message(message)
+        # iconfigs = json.load(open(os.path.dirname(os.path.realpath(__file__))+"/"+"inputs.json"))
+        # self.mqtt.publish("debug",message)
+        # data = json.loads(message)
 
-        src = data["src"]
-        evnt = data["params"]["events"][0]["event"]
-        cid = str(data["params"]["events"][0]["id"])
-        iconfig = iconfigs[src]
-        commands = []
-        if iconfig["hex_enabled"] is True and evnt == "btn_up":
-            d = iconfig["hex_value"][cid]
-            if self.hex_waiting is False:
-                if d == "0":
-                    self.hex_waiting = True
-                    self.mqtt.publish("notifications","Waiting for hex input")
-                    self.hex_command = ""
-                    return
-                else:
-                    m = "HEX: "+d + " execute"
-                    commands = iconfigs["hex_commands"][d]
-                    for command in commands:
-                        m = m + "\\n" + command
-                    self.mqtt.publish("notifications",m)
-            elif len(self.hex_command) < 2:
-                self.hex_command = self.hex_command + iconfig["hex_value"][cid]
-                if self.hex_search is True:
-                    self.mqtt.publish("notifications","HEX Search: "+self.hex_command)
-                else:
-                    self.mqtt.publish("notifications","HEX: "+self.hex_command)
-            if self.hex_command == "00":
-                self.hex_search = True
-                self.hex_command = ""
-                self.mqtt.publish("notifications","HEX Search: "+self.hex_command)
-                return
-            if self.hex_command == "01":
-                self.hex_waiting = False
-                self.hex_command = ""
-                self.mqtt.publish("notifications","Single Hex Commands")
-                m = ""
-                for hex in iconfigs["hex_commands"].keys():
-                    if len(hex) > 1:
-                        continue
-                    coms = iconfigs["hex_commands"][hex]
-                    m = m + hex.replace('A','10').replace('B','11').replace('C','12').replace('D','13').replace('E','14').replace('F','15') + ": "
-                    for com in coms:
-                        m = m + com + "\\n"
-                m = m + "16: Two Button Input Mode"
-                self.mqtt.publish("notifications",m)
-                return
-            if self.hex_command == "02":
-                self.hex_waiting = False
-                self.hex_command = ""
-                self.mqtt.publish("notifications","Hex Commands")
-                m = ""
-                for hex in iconfigs["hex_commands"].keys():
-                    coms = iconfigs["hex_commands"][hex]
-                    if len(hex) == 2:
-                        hex = hex[0] + "-" + hex[1]
-                    m = m + hex.replace('0','16').replace('A','10').replace('B','11').replace('C','12').replace('D','13').replace('E','14').replace('F','15') + ": "
-                    for com in coms:
-                        m = m + com + "\\n"
-                self.mqtt.publish("notifications",m)
-                return
-            if self.hex_command == "03":
-                self.hex_waiting = True
-                self.hex_input = True
-                self.hex_command = ""
-                self.hex_input_mode = "lowtemp"
-                self.mqtt.publish("notifications","Set Low Temperature")
-                return
-            if self.hex_command == "04":
-                self.hex_waiting = True
-                self.hex_input = True
-                self.hex_command = ""
-                self.hex_input_mode = "hightemp"
-                self.mqtt.publish("notifications","Set High Temperature")
-                return
-            if self.hex_command == "05":
-                self.hex_waiting = False
-                self.hex_input = False
-                self.hex_command = ""
-                m = ""
-                for circuit in self.config.circuits:
-                    m = m + circuit.name + ": " + str(circuit.status.relay.power) + "W\\n"
-                self.mqtt.publish("notifications",m)
-                return
-            if self.hex_command == "06":
-                self.hex_waiting = False
-                self.hex_input = False
-                self.hex_command = ""
-                m = self.mode
-                self.mqtt.publish("notifications",m)
-                return
+        # src = data["src"]
+        # evnt = data["params"]["events"][0]["event"]
+        # cid = str(data["params"]["events"][0]["id"])
+        # iconfig = iconfigs[src]
+        # commands = []
+        # if iconfig["hex_enabled"] is True and evnt == "btn_up":
+        #     d = iconfig["hex_value"][cid]
+        #     if self.hex_waiting is False:
+        #         if d == "0":
+        #             self.hex_waiting = True
+        #             self.mqtt.publish("notifications","Waiting for hex input")
+        #             self.hex_command = ""
+        #             return
+        #         else:
+        #             m = "HEX: "+d + " execute"
+        #             commands = iconfigs["hex_commands"][d]
+        #             for command in commands:
+        #                 m = m + "\\n" + command
+        #             self.mqtt.publish("notifications",m)
+        #     elif len(self.hex_command) < 2:
+        #         self.hex_command = self.hex_command + iconfig["hex_value"][cid]
+        #         if self.hex_search is True:
+        #             self.mqtt.publish("notifications","HEX Search: "+self.hex_command)
+        #         else:
+        #             self.mqtt.publish("notifications","HEX: "+self.hex_command)
+        #     if self.hex_command == "00":
+        #         self.hex_search = True
+        #         self.hex_command = ""
+        #         self.mqtt.publish("notifications","HEX Search: "+self.hex_command)
+        #         return
+        #     if self.hex_command == "01":
+        #         self.hex_waiting = False
+        #         self.hex_command = ""
+        #         self.mqtt.publish("notifications","Single Hex Commands")
+        #         m = ""
+        #         for hex in iconfigs["hex_commands"].keys():
+        #             if len(hex) > 1:
+        #                 continue
+        #             coms = iconfigs["hex_commands"][hex]
+        #             m = m + hex.replace('A','10').replace('B','11').replace('C','12').replace('D','13').replace('E','14').replace('F','15') + ": "
+        #             for com in coms:
+        #                 m = m + com + "\\n"
+        #         m = m + "16: Two Button Input Mode"
+        #         self.mqtt.publish("notifications",m)
+        #         return
+        #     if self.hex_command == "02":
+        #         self.hex_waiting = False
+        #         self.hex_command = ""
+        #         self.mqtt.publish("notifications","Hex Commands")
+        #         m = ""
+        #         for hex in iconfigs["hex_commands"].keys():
+        #             coms = iconfigs["hex_commands"][hex]
+        #             if len(hex) == 2:
+        #                 hex = hex[0] + "-" + hex[1]
+        #             m = m + hex.replace('0','16').replace('A','10').replace('B','11').replace('C','12').replace('D','13').replace('E','14').replace('F','15') + ": "
+        #             for com in coms:
+        #                 m = m + com + "\\n"
+        #         self.mqtt.publish("notifications",m)
+        #         return
+        #     if self.hex_command == "03":
+        #         self.hex_waiting = True
+        #         self.hex_input = True
+        #         self.hex_command = ""
+        #         self.hex_input_mode = "lowtemp"
+        #         self.mqtt.publish("notifications","Set Low Temperature")
+        #         return
+        #     if self.hex_command == "04":
+        #         self.hex_waiting = True
+        #         self.hex_input = True
+        #         self.hex_command = ""
+        #         self.hex_input_mode = "hightemp"
+        #         self.mqtt.publish("notifications","Set High Temperature")
+        #         return
+        #     if self.hex_command == "05":
+        #         self.hex_waiting = False
+        #         self.hex_input = False
+        #         self.hex_command = ""
+        #         m = ""
+        #         for circuit in self.config.circuits:
+        #             m = m + circuit.name + ": " + str(circuit.status.relay.power) + "W\\n"
+        #         self.mqtt.publish("notifications",m)
+        #         return
+        #     if self.hex_command == "06":
+        #         self.hex_waiting = False
+        #         self.hex_input = False
+        #         self.hex_command = ""
+        #         m = self.mode
+        #         self.mqtt.publish("notifications",m)
+        #         return
             
-            if len(self.hex_command) == 2 and self.hex_input is True:
-                self.hex_waiting = False
-                self.hex_input = False
-                if self.hex_input_mode == "lowtemp":
-                    self.mqtt.publish("smarter_circuits/thermosettings/hallway","temperature_low_setting:"+self.hex_command)
-                    self.mqtt.publish("smarter_circuits/thermosettings/gameroom","temperature_low_setting:"+self.hex_command)
-                    self.mqtt.publish("notifications","Low Temperature Set\\n"+self.hex_command)
-                if self.hex_input_mode == "hightemp":
-                    self.mqtt.publish("smarter_circuits/thermosettings/hallway","temperature_high_setting:"+self.hex_command)
-                    self.mqtt.publish("smarter_circuits/thermosettings/gameroom","temperature_high_setting:"+self.hex_command)
-                    self.mqtt.publish("notifications","High Temperature Set\\n"+self.hex_command)
-                self.hex_command = ""
-                return
+        #     if len(self.hex_command) == 2 and self.hex_input is True:
+        #         self.hex_waiting = False
+        #         self.hex_input = False
+        #         if self.hex_input_mode == "lowtemp":
+        #             self.mqtt.publish("smarter_circuits/thermosettings/hallway","temperature_low_setting:"+self.hex_command)
+        #             self.mqtt.publish("smarter_circuits/thermosettings/gameroom","temperature_low_setting:"+self.hex_command)
+        #             self.mqtt.publish("notifications","Low Temperature Set\\n"+self.hex_command)
+        #         if self.hex_input_mode == "hightemp":
+        #             self.mqtt.publish("smarter_circuits/thermosettings/hallway","temperature_high_setting:"+self.hex_command)
+        #             self.mqtt.publish("smarter_circuits/thermosettings/gameroom","temperature_high_setting:"+self.hex_command)
+        #             self.mqtt.publish("notifications","High Temperature Set\\n"+self.hex_command)
+        #         self.hex_command = ""
+        #         return
 
-            if len(self.hex_command) == 2 and self.hex_search is True:
-                self.hex_waiting = False
-                self.hex_search = False
-                m = "HEX: "+self.hex_command + " search result"
-                if self.hex_command in iconfigs["hex_commands"]:
-                    coms = iconfigs["hex_commands"][self.hex_command]
-                    for command in coms:
-                        m = m + "\\n" + command
-                self.mqtt.publish("notifications",m)
-                return
-            if len(self.hex_command) == 2 and self.hex_search is False:
-                self.hex_waiting = False
-                m = "HEX: "+self.hex_command + " execute"
-                if self.hex_command in iconfigs["hex_commands"]:
-                    commands = iconfigs["hex_commands"][self.hex_command]
-                    for command in commands:
-                        m = m + "\\n" + command
-                self.mqtt.publish("notifications",m)
-                self.hex_command = ""
-            for command in commands:
-                if command != "ignore":
-                    self.mqtt.publish("smarter_circuits/command",command)
-            return
-        bid = src + str(cid)
-        if evnt == "btn_down":
-            self.buttons[bid] = "down"
-        if evnt == "long_push":
-            self.buttons[bid] = "long"
-        if evnt == "btn_up":
-            pressed = ""
-            longed = ""
-            for k in self.buttons:
-                i = k[len(k)-1]
-                if self.buttons[k] == "down":
-                    pressed = pressed + i
-                if self.buttons[k] == "long":
-                    longed = longed + i
-            self.buttons = {}
-            if pressed == "":
-                commands = iconfig["long"][longed]
-            else:
-                commands = iconfig["short"][pressed]
-            for command in commands:
-                if command != "ignore":
-                    self.mqtt.publish("smarter_circuits/command",command)
+        #     if len(self.hex_command) == 2 and self.hex_search is True:
+        #         self.hex_waiting = False
+        #         self.hex_search = False
+        #         m = "HEX: "+self.hex_command + " search result"
+        #         if self.hex_command in iconfigs["hex_commands"]:
+        #             coms = iconfigs["hex_commands"][self.hex_command]
+        #             for command in coms:
+        #                 m = m + "\\n" + command
+        #         self.mqtt.publish("notifications",m)
+        #         return
+        #     if len(self.hex_command) == 2 and self.hex_search is False:
+        #         self.hex_waiting = False
+        #         m = "HEX: "+self.hex_command + " execute"
+        #         if self.hex_command in iconfigs["hex_commands"]:
+        #             commands = iconfigs["hex_commands"][self.hex_command]
+        #             for command in commands:
+        #                 m = m + "\\n" + command
+        #         self.mqtt.publish("notifications",m)
+        #         self.hex_command = ""
+        #     for command in commands:
+        #         if command != "ignore":
+        #             self.mqtt.publish("smarter_circuits/command",command)
+        #     return
+        # bid = src + str(cid)
+        # if evnt == "btn_down":
+        #     self.buttons[bid] = "down"
+        # if evnt == "long_push":
+        #     self.buttons[bid] = "long"
+        # if evnt == "btn_up":
+        #     pressed = ""
+        #     longed = ""
+        #     for k in self.buttons:
+        #         i = k[len(k)-1]
+        #         if self.buttons[k] == "down":
+        #             pressed = pressed + i
+        #         if self.buttons[k] == "long":
+        #             longed = longed + i
+        #     self.buttons = {}
+        #     if pressed == "":
+        #         commands = iconfig["long"][longed]
+        #     else:
+        #         commands = iconfig["short"][pressed]
+        #     for command in commands:
+        #         if command != "ignore":
+        #             self.mqtt.publish("smarter_circuits/command",command)
 
     def handle_shelly_relay_message(self, id, subtopic, message):
         for circuit in self.config.circuits:
