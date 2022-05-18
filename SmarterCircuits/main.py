@@ -302,7 +302,7 @@ class SmarterCircuitsMCP:
     def stop(self, restart = False):
         self.log("SmarterCircuitsMCP","stopping...")
         if restart is True:
-            self.mqtt.publish("smarter_circuits/info/"+self.name,"restarting...")
+            self.log("SmarterCircuitsMCP","restarting...")
         self.running = False
         self.config.stop()
         self.mqtt.stop()
