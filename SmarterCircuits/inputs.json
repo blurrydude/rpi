@@ -12,9 +12,9 @@
             "double_push": ["turn off the garage lights"]
         },
         "2": {
-            "single_push": ["toggle the workbench fan"],
+            "single_push": ["toggle the laundry room"],
             "long_push": ["turn off the workbench fan"],
-            "double_push": ["turn off the workbench fan"]
+            "double_push": ["toggle the workbench fan"]
         },
         "3": {
             "single_push": ["toggle the storage room"],
