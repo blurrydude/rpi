@@ -1,395 +1,140 @@
 {
     "shellyplusi4-083af200a4b0": 
     {
-        "hex_enabled": false,
-        "short": {
-            "0": ["turn on the shop light"], 
-            "1": ["turn on the garage lights"],
-            "2": ["turn on the workbench fan"],
-            "3": ["turn on the storage room"]
+        "0": {
+            "single_push": ["turn on the shop light"],
+            "long_push": ["turn off the shop light"],
+            "double_push": ["turn off the shop light"]
         },
-        "long": {
-            "0": ["turn off the shop light"], 
-            "1": ["turn off the garage lights"],
-            "2": ["turn off the workbench fan"],
-            "3": ["turn off the storage room"]
+        "1": {
+            "single_push": ["turn on the garage lights"],
+            "long_push": ["turn off the garage lights"],
+            "double_push": ["turn off the garage lights"]
+        },
+        "2": {
+            "single_push": ["turn on the workbench fan"],
+            "long_push": ["turn off the workbench fan"],
+            "double_push": ["turn off the workbench fan"]
+        },
+        "3": {
+            "single_push": ["turn on the storage room"],
+            "long_push": ["turn off the storage room"],
+            "double_push": ["turn off the storage room"]
         }
     },
     "shellyplusi4-083af200fe38": 
     {
-        "hex_enabled": false,
-        "short": {
-            "0": ["turn on the master bath"], 
-            "1": ["turn on the stairway"],
-            "2": ["turn on the shower fan"],
-            "3": ["switch 4"]
+        "0": {
+            "single_push": ["turn on the master bath"],
+            "long_push": ["turn off the master bath"],
+            "double_push": ["turn off the master bath"]
         },
-        "long": {
-            "0": ["turn off the master bath"], 
-            "1": ["turn off the stairway"],
-            "2": ["turn off the shower fan"],
-            "3": ["switch 4"]
+        "1": {
+            "single_push": ["turn on the stairway"],
+            "long_push": ["turn off the stairway"],
+            "double_push": ["turn off the stairway"]
+        },
+        "2": {
+            "single_push": ["turn on the shower fan"],
+            "long_push": ["turn off the shower fan"],
+            "double_push": ["turn off the shower fan"]
+        },
+        "3": {
+            "single_push": ["switch 4"],
+            "long_push": ["switch 4"],
+            "double_push": ["switch 4"]
         }
     },
     "shellyplusi4-083af200a500": 
     {
-        "hex_enabled": false,
-        "short": {
-            "0": ["turn on the gym lamp"],
-            "1": ["turn on the guest bathroom"],
-            "2": ["turn on the library"],
-            "3": ["turn on the garage lights"]
+        "0": {
+            "single_push": ["turn on the gym lamp"],
+            "long_push": ["turn off the gym lamp"],
+            "double_push": ["turn off the gym lamp"]
         },
-        "long": {
-            "0": ["turn off the gym lamp"],
-            "1": ["turn off the guest bathroom"],
-            "2": ["turn off the library"],
-            "3": ["turn off the garage lights"]
+        "1": {
+            "single_push": ["turn on the guest bathroom"],
+            "long_push": ["turn off the guest bathroom"],
+            "double_push": ["turn off the guest bathroom"]
+        },
+        "2": {
+            "single_push": ["turn on the library"],
+            "long_push": ["turn off the library"],
+            "double_push": ["turn off the library"]
+        },
+        "3": {
+            "single_push": ["turn on the garage lights"],
+            "long_push": ["turn off the garage lights"],
+            "double_push": ["turn off the garage lights"]
         }
     },
     "shellyplusi4-083af200d788": 
     {
-        "hex_enabled": false,
-        "short": {
-            "0": ["turn on the living room lamp"],
-            "1": ["turn on the day room fan"],
-            "2": ["turn on the kitchen"],
-            "3": ["turn on the porch light"]
+        "0": {
+            "single_push": ["turn on the living room lamp"],
+            "long_push": ["turn off the living room lamp"],
+            "double_push": ["turn off the living room lamp"]
         },
-        "long": {
-            "0": ["turn off the living room lamp"],
-            "1": ["turn off the day room fan"],
-            "2": ["turn off the kitchen"],
-            "3": ["turn off the porch light"]
+        "1": {
+            "single_push": ["turn on the day room fan"],
+            "long_push": ["turn off the day room fan"],
+            "double_push": ["turn off the day room fan"]
+        },
+        "2": {
+            "single_push": ["turn on the kitchen"],
+            "long_push": ["turn off the kitchen"],
+            "double_push": ["turn off the kitchen"]
+        },
+        "3": {
+            "single_push": ["turn on the porch light"],
+            "long_push": ["turn off the porch light"],
+            "double_push": ["turn off the porch light"]
         }
     },
     "shellyplusi4-083af200fe60": 
     {
-        "hex_enabled": false,
-        "short": {
-            "0": ["turn on the bedroom lamp"],
-            "1": ["turn on the deck rail"],
-            "2": ["turn on the under cabinet"],
-            "3": ["switch 16"]
+        "0": {
+            "single_push": ["turn on the bedroom lamp"],
+            "long_push": ["turn off the bedroom lamp"],
+            "double_push": ["turn off the bedroom lamp"]
         },
-        "long": {
-            "0": ["turn off the bedroom lamp"],
-            "1": ["turn off the deck rail"],
-            "2": ["turn off the under cabinet"],
-            "3": ["switch 16"]
+        "1": {
+            "single_push": ["turn on the deck rail"],
+            "long_push": ["turn off the deck rail"],
+            "double_push": ["turn off the deck rail"]
+        },
+        "2": {
+            "single_push": ["turn on the under cabinet"],
+            "long_push": ["turn off the under cabinet"],
+            "double_push": ["turn off the under cabinet"]
+        },
+        "3": {
+            "single_push": ["turn on the switch 16"],
+            "long_push": ["turn off the switch 16"],
+            "double_push": ["turn off the switch 16"]
         }
     },
     "shellyplusi4-083af200ff20": 
     {
-        "hex_enabled": false,
-        "short": {
-            "0": ["turn on the lamp post"],
-            "1": ["turn on the dining room"],
-            "2": ["switch 19"],
-            "3": ["turn on the bar"]
+        "0": {
+            "single_push": ["turn on the lamp post"],
+            "long_push": ["turn off the lamp post"],
+            "double_push": ["turn off the lamp post"]
         },
-        "long": {
-            "0": ["turn off the lamp post"],
-            "1": ["turn off the dining room"],
-            "2": ["switch 19"],
-            "3": ["turn off the bar"]
+        "1": {
+            "single_push": ["turn on the dining room"],
+            "long_push": ["turn off the dining room"],
+            "double_push": ["turn off the dining room"]
+        },
+        "2": {
+            "single_push": ["turn on the switch 19"],
+            "long_push": ["turn off the switch 19"],
+            "double_push": ["turn off the switch 19"]
+        },
+        "3": {
+            "single_push": ["turn on the bar"],
+            "long_push": ["turn off the bar"],
+            "double_push": ["turn off the bar"]
         }
-    },
-    "shellyplusi4-083af200df3c": 
-    {
-        "hex_enabled": true,
-        "hex_value": {
-            "0": "1",
-            "1": "2",
-            "2": "3",
-            "3": "4"
-        }
-    },
-    "shellyplusi4-083af200b62c": 
-    {
-        "hex_enabled": true,
-        "hex_value": {
-            "0": "5",
-            "1": "6",
-            "2": "7",
-            "3": "8"
-        }
-    },
-    "shellyplusi4-083af200ff40": 
-    {
-        "hex_enabled": true,
-        "hex_value": {
-            "0": "9",
-            "1": "A",
-            "2": "B",
-            "3": "C"
-        }
-    },
-    "shellyplusi4-083af2013d5c": 
-    {
-        "hex_enabled": true,
-        "hex_value": {
-            "0": "D",
-            "1": "E",
-            "2": "F",
-            "3": "0"
-        }
-    },
-    "hex_commands": {
-        "1": ["turn on the game room"],
-        "2": ["turn off the game room"],
-        "3": ["turn on the game tables"],
-        "4": ["turn off the game tables"],
-        "5": ["turn on the bar"],
-        "6": ["turn off the bar"],
-        "7": ["turn on the kitchen"],
-        "8": ["turn off the kitchen"],
-        "9": ["turn on the day room lamp"],
-        "A": ["turn off the day room lamp"],
-        "B": ["turn on the deck rail"],
-        "C": ["turn off the deck rail"],
-        "D": ["turn on the livingroom lamp"],
-        "E": ["turn off the livingroom lamp"],
-        "F": ["turn on the guest bathroom"],
-        "10": ["ignore"],
-        "11": ["report temperature"],
-        "12": ["report temperature"],
-        "13": ["turn on the storage room"],
-        "14": ["turn off the storage room"],
-        "15": ["turn on the laundry room"],
-        "16": ["turn off the laundry room"],
-        "17": ["turn on the garage lights"],
-        "18": ["turn off the garage lights"],
-        "19": ["turn on the workbench fan"],
-        "1A": ["turn off the workbench fan"],
-        "1B": ["turn on the stairway"],
-        "1C": ["turn off the stairway"],
-        "1D": ["turn on the shop light"],
-        "1E": ["turn off the shop light"],
-        "1F": ["ignore"],
-        "20": ["ignore"],
-        "21": ["ignore"],
-        "22": ["ignore"],
-        "23": ["turn on the bedroom lamp"],
-        "24": ["turn off the bedroom lamp"],
-        "25": ["turn on the master bath"],
-        "26": ["turn off the master bath"],
-        "27": ["turn on the shower fan"],
-        "28": ["turn off the shower fan"],
-        "29": ["turn on the hallway"],
-        "2A": ["turn off the hallway"],
-        "2B": ["turn on the whole house fan"],
-        "2C": ["turn off the whole house fan"],
-        "2D": ["ignore"],
-        "2E": ["ignore"],
-        "2F": ["ignore"],
-        "30": ["ignore"],
-        "31": ["open the first shade"],
-        "32": ["open the second shade"],
-        "33": ["open the third shade"],
-        "34": ["open the shades"],
-        "35": ["close the first shade"],
-        "36": ["close the second shade"],
-        "37": ["close the third shade"],
-        "38": ["close the shades"],
-        "39": ["ignore"],
-        "3A": ["ignore"],
-        "3B": ["ignore"],
-        "3C": ["ignore"],
-        "3D": ["ignore"],
-        "3E": ["ignore"],
-        "3F": ["ignore"],
-        "40": ["ignore"],
-        "41": ["turn on the floor fan"],
-        "42": ["turn off the floor fan"],
-        "43": ["turn on the day room fan"],
-        "44": ["turn off the day room fan"],
-        "45": ["ignore"],
-        "46": ["ignore"],
-        "47": ["ignore"],
-        "48": ["ignore"],
-        "49": ["ignore"],
-        "4A": ["ignore"],
-        "4B": ["ignore"],
-        "4C": ["ignore"],
-        "4D": ["ignore"],
-        "4E": ["ignore"],
-        "4F": ["ignore"],
-        "50": ["ignore"],
-        "51": ["ignore"],
-        "52": ["ignore"],
-        "53": ["ignore"],
-        "54": ["ignore"],
-        "55": ["ignore"],
-        "56": ["ignore"],
-        "57": ["ignore"],
-        "58": ["ignore"],
-        "59": ["ignore"],
-        "5A": ["ignore"],
-        "5B": ["ignore"],
-        "5C": ["ignore"],
-        "5D": ["ignore"],
-        "5E": ["ignore"],
-        "5F": ["ignore"],
-        "60": ["ignore"],
-        "61": ["ignore"],
-        "62": ["ignore"],
-        "63": ["ignore"],
-        "64": ["ignore"],
-        "65": ["ignore"],
-        "66": ["ignore"],
-        "67": ["ignore"],
-        "68": ["ignore"],
-        "69": ["ignore"],
-        "6A": ["ignore"],
-        "6B": ["ignore"],
-        "6C": ["ignore"],
-        "6D": ["ignore"],
-        "6E": ["ignore"],
-        "6F": ["ignore"],
-        "70": ["ignore"],
-        "71": ["ignore"],
-        "72": ["ignore"],
-        "73": ["ignore"],
-        "74": ["ignore"],
-        "75": ["ignore"],
-        "76": ["ignore"],
-        "77": ["ignore"],
-        "78": ["ignore"],
-        "79": ["ignore"],
-        "7A": ["ignore"],
-        "7B": ["ignore"],
-        "7C": ["ignore"],
-        "7D": ["ignore"],
-        "7E": ["ignore"],
-        "7F": ["ignore"],
-        "80": ["ignore"],
-        "81": ["ignore"],
-        "82": ["ignore"],
-        "83": ["ignore"],
-        "84": ["ignore"],
-        "85": ["ignore"],
-        "86": ["ignore"],
-        "87": ["ignore"],
-        "88": ["ignore"],
-        "89": ["ignore"],
-        "8A": ["ignore"],
-        "8B": ["ignore"],
-        "8C": ["ignore"],
-        "8D": ["ignore"],
-        "8E": ["ignore"],
-        "8F": ["ignore"],
-        "90": ["ignore"],
-        "91": ["ignore"],
-        "92": ["ignore"],
-        "93": ["ignore"],
-        "94": ["ignore"],
-        "95": ["ignore"],
-        "96": ["ignore"],
-        "97": ["ignore"],
-        "98": ["ignore"],
-        "99": ["ignore"],
-        "9A": ["ignore"],
-        "9B": ["ignore"],
-        "9C": ["ignore"],
-        "9D": ["ignore"],
-        "9E": ["ignore"],
-        "9F": ["ignore"],
-        "A0": ["ignore"],
-        "A1": ["ignore"],
-        "A2": ["ignore"],
-        "A3": ["ignore"],
-        "A4": ["ignore"],
-        "A5": ["ignore"],
-        "A6": ["ignore"],
-        "A7": ["ignore"],
-        "A8": ["ignore"],
-        "A9": ["ignore"],
-        "AA": ["ignore"],
-        "AB": ["ignore"],
-        "AC": ["ignore"],
-        "AD": ["ignore"],
-        "AE": ["ignore"],
-        "AF": ["ignore"],
-        "B0": ["ignore"],
-        "B1": ["ignore"],
-        "B2": ["ignore"],
-        "B3": ["ignore"],
-        "B4": ["ignore"],
-        "B5": ["ignore"],
-        "B6": ["ignore"],
-        "B7": ["ignore"],
-        "B8": ["ignore"],
-        "B9": ["ignore"],
-        "BA": ["ignore"],
-        "BB": ["ignore"],
-        "BC": ["ignore"],
-        "BD": ["ignore"],
-        "BE": ["ignore"],
-        "BF": ["ignore"],
-        "C0": ["ignore"],
-        "C1": ["ignore"],
-        "C2": ["ignore"],
-        "C3": ["ignore"],
-        "C4": ["ignore"],
-        "C5": ["ignore"],
-        "C6": ["ignore"],
-        "C7": ["ignore"],
-        "C8": ["ignore"],
-        "C9": ["ignore"],
-        "CA": ["ignore"],
-        "CB": ["ignore"],
-        "CC": ["ignore"],
-        "CD": ["ignore"],
-        "CE": ["ignore"],
-        "CF": ["ignore"],
-        "D0": ["ignore"],
-        "D1": ["ignore"],
-        "D2": ["ignore"],
-        "D3": ["ignore"],
-        "D4": ["ignore"],
-        "D5": ["ignore"],
-        "D6": ["ignore"],
-        "D7": ["ignore"],
-        "D8": ["ignore"],
-        "D9": ["ignore"],
-        "DA": ["ignore"],
-        "DB": ["ignore"],
-        "DC": ["ignore"],
-        "DD": ["ignore"],
-        "DE": ["ignore"],
-        "DF": ["ignore"],
-        "E0": ["ignore"],
-        "E1": ["ignore"],
-        "E2": ["ignore"],
-        "E3": ["ignore"],
-        "E4": ["ignore"],
-        "E5": ["ignore"],
-        "E6": ["ignore"],
-        "E7": ["ignore"],
-        "E8": ["ignore"],
-        "E9": ["ignore"],
-        "EA": ["ignore"],
-        "EB": ["ignore"],
-        "EC": ["ignore"],
-        "ED": ["ignore"],
-        "EE": ["ignore"],
-        "EF": ["ignore"],
-        "F0": ["ignore"],
-        "F1": ["turn on cabinet light"],
-        "F2": ["turn off cabinet light"],
-        "F3": ["turn on cabinet projector"],
-        "F4": ["turn off cabinet projector"],
-        "F5": ["ignore"],
-        "F6": ["ignore"],
-        "F7": ["ignore"],
-        "F8": ["ignore"],
-        "F9": ["ignore"],
-        "FA": ["ignore"],
-        "FB": ["ignore"],
-        "FC": ["ignore"],
-        "FD": ["ignore"],
-        "FE": ["ignore"],
-        "FF": ["ignore"]
     }
 }
