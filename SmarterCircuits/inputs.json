@@ -2,7 +2,7 @@
     "shellyplusi4-083af200a4b0": 
     {
         "0": {
-            "single_push": ["toggle the shop light"],
+            "single_push": ["toggle the studio light"],
             "long_push": ["turn off the shop light"],
             "double_push": ["turn off the shop light"]
         },
