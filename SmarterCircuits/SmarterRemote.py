@@ -16,6 +16,7 @@ class RemoteHandler:
         button_id = message.source + "-" + message.circuit_id
         if button_id not in self.config["buttons"].keys():
             self.handle_non_remote_command(message)
+            return
         if message.event != "btn_up":
             return
         self.load_config()
