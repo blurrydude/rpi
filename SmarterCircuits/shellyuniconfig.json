@@ -2,23 +2,23 @@
     "C45BBE5FE891": {
         "button_a": {
             "short": { 
-                "default": ["turn on the master bathroom"]
+                "default": ["toggle master bathroom"]
             },
             "long": { 
-                "default": ["turn off the master bathroom"] 
+                "default": ["toggle shower fan"] 
             }
         },
         "button_b": {
             "short": { 
-                "default": ["turn on the bedroom lamp"]
+                "default": ["toggle bedroom lamp"]
             },
             "long": { 
-                "default": ["turn off the bedroom lamp"]
+                "default": ["toggle floor fan"]
             }
         },
         "button_c": {
             "short": { 
-                "default": ["report temperature"]
+                "default": ["toggle whole house fan"]
             },
             "long": { 
                 "default": ["switch to night mode"]
