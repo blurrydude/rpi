@@ -180,6 +180,7 @@ class SmarterCircuitsMCP:
         for circuit in self.config.circuits:
             power = power + circuit.status.relay.power
         data = data + "System Power Usage: "+str(power)+" W\\nCurrent Mode: " + self.mode.upper()
+        self.send_discord_message(self.discord_house_room, data)
     
     def log_temp_data(self):
         if self.circuit_authority is False:
