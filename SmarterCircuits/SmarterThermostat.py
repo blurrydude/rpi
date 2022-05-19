@@ -164,7 +164,7 @@ class Thermostat:
             self.settings_loaded = True
             
     def log(self, message):
-        text = "[" + self.room + "] " + message + " ("+str(self.state.temperature)+"F "+str(self.state.humidity)+"%)"
+        text = "[" + self.room + "] " + message + " ("+str(round(self.state.temperature,2))+"F "+str(round(self.state.humidity,2))+"%)"
         SmarterLog.log("SmarterThermostat", text)
         self.mcp.send_discord_message(self.mcp.discord_house_room, text)
     
