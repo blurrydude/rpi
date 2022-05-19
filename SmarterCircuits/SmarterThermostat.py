@@ -164,7 +164,9 @@ class Thermostat:
             self.settings_loaded = True
             
     def log(self, message):
-        SmarterLog.log("SmarterThermostat", "[" + self.room + "] " + message)
+        text = "[" + self.room + "] " + message
+        SmarterLog.log("SmarterThermostat", text)
+        self.mcp.send_discord_message(self.mcp.discord_house_room, text)
     
     def set_circuit(self, circuit_pin, state):
         if state is False:
