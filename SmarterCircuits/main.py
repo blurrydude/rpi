@@ -25,6 +25,7 @@ import textwrap
 
 class SmarterCircuitsMCP:
     def __init__(self, name, ip_address, model):
+        self.discord_house_room = "976692334920077342"
         self.id = 0
         self.name = name
         self.model = model
@@ -668,14 +669,15 @@ class SmarterCircuitsMCP:
             self.handle_motion(sensor)
 
     def handle_motion(self, sensor:MotionSensor):
-        self.log("SmarterCircuitsMCP","Motion detected: "+sensor.name)
         if self.circuit_authority is not True:
             return
         if sensor.id in self.motion_detected:
             return
         if sensor.status.motion is not True:
             return
-            
+        
+        self.log("SmarterCircuitsMCP","Motion detected: "+sensor.name)
+        self.send_discord_message(self.discord_house_room,"Motion detected: "+sensor.name)
         self.motion_detected.append(sensor.id)
         for command in sensor.commands:
             if self.conditions_met(command.conditions) is True:
@@ -809,6 +811,7 @@ class SmarterCircuitsMCP:
         self.log("SmarterCircuitsMCP","mode set to "+self.mode)
         if self.circuit_authority is not True:
             return
+        self.send_discord_message(self.discord_house_room,"mode set to "+self.mode)
         for circuit in self.config.circuits:
             if self.mode.lower() in (string.lower() for string in circuit.on_modes):
                 self.execute_command("turn on "+circuit.name.lower())
@@ -823,6 +826,7 @@ class SmarterCircuitsMCP:
         if sensor.status.battery < 50:
             self.log("BATTERY STATUS","Battery Low: "+sensor.id+"("+sensor.name+")")
             if self.circuit_authority is True:
+                self.send_discord_message(self.discord_house_room,"Battery Low: "+sensor.id+" ("+sensor.name+") @ "+str(sensor.status.battery)+"%")
                 self.mqtt.publish("notifications","Battery at "+str(sensor.status.battery)+"%\\n"+sensor.id+"\\n("+sensor.name+")")
 
     def conditions_met(self, conditions):
@@ -885,6 +889,9 @@ class SmarterCircuitsMCP:
                     return False
         return True
 
+    def send_discord_message(self, room, message):
+        self.mqtt.publish("discord/out/"+room,message)
+
     def send_api_command(self, command):
         #TODO: remove API altogether from system
         self.log("SmarterCircuitsMCP","sending command: "+command)
@@ -901,7 +908,9 @@ class SmarterCircuitsMCP:
         command = command.lower()
         if " bot says " in command:
             room = command.split(' ')[0]
-            self.mqtt.publish("discord/out/"+room,"executing command: "+command)
+            command = command.split(' !c ')[1]
+            self.send_discord_message(room,"executing bot command: "+command)
+        self.send_discord_message(self.discord_house_room,"executing command: "+command)
         com = "off"
         command_list = []
         if "show status" in command:
