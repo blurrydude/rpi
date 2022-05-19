@@ -899,6 +899,9 @@ class SmarterCircuitsMCP:
             return
         self.log("SmarterCircuitsMCP","executing command: "+command)
         command = command.lower()
+        if " bot says " in command:
+            room = command.split(' ')[0]
+            self.mqtt.publish("discord/out/"+room,"executing command: "+command)
         com = "off"
         command_list = []
         if "show status" in command:
