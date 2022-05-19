@@ -26,6 +26,7 @@ import textwrap
 class SmarterCircuitsMCP:
     def __init__(self, name, ip_address, model):
         self.discord_house_room = "976692334920077342"
+        self.discord_debug_room = "922927575884505119"
         self.id = 0
         self.name = name
         self.model = model
@@ -100,7 +101,7 @@ class SmarterCircuitsMCP:
         #     time.sleep(1)
         # self.stop()
         self.web_server.start()
-        self.send_discord_message(self.discord_house_room, self.name+" is now started as"+", ".join(roles)+".")
+        self.send_discord_message(self.discord_debug_room, self.name+" is now started as"+", ".join(roles)+".")
     
     def log(self, origin, message):
         self.debug(origin+": "+message)
@@ -134,7 +135,7 @@ class SmarterCircuitsMCP:
             return
         self.source_modified = modified
         self.log("SmarterCircuitsMCP","restarting due to source modification: "+str(self.source_modified))
-        self.send_discord_message(self.discord_house_room, self.name+" restarting due to source modification: "+str(self.source_modified))
+        self.send_discord_message(self.discord_debug_room, self.name+" restarting due to source modification: "+str(self.source_modified))
         self.stop(True)
     
     def main_loop(self):
@@ -922,8 +923,8 @@ class SmarterCircuitsMCP:
         if " bot says " in command:
             room = command.split(' ')[0]
             command = command.split(' !c ')[1]
-            self.send_discord_message(room,"executing bot command: "+command)
-        self.send_discord_message(self.discord_house_room,"executing command: "+command)
+            self.send_discord_message(room,"executing command: "+command)
+        self.send_discord_message(self.discord_debug_room,"executing command: "+command)
         com = "off"
         command_list = []
         if "show status" in command:
