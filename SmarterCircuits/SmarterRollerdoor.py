@@ -57,6 +57,11 @@ class Rollerdoor:
         p.digital_write(bay,0)
 
     def state_change(self):
+        state = "closed"
+        if self.door_open[1] is True:
+            state = "open"
+
+        self.mcp.send_discord_message(self.mcp.discord_house_room,"Shop door "+state)
         self.mcp.mqtt.publish("smarter_circuits/rollerdoor/"+self.name+"/state",json.dumps(self.door_open))
 
     def set_state(self, bay, state):
