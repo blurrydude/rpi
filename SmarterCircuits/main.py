@@ -658,9 +658,8 @@ class SmarterCircuitsMCP:
 
         if subtopic == "sensor/humidity":
             sensor.status.humidity = float(message)
-            self.send_discord_message(self.discord_house_room, sensor.name+" humidity is "+message+" %")
             if self.circuit_authority is True:
-                self.send_discord_message(self.discord_house_room, sensor.name+" temperature is "+message+" F")
+                self.send_discord_message(self.discord_house_room, sensor.name+" humidity is "+message+" %")
 
     def handle_shelly_motion_message(self, id, subtopic, message):
         sensor = self.config.motion_sensors[id]
