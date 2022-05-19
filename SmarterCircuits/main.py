@@ -70,6 +70,7 @@ class SmarterCircuitsMCP:
 
     def start(self):
         self.log("SmarterCircuitsMCP","starting...")
+        roles = []
         self.running = True
         self.config = SmarterConfiguration.SmarterConfig(self)
         while self.config.loaded is False:
@@ -79,15 +80,19 @@ class SmarterCircuitsMCP:
         _thread.start_new_thread(self.main_loop, ())
         self.api = SmarterAPI(self)
         if self.config.thermostat is True:
+            roles.append("thermostat")
             self.log("SmarterCircuitsMCP","instantiating thermostat...")
             self.thermostat = Thermostat(self)
         if self.config.touchscreen is True:
+            roles.append("touchscreen")
             self.log("SmarterCircuitsMCP","instantiating touchscreen...")
             self.touchscreen = Touchscreen(self)
         if self.config.rollershade is True:
+            roles.append("rollershade")
             self.log("SmarterCircuitsMCP","instantiating rollershade...")
             self.rollershade = Rollershade(self,self.name)
         if self.config.rollerdoor is True:
+            roles.append("rollerdoor")
             self.log("SmarterCircuitsMCP","instantiating rollerdoor...")
             self.rollerdoor = Rollerdoor(self,self.name)
         #else:
@@ -95,6 +100,7 @@ class SmarterCircuitsMCP:
         #     time.sleep(1)
         # self.stop()
         self.web_server.start()
+        self.send_discord_message(self.discord_house_room, self.name+" is now started as"+", ".join(roles)+".")
     
     def log(self, origin, message):
         self.debug(origin+": "+message)
@@ -128,6 +134,7 @@ class SmarterCircuitsMCP:
             return
         self.source_modified = modified
         self.log("SmarterCircuitsMCP","restarting due to source modification: "+str(self.source_modified))
+        self.send_discord_message(self.discord_house_room, self.name+" restarting due to source modification: "+str(self.source_modified))
         self.stop(True)
     
     def main_loop(self):
@@ -292,6 +299,7 @@ class SmarterCircuitsMCP:
                 self.log("SmarterCircuitsMCP","I am circuit authority")
                 self.circuit_authority = True
                 self.mqtt.publish("notifications",self.name+"\\nCircuit Authority")
+                self.send_discord_message(self.discord_house_room, self.name+" is now the circuit authority.")
                 try:
                     requests.get("https://api.idkline.com/circuitauthority/"+self.ip_address)
                     self.log("SmarterCircuitsMCP","Told the API I am circuit authority")
@@ -304,13 +312,13 @@ class SmarterCircuitsMCP:
         self.log("SmarterCircuitsMCP","stopping...")
         if restart is True:
             self.log("SmarterCircuitsMCP","restarting...")
+            self.send_discord_message(self.discord_house_room, self.name+" is restarting.")
         self.running = False
         self.config.stop()
         self.mqtt.stop()
         time.sleep(5)
         self.log("SmarterCircuitsMCP","stopped.")
         if restart is True:
-            self.log("SmarterCircuitsMCP","restarting...")
             os.system('sudo reboot now')
         exit()
     
