@@ -2,7 +2,7 @@
     "C45BBE5FE891": {
         "button_a": {
             "short": { 
-                "default": ["toggle game room"]
+                "default": ["toggle master bath"]
             },
             "long": { 
                 "default": ["toggle shower fan"] 
