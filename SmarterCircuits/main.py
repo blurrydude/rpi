@@ -268,6 +268,7 @@ class SmarterCircuitsMCP:
                     donothing = True
                 else:
                     self.log("SmarterCircuitsMCP","time command: "+tc["command"])
+                    self.send_discord_message(self.discord_house_room,"Executing time command: "+tc["command"])
                     self.execute_command(tc["command"])
 
     def time_check(self, now, check):
@@ -694,7 +695,7 @@ class SmarterCircuitsMCP:
             return
         
         self.log("SmarterCircuitsMCP","Motion detected: "+sensor.name)
-        self.send_discord_message(self.discord_house_room,"Motion detected: "+sensor.name)
+        self.send_discord_message(self.discord_house_room,"Motion detected: "+sensor.name+" (batt "+str(sensor.status.battery)+"%)")
         self.motion_detected.append(sensor.id)
         for command in sensor.commands:
             if self.conditions_met(command.conditions) is True:

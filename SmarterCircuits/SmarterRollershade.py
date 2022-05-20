@@ -70,6 +70,22 @@ class Rollershade:
 
     def state_change(self):
         self.mcp.mqtt.publish("smarter_circuits/rollershade/"+self.name+"/state",json.dumps(self.shade_up))
+        data = "Left shade "
+        if self.shade_up[0] is True:
+            data = data + "up"
+        else:
+            data = data + "down"
+        data = data + "\nCenter shade "
+        if self.shade_up[1] is True:
+            data = data + "up"
+        else:
+            data = data + "down"
+        data = data + "\nRight shade "
+        if self.shade_up[2] is True:
+            data = data + "up"
+        else:
+            data = data + "down"
+        self.mcp.send_discord_message(self.mcp.discord_house_room,data)
     
     def close_shade(self, addy):
         if self.moving[addy] is True:
