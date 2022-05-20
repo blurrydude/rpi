@@ -172,14 +172,14 @@ class SmarterCircuitsMCP:
         data = ""
         for thermokey in self.thermostats.keys():
             thermo = self.thermostats[thermokey]
-            data = data + thermo.room.upper() + ": " + str(round(thermo.state.temperature,1)) + " F " + str(round(thermo.state.humidity,1)) +"%\\n"
+            data = data + thermo.room.upper() + ": " + str(round(thermo.state.temperature,1)) + " F " + str(round(thermo.state.humidity,1)) +"%\n"
         for sensor_id in self.config.ht_sensors.keys():
             sensor = self.config.ht_sensors[sensor_id]
-            data = data + sensor.name.upper() + ": " + str(round(sensor.status.temperature,1)) + " F " + str(round(sensor.status.humidity,1)) +"%\\n"
+            data = data + sensor.name.upper() + ": " + str(round(sensor.status.temperature,1)) + " F " + str(round(sensor.status.humidity,1)) +"%\n"
         power = 0.0
         for circuit in self.config.circuits:
             power = power + circuit.status.relay.power
-        data = data + "System Power Usage: "+str(power)+" W\\nCurrent Mode: " + self.mode.upper()
+        data = data + "System Power Usage: "+str(power)+" W\nCurrent Mode: " + self.mode.upper()
         self.send_discord_message(self.discord_house_room, data)
     
     def log_temp_data(self):
