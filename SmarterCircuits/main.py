@@ -179,6 +179,8 @@ class SmarterCircuitsMCP:
         power = 0.0
         for circuit in self.config.circuits:
             power = power + circuit.status.relay.power
+            if circuit.status.relay.power > 0:
+                data = data + circuit.name +": "+str(circuit.status.relay.power) + " W\n"
         data = data + "System Power Usage: "+str(power)+" W\nCurrent Mode: " + self.mode.upper()
         self.send_discord_message(self.discord_house_room, data)
     
