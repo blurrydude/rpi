@@ -655,6 +655,8 @@ class SmarterCircuitsMCP:
             battery = int(message)
             if sensor.status.battery != battery:
                 sensor.status.battery = battery
+                if self.circuit_authority is True:
+                    self.send_discord_message(self.discord_house_room, sensor.name+" battery level is "+sensor.status.battery+" %")
                 self.battery_status_check(sensor)
         if subtopic == "sensor/temperature":
             sensor.status.temperature = float(message)
