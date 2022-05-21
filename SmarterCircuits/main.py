@@ -1031,6 +1031,14 @@ class SmarterCircuitsMCP:
             room = s[1]
             setting = s[2]
             command_list.append({"t":"smarter_circuits/thermosettings/"+room,"c":setting})
+        elif "peers" in command:
+            data = "Peers:\n"
+            for peer in self.peers:
+                data = data + peer.name + " (" + peer.ip_address.split('.')[-1] + ") " + peer.model + " "
+                if peer.circuit_authority is True:
+                    data = data + "circuit authority"
+                data = data + "\n"
+            self.send_discord_message(self.discord_house_room,data)
 
         for cmd in command_list:
             self.mqtt.publish(cmd["t"],cmd["c"])
