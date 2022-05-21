@@ -1040,12 +1040,21 @@ class SmarterCircuitsMCP:
                 data = data + "\n"
             self.send_discord_message(self.discord_house_room,data)
         elif "circuits" in command:
-            data = "Peers:\n"
+            data = "Circuits:\n"
             for c in self.config.circuits:
                 data = data + c.name + " (" + c.ip_address.split('.')[-1] + ") " + str(c.status.relay.power) + "W "
                 if c.status.relay.on is True:
                     data = data + "on"
                 data = data + "\n"
+            self.send_discord_message(self.discord_house_room,data)
+        elif "sensors" in command:
+            data = "Sensors:\n"
+            for sensor_id in self.config.motion_sensors.keys():
+                sensor = self.config.motion_sensors[sensor_id]
+                data = data + sensor.name + " motion (" + sensor.ip_address.split('.')[-1] + ") batt: " + str(sensor.status.battery) + "% lux: " + str(sensor.status.lux) + " timestamp: " + str(sensor.status.timestamp) + "\n"
+            for sensor_id in self.config.ht_sensors.keys():
+                sensor = self.config.ht_sensors[sensor_id]
+                data = data + sensor.name + " HT " + str(round(sensor.status.temperature,1)) + " F " + str(round(sensor.status.humidity,1)) +"% (batt "+str(round(sensor.status.battery,1))+"%)\n"
             self.send_discord_message(self.discord_house_room,data)
 
         for cmd in command_list:
