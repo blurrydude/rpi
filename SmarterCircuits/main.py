@@ -1024,7 +1024,7 @@ class SmarterCircuitsMCP:
             val = int(s[len(s)-1])
             for thermokey in self.thermostats.keys():
                 thermo = self.thermostats[thermokey]
-                command_list.append({"t":"smarter_circuits/thermosettings/"+thermo.room.lower(),"c":"temperature_high_setting"+str(val-1)})
+                command_list.append({"t":"smarter_circuits/thermosettings/"+thermo.room.lower(),"c":"temperature_high_setting"+str(val+1)})
                 command_list.append({"t":"smarter_circuits/thermosettings/"+thermo.room.lower(),"c":"temperature_low_setting"+str(val-1)})
         elif "set" in command:
             s = command.split(' ')
