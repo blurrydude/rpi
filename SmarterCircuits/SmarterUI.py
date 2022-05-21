@@ -1,4 +1,9 @@
-import tkinter as tk
+try:
+    import tkinter as tk
+    libraries_available = True
+except:
+    libraries_available = False
+
 class SmartButton:
     def __init__(self, row, col, text, func, target, height, fontname, fontsize, bg, fg, padx, pady):
         self.text = tk.StringVar()

@@ -1032,34 +1032,51 @@ class SmarterCircuitsMCP:
             setting = s[2]
             command_list.append({"t":"smarter_circuits/thermosettings/"+room,"c":setting})
         elif "peers" in command:
-            data = "Peers:\n"
-            for peer in self.peers:
-                data = data + peer.name + " (" + peer.ip_address.split('.')[-1] + ") " + peer.model + " "
-                if peer.circuit_authority is True:
-                    data = data + "circuit authority"
-                data = data + "\n"
+            data = self.peer_report()
             self.send_discord_message(self.discord_house_room,data)
         elif "circuits" in command:
-            data = "Circuits:\n"
-            for c in self.config.circuits:
-                data = data + c.name + " (" + c.ip_address.split('.')[-1] + ") " + str(c.status.relay.power) + "W "
-                if c.status.relay.on is True:
-                    data = data + "on"
-                data = data + "\n"
+            data = self.circuit_report()
             self.send_discord_message(self.discord_house_room,data)
         elif "sensors" in command:
-            data = "Sensors:\n"
-            for sensor_id in self.config.motion_sensors.keys():
-                sensor = self.config.motion_sensors[sensor_id]
-                data = data + sensor.name + " motion (" + sensor.ip_address.split('.')[-1] + ") batt: " + str(sensor.status.battery) + "% lux: " + str(sensor.status.lux) + " timestamp: " + str(sensor.status.timestamp) + "\n"
-            for sensor_id in self.config.ht_sensors.keys():
-                sensor = self.config.ht_sensors[sensor_id]
-                data = data + sensor.name + " HT " + str(round(sensor.status.temperature,1)) + " F " + str(round(sensor.status.humidity,1)) +"% (batt "+str(round(sensor.status.battery,1))+"%)\n"
+            data = self.sensor_report()
+            self.send_discord_message(self.discord_house_room,data)
+        elif "full report" in command:
+            data = self.peer_report()
+            data = data + "\n" + self.circuit_report()
+            data = data + "\n" + self.sensor_report()
             self.send_discord_message(self.discord_house_room,data)
 
         for cmd in command_list:
             self.mqtt.publish(cmd["t"],cmd["c"])
     
+    def peer_report(self):
+        data = "Peers:\n"
+        for peer in self.peers:
+            data = data + peer.name + " (" + peer.ip_address.split('.')[-1] + ") " + peer.model + " "
+            if peer.circuit_authority is True:
+                data = data + "circuit authority"
+            data = data + "\n"
+        return data
+
+    def circuit_report(self):
+        data = "Circuits:\n"
+        for c in self.config.circuits:
+            data = data + c.name + " (" + c.ip_address.split('.')[-1] + ") " + str(c.status.relay.power) + "W "
+            if c.status.relay.on is True:
+                data = data + "on"
+            data = data + "\n"
+        return data
+    
+    def sensor_report(self):
+        data = "Sensors:\n"
+        for sensor_id in self.config.motion_sensors.keys():
+            sensor = self.config.motion_sensors[sensor_id]
+            data = data + sensor.name + " motion (" + sensor.ip_address.split('.')[-1] + ") batt: " + str(sensor.status.battery) + "% lux: " + str(sensor.status.lux) + " timestamp: " + str(sensor.status.timestamp) + "\n"
+        for sensor_id in self.config.ht_sensors.keys():
+            sensor = self.config.ht_sensors[sensor_id]
+            data = data + sensor.name + " HT " + str(round(sensor.status.temperature,1)) + " F " + str(round(sensor.status.humidity,1)) +"% (batt "+str(round(sensor.status.battery,1))+"%)\n"
+        return data
+
     def set_command(self, args):
         if args[1] == "high":
             val = int(args[len(args)-1])

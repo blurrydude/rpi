@@ -443,7 +443,7 @@ class Thermostat:
 
     def send_command(self, command):
         self.log("sending command: "+command)
-        self.mcp.execute_command(command)
+        self.mcp.mqtt.publish("smarter_circuits/command",command)
 
     def report(self, to_log = False):
         state = {
