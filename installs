@@ -42,3 +42,7 @@ git clone https://github.com/goodtft/LCD-show.git
 chmod -R 755 LCD-show
 cd LCD-show/
 sudo ./LCD5-show
+
+* * * * * python3 /home/pi/rpi/patcher.py
+#0 0 * * * sudo reboot now
+@reboot sudo python3 /home/pi/rpi/SmarterCircuits/main.py
