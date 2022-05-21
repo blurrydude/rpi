@@ -1039,6 +1039,14 @@ class SmarterCircuitsMCP:
                     data = data + "circuit authority"
                 data = data + "\n"
             self.send_discord_message(self.discord_house_room,data)
+        elif "circuits" in command:
+            data = "Peers:\n"
+            for c in self.config.circuits:
+                data = data + c.name + " (" + c.ip_address.split('.')[-1] + ") " + str(c.status.relay.power) + "W "
+                if c.status.relay.on is True:
+                    data = data + "on"
+                data = data + "\n"
+            self.send_discord_message(self.discord_house_room,data)
 
         for cmd in command_list:
             self.mqtt.publish(cmd["t"],cmd["c"])
