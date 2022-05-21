@@ -1026,9 +1026,19 @@ class SmarterCircuitsMCP:
                 thermo = self.thermostats[thermokey]
                 command_list.append({"t":"smarter_circuits/thermosettings/"+thermo.room.lower(),"c":"temperature_high_setting"+str(val-1)})
                 command_list.append({"t":"smarter_circuits/thermosettings/"+thermo.room.lower(),"c":"temperature_low_setting"+str(val-1)})
+        elif "set" in command:
+            s = command.split(' ')
+            room = s[1]
+            setting = s[2]
+            command_list.append({"t":"smarter_circuits/thermosettings/"+room,"c":setting})
 
         for cmd in command_list:
             self.mqtt.publish(cmd["t"],cmd["c"])
+    
+    def set_command(self, args):
+        if args[1] == "high":
+            val = int(args[len(args)-1])
+
 
     def received_peer_data(self, peer):
         self.last_seen[peer["id"]] = datetime.now()
