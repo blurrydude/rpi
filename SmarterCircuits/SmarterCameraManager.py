@@ -2,7 +2,7 @@ import time
 from datetime import datetime, timedelta
 import traceback
 
-from SmarterCircuits.main import SmarterCircuitsMCP
+from main import SmarterCircuitsMCP
 try:
     import cv2
 except:
