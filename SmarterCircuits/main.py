@@ -743,6 +743,11 @@ class SmarterCircuitsMCP:
 
     def handle_smarter_circuits_message(self, topic, message):
         #print(topic+": "+message)
+        if topic == "smarter_circuits/restart" and message == self.name:
+            self.log("SmarterCircuitsMCP","restarting by command")
+            self.send_discord_message(self.discord_debug_room, self.name+" restarting by command")
+            self.stop(True)
+            return
         if "smarter_circuits/secrets" in topic:
             filepath = self.source_dir+"secrets.json"
             self.mqtt.publish("smarter_circuits/info/"+self.name,"received secrets")
