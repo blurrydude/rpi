@@ -43,9 +43,9 @@ class CameraManager:
         try:
             self.mcp.send_discord_message(self.mcp.discord_debug_room,"grabbing still from camera "+str(camnum))
             cap = self.cameras[camnum]
-            for i in range(5):
-                cap.read()
-                time.sleep(0.1)
+            now = datetime.now()
+            while(now > datetime.now() - timedelta(seconds=2)):
+                ref, frame = cap.read()
             success, image = cap.read()
             res = [(1920, 1080), (640, 480), (640, 480)]
             image = cv2.putText(image, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), (50,res[camnum][1]-50), self.font, self.fontScale, self.color, self.thickness, cv2.LINE_AA)
