@@ -25,12 +25,14 @@ class CameraManager:
         self.thickness = 2
     
     def capture(self, camnum, seconds):
-        self.mcp.send_discord_message(self.mcp.discord_debug_room,"capturing on camera "+str(camnum))
-        cap = self.cameras[camnum]
-        now = datetime.now()
-        nowstr = now.strftime("%Y%m%d%H%M")
         fps = [ 30.0, 15.0, 15.0 ]
         res = [(1920, 1080), (640, 480), (640, 480)]
+        self.mcp.send_discord_message(self.mcp.discord_debug_room,"capturing on camera "+str(camnum))
+        cap = self.cameras[camnum]
+        cap.set(cv2.CAP_PROP_FRAME_WIDTH, res[camnum][0])
+        cap.set(cv2.CAP_PROP_FRAME_HEIGHT, res[camnum][1])
+        now = datetime.now()
+        nowstr = now.strftime("%Y%m%d%H%M")
         os.remove("output_"+str(camnum)+".avi")
         out = cv2.VideoWriter("output_"+str(camnum)+".avi", cv2.VideoWriter_fourcc(*'XVID'), fps[camnum], res[camnum])
         while(now > datetime.now() - timedelta(seconds=seconds)):
