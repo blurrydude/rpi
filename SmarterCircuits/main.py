@@ -175,10 +175,7 @@ class SmarterCircuitsMCP:
             except Exception as e: 
                 error = str(e)
                 tb = traceback.format_exc()
-                self.log("SmarterCircuitsMCP","main_loop error: "+error)
-                self.log("SmarterCircuitsMCP","main_loop traceback: "+tb)
-                self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
-                self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
+                self.handle_exception(error, tb)
             time.sleep(1)
     
     def send_system_state(self):
@@ -214,10 +211,7 @@ class SmarterCircuitsMCP:
         except Exception as e: 
             error = str(e)
             tb = traceback.format_exc()
-            self.log("SmarterCircuitsMCP","log_temp_data error: "+error)
-            self.log("SmarterCircuitsMCP","log_temp_data traceback: "+tb)
-            self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
-            self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
+            self.handle_exception(error, tb)
 
     def binarize(self, b):
         if b is True:
@@ -246,10 +240,7 @@ class SmarterCircuitsMCP:
         except Exception as e: 
             error = str(e)
             tb = traceback.format_exc()
-            self.log("SmarterCircuitsMCP","do_log_dump error: "+error)
-            self.log("SmarterCircuitsMCP","do_log_dump traceback: "+tb)
-            self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
-            self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
+            self.handle_exception(error, tb)
 
     def check_solar_data(self, day):
         if day != self.last_day:
@@ -357,10 +348,7 @@ class SmarterCircuitsMCP:
         except Exception as e: 
             error = str(e)
             tb = traceback.format_exc()
-            self.log("SmarterCircuitsMCP","main_loop error: "+error)
-            self.log("SmarterCircuitsMCP","main_loop traceback: "+tb)
-            self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
-            self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
+            self.handle_exception(error, tb)
     
     def handle_camera_message(self, topic, text):
         if self.config.cam_manager is False:
@@ -373,10 +361,7 @@ class SmarterCircuitsMCP:
         except Exception as e: 
             error = str(e)
             tb = traceback.format_exc()
-            self.log("SmarterCircuitsMCP","main_loop error: "+error)
-            self.log("SmarterCircuitsMCP","main_loop traceback: "+tb)
-            self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
-            self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
+            self.handle_exception(error, tb)
 
     
     def handle_remote_menu(self, text):
@@ -398,10 +383,7 @@ class SmarterCircuitsMCP:
         except Exception as e: 
             error = str(e)
             tb = traceback.format_exc()
-            self.log("SmarterCircuitsMCP","handle_remote_menu error: "+error)
-            self.log("SmarterCircuitsMCP","handle_remote_menu traceback: "+tb)
-            self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
-            self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
+            self.handle_exception(error, tb)
 
     def handle_shelly_message(self, topic, message):
         #print(topic+": "+message)
@@ -473,159 +455,6 @@ class SmarterCircuitsMCP:
         if self.circuit_authority is False:
             return
         self.remote.handle_i4_message(message)
-        # iconfigs = json.load(open(self.source_dir+"inputs.json"))
-        # self.mqtt.publish("debug",message)
-        # data = json.loads(message)
-
-        # src = data["src"]
-        # evnt = data["params"]["events"][0]["event"]
-        # cid = str(data["params"]["events"][0]["id"])
-        # iconfig = iconfigs[src]
-        # commands = []
-        # if iconfig["hex_enabled"] is True and evnt == "btn_up":
-        #     d = iconfig["hex_value"][cid]
-        #     if self.hex_waiting is False:
-        #         if d == "0":
-        #             self.hex_waiting = True
-        #             self.mqtt.publish("notifications","Waiting for hex input")
-        #             self.hex_command = ""
-        #             return
-        #         else:
-        #             m = "HEX: "+d + " execute"
-        #             commands = iconfigs["hex_commands"][d]
-        #             for command in commands:
-        #                 m = m + "\\n" + command
-        #             self.mqtt.publish("notifications",m)
-        #     elif len(self.hex_command) < 2:
-        #         self.hex_command = self.hex_command + iconfig["hex_value"][cid]
-        #         if self.hex_search is True:
-        #             self.mqtt.publish("notifications","HEX Search: "+self.hex_command)
-        #         else:
-        #             self.mqtt.publish("notifications","HEX: "+self.hex_command)
-        #     if self.hex_command == "00":
-        #         self.hex_search = True
-        #         self.hex_command = ""
-        #         self.mqtt.publish("notifications","HEX Search: "+self.hex_command)
-        #         return
-        #     if self.hex_command == "01":
-        #         self.hex_waiting = False
-        #         self.hex_command = ""
-        #         self.mqtt.publish("notifications","Single Hex Commands")
-        #         m = ""
-        #         for hex in iconfigs["hex_commands"].keys():
-        #             if len(hex) > 1:
-        #                 continue
-        #             coms = iconfigs["hex_commands"][hex]
-        #             m = m + hex.replace('A','10').replace('B','11').replace('C','12').replace('D','13').replace('E','14').replace('F','15') + ": "
-        #             for com in coms:
-        #                 m = m + com + "\\n"
-        #         m = m + "16: Two Button Input Mode"
-        #         self.mqtt.publish("notifications",m)
-        #         return
-        #     if self.hex_command == "02":
-        #         self.hex_waiting = False
-        #         self.hex_command = ""
-        #         self.mqtt.publish("notifications","Hex Commands")
-        #         m = ""
-        #         for hex in iconfigs["hex_commands"].keys():
-        #             coms = iconfigs["hex_commands"][hex]
-        #             if len(hex) == 2:
-        #                 hex = hex[0] + "-" + hex[1]
-        #             m = m + hex.replace('0','16').replace('A','10').replace('B','11').replace('C','12').replace('D','13').replace('E','14').replace('F','15') + ": "
-        #             for com in coms:
-        #                 m = m + com + "\\n"
-        #         self.mqtt.publish("notifications",m)
-        #         return
-        #     if self.hex_command == "03":
-        #         self.hex_waiting = True
-        #         self.hex_input = True
-        #         self.hex_command = ""
-        #         self.hex_input_mode = "lowtemp"
-        #         self.mqtt.publish("notifications","Set Low Temperature")
-        #         return
-        #     if self.hex_command == "04":
-        #         self.hex_waiting = True
-        #         self.hex_input = True
-        #         self.hex_command = ""
-        #         self.hex_input_mode = "hightemp"
-        #         self.mqtt.publish("notifications","Set High Temperature")
-        #         return
-        #     if self.hex_command == "05":
-        #         self.hex_waiting = False
-        #         self.hex_input = False
-        #         self.hex_command = ""
-        #         m = ""
-        #         for circuit in self.config.circuits:
-        #             m = m + circuit.name + ": " + str(circuit.status.relay.power) + "W\\n"
-        #         self.mqtt.publish("notifications",m)
-        #         return
-        #     if self.hex_command == "06":
-        #         self.hex_waiting = False
-        #         self.hex_input = False
-        #         self.hex_command = ""
-        #         m = self.mode
-        #         self.mqtt.publish("notifications",m)
-        #         return
-            
-        #     if len(self.hex_command) == 2 and self.hex_input is True:
-        #         self.hex_waiting = False
-        #         self.hex_input = False
-        #         if self.hex_input_mode == "lowtemp":
-        #             self.mqtt.publish("smarter_circuits/thermosettings/hallway","temperature_low_setting:"+self.hex_command)
-        #             self.mqtt.publish("smarter_circuits/thermosettings/gameroom","temperature_low_setting:"+self.hex_command)
-        #             self.mqtt.publish("notifications","Low Temperature Set\\n"+self.hex_command)
-        #         if self.hex_input_mode == "hightemp":
-        #             self.mqtt.publish("smarter_circuits/thermosettings/hallway","temperature_high_setting:"+self.hex_command)
-        #             self.mqtt.publish("smarter_circuits/thermosettings/gameroom","temperature_high_setting:"+self.hex_command)
-        #             self.mqtt.publish("notifications","High Temperature Set\\n"+self.hex_command)
-        #         self.hex_command = ""
-        #         return
-
-        #     if len(self.hex_command) == 2 and self.hex_search is True:
-        #         self.hex_waiting = False
-        #         self.hex_search = False
-        #         m = "HEX: "+self.hex_command + " search result"
-        #         if self.hex_command in iconfigs["hex_commands"]:
-        #             coms = iconfigs["hex_commands"][self.hex_command]
-        #             for command in coms:
-        #                 m = m + "\\n" + command
-        #         self.mqtt.publish("notifications",m)
-        #         return
-        #     if len(self.hex_command) == 2 and self.hex_search is False:
-        #         self.hex_waiting = False
-        #         m = "HEX: "+self.hex_command + " execute"
-        #         if self.hex_command in iconfigs["hex_commands"]:
-        #             commands = iconfigs["hex_commands"][self.hex_command]
-        #             for command in commands:
-        #                 m = m + "\\n" + command
-        #         self.mqtt.publish("notifications",m)
-        #         self.hex_command = ""
-        #     for command in commands:
-        #         if command != "ignore":
-        #             self.mqtt.publish("smarter_circuits/command",command)
-        #     return
-        # bid = src + str(cid)
-        # if evnt == "btn_down":
-        #     self.buttons[bid] = "down"
-        # if evnt == "long_push":
-        #     self.buttons[bid] = "long"
-        # if evnt == "btn_up":
-        #     pressed = ""
-        #     longed = ""
-        #     for k in self.buttons:
-        #         i = k[len(k)-1]
-        #         if self.buttons[k] == "down":
-        #             pressed = pressed + i
-        #         if self.buttons[k] == "long":
-        #             longed = longed + i
-        #     self.buttons = {}
-        #     if pressed == "":
-        #         commands = iconfig["long"][longed]
-        #     else:
-        #         commands = iconfig["short"][pressed]
-        #     for command in commands:
-        #         if command != "ignore":
-        #             self.mqtt.publish("smarter_circuits/command",command)
 
     def handle_shelly_relay_message(self, id, subtopic, message):
         for circuit in self.config.circuits:
@@ -858,11 +687,10 @@ class SmarterCircuitsMCP:
                 try:
                     self.rollerdoor = Rollerdoor(self,self.name)
                     self.rollerdoor.set_state(addy, state)
-                except Exception as e:
+                except Exception as e: 
                     error = str(e)
-                    self.log("SmarterCircuitsMCP",error)
-                    self.log("SmarterCircuitsMCP","failed to reinstantiate rollerdoor")
-                    self.mqtt.publish("smarter_circuits/info/"+self.name, "failed to reinstantiate rollerdoor")
+                    tb = traceback.format_exc()
+                    self.handle_exception(error, tb)
             else:
                 self.rollerdoor.set_state(addy, state)
 
@@ -1161,6 +989,20 @@ class SmarterCircuitsMCP:
             o = o + "0"
         o = o + str(m)
         return o
+    
+    def handle_exception(self, error, tb, origin = "SmarterCircuitsMCP"):
+        try:
+            self.log(origin,"error: "+error)
+            self.log(origin,"traceback: "+tb)
+            self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
+            self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
+            self.send_discord_message(self.discord_debug_room,self.name+" error: "+error+"\n"+tb)
+        except Exception as e: 
+            error = str(e)
+            tb = traceback.format_exc()
+            print(error)
+            print(tb)
+
 
 class SmarterCircuitsPeer:
     def __init__(self, id, name, ip_address, model, circuit_authority, timestamp, thermostat, rollershade, rollerdoor):

@@ -1,13 +1,15 @@
 import time
 from datetime import datetime, timedelta
 import traceback
+
+from SmarterCircuits.main import SmarterCircuitsMCP
 try:
     import cv2
 except:
     cv2 = None
 
 class CameraManager:
-    def __init__(self, mcp):
+    def __init__(self, mcp: SmarterCircuitsMCP):
         self.mcp = mcp
         self.cameras = [
             cv2.VideoCapture(0),
@@ -50,10 +52,7 @@ class CameraManager:
         except Exception as e: 
             error = str(e)
             tb = traceback.format_exc()
-            self.mcp.log("SmarterCameraManager","capture_still error: "+error)
-            self.mcp.log("SmarterCameraManager","capture_still traceback: "+tb)
-            self.mcp.mqtt.publish("smarter_circuits/errors/"+self.mcp.name,error)
-            self.mcp.mqtt.publish("smarter_circuits/errors/"+self.mcp.name+"/traceback",tb)
+            self.mcp.handle_exception(error,tb,"SmarterCameraManager")
     
     def dispose(self):
         self.client.disconnect()
