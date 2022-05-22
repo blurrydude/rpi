@@ -101,7 +101,7 @@ class SmarterCircuitsMCP:
         if self.config.cam_manager is True:
             roles.append("camera manager")
             self.log("SmarterCircuitsMCP","instantiating camera manager...")
-            self.cam_manager = CameraManager(self,self.name)
+            self.cam_manager = CameraManager(self)
         #else:
         # while self.running is True:
         #     time.sleep(1)
@@ -678,7 +678,7 @@ class SmarterCircuitsMCP:
             if sensor.status.battery != battery:
                 sensor.status.battery = battery
                 if self.circuit_authority is True:
-                    self.send_discord_message(self.discord_house_room, sensor.name+" battery level is "+sensor.status.battery+" %")
+                    self.send_discord_message(self.discord_house_room, sensor.name+" battery level is "+str(sensor.status.battery)+" %")
                 self.battery_status_check(sensor)
         if subtopic == "sensor/temperature":
             sensor.status.temperature = float(message)
