@@ -1,3 +1,4 @@
+from SmarterCameraManager import CameraManager
 from SmarterUI import SmartLabel, SmartButton
 from SmarterCircuitsWebService import SmarterCircuitsWeb
 from SmarterCircuitsAPI import SmarterAPI
@@ -46,6 +47,7 @@ class SmarterCircuitsMCP:
         self.thermostat = None
         self.rollershade = None
         self.rollerdoor = None
+        self.cam_manager = None
         self.last_seen = {}
         self.last_day = ""
         self.solar_data = False
@@ -77,7 +79,7 @@ class SmarterCircuitsMCP:
         while self.config.loaded is False:
             time.sleep(1)
         self.remote = RemoteHandler(self)
-        self.mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(self.config.brokers,["shellies/#","smarter_circuits/#","remote_menu"],self.on_message)
+        self.mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(self.config.brokers,["shellies/#","smarter_circuits/#","remote_menu","crittercam/#"],self.on_message)
         _thread.start_new_thread(self.main_loop, ())
         self.api = SmarterAPI(self)
         if self.config.thermostat is True:
@@ -96,12 +98,16 @@ class SmarterCircuitsMCP:
             roles.append("rollerdoor")
             self.log("SmarterCircuitsMCP","instantiating rollerdoor...")
             self.rollerdoor = Rollerdoor(self,self.name)
+        if self.config.cam_manager is True:
+            roles.append("camera manager")
+            self.log("SmarterCircuitsMCP","instantiating camera manager...")
+            self.cam_manager = CameraManager(self,self.name)
         #else:
         # while self.running is True:
         #     time.sleep(1)
         # self.stop()
+        self.send_discord_message(self.discord_house_room, self.name+" is now started as"+", ".join(roles)+".")
         self.web_server.start()
-        self.send_discord_message(self.discord_debug_room, self.name+" is now started as"+", ".join(roles)+".")
     
     def log(self, origin, message):
         self.debug(origin+": "+message)
@@ -337,6 +343,8 @@ class SmarterCircuitsMCP:
                 self.handle_smarter_circuits_message(topic, text)
             if topic == "remote_menu" and self.config.touchscreen is True:
                 self.handle_remote_menu(text)
+            if topic.startswith("crittercam"):
+                self.handle_camera_message(topic, text)
         except Exception as e: 
             error = str(e)
             tb = traceback.format_exc()
@@ -344,6 +352,20 @@ class SmarterCircuitsMCP:
             self.log("SmarterCircuitsMCP","main_loop traceback: "+tb)
             self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
             self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
+    
+    def handle_camera_message(self, topic, text):
+        if self.config.cam_manager is False:
+            return
+        try:
+            self.cam_manager.on_message(topic, text)
+        except Exception as e: 
+            error = str(e)
+            tb = traceback.format_exc()
+            self.log("SmarterCircuitsMCP","main_loop error: "+error)
+            self.log("SmarterCircuitsMCP","main_loop traceback: "+tb)
+            self.mqtt.publish("smarter_circuits/errors/"+self.name,error)
+            self.mqtt.publish("smarter_circuits/errors/"+self.name+"/traceback",tb)
+
     
     def handle_remote_menu(self, text):
         try:

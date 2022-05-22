@@ -40,6 +40,7 @@ class SmarterConfig:
         self.rollershade_update_files = []
         self.rollerdoor = False
         self.rollerdoor_update_files = []
+        self.cam_manager = False
         self.running = False
         self.loaded = False
         self.command_endpoint = ""
@@ -96,6 +97,9 @@ class SmarterConfig:
         self.rollerdoor = self.mcp.name in config["rollerdoors"]
         if self.rollerdoor is True:
             SmarterLog.log("SmarterConfiguration","I am a rollerdoor")
+        self.cam_manager = self.mcp.name == config["cam_manager"]
+        if self.cam_manager is True:
+            SmarterLog.log("SmarterConfiguration","I am a camera manager")
 
     def load_circuits(self):
         self.log("load_circuits")

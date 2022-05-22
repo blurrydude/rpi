@@ -3,6 +3,7 @@
     "topics":["shellies/#"],
     "command_endpoint":"https://api.idkline.com/control/",
     "use_api": false,
+    "cam_manager": "crittercampi",
     "touchscreens":["garagecontrolpi","dayroompi","kitchenpi","hallwaypi","xpi"],
     "thermostats":["gameroomthermopi","hallwaythermopi"],
     "rollershades":["rollerpi"],

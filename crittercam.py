@@ -8,7 +8,8 @@ class CritterCam:
 	def __init__(self):
 		self.cameras = [
 			cv2.VideoCapture(0),
-			cv2.VideoCapture("http://192.168.0.200/videostream.cgi?user=viewer&pwd=viewer")
+			cv2.VideoCapture("http://192.168.0.200/videostream.cgi?user=viewer&pwd=viewer"),
+			cv2.VideoCapture("http://192.168.0.201/videostream.cgi?user=viewer&pwd=viewer")
 		]
 		self.client = mqtt.Client()
 		self.client.on_message = self.on_message
@@ -26,7 +27,7 @@ class CritterCam:
 
 	def start(self):
 		self.client.connect("192.168.2.200")
-		self.client.subscribe("shellies/shellymotionsensor-60A42386DDE2")
+		self.client.subscribe("crittercam/#")
 		self.running = True
 		self.client.loop_start()
 		while self.running is True:
@@ -37,14 +38,22 @@ class CritterCam:
 		print("capturing on camera "+str(camnum))
 		cap = self.cameras[camnum]
 		now = datetime.now()
-		nowstr = now.strftime("%Y%m%d")
-		fps = [ 30.0, 20.0 ]
-		res = [(1920, 1080), (640, 480)]
-		out = cv2.VideoWriter("output_"+str(camnum)+"_"+nowstr+".avi", cv2.VideoWriter_fourcc(*'XVID'), fps[camnum], res[camnum])
+		nowstr = now.strftime("%Y%m%d%H%M")
+		fps = [ 30.0, 15.0, 15.0 ]
+		res = [(1920, 1080), (640, 480), (640, 480)]
+		out = cv2.VideoWriter("output_"+str(camnum)+".avi", cv2.VideoWriter_fourcc(*'XVID'), fps[camnum], res[camnum])
 		while(now > datetime.now() - timedelta(seconds=seconds)):
 			ref, frame = cap.read()
 			out.write(frame)
 		out.release()
+		print("done capturing")
+	
+	def capture_still(self, camnum):
+		print("grabbing still from camera "+str(camnum))
+		cap = self.cameras[camnum]
+		success, image = cap.read()
+		cv2.imwrite("output_"+str(camnum)+".jpg", image)
+		print("image captured")
 	
 	def dispose(self):
 		self.client.disconnect()
@@ -54,23 +63,23 @@ class CritterCam:
 		exit()
 	
 	def on_message(self, client, userdata, message):
-		try:
-			topic = message.topic
-			if "stopcritter" in topic:
-				self.running = False
-				self.dispose()
-			if "shellymotion" not in topic:
-				return
-			text = str(message.payload.decode("utf-8"))
-			data = json.loads(text)
-			status = data["motion"]
-			self.lux = data["lux"]
-			if self.last_status != status:
-				self.last_status = status
-			if self.last_status is True:
-				self.motion()
-		except:
-			donothing = True
+		topic = message.topic
+		if "stopcritter" in topic:
+			self.running = False
+			self.dispose()
+		if "crittercam" not in topic:
+			return
+		text = str(message.payload.decode("utf-8"))
+		command = text.split(':')
+		cam = int(command[0])
+		if len(command) > 1:
+			sec = int(command[1])
+		else:
+			sec = 0
+		if sec == 0:
+			self.capture_still(cam)
+		else:
+			self.capture(cam,sec)
 	
 	def motion(self):
 		if self.lux > 800:
