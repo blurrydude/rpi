@@ -42,14 +42,16 @@ class CameraManager:
     
     def capture_still(self, camnum):
         try:
+            res = [(1920, 1080), (640, 480), (640, 480)]
             self.mcp.send_discord_message(self.mcp.discord_debug_room,"grabbing still from camera "+str(camnum))
             cap = self.cameras[camnum]
+            cap.set(cv2.CAP_PROP_FRAME_WIDTH, res[camnum][0])
+            cap.set(cv2.CAP_PROP_FRAME_HEIGHT, res[camnum][1])
             now = datetime.now()
             while(now > datetime.now() - timedelta(seconds=2)):
                 ref, frame = cap.read()
             success, image = cap.read()
             self.mcp.send_discord_message(self.mcp.discord_debug_room,"image shape: "+str(image.shape))
-            res = [(1920, 1080), (640, 480), (640, 480)]
             image = cv2.putText(image, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), (50,res[camnum][1]-50), self.font, self.fontScale, self.color, self.thickness, cv2.LINE_AA)
             os.remove("output_"+str(camnum)+".jpg")
             cv2.imwrite("output_"+str(camnum)+".jpg", image)
