@@ -55,7 +55,6 @@ class CameraManager:
             self.mcp.handle_exception(error,tb,"SmarterCameraManager")
     
     def dispose(self):
-        self.client.disconnect()
         for cam in self.cameras:
             cam.release()
         cv2.destroyAllWindows()
