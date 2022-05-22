@@ -41,6 +41,7 @@ class SmarterConfig:
         self.rollerdoor = False
         self.rollerdoor_update_files = []
         self.cam_manager = False
+        self.cam_manager_update_files = []
         self.running = False
         self.loaded = False
         self.command_endpoint = ""
@@ -86,6 +87,7 @@ class SmarterConfig:
         self.update_files = config["update_files"]
         self.touchscreen_update_files = config["touchscreen_update_files"]
         self.thermostat_update_files = config["thermostat_update_files"]
+        self.cam_manager_update_files = config["cam_manager_update_files"]
         if self.touchscreen is True:
             SmarterLog.log("SmarterConfiguration","I am a touchscreen")
         self.thermostat = self.mcp.name in config["thermostats"]

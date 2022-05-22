@@ -1,5 +1,6 @@
 import time
 from datetime import datetime, timedelta
+import traceback
 try:
     import cv2
 except:
@@ -51,12 +52,20 @@ class CameraManager:
         print("done capturing")
     
     def capture_still(self, camnum):
-        print("grabbing still from camera "+str(camnum))
-        cap = self.cameras[camnum]
-        success, image = cap.read()
-        image = cv2.putText(image, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), self.org, self.font, self.fontScale, self.color, self.thickness, cv2.LINE_AA)
-        cv2.imwrite("output_"+str(camnum)+".jpg", image)
-        print("image captured")
+        try:
+            print("grabbing still from camera "+str(camnum))
+            cap = self.cameras[camnum]
+            success, image = cap.read()
+            image = cv2.putText(image, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), self.org, self.font, self.fontScale, self.color, self.thickness, cv2.LINE_AA)
+            cv2.imwrite("output_"+str(camnum)+".jpg", image)
+            print("image captured")
+        except Exception as e: 
+            error = str(e)
+            tb = traceback.format_exc()
+            self.mcp.log("SmarterCameraManager","capture_still error: "+error)
+            self.mcp.log("SmarterCameraManager","capture_still traceback: "+tb)
+            self.mcp.mqtt.publish("smarter_circuits/errors/"+self.mcp.name,error)
+            self.mcp.mqtt.publish("smarter_circuits/errors/"+self.mcp.name+"/traceback",tb)
     
     def dispose(self):
         self.client.disconnect()

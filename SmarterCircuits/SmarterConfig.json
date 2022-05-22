@@ -12,5 +12,6 @@
     "thermostat_update_files": ["SmarterThermostat.py"],
     "touchscreen_update_files": ["SmarterTouchscreen.py"],
     "rollershade_update_files": ["SmarterRollershade.py"],
-    "rollerdoor_update_files": ["SmarterRollerdoor.py"]
+    "rollerdoor_update_files": ["SmarterRollerdoor.py"],
+    "cam_manager_update_files": ["SmarterCameraManager.py"]
 }

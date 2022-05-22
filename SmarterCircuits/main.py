@@ -128,6 +128,8 @@ class SmarterCircuitsMCP:
                 ignore_file = False
             if self.config.thermostat is True and file in self.config.thermostat_update_files:
                 ignore_file = False
+            if self.config.cam_manager is True and file in self.config.cam_manager_update_files:
+                ignore_file = False
             if ignore_file is True:
                 continue
             file_check = round(os.stat(self.source_dir+file).st_mtime,0)
