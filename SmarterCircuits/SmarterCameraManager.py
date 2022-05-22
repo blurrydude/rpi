@@ -1,7 +1,7 @@
 import time
 from datetime import datetime, timedelta
 import traceback
-
+import os
 try:
     import cv2
 except:
@@ -31,6 +31,7 @@ class CameraManager:
         nowstr = now.strftime("%Y%m%d%H%M")
         fps = [ 30.0, 15.0, 15.0 ]
         res = [(1920, 1080), (640, 480), (640, 480)]
+        os.remove("output_"+str(camnum)+".avi")
         out = cv2.VideoWriter("output_"+str(camnum)+".avi", cv2.VideoWriter_fourcc(*'XVID'), fps[camnum], res[camnum])
         while(now > datetime.now() - timedelta(seconds=seconds)):
             ref, frame = cap.read()
@@ -49,6 +50,7 @@ class CameraManager:
             success, image = cap.read()
             res = [(1920, 1080), (640, 480), (640, 480)]
             image = cv2.putText(image, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), (50,res[camnum][1]-50), self.font, self.fontScale, self.color, self.thickness, cv2.LINE_AA)
+            os.remove("output_"+str(camnum)+".jpg")
             cv2.imwrite("output_"+str(camnum)+".jpg", image)
             self.mcp.send_discord_message(self.mcp.discord_debug_room,"image captured")
         except Exception as e: 
