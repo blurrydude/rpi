@@ -50,9 +50,13 @@ class CameraManager:
             cap.set(cv2.CAP_PROP_FRAME_WIDTH, res[camnum][0])
             cap.set(cv2.CAP_PROP_FRAME_HEIGHT, res[camnum][1])
             now = datetime.now()
+            image = None
             while(now > datetime.now() - timedelta(seconds=2)):
-                ref, frame = cap.read()
-            success, image = cap.read()
+                ref, image = cap.read()
+            retries = 0
+            while image is None and retries < 5:
+                success, image = cap.read()
+                retries = retries + 1
             self.mcp.send_discord_message(self.mcp.discord_debug_room,"image shape: "+str(image.shape))
             image = cv2.putText(image, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), (50,res[camnum][1]-50), self.font, self.fontScale, self.color, self.thickness, cv2.LINE_AA)
             try:
