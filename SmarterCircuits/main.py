@@ -356,6 +356,9 @@ class SmarterCircuitsMCP:
     def handle_camera_message(self, topic, text):
         if self.config.cam_manager is False:
             return
+        if self.cam_manager is None:
+            self.log("SmarterCircuitsMCP","re-instantiating camera manager...")
+            self.cam_manager = CameraManager(self)
         try:
             self.cam_manager.on_message(topic, text)
         except Exception as e: 
