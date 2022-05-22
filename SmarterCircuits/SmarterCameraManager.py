@@ -55,7 +55,10 @@ class CameraManager:
             success, image = cap.read()
             self.mcp.send_discord_message(self.mcp.discord_debug_room,"image shape: "+str(image.shape))
             image = cv2.putText(image, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), (50,res[camnum][1]-50), self.font, self.fontScale, self.color, self.thickness, cv2.LINE_AA)
-            os.remove("output_"+str(camnum)+".jpg")
+            try:
+                os.remove("output_"+str(camnum)+".jpg")
+            except:
+                print("no file")
             cv2.imwrite("output_"+str(camnum)+".jpg", image)
             self.mcp.send_discord_message(self.mcp.discord_debug_room,"image captured")
         except Exception as e: 
