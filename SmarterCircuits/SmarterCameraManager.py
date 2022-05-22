@@ -16,6 +16,11 @@ class CameraManager:
         self.running = False
         self.last_status = ""
         self.lux = 0
+        self.font = cv2.FONT_HERSHEY_SIMPLEX
+        self.org = (50, 50)
+        self.fontScale = 1
+        self.color = (255, 0, 0)
+        self.thickness = 2
         self.start()
 
     def on_connect(self, clent, userdata, flags, rc):
@@ -40,6 +45,7 @@ class CameraManager:
         out = cv2.VideoWriter("output_"+str(camnum)+".avi", cv2.VideoWriter_fourcc(*'XVID'), fps[camnum], res[camnum])
         while(now > datetime.now() - timedelta(seconds=seconds)):
             ref, frame = cap.read()
+            frame = cv2.putText(frame, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), self.org, self.font, self.fontScale, self.color, self.thickness, cv2.LINE_AA)
             out.write(frame)
         out.release()
         print("done capturing")
@@ -48,6 +54,7 @@ class CameraManager:
         print("grabbing still from camera "+str(camnum))
         cap = self.cameras[camnum]
         success, image = cap.read()
+        image = cv2.putText(image, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), self.org, self.font, self.fontScale, self.color, self.thickness, cv2.LINE_AA)
         cv2.imwrite("output_"+str(camnum)+".jpg", image)
         print("image captured")
     
