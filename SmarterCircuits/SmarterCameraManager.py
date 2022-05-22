@@ -22,7 +22,7 @@ class CameraManager:
         self.fontScale = 1
         self.color = (255, 0, 0)
         self.thickness = 2
-        self.start()
+        #self.start()
 
     def on_connect(self, clent, userdata, flags, rc):
         print("client connected")

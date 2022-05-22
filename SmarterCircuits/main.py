@@ -85,23 +85,28 @@ class SmarterCircuitsMCP:
         if self.config.thermostat is True:
             roles.append("thermostat")
             self.log("SmarterCircuitsMCP","instantiating thermostat...")
-            self.thermostat = Thermostat(self)
+            dev = Thermostat(self)
+            self.thermostat = dev
         if self.config.touchscreen is True:
             roles.append("touchscreen")
             self.log("SmarterCircuitsMCP","instantiating touchscreen...")
-            self.touchscreen = Touchscreen(self)
+            dev = Touchscreen(self)
+            self.touchscreen = dev
         if self.config.rollershade is True:
             roles.append("rollershade")
             self.log("SmarterCircuitsMCP","instantiating rollershade...")
-            self.rollershade = Rollershade(self,self.name)
+            dev = Rollershade(self,self.name)
+            self.rollershade = dev
         if self.config.rollerdoor is True:
             roles.append("rollerdoor")
             self.log("SmarterCircuitsMCP","instantiating rollerdoor...")
-            self.rollerdoor = Rollerdoor(self,self.name)
+            dev = Rollerdoor(self,self.name)
+            self.rollerdoor = dev
         if self.config.cam_manager is True:
             roles.append("camera manager")
             self.log("SmarterCircuitsMCP","instantiating camera manager...")
-            self.cam_manager = CameraManager(self)
+            dev = CameraManager(self)
+            self.cam_manager = dev
         #else:
         # while self.running is True:
         #     time.sleep(1)
@@ -327,6 +332,8 @@ class SmarterCircuitsMCP:
             self.log("SmarterCircuitsMCP","restarting...")
             self.send_discord_message(self.discord_house_room, self.name+" is restarting.")
         self.running = False
+        if self.cam_manager is not None:
+            self.cam_manager.dispose()
         self.config.stop()
         self.mqtt.stop()
         time.sleep(5)
