@@ -22,22 +22,9 @@ class CameraManager:
         self.fontScale = 1
         self.color = (255, 0, 0)
         self.thickness = 2
-        #self.start()
-
-    def on_connect(self, clent, userdata, flags, rc):
-        print("client connected")
-
-    def on_disconnect(self, client, userdata, rc):
-        print("client disconnected")
-
-    def start(self):
-        self.running = True
-        while self.running is True:
-            time.sleep(1)
-        self.dispose()
     
     def capture(self, camnum, seconds):
-        print("capturing on camera "+str(camnum))
+        self.mcp.send_discord_message(self.mcp.discord_debug_room,"capturing on camera "+str(camnum))
         cap = self.cameras[camnum]
         now = datetime.now()
         nowstr = now.strftime("%Y%m%d%H%M")
@@ -46,19 +33,20 @@ class CameraManager:
         out = cv2.VideoWriter("output_"+str(camnum)+".avi", cv2.VideoWriter_fourcc(*'XVID'), fps[camnum], res[camnum])
         while(now > datetime.now() - timedelta(seconds=seconds)):
             ref, frame = cap.read()
-            frame = cv2.putText(frame, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), self.org, self.font, self.fontScale, self.color, self.thickness, cv2.LINE_AA)
+            frame = cv2.putText(frame, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), (50,res[camnum][1]-50), self.font, self.fontScale, self.color, self.thickness, cv2.LINE_AA)
             out.write(frame)
         out.release()
-        print("done capturing")
+        self.mcp.send_discord_message(self.mcp.discord_debug_room,"done capturing")
     
     def capture_still(self, camnum):
         try:
-            print("grabbing still from camera "+str(camnum))
+            self.mcp.send_discord_message(self.mcp.discord_debug_room,"grabbing still from camera "+str(camnum))
             cap = self.cameras[camnum]
             success, image = cap.read()
-            image = cv2.putText(image, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), self.org, self.font, self.fontScale, self.color, self.thickness, cv2.LINE_AA)
+            res = [(1920, 1080), (640, 480), (640, 480)]
+            image = cv2.putText(image, datetime.now().strftime("%m/%d/%Y, %H:%M:%S"), (50,res[camnum][1]-50), self.font, self.fontScale, self.color, self.thickness, cv2.LINE_AA)
             cv2.imwrite("output_"+str(camnum)+".jpg", image)
-            print("image captured")
+            self.mcp.send_discord_message(self.mcp.discord_debug_room,"image captured")
         except Exception as e: 
             error = str(e)
             tb = traceback.format_exc()
