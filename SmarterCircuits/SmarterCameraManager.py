@@ -2,14 +2,13 @@ import time
 from datetime import datetime, timedelta
 import traceback
 
-from main import SmarterCircuitsMCP
 try:
     import cv2
 except:
     cv2 = None
 
 class CameraManager:
-    def __init__(self, mcp: SmarterCircuitsMCP):
+    def __init__(self, mcp):
         self.mcp = mcp
         self.cameras = [
             cv2.VideoCapture(0),
