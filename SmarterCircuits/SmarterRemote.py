@@ -66,6 +66,12 @@ class RemoteHandler:
 class Shellyi4Message:
     def __init__(self, jsonData):
         data = json.loads(jsonData)
-        self.circuit_id = str(data["params"]["events"][0]["id"])
-        self.event = data["params"]["events"][0]["event"]
-        self.source = data["src"]
+        try:
+            self.circuit_id = str(data["params"]["events"][0]["id"])
+            self.event = data["params"]["events"][0]["event"]
+            self.source = data["src"]
+        except:
+            self.mcp.send_discord_message(self.mcp.discord_debug_room, "remote got bad data: "+jsonData)
+            self.circuit_id = "0"
+            self.event = "none"
+            self.source = "none"
