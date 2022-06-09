@@ -295,14 +295,21 @@ class SmarterCircuitsMCP:
                 return
         last_octet = int(self.ip_address.split('.')[3])
         highest_ip = last_octet
+        bad_peers = []
         for peer in self.peers:
-            if peer.id in self.last_seen.keys() and self.last_seen[peer.id] < now - timedelta(minutes=2):
+            if datetime.strptime(peer.timestamp, '%m/%d/%Y, %H:%M:%S') < now - timedelta(minutes=2):
+                bad_peers.append(peer)
                 continue
+            # if peer.id in self.last_seen.keys() and self.last_seen[peer.id] < now - timedelta(minutes=2):
+            #     continue
             if "192" not in peer.ip_address:
                 continue
             peer_last_octet = int(peer.ip_address.split('.')[3])
             if peer_last_octet > highest_ip:
                 highest_ip = peer_last_octet
+        for bad_peer in bad_peers:
+            self.peers.remove(bad_peer)
+            self.log("SmarterCircuitsMCP","Forgot stale peer "+peer.name)
         if highest_ip == last_octet and self.circuit_authority is not True:
                 self.log("SmarterCircuitsMCP","I am circuit authority")
                 self.circuit_authority = True
