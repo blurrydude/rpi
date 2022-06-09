@@ -159,6 +159,7 @@ class SmarterCircuitsMCP:
                 if self.ticks in [0,10,20,30,40,50]:
                     self.send_peer_data()
                     self.check_for_updates()
+                    self.check_circuit_authority()
                 # if self.last_notification < datetime.now() - timedelta(minutes=30):
                 #     self.last_notification = datetime.now()
                 #     self.send_system_state()
@@ -167,7 +168,6 @@ class SmarterCircuitsMCP:
                 if self.ticks >= 59:
                     self.ticks = 0
                     self.check_solar_data(day)
-                    self.check_circuit_authority()
                     self.do_time_commands(now, day)
                     self.do_log_dump()
                     self.log_temp_data()
@@ -303,17 +303,21 @@ class SmarterCircuitsMCP:
             peer_last_octet = int(peer.ip_address.split('.')[3])
             if peer_last_octet > highest_ip:
                 highest_ip = peer_last_octet
-        if highest_ip == last_octet:
-            if self.circuit_authority is not True:
+        if highest_ip == last_octet and self.circuit_authority is not True:
                 self.log("SmarterCircuitsMCP","I am circuit authority")
                 self.circuit_authority = True
                 self.mqtt.publish("notifications",self.name+"\\nCircuit Authority")
                 self.send_discord_message(self.discord_house_room, self.name+" is now the circuit authority.")
-                try:
-                    requests.get("https://api.idkline.com/circuitauthority/"+self.ip_address)
-                    self.log("SmarterCircuitsMCP","Told the API I am circuit authority")
-                except:
-                    self.log("SmarterCircuitsMCP","Could not tell the API I am circuit authority")
+                # try:
+                #     requests.get("https://api.idkline.com/circuitauthority/"+self.ip_address)
+                #     self.log("SmarterCircuitsMCP","Told the API I am circuit authority")
+                # except:
+                #     self.log("SmarterCircuitsMCP","Could not tell the API I am circuit authority")
+        elif highest_ip > last_octet and self.circuit_authority is True:
+                self.log("SmarterCircuitsMCP","I am no longer circuit authority")
+                self.circuit_authority = False
+                self.mqtt.publish("notifications",self.name+"\\nCircuit Authority")
+                self.send_discord_message(self.discord_house_room, self.name+" is no longer the circuit authority.")
         else:
             self.circuit_authority = False
 
