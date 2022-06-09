@@ -318,8 +318,6 @@ class SmarterCircuitsMCP:
                 self.circuit_authority = False
                 self.mqtt.publish("notifications",self.name+"\\nCircuit Authority")
                 self.send_discord_message(self.discord_house_room, self.name+" is no longer the circuit authority.")
-        else:
-            self.circuit_authority = False
 
     def stop(self, restart = False):
         self.log("SmarterCircuitsMCP","stopping...")
