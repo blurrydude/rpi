@@ -584,7 +584,7 @@ class SmarterCircuitsMCP:
 
     def handle_smarter_circuits_message(self, topic, message):
         #print(topic+": "+message)
-        if topic == "smarter_circuits/restart" and message == self.name:
+        if topic == "smarter_circuits/restart" and (message == self.name or message == "all"):
             self.log("SmarterCircuitsMCP","restarting by command")
             self.send_discord_message(self.discord_debug_room, self.name+" restarting by command")
             self.stop(True)
