@@ -159,7 +159,6 @@ class SmarterCircuitsMCP:
                 if self.ticks in [0,10,20,30,40,50]:
                     self.send_peer_data()
                     self.check_for_updates()
-                    self.check_circuit_authority()
                 # if self.last_notification < datetime.now() - timedelta(minutes=30):
                 #     self.last_notification = datetime.now()
                 #     self.send_system_state()
@@ -167,6 +166,7 @@ class SmarterCircuitsMCP:
                 day = datetime.now().strftime("%a").lower()
                 if self.ticks >= 59:
                     self.ticks = 0
+                    self.check_circuit_authority()
                     self.check_solar_data(day)
                     self.do_time_commands(now, day)
                     self.do_log_dump()
