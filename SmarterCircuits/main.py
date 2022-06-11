@@ -303,14 +303,15 @@ class SmarterCircuitsMCP:
         bad_peers = []
         circuit_authority_exists = False
         for peer in self.peers:
-            if datetime.strptime(peer.timestamp, '%m/%d/%Y, %H:%M:%S') < now - timedelta(minutes=2):
+            # if datetime.strptime(peer.timestamp, '%m/%d/%Y, %H:%M:%S') < now - timedelta(minutes=2):
+            #     bad_peers.append(peer)
+            #     continue
+            if peer.id in self.last_seen.keys() and self.last_seen[peer.id] < now - timedelta(minutes=2):
                 bad_peers.append(peer)
                 continue
             if peer.circuit_authority is True:
                 circuit_authority_exists = True
                 continue
-            # if peer.id in self.last_seen.keys() and self.last_seen[peer.id] < now - timedelta(minutes=2):
-            #     continue
             if "192" not in peer.ip_address:
                 continue
             peer_last_octet = int(peer.ip_address.split('.')[3])
