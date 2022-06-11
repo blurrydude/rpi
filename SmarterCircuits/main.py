@@ -33,7 +33,7 @@ class SmarterCircuitsMCP:
         self.model = model
         self.mode = "day"
         self.running = False
-        self.ticks = 0
+        # self.ticks = 0
         self.ip_address = ip_address
         self.circuit_authority = False
         self.config = None
@@ -62,7 +62,8 @@ class SmarterCircuitsMCP:
         self.web_server = SmarterCircuitsWeb(ip_address, 8081)
         self.buttons = {}
         self.switch_states = {}
-        self.last_notification = datetime.now() - timedelta(minutes=28)
+        self.last_notification = datetime.now() - timedelta(minutes=1)
+        self.last_minute_cycle = datetime.now() - timedelta(minutes=1)
         self.hex_waiting = False
         self.hex_search = False
         self.hex_input = False
@@ -156,7 +157,9 @@ class SmarterCircuitsMCP:
             try:
                 if self.config.loaded is False or self.mqtt.connected is False:
                     continue
-                if self.ticks in [0,10,20,30,40,50]:
+                if self.last_notification < datetime.now() - timedelta(seconds=10):
+                    self.last_notification = datetime.now()
+                # if self.ticks in [0,10,20,30,40,50]:
                     self.send_peer_data()
                     self.check_for_updates()
                 # if self.last_notification < datetime.now() - timedelta(minutes=30):
@@ -164,14 +167,16 @@ class SmarterCircuitsMCP:
                 #     self.send_system_state()
                 now = datetime.now().strftime("%H:%M")
                 day = datetime.now().strftime("%a").lower()
-                if self.ticks >= 59:
-                    self.ticks = 0
+                if self.last_minute_cycle < datetime.now() - timedelta(minutes=1):
+                    self.last_minute_cycle = datetime.now()
+                # if self.ticks >= 59:
+                    # self.ticks = 0
                     self.check_circuit_authority()
                     self.check_solar_data(day)
                     self.do_time_commands(now, day)
                     self.do_log_dump()
                     self.log_temp_data()
-                self.ticks = self.ticks + 1
+                # self.ticks = self.ticks + 1
             except Exception as e: 
                 error = str(e)
                 tb = traceback.format_exc()
