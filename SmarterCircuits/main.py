@@ -301,9 +301,13 @@ class SmarterCircuitsMCP:
         last_octet = int(self.ip_address.split('.')[3])
         highest_ip = last_octet
         bad_peers = []
+        circuit_authority_exists = False
         for peer in self.peers:
             if datetime.strptime(peer.timestamp, '%m/%d/%Y, %H:%M:%S') < now - timedelta(minutes=2):
                 bad_peers.append(peer)
+                continue
+            if peer.circuit_authority is True:
+                circuit_authority_exists = True
                 continue
             # if peer.id in self.last_seen.keys() and self.last_seen[peer.id] < now - timedelta(minutes=2):
             #     continue
@@ -315,7 +319,7 @@ class SmarterCircuitsMCP:
         for bad_peer in bad_peers:
             self.peers.remove(bad_peer)
             self.log("SmarterCircuitsMCP","Forgot stale peer "+peer.name)
-        if highest_ip == last_octet and self.circuit_authority is not True:
+        if highest_ip == last_octet and self.circuit_authority is not True and circuit_authority_exists is not True:
                 self.log("SmarterCircuitsMCP","I am circuit authority")
                 self.circuit_authority = True
                 self.mqtt.publish("notifications",self.name+"\\nCircuit Authority")
