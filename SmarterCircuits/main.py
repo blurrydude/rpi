@@ -329,7 +329,7 @@ class SmarterCircuitsMCP:
                 #     self.log("SmarterCircuitsMCP","Told the API I am circuit authority")
                 # except:
                 #     self.log("SmarterCircuitsMCP","Could not tell the API I am circuit authority")
-        elif highest_ip > last_octet and self.circuit_authority is True:
+        elif (highest_ip > last_octet or circuit_authority_exists is True) and self.circuit_authority is True:
                 self.log("SmarterCircuitsMCP","I am no longer circuit authority")
                 self.circuit_authority = False
                 self.mqtt.publish("notifications",self.name+"\\nCircuit Authority")
