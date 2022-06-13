@@ -33,7 +33,6 @@ class SmarterCircuitsMCP:
         self.model = model
         self.mode = "day"
         self.running = False
-        # self.ticks = 0
         self.ip_address = ip_address
         self.circuit_authority = False
         self.config = None
@@ -108,10 +107,6 @@ class SmarterCircuitsMCP:
             self.log("SmarterCircuitsMCP","instantiating camera manager...")
             dev = CameraManager(self)
             self.cam_manager = dev
-        #else:
-        # while self.running is True:
-        #     time.sleep(1)
-        # self.stop()
         self.send_discord_message(self.discord_house_room, self.name+" is now started as"+", ".join(roles)+".")
         self.web_server.start()
     
@@ -159,24 +154,17 @@ class SmarterCircuitsMCP:
                     continue
                 if self.last_notification < datetime.now() - timedelta(seconds=10):
                     self.last_notification = datetime.now()
-                # if self.ticks in [0,10,20,30,40,50]:
-                    self.send_peer_data()
                     self.check_for_updates()
-                # if self.last_notification < datetime.now() - timedelta(minutes=30):
-                #     self.last_notification = datetime.now()
-                #     self.send_system_state()
+                    _thread.start_new_thread(self.send_peer_data, ())
                 now = datetime.now().strftime("%H:%M")
                 day = datetime.now().strftime("%a").lower()
                 if self.last_minute_cycle < datetime.now() - timedelta(minutes=1):
                     self.last_minute_cycle = datetime.now()
-                # if self.ticks >= 59:
-                    # self.ticks = 0
                     self.check_circuit_authority()
-                    self.check_solar_data(day)
-                    self.do_time_commands(now, day)
-                    self.do_log_dump()
-                    self.log_temp_data()
-                # self.ticks = self.ticks + 1
+                    _thread.start_new_thread(self.check_solar_data, (day))
+                    _thread.start_new_thread(self.do_time_commands, (now, day))
+                    _thread.start_new_thread(self.do_log_dump, ())
+                    _thread.start_new_thread(self.log_temp_data, ())
             except Exception as e: 
                 error = str(e)
                 tb = traceback.format_exc()
@@ -229,14 +217,6 @@ class SmarterCircuitsMCP:
             for i in range(7,15):
                 old_dates.append((datetime.now()-timedelta(days=i)).strftime("%Y%m%d"))
             previouslogfiledate = (datetime.now()-timedelta(hours=1)).strftime("%Y%m%d%H")
-            previouslogfilepath = self.source_dir+"logs/SmarterCircuits_"+previouslogfiledate+".log"
-            if os.path.exists(previouslogfilepath):
-                currenthour = datetime.now().hour
-                if self.last_log_dump_hour != currenthour:
-                    self.last_log_dump_hour = currenthour
-                    f = open(previouslogfilepath)
-                    t = f.read()
-                    #SmarterLog.send_email(self.config.secrets["smtp_user"],self.config.secrets["smtp_pass"],"smartercircuits@gmail.com",self.name+" log file "+previouslogfiledate,t)
             logs_dir = self.source_dir+"logs/"
             for file in os.listdir(logs_dir):
                 for old_date in old_dates:
@@ -407,7 +387,6 @@ class SmarterCircuitsMCP:
             self.handle_exception(error, tb)
 
     def handle_shelly_message(self, topic, message):
-        #print(topic+": "+message)
         s = topic.split('/')
         id = s[1]
         if "1pm" in id or "switch25" in id:
