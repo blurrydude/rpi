@@ -161,7 +161,7 @@ class SmarterCircuitsMCP:
                 if self.last_minute_cycle < datetime.now() - timedelta(minutes=1):
                     self.last_minute_cycle = datetime.now()
                     self.check_circuit_authority()
-                    _thread.start_new_thread(self.check_solar_data, (day))
+                    _thread.start_new_thread(self.check_solar_data, (day,))
                     _thread.start_new_thread(self.do_time_commands, (now, day))
                     _thread.start_new_thread(self.do_log_dump, ())
                     _thread.start_new_thread(self.log_temp_data, ())
