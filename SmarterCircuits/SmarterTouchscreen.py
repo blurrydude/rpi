@@ -225,8 +225,8 @@ class Touchscreen:
             labels.append(SmartLabel(r,1,"currently "+str(round(thermostat.state.temperature,1))+"F","Times",16,"black","white",5,5))
             labels.append(SmartLabel(r,2,state,"Times",16,"black","white",5,5))
             r = r + 1
-            labels.append(SmartLabel(r,1,"heat if cooler than " + str(thermostat.settings.temperature_low_setting),"Times",16,"black","white",5,5))
-            labels.append(SmartLabel(r,2,"cool if warmer than " + str(thermostat.settings.temperature_high_setting),"Times",16,"black","white",5,5))
+            labels.append(SmartLabel(r,1,"heat under " + str(thermostat.settings.temperature_low_setting),"Times",16,"black","white",5,5))
+            labels.append(SmartLabel(r,2,"cool over " + str(thermostat.settings.temperature_high_setting),"Times",16,"black","white",5,5))
             # labels.append(SmartLabel(r,1,str(round(thermostat.state.temperature,1))+"F","Times",24,"black","red",5,5))
             # labels.append(SmartLabel(r,2,str(round(thermostat.state.humidity,1))+"% - "+state,"Times",24,"black","blue",5,5))
             r = r + 1
