@@ -231,13 +231,13 @@ class Touchscreen:
             # labels.append(SmartLabel(r,2,str(round(thermostat.state.humidity,1))+"% - "+state,"Times",24,"black","blue",5,5))
             r = r + 1
 
-        # for sensor_id in self.mcp.config.ht_sensors.keys():
-        #     sensor = self.mcp.config.ht_sensors[sensor_id]
-        #     labels.append(SmartLabel(r,0,sensor.name.upper(),"Times",16,"black","white",5,5))
-        #     labels.append(SmartLabel(r,1,str(round(sensor.status.temperature,1))+"F","Times",24,"black","red",5,5))
-        #     labels.append(SmartLabel(r,2,str(round(sensor.status.humidity,1))+"%","Times",24,"black","blue",5,5))
+        for sensor_id in self.mcp.config.ht_sensors.keys():
+            sensor = self.mcp.config.ht_sensors[sensor_id]
+            labels.append(SmartLabel(r,0,sensor.name.upper(),"Times",16,"black","white",5,5))
+            labels.append(SmartLabel(r,1,str(round(sensor.status.temperature,1))+"F","Times",24,"black","red",5,5))
+            labels.append(SmartLabel(r,2,str(round(sensor.status.humidity,1))+"%","Times",24,"black","blue",5,5))
             
-        #     r = r + 1
+            r = r + 1
 
         for room in self.mcp.thermostats.keys():
             thermostat = self.mcp.thermostats[room]
