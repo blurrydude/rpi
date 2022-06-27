@@ -53,6 +53,7 @@ class ThermostatSettings:
         self.use_whole_house_fan = False
         self.system_disabled = False
         self.swing_temp_offset = 1
+        self.manual_override = False
 
     def load_json(self, json_string):
         data = json.loads(json_string)
@@ -68,6 +69,10 @@ class ThermostatSettings:
         self.use_whole_house_fan = data["use_whole_house_fan"]
         self.system_disabled = str(data["system_disabled"]).lower() == "true"
         self.swing_temp_offset = data["swing_temp_offset"]
+        try:
+            self.manual_override = data["manual_override"]
+        except:
+            pass
         
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__, 
@@ -149,6 +154,25 @@ class Thermostat:
         if setting == "use_whole_house_fan": self.settings.use_whole_house_fan = bool(value)
         if setting == "ventilation_cycle_minutes": self.settings.ventilation_cycle_minutes = int(value)
         if setting == "settings_from_circuit_authority": self.settings_loaded = bool(value)
+        if setting == "manual_override": self.settings_loaded = bool(value)
+        if setting == "ac" and value == "on": 
+            self.ac_on()
+            return
+        if setting == "heat" and value == "on": 
+            self.heat_on()
+            return
+        if setting == "fan" and value == "on": 
+            self.fan_on()
+            return
+        if setting == "ac" and value == "off": 
+            self.ac_off()
+            return
+        if setting == "heat" and value == "off": 
+            self.heat_off()
+            return
+        if setting == "fan" and value == "off": 
+            self.fan_off()
+            return
         self.save_settings()
     
     def save_settings(self):
@@ -331,6 +355,9 @@ class Thermostat:
             return
         
         self.report()
+
+        if self.settings.manual_override is True:
+            return
 
         if self.circulating is True:
             if datetime.now() > self.circulate_until:
