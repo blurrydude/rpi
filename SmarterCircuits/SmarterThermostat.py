@@ -141,6 +141,7 @@ class Thermostat:
     
     def set(self, setting, value):
         SmarterLog.log("SmarterThermostat","set setting "+setting+" = "+ str(value))
+        self.mcp.send_discord_message(self.mcp.discord_house_room, self.mcp.name+" "+setting+" set to "+str(value))
         if setting == "air_circulation_minutes": self.settings.air_circulation_minutes = int(value)
         if setting == "circulation_cycle_minutes": self.settings.circulation_cycle_minutes = int(value)
         if setting == "failed_read_halt_limit": self.settings.failed_read_halt_limit = int(value)
