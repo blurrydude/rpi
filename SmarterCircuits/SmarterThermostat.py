@@ -155,23 +155,23 @@ class Thermostat:
         if setting == "use_whole_house_fan": self.settings.use_whole_house_fan = bool(value)
         if setting == "ventilation_cycle_minutes": self.settings.ventilation_cycle_minutes = int(value)
         if setting == "settings_from_circuit_authority": self.settings_loaded = bool(value)
-        if setting == "manual_override": self.manual_override = str(value).lower() == "true"
-        if setting == "ac" and value == "on" and self.manual_override is True: 
+        if setting == "manual_override": self.settings.manual_override = str(value).lower() == "true"
+        if setting == "ac" and value == "on" and self.settings.manual_override is True: 
             self.ac_on()
             return
-        if setting == "heat" and value == "on" and self.manual_override is True: 
+        if setting == "heat" and value == "on" and self.settings.manual_override is True: 
             self.heat_on()
             return
-        if setting == "fan" and value == "on" and self.manual_override is True: 
+        if setting == "fan" and value == "on" and self.settings.manual_override is True: 
             self.fan_on()
             return
-        if setting == "ac" and value == "off" and self.manual_override is True: 
+        if setting == "ac" and value == "off" and self.settings.manual_override is True: 
             self.ac_off()
             return
-        if setting == "heat" and value == "off" and self.manual_override is True: 
+        if setting == "heat" and value == "off" and self.settings.manual_override is True: 
             self.heat_off()
             return
-        if setting == "fan" and value == "off" and self.manual_override is True: 
+        if setting == "fan" and value == "off" and self.settings.manual_override is True: 
             self.fan_off()
             return
         self.save_settings()
