@@ -155,7 +155,7 @@ class Thermostat:
         if setting == "use_whole_house_fan": self.settings.use_whole_house_fan = bool(value)
         if setting == "ventilation_cycle_minutes": self.settings.ventilation_cycle_minutes = int(value)
         if setting == "settings_from_circuit_authority": self.settings_loaded = bool(value)
-        if setting == "manual_override": self.settings_loaded = bool(value)
+        if setting == "manual_override": self.settings_loaded = str(value).lower() == "true"
         if setting == "ac" and value == "on": 
             self.ac_on()
             return
