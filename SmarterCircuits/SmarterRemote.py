@@ -12,7 +12,7 @@ class RemoteHandler:
         self.load_config()
     
     def handle_i4_message(self, raw_message):
-        message = Shellyi4Message(raw_message)
+        message = Shellyi4Message(raw_message, self.mcp.discord_debug_room)
         button_id = message.source + "-" + message.circuit_id
         if button_id not in self.config["buttons"].keys():
             self.handle_non_remote_command(message)
@@ -64,14 +64,14 @@ class RemoteHandler:
         self.alt_config = json.load(open(os.path.dirname(os.path.realpath(__file__))+"/"+"inputs.json"))
 
 class Shellyi4Message:
-    def __init__(self, jsonData):
+    def __init__(self, jsonData, discord_debug_room):
         data = json.loads(jsonData)
         try:
             self.circuit_id = str(data["params"]["events"][0]["id"])
             self.event = data["params"]["events"][0]["event"]
             self.source = data["src"]
         except:
-            self.mcp.send_discord_message(self.mcp.discord_debug_room, "remote got bad data: "+jsonData)
+            self.mcp.send_discord_message(discord_debug_room, "remote got bad data: "+jsonData)
             self.circuit_id = "0"
             self.event = "none"
             self.source = "none"
