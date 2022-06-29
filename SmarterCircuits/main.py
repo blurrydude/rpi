@@ -175,10 +175,12 @@ class SmarterCircuitsMCP:
         data = ""
         for thermokey in self.thermostats.keys():
             thermo = self.thermostats[thermokey]
-            data = data + thermo.room.upper() + ": " + str(round(thermo.state.temperature,1)) + " F " + str(round(thermo.state.humidity,1)) +"%\n"
+            dp = self.get_dew_point_f(thermo.state.temperature, thermo.state.humidity)
+            data = data + thermo.room.upper() + ": " + str(round(thermo.state.temperature,1)) + " F " + str(round(thermo.state.humidity,1)) +"% (dew point: "+str(dp)+" F)\n"
         for sensor_id in self.config.ht_sensors.keys():
             sensor = self.config.ht_sensors[sensor_id]
-            data = data + sensor.name.upper() + ": " + str(round(sensor.status.temperature,1)) + " F " + str(round(sensor.status.humidity,1)) +"% (batt "+str(round(sensor.status.battery,1))+"%)\n"
+            dp = self.get_dew_point_f(sensor.status.temperature, sensor.status.humidity)
+            data = data + sensor.name.upper() + ": " + str(round(sensor.status.temperature,1)) + " F " + str(round(sensor.status.humidity,1)) +"% (dew point: "+str(dp)+" F, batt "+str(round(sensor.status.battery,1))+"%)\n"
         power = 0.0
         for circuit in self.config.circuits:
             power = power + circuit.status.relay.power
@@ -529,10 +531,14 @@ class SmarterCircuitsMCP:
         if subtopic == "sensor/humidity":
             sensor.status.humidity = float(message)
             if self.circuit_authority is True:
-                TC = self.FtoC(sensor.status.temperature)
-                Td = TC - ((100-sensor.status.humidity)/5)
-                dp = self.CtoF(Td)
+                dp = self.get_dew_point_f(sensor.status.temperature, sensor.status.humidity)
                 self.send_discord_message(self.discord_house_room, sensor.name+" humidity is "+message+" % dew point is "+str(dp)+" F")
+    
+    def get_dew_point_f(self, tf, rh):
+        TC = self.FtoC(tf)
+        Td = TC - ((100-rh)/5)
+        dp = self.CtoF(Td)
+        return dp
 
     def FtoC(f):
         return round((f - 32) * (5 / 9), 2)
