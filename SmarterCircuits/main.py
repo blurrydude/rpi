@@ -530,6 +530,16 @@ class SmarterCircuitsMCP:
             sensor.status.humidity = float(message)
             if self.circuit_authority is True:
                 self.send_discord_message(self.discord_house_room, sensor.name+" humidity is "+message+" %")
+                TC = self.FtoC(sensor.status.temperature)
+                Td = TC - ((100-sensor.status.humidity)/5)
+                dp = self.CtoF(Td)
+                self.send_discord_message(self.discord_house_room, sensor.name+" dew point is "+str(dp)+" %")
+
+    def FtoC(f):
+        return round((f - 32) * (5 / 9), 2)
+    
+    def CtoF(c):
+        return round((c * (9 / 5)) + 32, 2)
 
     def handle_shelly_motion_message(self, id, subtopic, message):
         sensor = self.config.motion_sensors[id]
