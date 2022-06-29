@@ -540,10 +540,10 @@ class SmarterCircuitsMCP:
         dp = self.CtoF(Td)
         return dp
 
-    def FtoC(f):
+    def FtoC(self, f):
         return round((f - 32) * (5 / 9), 2)
     
-    def CtoF(c):
+    def CtoF(self, c):
         return round((c * (9 / 5)) + 32, 2)
 
     def handle_shelly_motion_message(self, id, subtopic, message):
