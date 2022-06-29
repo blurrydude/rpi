@@ -529,11 +529,10 @@ class SmarterCircuitsMCP:
         if subtopic == "sensor/humidity":
             sensor.status.humidity = float(message)
             if self.circuit_authority is True:
-                self.send_discord_message(self.discord_house_room, sensor.name+" humidity is "+message+" %")
                 TC = self.FtoC(sensor.status.temperature)
                 Td = TC - ((100-sensor.status.humidity)/5)
                 dp = self.CtoF(Td)
-                self.send_discord_message(self.discord_house_room, sensor.name+" dew point is "+str(dp)+" %")
+                self.send_discord_message(self.discord_house_room, sensor.name+" humidity is "+message+" % dew point is "+str(dp)+" F")
 
     def FtoC(f):
         return round((f - 32) * (5 / 9), 2)
