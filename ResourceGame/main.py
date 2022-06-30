@@ -3,7 +3,7 @@ import math
 from random import randint, random
 import pygame
 from mapgen import MapMaker
-from models import TileType, Worker, MouseMode
+from models import TileType, Worker, MouseMode, Tile
 pygame.init()
 
 class Game:
@@ -55,6 +55,8 @@ class Game:
             self.move_view(1,0)
         
         if pressed_keys[pygame.K_c] and self.mouse_mode == MouseMode.STANDBY:
+            self.text_elements["notification"].update_text("Place Worker Unit")
+            self.text_elements["notification"].show = True
             self.mouse_mode = MouseMode.PLACE_UNIT
             self.unit_to_place = Worker()
         
@@ -71,15 +73,46 @@ class Game:
             dx = round((mouse_pos[0] - self.last_mouse_pos[0]) / self.tile_size)
             dy = round((mouse_pos[1] - self.last_mouse_pos[1]) / self.tile_size)
             self.move_view(dx*-1,dy*-1)
+        elif change is True and mouse_press[0] is False:
+            self.handle_standby_mouse_up(mouse_pos)
         self.last_mouse_pos = mouse_pos
 
-    def handle_mouse_left(self, pos):
-        if self.mouse_mode == MouseMode.PLACE_UNIT and self.unit_to_place is not None:
-            self.unit_to_place.x = math.floor(pos[0]/8) + self.view_pos[0]
-            self.unit_to_place.y = math.floor(pos[1]/8) + self.view_pos[1]
-            self.workers.append(self.unit_to_place)
+    def handle_standby_mouse_up(self, pos):
+        map_pos = (
+            math.floor(pos[0]/self.tile_size)+self.view_pos[0],
+            math.floor(pos[1]/self.tile_size)+self.view_pos[1]
+        )
+        handled = False
+        for worker in self.workers:
+            if worker.x == map_pos[0] and worker.y == map_pos[1]:
+                self.unit_to_move = worker
+                self.mouse_mode = MouseMode.MOVE_UNIT_TO
+                self.text_elements["notification"].update_text("Click to move worker unit")
+                self.text_elements["notification"].show = True
+                handled = True
+                break
         
+
+    def handle_mouse_left(self, pos):
+        map_pos = (
+            math.floor(pos[0]/self.tile_size) + self.view_pos[0],
+            math.floor(pos[1]/self.tile_size) + self.view_pos[1]
+        )
+        if self.mouse_mode == MouseMode.PLACE_UNIT and self.unit_to_place is not None:
+            self.unit_to_place.x = map_pos[0]
+            self.unit_to_place.y = map_pos[1]
+            self.workers.append(self.unit_to_place)
+            self.unit_to_place = None
+            self.text_elements["notification"].show = False
+        
+        if self.mouse_mode == MouseMode.MOVE_UNIT_TO and self.unit_to_move is not None:
+            self.unit_to_move.walk_target = map_pos
+            self.text_elements["notification"].show = False
         self.mouse_mode = MouseMode.STANDBY
+    
+    def get_tile(self, x, y) -> Tile:
+        i = y + (x * self.map_size[1])
+        return self.map.tiles[i]
 
     def update(self):
         if self.last_tick < datetime.now() + timedelta(seconds=1):
@@ -87,6 +120,8 @@ class Game:
         for tile in self.map.tiles:
             for structure in tile.structures:
                 structure.update(self.gametime)
+        for worker in self.workers:
+            worker.update(self)
     
     def in_view(self, tile):
         return tile.x >= self.view_pos[0] and tile.y >= self.view_pos[1] and tile.x <= self.view_pos[0] + self.view_max[0] and tile.y <= self.view_pos[1] + self.view_max[1]
@@ -115,13 +150,15 @@ class Game:
         for worker in self.workers:
             if self.in_view(worker) is False:
                 continue
-            pygame.draw.circle(self.screen, (255, 0, 0), ((worker.x-self.view_pos[0])*self.tile_size, (worker.y-self.view_pos[1])*self.tile_size), 10)
+            pygame.draw.circle(self.screen, (128, 128, 0), ((worker.x-self.view_pos[0])*self.tile_size, (worker.y-self.view_pos[1])*self.tile_size), 8)
         
         #UI
+        for key in self.text_elements:
+            self.text_elements[key].draw()
 
         #mouse
         if self.mouse_mode == MouseMode.PLACE_UNIT:
-            pygame.draw.circle(self.screen, (255, 0, 0), (self.last_mouse_pos[0], self.last_mouse_pos[1]), 10)
+            pygame.draw.circle(self.screen, (128, 128, 0), (self.last_mouse_pos[0], self.last_mouse_pos[1]), 8)
 
 class TextElement:
     def __init__(self, screen, x, y, font, text, color=(255,255,255), shadow=False, show=True):
@@ -130,13 +167,14 @@ class TextElement:
         self.y = y
         self.show = show
         self.font = font
+        self.color = color
         self.display_shadow = shadow
         self.text = self.font.render(text, True, color)
         self.shadow = self.font.render(text, True, (0,0,0))
     
     def update_text(self, text):
-        self.text = self.fonts[self.font].render(text, True, self.color)
-        self.shadow = self.fonts[self.font].render(text, True, (0,0,0))
+        self.text = self.font.render(text, True, self.color)
+        self.shadow = self.font.render(text, True, (0,0,0))
     
     def draw(self):
         if self.show is False:

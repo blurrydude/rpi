@@ -66,6 +66,40 @@ class Worker:
     def __init__(self):
         self.x = 0
         self.y = 0
+        self.walk_target = None
 
-    def update(self, gametime):
-        pass
+    def update(self, game):
+        if self.walk_target is None:
+            return
+        
+        left_x = right_x = next_x = self.x
+        left_y = right_y = next_y = self.y
+        
+        if next_x < self.walk_target[0]:
+            next_x = next_x + 1
+            left_x = left_x + 1
+        elif next_x > self.walk_target[0]:
+            next_x = next_x - 1
+            right_x = right_x - 1
+        if next_y < self.walk_target[1]:
+            next_y = next_y + 1
+            left_y = left_y + 1
+        elif next_y > self.walk_target[1]:
+            next_y = next_y - 1
+            right_y = right_y - 1
+        next_tile = game.get_tile(next_x, next_y)
+        left_tile = game.get_tile(left_x, left_y)
+        right_tile = game.get_tile(right_x, right_y)
+        if next_tile.t not in [TileType.WATER, TileType.SNOW]:
+            self.x = next_x
+            self.y = next_y
+        elif left_tile.t not in [TileType.WATER, TileType.SNOW]:
+            self.x = left_x
+            self.y = left_y
+        elif right_tile.t not in [TileType.WATER, TileType.SNOW]:
+            self.x = right_x
+            self.y = right_y
+        else:
+            self.walk_target = None
+        if self.x == self.walk_target[0] and self.y == self.walk_target[1]:
+            self.walk_target = None
