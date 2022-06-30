@@ -1,45 +1,10 @@
 from datetime import datetime, timedelta
+import math
 from random import randint, random
 import pygame
 from mapgen import MapMaker
-from models import TileType
+from models import TileType, Worker, MouseMode
 pygame.init()
-
-class WaterPump:
-    def __init__(self, tile):
-        self.tile = tile
-        self.last_pump = 0
-        self.gallons_stored = 0
-        self.capacity = 5000
-        self.speed = 2
-    
-    def update(self, gametime):
-        if self.gallons_stored < self.capacity and gametime - self.last_pump > (60 / self.speed):
-            self.last_pump = gametime
-            self.gallons_stored = self.gallons_stored + 1
-
-class Mine:
-    def __init__(self, tile, rtype):
-        self.tile = tile
-        self.last_mine = 0
-        self.ore_stored = 0
-        self.capacity = 500
-        self.speed = 10
-        self.resource_type = rtype
-    
-    def update(self, gametime):
-        if self.ore_stored < self.capacity and self.tile.q > 0 and gametime - self.last_mine > (60 / self.speed):
-            self.last_mine = gametime
-            self.ore_stored = self.ore_stored + 1
-            self.tile.q = self.tile.q - 1
-
-class Worker:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-    def update(self, gametime):
-        pass
 
 class Game:
     def __init__(self):
@@ -56,12 +21,19 @@ class Game:
         self.view_max = (self.screen_size[0]/self.tile_size,self.screen_size[1]/self.tile_size)
         self.last_mouse_pos = (0,0)
         self.last_mouse_press = False
+        self.unit_to_place = None
+        self.structure_to_place = None
+        self.unit_to_move = None
+        self.mouse_mode = MouseMode.STANDBY
         self.fonts = [
             pygame.font.SysFont(None, 16),
             pygame.font.SysFont(None, 20),
             pygame.font.SysFont(None, 24),
             pygame.font.SysFont(None, 32)
         ]
+        self.text_elements = {
+            "notification": TextElement(self.screen, 20, 20, self.fonts[3], "", shadow=True, show=False)
+        }
         self.workers = []
         #self.bg = pygame.image.fromstring(self.map.image.tobytes(),self.map.image.size,self.map.image.mode).convert()
     
@@ -81,17 +53,33 @@ class Game:
             self.move_view(-1,0)
         if pressed_keys[pygame.K_RIGHT]:
             self.move_view(1,0)
-        if pressed_keys[pygame.K_w]:
-            self.workers.append(Worker(randint(0,self.map_size[0]),randint(0,self.map_size[1])))
+        
+        if pressed_keys[pygame.K_c] and self.mouse_mode == MouseMode.STANDBY:
+            self.mouse_mode = MouseMode.PLACE_UNIT
+            self.unit_to_place = Worker()
+        
         mouse_pos = pygame.mouse.get_pos()
         mouse_press = pygame.mouse.get_pressed()
+
+        change = False
         if self.last_mouse_press != mouse_press[0]:
             self.last_mouse_press = mouse_press[0]
+            change = True
+        if change is True and self.mouse_mode != MouseMode.STANDBY and mouse_press[0] is True:
+            self.handle_mouse_left(mouse_pos)
         elif mouse_press[0] is True:
             dx = round((mouse_pos[0] - self.last_mouse_pos[0]) / self.tile_size)
             dy = round((mouse_pos[1] - self.last_mouse_pos[1]) / self.tile_size)
             self.move_view(dx*-1,dy*-1)
         self.last_mouse_pos = mouse_pos
+
+    def handle_mouse_left(self, pos):
+        if self.mouse_mode == MouseMode.PLACE_UNIT and self.unit_to_place is not None:
+            self.unit_to_place.x = math.floor(pos[0]/8) + self.view_pos[0]
+            self.unit_to_place.y = math.floor(pos[1]/8) + self.view_pos[1]
+            self.workers.append(self.unit_to_place)
+        
+        self.mouse_mode = MouseMode.STANDBY
 
     def update(self):
         if self.last_tick < datetime.now() + timedelta(seconds=1):
@@ -130,13 +118,36 @@ class Game:
             pygame.draw.circle(self.screen, (255, 0, 0), ((worker.x-self.view_pos[0])*self.tile_size, (worker.y-self.view_pos[1])*self.tile_size), 10)
         
         #UI
-        txt = self.fonts[3].render('hello', True, (255,255,255))
-        shdw = self.fonts[3].render('hello', True, (0,0,0))
-        self.screen.blit(shdw, (21, 21))
-        self.screen.blit(shdw, (19, 19))
-        self.screen.blit(shdw, (19, 21))
-        self.screen.blit(shdw, (21, 19))
-        self.screen.blit(txt, (20, 20))
+
+        #mouse
+        if self.mouse_mode == MouseMode.PLACE_UNIT:
+            pygame.draw.circle(self.screen, (255, 0, 0), (self.last_mouse_pos[0], self.last_mouse_pos[1]), 10)
+
+class TextElement:
+    def __init__(self, screen, x, y, font, text, color=(255,255,255), shadow=False, show=True):
+        self.screen = screen
+        self.x = x
+        self.y = y
+        self.show = show
+        self.font = font
+        self.display_shadow = shadow
+        self.text = self.font.render(text, True, color)
+        self.shadow = self.font.render(text, True, (0,0,0))
+    
+    def update_text(self, text):
+        self.text = self.fonts[self.font].render(text, True, self.color)
+        self.shadow = self.fonts[self.font].render(text, True, (0,0,0))
+    
+    def draw(self):
+        if self.show is False:
+            return
+        if self.display_shadow is True:
+            self.screen.blit(self.shadow, (self.x+1, self.y-1))
+            self.screen.blit(self.shadow, (self.x+1, self.y+1))
+            self.screen.blit(self.shadow, (self.x-1, self.y-1))
+            self.screen.blit(self.shadow, (self.x-1, self.y+1))
+        self.screen.blit(self.text, (self.x, self.y))
+
 
 if __name__ == "__main__":
     game = Game()
