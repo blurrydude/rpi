@@ -3,12 +3,12 @@ import math
 from random import randint, random
 import pygame
 from mapgen import MapMaker
-from models import TileType, Worker, MouseMode, Tile
+from models import TileType, Worker, MouseMode, Tile, ResourceType
 pygame.init()
 
 class Game:
     def __init__(self):
-        self.tile_size = 8
+        self.tile_size = 16
         self.screen_size = (1024, 768)
         self.screen = pygame.display.set_mode([self.screen_size[0],self.screen_size[1]])
         self.running = True
@@ -73,7 +73,7 @@ class Game:
             dx = round((mouse_pos[0] - self.last_mouse_pos[0]) / self.tile_size)
             dy = round((mouse_pos[1] - self.last_mouse_pos[1]) / self.tile_size)
             self.move_view(dx*-1,dy*-1)
-        elif change is True and mouse_press[0] is False:
+        elif change is True and self.mouse_mode == MouseMode.STANDBY and mouse_press[0] is False:
             self.handle_standby_mouse_up(mouse_pos)
         self.last_mouse_pos = mouse_pos
 
@@ -82,6 +82,7 @@ class Game:
             math.floor(pos[0]/self.tile_size)+self.view_pos[0],
             math.floor(pos[1]/self.tile_size)+self.view_pos[1]
         )
+        print("handle_standby_mouse_up pos:"+str(pos)+" map_pos:"+str(map_pos))
         handled = False
         for worker in self.workers:
             if worker.x == map_pos[0] and worker.y == map_pos[1]:
@@ -91,6 +92,9 @@ class Game:
                 self.text_elements["notification"].show = True
                 handled = True
                 break
+        if handled is False:
+            tile = game.get_tile(map_pos[0], map_pos[1])
+            print("clicked tile: ("+str(map_pos)+") "+str(tile.t))
         
 
     def handle_mouse_left(self, pos):
@@ -111,7 +115,7 @@ class Game:
         self.mouse_mode = MouseMode.STANDBY
     
     def get_tile(self, x, y) -> Tile:
-        i = y + (x * self.map_size[1])
+        i = x + (y * self.map_size[0])
         return self.map.tiles[i]
 
     def update(self):
@@ -146,11 +150,29 @@ class Game:
             if tile.t == TileType.SAND:
                 surf.fill((255, 196, 0))
             self.screen.blit(surf,((tile.x-self.view_pos[0])*self.tile_size,(tile.y-self.view_pos[1])*self.tile_size))
+
+        for tile in self.map.tiles:
+            if tile.r == ResourceType.IRON:
+                rsurf = pygame.Surface((self.tile_size-2, self.tile_size-2))
+                rsurf.fill((128, 128, 255))
+                self.screen.blit(rsurf,((tile.x-self.view_pos[0])*self.tile_size+1,(tile.y-self.view_pos[1])*self.tile_size+1))
+            if tile.r == ResourceType.COPPER:
+                rsurf = pygame.Surface((self.tile_size-2, self.tile_size-2))
+                rsurf.fill((196, 0, 0))
+                self.screen.blit(rsurf,((tile.x-self.view_pos[0])*self.tile_size+1,(tile.y-self.view_pos[1])*self.tile_size+1))
+            if tile.r == ResourceType.GOLD:
+                rsurf = pygame.Surface((self.tile_size-2, self.tile_size-2))
+                rsurf.fill((200, 255, 0))
+                self.screen.blit(rsurf,((tile.x-self.view_pos[0])*self.tile_size+1,(tile.y-self.view_pos[1])*self.tile_size+1))
+
+        for tile in self.map.tiles:
+            if tile.tree is True:
+                pygame.draw.circle(self.screen, (0, 128, 0), ((tile.x-self.view_pos[0])*self.tile_size+(self.tile_size/2), (tile.y-self.view_pos[1])*self.tile_size+(self.tile_size/2)), ((self.tile_size/4)*3))
         
         for worker in self.workers:
             if self.in_view(worker) is False:
                 continue
-            pygame.draw.circle(self.screen, (128, 128, 0), ((worker.x-self.view_pos[0])*self.tile_size, (worker.y-self.view_pos[1])*self.tile_size), 8)
+            pygame.draw.circle(self.screen, (196, 128, 0), ((worker.x-self.view_pos[0])*self.tile_size+(self.tile_size/2), (worker.y-self.view_pos[1])*self.tile_size+(self.tile_size/2)), (self.tile_size/3))
         
         #UI
         for key in self.text_elements:
@@ -158,7 +180,9 @@ class Game:
 
         #mouse
         if self.mouse_mode == MouseMode.PLACE_UNIT:
-            pygame.draw.circle(self.screen, (128, 128, 0), (self.last_mouse_pos[0], self.last_mouse_pos[1]), 8)
+            pygame.draw.circle(self.screen, (128, 128, 0), (self.last_mouse_pos[0], self.last_mouse_pos[1]), (self.tile_size/2)+2)
+        if self.mouse_mode == MouseMode.MOVE_UNIT_TO:
+            pygame.draw.circle(self.screen, (0, 128, 0), (self.last_mouse_pos[0], self.last_mouse_pos[1]), (self.tile_size/3)+2)
 
 class TextElement:
     def __init__(self, screen, x, y, font, text, color=(255,255,255), shadow=False, show=True):

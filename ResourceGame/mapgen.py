@@ -132,12 +132,48 @@ class MapMaker:
                 tiles.append(tile)
         return tiles
     
+    def add_resources(self, map):
+        size = map.image.size[0]
+        resources = [
+            [ResourceType.IRON,10000000],
+            [ResourceType.COPPER,5000000],
+            [ResourceType.GOLD,2500000],
+        ]
+        for r in range(len(resources)):
+            while resources[r][1] > 0:
+                pos = self.random_pos(map)
+                target_type = TileType.GRASS
+                if resources[r][0] == ResourceType.COPPER:
+                    target_type = TileType.MOUNTAIN
+                while map.tiles[self.tile_index(pos[0],pos[1],size)].t != target_type:
+                    pos = self.random_pos(map)
+                deposit = random.randint(100,500)*1000
+                map.tiles[self.tile_index(pos[0],pos[1],size)].r = resources[r][0]
+                map.tiles[self.tile_index(pos[0],pos[1],size)].q = deposit
+                resources[r][1] = resources[r][1] - deposit
+        tree_count = 3000
+        while tree_count > 0:
+            pos = self.random_pos(map)
+            while map.tiles[self.tile_index(pos[0],pos[1],size)].t != TileType.GRASS or map.tiles[self.tile_index(pos[0],pos[1],size)].r != ResourceType.NONE:
+                pos = self.random_pos(map)
+            map.tiles[self.tile_index(pos[0],pos[1],size)].tree = True
+            tree_count = tree_count - 1
+
+    def random_pos(self, map):
+        size = map.image.size[0]
+        return (random.randint(0,size-1),random.randint(0,size-1))
+
+    def tile_index(self, x, y, size):
+        return x + (y * size)
+    
     def gen_map(self):
-        map = self.get_random_height_map(8)
+        hmap = self.get_random_height_map(8)
         for i in range(6):
-            map = self.double_height_map_scale(map)
+            hmap = self.double_height_map_scale(hmap)
             if i < 4:
-                self.add_noise(map, 25)
-        img = self.make_map(map)
+                self.add_noise(hmap, 25)
+        img = self.make_map(hmap)
         self.despeckle(img)
-        return Map(img, self.read_tile_data(img))
+        map = Map(img, self.read_tile_data(img))
+        self.add_resources(map)
+        return map

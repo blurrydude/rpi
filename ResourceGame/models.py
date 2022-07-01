@@ -4,6 +4,7 @@ class Map:
     def __init__(self, img, tiles):
         self.image = img
         self.tiles = tiles
+        self.trees = []
 
 class Tile:
     def __init__(self, x, y):
@@ -12,6 +13,7 @@ class Tile:
         self.t = TileType.GRASS
         self.r = ResourceType.NONE
         self.q = 0
+        self.tree = False
         self.structures = []
 
 class ResourceType(Enum):
@@ -19,7 +21,9 @@ class ResourceType(Enum):
     WATER = 1,
     STONE = 2,
     IRON = 3,
-    COPPER = 4
+    COPPER = 4,
+    GOLD = 5,
+    LUMBER = 6
 
 class TileType(Enum):
     WATER = 0,
@@ -67,39 +71,42 @@ class Worker:
         self.x = 0
         self.y = 0
         self.walk_target = None
+        self.prefs = {
+            "N":  [(0,-1),(-1,-1),(1,-1),(-1,0),(1,0)],
+            "E":  [(1,0),(1,-1),(1,1),(0,-1),(0,1)],
+            "S":  [(0,1),(1,1),(-1,1),(1,0),(-1,0)],
+            "W":  [(-1,0),(-1,1),(-1,-1),(0,1),(0,-1)],
+            "EN": [(1,-1),(0,-1),(1,0),(-1,-1),(1,1)],
+            "ES": [(1,1),(1,0),(0,1),(1,-1),(-1,1)],
+            "WN": [(-1,-1),(-1,0),(0,-1),(-1,1),(1,-1)],
+            "WS": [(-1,1),(0,1),(-1,0),(1,1),(-1,-1)],
+        }
 
     def update(self, game):
         if self.walk_target is None:
             return
         
-        left_x = right_x = next_x = self.x
-        left_y = right_y = next_y = self.y
-        
-        if next_x < self.walk_target[0]:
-            next_x = next_x + 1
-            left_x = left_x + 1
-        elif next_x > self.walk_target[0]:
-            next_x = next_x - 1
-            right_x = right_x - 1
-        if next_y < self.walk_target[1]:
-            next_y = next_y + 1
-            left_y = left_y + 1
-        elif next_y > self.walk_target[1]:
-            next_y = next_y - 1
-            right_y = right_y - 1
-        next_tile = game.get_tile(next_x, next_y)
-        left_tile = game.get_tile(left_x, left_y)
-        right_tile = game.get_tile(right_x, right_y)
-        if next_tile.t not in [TileType.WATER, TileType.SNOW]:
-            self.x = next_x
-            self.y = next_y
-        elif left_tile.t not in [TileType.WATER, TileType.SNOW]:
-            self.x = left_x
-            self.y = left_y
-        elif right_tile.t not in [TileType.WATER, TileType.SNOW]:
-            self.x = right_x
-            self.y = right_y
-        else:
+        dir = ""
+        if self.x < self.walk_target[0]:
+            dir = dir + "E"
+        elif self.x > self.walk_target[0]:
+            dir = dir + "W"
+        if self.y < self.walk_target[1]:
+            dir = dir + "S"
+        elif self.y > self.walk_target[1]:
+            dir = dir + "N"
+        if dir == "":
             self.walk_target = None
+        prefs = self.prefs[dir]
+        for pref in prefs:
+            next_x = pref[0]+self.x
+            next_y = pref[1]+self.y
+            next_tile = game.get_tile(next_x, next_y)
+            if next_tile.t not in [TileType.WATER, TileType.SNOW]:
+                print(dir+" walk next "+str(next_x)+","+str(next_y)+" "+str(next_tile.t))
+                self.x = next_x
+                self.y = next_y
+                break
         if self.x == self.walk_target[0] and self.y == self.walk_target[1]:
+            print("done walking")
             self.walk_target = None
