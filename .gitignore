@@ -9,3 +9,4 @@ SmarterCircuits/thermosettings.json
 SmarterCircuits/shellylogins.json
 SmarterCircuits/secrets.json
 SmarterCircuits/__pycache__
+*.pyc

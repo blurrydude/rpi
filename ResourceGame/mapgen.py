@@ -115,8 +115,9 @@ class MapMaker:
     
     def read_tile_data(self, img):
         size = img.size[0] # since we're square
-        tiles = []
+        tiles = [[]] * size
         for y in range(size):
+            tiles[y] = []
             for x in range(size):
                 p = img.getpixel((x,y))
                 tile = Tile(x,y)
@@ -129,7 +130,7 @@ class MapMaker:
                     tile.t = TileType.SNOW
                 if p == (0,255,0):
                     tile.t = TileType.GRASS
-                tiles.append(tile)
+                tiles[y].append(tile)
         return tiles
     
     def add_resources(self, map):
@@ -145,26 +146,23 @@ class MapMaker:
                 target_type = TileType.GRASS
                 if resources[r][0] == ResourceType.COPPER:
                     target_type = TileType.MOUNTAIN
-                while map.tiles[self.tile_index(pos[0],pos[1],size)].t != target_type:
+                while map.tiles[pos[1]][pos[0]].t != target_type:
                     pos = self.random_pos(map)
                 deposit = random.randint(100,500)*1000
-                map.tiles[self.tile_index(pos[0],pos[1],size)].r = resources[r][0]
-                map.tiles[self.tile_index(pos[0],pos[1],size)].q = deposit
+                map.tiles[pos[1]][pos[0]].r = resources[r][0]
+                map.tiles[pos[1]][pos[0]].q = deposit
                 resources[r][1] = resources[r][1] - deposit
         tree_count = 3000
         while tree_count > 0:
             pos = self.random_pos(map)
-            while map.tiles[self.tile_index(pos[0],pos[1],size)].t != TileType.GRASS or map.tiles[self.tile_index(pos[0],pos[1],size)].r != ResourceType.NONE:
+            while map.tiles[pos[1]][pos[0]].t != TileType.GRASS or map.tiles[pos[1]][pos[0]].r != ResourceType.NONE:
                 pos = self.random_pos(map)
-            map.tiles[self.tile_index(pos[0],pos[1],size)].tree = True
+            map.tiles[pos[1]][pos[0]].tree = True
             tree_count = tree_count - 1
 
     def random_pos(self, map):
         size = map.image.size[0]
         return (random.randint(0,size-1),random.randint(0,size-1))
-
-    def tile_index(self, x, y, size):
-        return x + (y * size)
     
     def gen_map(self):
         hmap = self.get_random_height_map(8)
