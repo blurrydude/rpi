@@ -14,6 +14,7 @@ class Game:
         self.running = True
         self.last_tick = datetime.now()
         self.gametime = 0
+        self.fps = 0
         maker = MapMaker()
         self.map = maker.gen_map()
         self.map_size = self.map.image.size
@@ -25,6 +26,9 @@ class Game:
         self.structure_to_place = None
         self.unit_to_move = None
         self.mouse_mode = MouseMode.STANDBY
+        self.mouse_dragging = False
+        self.show_map = True
+        self.show_resources = True
         self.fonts = [
             pygame.font.SysFont(None, 16),
             pygame.font.SysFont(None, 20),
@@ -32,9 +36,26 @@ class Game:
             pygame.font.SysFont(None, 32)
         ]
         self.text_elements = {
-            "notification": TextElement(self.screen, 20, 20, self.fonts[3], "", shadow=True, show=False)
+            "notification": TextElement(self.screen, 20, 20, self.fonts[3], "", shadow=True, show=False),
+            "fps": TextElement(self.screen, 20, 4, self.fonts[2], "0 fps", shadow=True, show=True)
         }
         self.workers = []
+        self.surfaces = {
+            "grass": pygame.Surface((self.tile_size, self.tile_size)),
+            "water": pygame.Surface((self.tile_size, self.tile_size)),
+            "mountain": pygame.Surface((self.tile_size, self.tile_size)),
+            "snow": pygame.Surface((self.tile_size, self.tile_size)),
+            "iron": pygame.Surface((self.tile_size-2, self.tile_size-2)),
+            "copper": pygame.Surface((self.tile_size-2, self.tile_size-2)),
+            "gold": pygame.Surface((self.tile_size-2, self.tile_size-2))
+        }
+        self.surfaces["grass"].fill((0,255,0))
+        self.surfaces["water"].fill((0,0,255))
+        self.surfaces["mountain"].fill((128,128,128))
+        self.surfaces["snow"].fill((255,255,255))
+        self.surfaces["iron"].fill((128, 128, 255))
+        self.surfaces["copper"].fill((196, 0, 0))
+        self.surfaces["gold"].fill((200, 255, 0))
         #self.bg = pygame.image.fromstring(self.map.image.tobytes(),self.map.image.size,self.map.image.mode).convert()
     
     def move_view(self, dx, dy):
@@ -53,6 +74,10 @@ class Game:
             self.move_view(-1,0)
         if pressed_keys[pygame.K_RIGHT]:
             self.move_view(1,0)
+        if pressed_keys[pygame.K_m]:
+            self.show_map = self.show_map == False
+        if pressed_keys[pygame.K_r]:
+            self.show_resources = self.show_resources == False
         
         if pressed_keys[pygame.K_c] and self.mouse_mode == MouseMode.STANDBY:
             self.text_elements["notification"].update_text("Place Worker Unit")
@@ -72,9 +97,13 @@ class Game:
         elif mouse_press[0] is True:
             dx = round((mouse_pos[0] - self.last_mouse_pos[0]) / self.tile_size)
             dy = round((mouse_pos[1] - self.last_mouse_pos[1]) / self.tile_size)
-            self.move_view(dx*-1,dy*-1)
-        elif change is True and self.mouse_mode == MouseMode.STANDBY and mouse_press[0] is False:
+            if dx != 0 and dy != 0:
+                self.move_view(dx*-1,dy*-1)
+                self.mouse_dragging = True
+        elif change is True and self.mouse_dragging is False and self.mouse_mode == MouseMode.STANDBY and mouse_press[0] is False:
             self.handle_standby_mouse_up(mouse_pos)
+        if change is True and self.mouse_dragging is True and mouse_press[0] is False:
+            self.mouse_dragging = False
         self.last_mouse_pos = mouse_pos
 
     def handle_standby_mouse_up(self, pos):
@@ -135,39 +164,49 @@ class Game:
 
     def draw(self):
         self.screen.fill((0, 0, 0))
-        for tile in self.map.tiles:
-            if self.in_view(tile) is False:
-                continue
-            surf = pygame.Surface((self.tile_size, self.tile_size))
-            if tile.t == TileType.GRASS:
-                surf.fill((0, 255, 0))
-            if tile.t == TileType.WATER:
-                surf.fill((0, 0, 255))
-            if tile.t == TileType.SNOW:
-                surf.fill((255, 255, 255))
-            if tile.t == TileType.MOUNTAIN:
-                surf.fill((196, 196, 196))
-            if tile.t == TileType.SAND:
-                surf.fill((255, 196, 0))
-            self.screen.blit(surf,((tile.x-self.view_pos[0])*self.tile_size,(tile.y-self.view_pos[1])*self.tile_size))
+        if self.show_map is True:
+            for tile in self.map.tiles:
+                if self.in_view(tile) is False:
+                    continue
+                # surf = pygame.Surface((self.tile_size, self.tile_size))
+                if tile.t == TileType.GRASS:
+                    # surf.fill((0, 255, 0))
+                    surf = self.surfaces["grass"]
+                if tile.t == TileType.WATER:
+                    # surf.fill((0, 0, 255))
+                    surf = self.surfaces["water"]
+                if tile.t == TileType.SNOW:
+                    # surf.fill((255, 255, 255))
+                    surf = self.surfaces["snow"]
+                if tile.t == TileType.MOUNTAIN:
+                    # surf.fill((196, 196, 196))
+                    surf = self.surfaces["mountain"]
+                if tile.t == TileType.SAND:
+                    # surf.fill((255, 196, 0))
+                    surf = self.surfaces["sand"]
+                self.screen.blit(surf,((tile.x-self.view_pos[0])*self.tile_size,(tile.y-self.view_pos[1])*self.tile_size))
 
-        for tile in self.map.tiles:
-            if tile.r == ResourceType.IRON:
-                rsurf = pygame.Surface((self.tile_size-2, self.tile_size-2))
-                rsurf.fill((128, 128, 255))
-                self.screen.blit(rsurf,((tile.x-self.view_pos[0])*self.tile_size+1,(tile.y-self.view_pos[1])*self.tile_size+1))
-            if tile.r == ResourceType.COPPER:
-                rsurf = pygame.Surface((self.tile_size-2, self.tile_size-2))
-                rsurf.fill((196, 0, 0))
-                self.screen.blit(rsurf,((tile.x-self.view_pos[0])*self.tile_size+1,(tile.y-self.view_pos[1])*self.tile_size+1))
-            if tile.r == ResourceType.GOLD:
-                rsurf = pygame.Surface((self.tile_size-2, self.tile_size-2))
-                rsurf.fill((200, 255, 0))
-                self.screen.blit(rsurf,((tile.x-self.view_pos[0])*self.tile_size+1,(tile.y-self.view_pos[1])*self.tile_size+1))
+        if self.show_resources is True:
+            for tile in self.map.tiles:
+                if tile.r == ResourceType.IRON:
+                    # rsurf = pygame.Surface((self.tile_size-2, self.tile_size-2))
+                    # rsurf.fill((128, 128, 255))
+                    rsurf = self.surfaces["iron"]
+                    self.screen.blit(rsurf,((tile.x-self.view_pos[0])*self.tile_size+1,(tile.y-self.view_pos[1])*self.tile_size+1))
+                if tile.r == ResourceType.COPPER:
+                    # rsurf = pygame.Surface((self.tile_size-2, self.tile_size-2))
+                    # rsurf.fill((196, 0, 0))
+                    rsurf = self.surfaces["copper"]
+                    self.screen.blit(rsurf,((tile.x-self.view_pos[0])*self.tile_size+1,(tile.y-self.view_pos[1])*self.tile_size+1))
+                if tile.r == ResourceType.GOLD:
+                    # rsurf = pygame.Surface((self.tile_size-2, self.tile_size-2))
+                    # rsurf.fill((200, 255, 0))
+                    rsurf = self.surfaces["gold"]
+                    self.screen.blit(rsurf,((tile.x-self.view_pos[0])*self.tile_size+1,(tile.y-self.view_pos[1])*self.tile_size+1))
 
-        for tile in self.map.tiles:
-            if tile.tree is True:
-                pygame.draw.circle(self.screen, (0, 128, 0), ((tile.x-self.view_pos[0])*self.tile_size+(self.tile_size/2), (tile.y-self.view_pos[1])*self.tile_size+(self.tile_size/2)), ((self.tile_size/4)*3))
+            for tile in self.map.tiles:
+                if tile.tree is True:
+                    pygame.draw.circle(self.screen, (0, 128, 0), ((tile.x-self.view_pos[0])*self.tile_size+(self.tile_size/2), (tile.y-self.view_pos[1])*self.tile_size+(self.tile_size/2)), ((self.tile_size/4)*3))
         
         for worker in self.workers:
             if self.in_view(worker) is False:
@@ -214,6 +253,8 @@ class TextElement:
 if __name__ == "__main__":
     game = Game()
     pygame.mouse.set_visible(True)
+    last_second = datetime.now()
+    frame = 0
     while game.running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -222,5 +263,13 @@ if __name__ == "__main__":
         game.update()
         game.draw()
         pygame.display.flip()
+        if last_second < datetime.now() - timedelta(seconds=1):
+            last_second = datetime.now()
+            fps = frame
+            frame = 0
+            game.fps = fps
+            game.text_elements["fps"].update_text(str(fps)+" fps")
+        else:
+            frame = frame + 1
 
     pygame.quit()
