@@ -1,9 +1,18 @@
 from audioop import minmax
 from PIL import Image
 import os
+import json
 
-directory = "C:\\Users\\idkline\\Dropbox\\UOStuff\\UOArt\\Items\\"
-#directory = "/home/ian/Dropbox/UOStuff/UOArt/Items/"
+items = {}
+#directory = "C:\\Users\\idkline\\Dropbox\\UOStuff\\UOArt\\Items\\"
+directory = "/home/ian/Dropbox/UOStuff/UOArt/Items/"
+home_dir = os.path.dirname(os.path.realpath(__file__))+"/"
+
+image_size = (1920, 1080)
+screen_offeset_x = 540
+screen_offeset_y = 100
+img = Image.new(mode="RGBA", size=image_size)
+
 def get_item_image(id):
     f = os.path.join(directory, str(id)+".png")    
     item = Image.open(f)
@@ -17,61 +26,35 @@ def cart_to_iso(point):
 def mappos_to_screen_pos(x, y, h = 0):
     rsx = (y * -22) + (x * 22)
     rsy = (y * 22) + (x * 22) - h
-    return (rsx, rsy)
+    return [rsx, rsy, 0]
 
-def add_item(img, item, screen_pos):
+def add_item(img, itemnum, map_pos):
+    global items
+    item = items[str(itemnum)]
+    point = mappos_to_screen_pos(map_pos[0],map_pos[1],item.height-44-map_pos[2])
+    screen_pos = (
+        point[0] + screen_offeset_x,
+        point[1] + screen_offeset_y
+    )
+    #print("adding item "+str(itemnum)+" at map_pos ("+str(map_pos[0])+","+str(map_pos[1])+","+str(map_pos[2])+") screen_pos ("+str(screen_pos[0])+","+str(screen_pos[1])+")")
     img.paste(item, screen_pos, item)
-items = {}
-rowstart = (0,0)
-points = []
-minx = 0
-maxx = 0
-maxy = 0
-for y in range(10):
-    # #screen_pos = mappos_to_screen_pos(x*44, y*22)
-    # rowstart = (
-    #     rowstart[0] - 22,
-    #     rowstart[1] + 22
-    # )
-    # screen_pos = rowstart
-    points.append([])
-    for x in range(10):
-        screen_pos = mappos_to_screen_pos(x, y)
-        #img.paste(tile, screen_pos, tile)
-        points[y].append([screen_pos[0], screen_pos[1], 1180])
-        if screen_pos[0] < minx:
-            minx = screen_pos[0]
-        if screen_pos[0] > maxx:
-            maxx = screen_pos[0]
-        if screen_pos[1] > maxy:
-            maxy = screen_pos[1]
-        # screen_pos = (
-        #     screen_pos[0] + 22,
-        #     screen_pos[1] + 22
-        # )
-maxx = maxx - minx
-items_to_load = []
-for xpoints in points:
-    for point in xpoints:
-        if point[2] not in items_to_load:
-            items_to_load.append(point[2])
 
-for item in items_to_load:
-    items[str(item)] = get_item_image(item)
+def read_json():
+    global items
+    data = json.load(open(home_dir+'uostuff.json'))
+    for datum in data:
+        if str(datum["itemid"]) not in items.keys():
+            items[str(datum["itemid"])] = get_item_image(datum["itemid"])
+    for datum in data:
+        if datum["command"] == "tile":
+            tile_item(datum["target1"], datum["target2"], datum["itemid"])
+        if datum["command"] == "add":
+            add_item(img, datum["itemid"], datum["target"])
 
-img = Image.new(mode="RGBA", size=(maxx+44,maxy+44))
-for xpoints in points:
-    for point in xpoints:
-        screen_pos = (
-            point[0] - minx,
-            point[1]
-        )
-        add_item(img, items[str(point[2])], screen_pos)
-wall = get_item_image(2475)
-point = mappos_to_screen_pos(9,0,wall.height-44)
-screen_pos = (
-    point[0] - minx,
-    point[1]
-)
-add_item(img, wall, screen_pos)
+def tile_item(target1, target2, itemid):
+    for y in range(target1[1],target2[1]+1):
+        for x in range(target1[0],target2[0]+1):
+            add_item(img, itemid, (x,y,target1[2]))
+
+read_json()
 img.show()

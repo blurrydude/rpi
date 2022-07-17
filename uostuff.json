@@ -1,0 +1,48 @@
+[
+    {
+        "command": "tile",
+        "target1": [0,0,0],
+        "target2": [9,9,0],
+        "itemid": 1173
+    },
+    {
+        "command":"add",
+        "target": [2,2,0],
+        "itemid": 301
+    },
+    {
+        "command":"add",
+        "target": [2,3,0],
+        "itemid": 305
+    },
+    {
+        "command":"add",
+        "target": [2,4,0],
+        "itemid": 305
+    },
+    {
+        "command":"add",
+        "target": [2,5,0],
+        "itemid": 305
+    },
+    {
+        "command":"add",
+        "target": [3,5,0],
+        "itemid": 304
+    },
+    {
+        "command":"add",
+        "target": [4,5,0],
+        "itemid": 304
+    },
+    {
+        "command":"add",
+        "target": [5,4,0],
+        "itemid": 305
+    },
+    {
+        "command":"add",
+        "target": [5,5,0],
+        "itemid": 306
+    }
+]
