@@ -1,7 +1,8 @@
 from PIL import Image
 import os
 
-directory = "C:\\Users\\idkline\\Dropbox\\UOStuff\\UOArt\\Items\\"
+#directory = "C:\\Users\\idkline\\Dropbox\\UOStuff\\UOArt\\Items\\"
+directory = "/home/ian/Dropbox/UOStuff/UOArt/Items/"
 def get_item_image(id):
     f = os.path.join(directory, str(id)+".png")    
     item = Image.open(f)
@@ -18,8 +19,15 @@ def mappos_to_screen_pos(x, y):
 
 img = Image.new(mode="RGBA", size=(1024,768))
 tile = get_item_image(1173)
-for x in range(10):
-    for y in range(10):
-        screen_pos = mappos_to_screen_pos(x*44, y*22)
+sx = 0
+sy = 0
+for y in range(10):
+    #screen_pos = mappos_to_screen_pos(x*44, y*22)
+    sx = sx - 22
+    sy = sy + 22
+    for x in range(10):
+        sx = sx + 22
+        sy = sy + 22
+        screen_pos = (sx, sy)
         img.paste(tile, screen_pos, tile)
 img.show()
