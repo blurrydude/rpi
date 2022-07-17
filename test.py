@@ -291,24 +291,74 @@
 #     place = place[len(place)-1]
 #     subprocess.call("git clone https://winsupplyinc.visualstudio.com/DefaultCollection/"+thing+"/_git/"+thing+" C:/WINREPO/"+place)
 
-import os
-rootdir = 'C:/WINREPO/'
+# import os
+# rootdir = 'C:/WINREPO/'
 
-term = "https://onbasews1.winwholesale.com/"#GetCurrentFinancialPeriod/api/financial/period"
+# term = "https://onbasews1.winwholesale.com/"#GetCurrentFinancialPeriod/api/financial/period"
 
-targets = []
+# targets = []
 
-for subdir, dirs, files in os.walk(rootdir):
-    for file in files:
-        p = os.path.join(subdir, file)
-        if file.endswith(".cs"):
-            try:
-                f = open(p,mode='r')
-                text = f.read().lower()
-                f.close()
-                if term.lower() in text:
-                    targets.append(p)
-            except:
-                print("can't read "+p)
+# for subdir, dirs, files in os.walk(rootdir):
+#     for file in files:
+#         p = os.path.join(subdir, file)
+#         if file.endswith(".cs"):
+#             try:
+#                 f = open(p,mode='r')
+#                 text = f.read().lower()
+#                 f.close()
+#                 if term.lower() in text:
+#                     targets.append(p)
+#             except:
+#                 print("can't read "+p)
 
-print(targets)
+# print(targets)
+
+# import json
+
+
+# class DewData:
+#     def __init__(self, tc, h, wpdc=2):
+#         self.temperature_c = tc
+#         self.temperature_f = CtoF(tc)
+#         self.humidity = h
+#         self.dew_point_c = tc - ((100-h)/5)
+#         self.dew_point_f = CtoF(self.dew_point_c)
+#         self.delta_c = self.temperature_c - self.dew_point_c
+#         # assume 20 degrees costs 40W / 12V = 3.333~A OR 1 degree costs 2W / 12V = 0.167A
+#         self.watt_cost = self.delta_c * wpdc
+#         self.amps_at_12v = self.watt_cost / 12
+#     def toJSON(self):
+#         return json.dumps(self, default=lambda o: o.__dict__, 
+#             sort_keys=True, indent=4)
+
+# def get_dew_point_f(tf, rh):
+#     TC = FtoC(tf)
+#     Td = TC - ((100-rh)/5)
+#     dp = CtoF(Td)
+#     print(str(tf)+ "F ("+str(TC)+" C) @ "+str(rh)+" % RH Dew Point: "+str(dp)+" F ("+str(Td)+" C) "+str(TC-Td)+" C drop")
+#     return dp
+
+# def FtoC(f):
+#     return round((f - 32) * (5 / 9), 2)
+
+# def CtoF(c):
+#     return round((c * (9 / 5)) + 32, 2)
+
+# watt_per_degree_celsius = 5
+# # matrix = []
+# # for t in range(-20,130):
+# #     r = []
+# #     for h in range(1,20):
+# #         dew_data = json.loads(DewData(t,h*5, watt_per_degree_celsius).toJSON())
+# #         r.append(dew_data)
+# #     matrix.append(r)
+# # with open("dew_data.json","w") as write_file:
+# #     write_file.write(json.dumps(matrix, indent=4))
+
+# tf = 31
+# rh = 34
+# print(DewData(tf,rh, watt_per_degree_celsius).toJSON())
+
+a = (1,1)
+b = (2,3)
+print(a + b)

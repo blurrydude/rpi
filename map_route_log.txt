@@ -1,0 +1,268 @@
+all stops:
+["4060 Gibson Dr 45371", "250 Lindell Dr 45327", "136 Worthington Dr 45327", "6676 Banbury Dr 45005", "5369 Union Rd 45005", "52 Lakeridge Dr 45005", "1 Evergeen Ct 45005", "28 Anchor Ln 45066", "859 Williow Oak Ct 45066", "10783 Falls Creek Ln 45458", "9157 Rolling Greens Trl 45342", "227 W Circle Dr 45449", "2176 Bushwick Dr 45439", "380 Blumen Ln 45439", "4818 Hagen Ave 45417"]
+----------------------------------------------------------------------------------------------
+priority stops:
+[]
+----------------------------------------------------------------------------------------------
+distance matrix:
+[{"address": "4060 Gibson Dr 45371", "distances": [{"address": "250 Lindell Dr 45327", "distance": 27.63}, {"address": "136 Worthington Dr 45327", "distance": 25.27}, {"address": "6676 Banbury Dr 45005", "distance": 32.47}, {"address": "5369 Union Rd 45005", "distance": 31.34}, {"address": "52 Lakeridge Dr 45005", "distance": 30.57}, {"address": "1 Evergeen Ct 45005", "distance": 30.29}, {"address": "28 Anchor Ln 45066", "distance": 27.06}, {"address": "859 Williow Oak Ct 45066", "distance": 30.07}, {"address": "10783 Falls Creek Ln 45458", "distance": 27.39}, {"address": "9157 Rolling Greens Trl 45342", "distance": 23.74}, {"address": "227 W Circle Dr 45449", "distance": 20.26}, {"address": "2176 Bushwick Dr 45439", "distance": 18.71}, {"address": "380 Blumen Ln 45439", "distance": 19.9}, {"address": "4818 Hagen Ave 45417", "distance": 17.46}]}, {"address": "250 Lindell Dr 45327", "distances": [{"address": "4060 Gibson Dr 45371", "distance": 27.75}, {"address": "136 Worthington Dr 45327", "distance": 2.1}, {"address": "6676 Banbury Dr 45005", "distance": 6.57}, {"address": "5369 Union Rd 45005", "distance": 10.79}, {"address": "52 Lakeridge Dr 45005", "distance": 10.88}, {"address": "1 Evergeen Ct 45005", "distance": 10.59}, {"address": "28 Anchor Ln 45066", "distance": 12.69}, {"address": "859 Williow Oak Ct 45066", "distance": 16.31}, {"address": "10783 Falls Creek Ln 45458", "distance": 13.27}, {"address": "9157 Rolling Greens Trl 45342", "distance": 9.27}, {"address": "227 W Circle Dr 45449", "distance": 9.26}, {"address": "2176 Bushwick Dr 45439", "distance": 12.47}, {"address": "380 Blumen Ln 45439", "distance": 11.59}, {"address": "4818 Hagen Ave 45417", "distance": 10.76}]}, {"address": "136 Worthington Dr 45327", "distances": [{"address": "4060 Gibson Dr 45371", "distance": 25.38}, {"address": "250 Lindell Dr 45327", "distance": 2.1}, {"address": "6676 Banbury Dr 45005", "distance": 6.58}, {"address": "5369 Union Rd 45005", "distance": 10.07}, {"address": "52 Lakeridge Dr 45005", "distance": 10.16}, {"address": "1 Evergeen Ct 45005", "distance": 9.88}, {"address": "28 Anchor Ln 45066", "distance": 11.98}, {"address": "859 Williow Oak Ct 45066", "distance": 15.59}, {"address": "10783 Falls Creek Ln 45458", "distance": 11.43}, {"address": "9157 Rolling Greens Trl 45342", "distance": 7.43}, {"address": "227 W Circle Dr 45449", "distance": 6.9}, {"address": "2176 Bushwick Dr 45439", "distance": 9.82}, {"address": "380 Blumen Ln 45439", "distance": 9.22}, {"address": "4818 Hagen Ave 45417", "distance": 8.39}]}, {"address": "6676 Banbury Dr 45005", "distances": [{"address": "4060 Gibson Dr 45371", "distance": 32.51}, {"address": "250 Lindell Dr 45327", "distance": 6.57}, {"address": "136 Worthington Dr 45327", "distance": 6.58}, {"address": "5369 Union Rd 45005", "distance": 6.39}, {"address": "52 Lakeridge Dr 45005", "distance": 6.48}, {"address": "1 Evergeen Ct 45005", "distance": 6.2}, {"address": "28 Anchor Ln 45066", "distance": 9.79}, {"address": "859 Williow Oak Ct 45066", "distance": 11.07}, {"address": "10783 Falls Creek Ln 45458", "distance": 11.46}, {"address": "9157 Rolling Greens Trl 45342", "distance": 8.99}, {"address": "227 W Circle Dr 45449", "distance": 13.21}, {"address": "2176 Bushwick Dr 45439", "distance": 16.21}, {"address": "380 Blumen Ln 45439", "distance": 15.53}, {"address": "4818 Hagen Ave 45417", "distance": 14.7}]}, {"address": "5369 Union Rd 45005", "distances": [{"address": "4060 Gibson Dr 45371", "distance": 31.02}, {"address": "250 Lindell Dr 45327", "distance": 10.77}, {"address": "136 Worthington Dr 45327", "distance": 10.05}, {"address": "6676 Banbury Dr 45005", "distance": 6.51}, {"address": "52 Lakeridge Dr 45005", "distance": 3.11}, {"address": "1 Evergeen Ct 45005", "distance": 2.82}, {"address": "28 Anchor Ln 45066", "distance": 9.64}, {"address": "859 Williow Oak Ct 45066", "distance": 10.0}, {"address": "10783 Falls Creek Ln 45458", "distance": 9.97}, {"address": "9157 Rolling Greens Trl 45342", "distance": 9.64}, {"address": "227 W Circle Dr 45449", "distance": 15.08}, {"address": "2176 Bushwick Dr 45439", "distance": 14.72}, {"address": "380 Blumen Ln 45439", "distance": 15.38}, {"address": "4818 Hagen Ave 45417", "distance": 22.34}]}, {"address": "52 Lakeridge Dr 45005", "distances": [{"address": "4060 Gibson Dr 45371", "distance": 30.25}, {"address": "250 Lindell Dr 45327", "distance": 10.86}, {"address": "136 Worthington Dr 45327", "distance": 10.13}, {"address": "6676 Banbury Dr 45005", "distance": 6.6}, {"address": "5369 Union Rd 45005", "distance": 3.1}, {"address": "1 Evergeen Ct 45005", "distance": 0.34}, {"address": "28 Anchor Ln 45066", "distance": 8.87}, {"address": "859 Williow Oak Ct 45066", "distance": 8.97}, {"address": "10783 Falls Creek Ln 45458", "distance": 9.2}, {"address": "9157 Rolling Greens Trl 45342", "distance": 8.87}, {"address": "227 W Circle Dr 45449", "distance": 14.31}, {"address": "2176 Bushwick Dr 45439", "distance": 13.95}, {"address": "380 Blumen Ln 45439", "distance": 14.61}, {"address": "4818 Hagen Ave 45417", "distance": 21.57}]}, {"address": "1 Evergeen Ct 45005", "distances": [{"address": "4060 Gibson Dr 45371", "distance": 29.96}, {"address": "250 Lindell Dr 45327", "distance": 10.57}, {"address": "136 Worthington Dr 45327", "distance": 9.84}, {"address": "6676 Banbury Dr 45005", "distance": 6.31}, {"address": "5369 Union Rd 45005", "distance": 2.82}, {"address": "52 Lakeridge Dr 45005", "distance": 0.34}, {"address": "28 Anchor Ln 45066", "distance": 8.58}, {"address": "859 Williow Oak Ct 45066", "distance": 8.68}, {"address": "10783 Falls Creek Ln 45458", "distance": 8.92}, {"address": "9157 Rolling Greens Trl 45342", "distance": 8.58}, {"address": "227 W Circle Dr 45449", "distance": 14.03}, {"address": "2176 Bushwick Dr 45439", "distance": 13.66}, {"address": "380 Blumen Ln 45439", "distance": 14.32}, {"address": "4818 Hagen Ave 45417", "distance": 21.29}]}, {"address": "28 Anchor Ln 45066", "distances": [{"address": "4060 Gibson Dr 45371", "distance": 26.63}, {"address": "250 Lindell Dr 45327", "distance": 12.72}, {"address": "136 Worthington Dr 45327", "distance": 12.0}, {"address": "6676 Banbury Dr 45005", "distance": 9.79}, {"address": "5369 Union Rd 45005", "distance": 8.6}, {"address": "52 Lakeridge Dr 45005", "distance": 7.67}, {"address": "1 Evergeen Ct 45005", "distance": 7.39}, {"address": "859 Williow Oak Ct 45066", "distance": 3.07}, {"address": "10783 Falls Creek Ln 45458", "distance": 2.91}, {"address": "9157 Rolling Greens Trl 45342", "distance": 5.25}, {"address": "227 W Circle Dr 45449", "distance": 10.69}, {"address": "2176 Bushwick Dr 45439", "distance": 10.33}, {"address": "380 Blumen Ln 45439", "distance": 10.99}, {"address": "4818 Hagen Ave 45417", "distance": 17.95}]}, {"address": "859 Williow Oak Ct 45066", "distances": [{"address": "4060 Gibson Dr 45371", "distance": 29.82}, {"address": "250 Lindell Dr 45327", "distance": 15.65}, {"address": "136 Worthington Dr 45327", "distance": 14.92}, {"address": "6676 Banbury Dr 45005", "distance": 11.21}, {"address": "5369 Union Rd 45005", "distance": 10.26}, {"address": "52 Lakeridge Dr 45005", "distance": 8.97}, {"address": "1 Evergeen Ct 45005", "distance": 8.69}, {"address": "28 Anchor Ln 45066", "distance": 3.07}, {"address": "10783 Falls Creek Ln 45458", "distance": 3.33}, {"address": "9157 Rolling Greens Trl 45342", "distance": 8.44}, {"address": "227 W Circle Dr 45449", "distance": 13.88}, {"address": "2176 Bushwick Dr 45439", "distance": 10.85}, {"address": "380 Blumen Ln 45439", "distance": 14.18}, {"address": "4818 Hagen Ave 45417", "distance": 21.14}]}, {"address": "10783 Falls Creek Ln 45458", "distances": [{"address": "4060 Gibson Dr 45371", "distance": 26.91}, {"address": "250 Lindell Dr 45327", "distance": 13.26}, {"address": "136 Worthington Dr 45327", "distance": 11.44}, {"address": "6676 Banbury Dr 45005", "distance": 11.28}, {"address": "5369 Union Rd 45005", "distance": 10.16}, {"address": "52 Lakeridge Dr 45005", "distance": 9.39}, {"address": "1 Evergeen Ct 45005", "distance": 9.1}, {"address": "28 Anchor Ln 45066", "distance": 2.91}, {"address": "859 Williow Oak Ct 45066", "distance": 3.34}, {"address": "9157 Rolling Greens Trl 45342", "distance": 5.53}, {"address": "227 W Circle Dr 45449", "distance": 10.98}, {"address": "2176 Bushwick Dr 45439", "distance": 7.95}, {"address": "380 Blumen Ln 45439", "distance": 11.27}, {"address": "4818 Hagen Ave 45417", "distance": 18.24}]}, {"address": "9157 Rolling Greens Trl 45342", "distances": [{"address": "4060 Gibson Dr 45371", "distance": 23.74}, {"address": "250 Lindell Dr 45327", "distance": 9.26}, {"address": "136 Worthington Dr 45327", "distance": 7.44}, {"address": "6676 Banbury Dr 45005", "distance": 8.96}, {"address": "5369 Union Rd 45005", "distance": 9.47}, {"address": "52 Lakeridge Dr 45005", "distance": 8.7}, {"address": "1 Evergeen Ct 45005", "distance": 8.42}, {"address": "28 Anchor Ln 45066", "distance": 5.19}, {"address": "859 Williow Oak Ct 45066", "distance": 8.2}, {"address": "10783 Falls Creek Ln 45458", "distance": 5.53}, {"address": "227 W Circle Dr 45449", "distance": 6.73}, {"address": "2176 Bushwick Dr 45439", "distance": 6.88}, {"address": "380 Blumen Ln 45439", "distance": 8.09}, {"address": "4818 Hagen Ave 45417", "distance": 10.64}]}, {"address": "227 W Circle Dr 45449", "distances": [{"address": "4060 Gibson Dr 45371", "distance": 20.03}, {"address": "250 Lindell Dr 45327", "distance": 9.23}, {"address": "136 Worthington Dr 45327", "distance": 6.44}, {"address": "6676 Banbury Dr 45005", "distance": 12.74}, {"address": "5369 Union Rd 45005", "distance": 14.75}, {"address": "52 Lakeridge Dr 45005", "distance": 13.98}, {"address": "1 Evergeen Ct 45005", "distance": 13.7}, {"address": "28 Anchor Ln 45066", "distance": 10.47}, {"address": "859 Williow Oak Ct 45066", "distance": 13.47}, {"address": "10783 Falls Creek Ln 45458", "distance": 10.8}, {"address": "9157 Rolling Greens Trl 45342", "distance": 6.25}, {"address": "2176 Bushwick Dr 45439", "distance": 3.72}, {"address": "380 Blumen Ln 45439", "distance": 4.72}, {"address": "4818 Hagen Ave 45417", "distance": 5.79}]}, {"address": "2176 Bushwick Dr 45439", "distances": [{"address": "4060 Gibson Dr 45371", "distance": 18.43}, {"address": "250 Lindell Dr 45327", "distance": 11.68}, {"address": "136 Worthington Dr 45327", "distance": 9.86}, {"address": "6676 Banbury Dr 45005", "distance": 16.08}, {"address": "5369 Union Rd 45005", "distance": 14.96}, {"address": "52 Lakeridge Dr 45005", "distance": 14.19}, {"address": "1 Evergeen Ct 45005", "distance": 13.9}, {"address": "28 Anchor Ln 45066", "distance": 9.52}, {"address": "859 Williow Oak Ct 45066", "distance": 10.84}, {"address": "10783 Falls Creek Ln 45458", "distance": 7.95}, {"address": "9157 Rolling Greens Trl 45342", "distance": 6.76}, {"address": "227 W Circle Dr 45449", "distance": 3.84}, {"address": "380 Blumen Ln 45439", "distance": 3.57}, {"address": "4818 Hagen Ave 45417", "distance": 7.22}]}, {"address": "380 Blumen Ln 45439", "distances": [{"address": "4060 Gibson Dr 45371", "distance": 19.27}, {"address": "250 Lindell Dr 45327", "distance": 11.59}, {"address": "136 Worthington Dr 45327", "distance": 9.22}, {"address": "6676 Banbury Dr 45005", "distance": 15.53}, {"address": "5369 Union Rd 45005", "distance": 15.49}, {"address": "52 Lakeridge Dr 45005", "distance": 14.72}, {"address": "1 Evergeen Ct 45005", "distance": 14.43}, {"address": "28 Anchor Ln 45066", "distance": 11.2}, {"address": "859 Williow Oak Ct 45066", "distance": 14.21}, {"address": "10783 Falls Creek Ln 45458", "distance": 11.54}, {"address": "9157 Rolling Greens Trl 45342", "distance": 7.88}, {"address": "227 W Circle Dr 45449", "distance": 4.77}, {"address": "2176 Bushwick Dr 45439", "distance": 3.49}, {"address": "4818 Hagen Ave 45417", "distance": 4.85}]}, {"address": "4818 Hagen Ave 45417", "distances": [{"address": "4060 Gibson Dr 45371", "distance": 17.27}, {"address": "250 Lindell Dr 45327", "distance": 10.76}, {"address": "136 Worthington Dr 45327", "distance": 8.39}, {"address": "6676 Banbury Dr 45005", "distance": 14.7}, {"address": "5369 Union Rd 45005", "distance": 22.3}, {"address": "52 Lakeridge Dr 45005", "distance": 21.54}, {"address": "1 Evergeen Ct 45005", "distance": 21.25}, {"address": "28 Anchor Ln 45066", "distance": 18.02}, {"address": "859 Williow Oak Ct 45066", "distance": 21.03}, {"address": "10783 Falls Creek Ln 45458", "distance": 18.36}, {"address": "9157 Rolling Greens Trl 45342", "distance": 14.7}, {"address": "227 W Circle Dr 45449", "distance": 6.64}, {"address": "2176 Bushwick Dr 45439", "distance": 6.53}, {"address": "380 Blumen Ln 45439", "distance": 4.26}]}]
+----------------------------------------------------------------------------------------------
+starting point:
+4060 Gibson Dr 45371
+    potential stop: 250 Lindell Dr 45327 @ 27.63 miles
+    potential stop: 136 Worthington Dr 45327 @ 25.27 miles
+    potential stop: 6676 Banbury Dr 45005 @ 32.47 miles
+    potential stop: 5369 Union Rd 45005 @ 31.34 miles
+    potential stop: 52 Lakeridge Dr 45005 @ 30.57 miles
+    potential stop: 1 Evergeen Ct 45005 @ 30.29 miles
+    potential stop: 28 Anchor Ln 45066 @ 27.06 miles
+    potential stop: 859 Williow Oak Ct 45066 @ 30.07 miles
+    potential stop: 10783 Falls Creek Ln 45458 @ 27.39 miles
+    potential stop: 9157 Rolling Greens Trl 45342 @ 23.74 miles
+    potential stop: 227 W Circle Dr 45449 @ 20.26 miles
+    potential stop: 2176 Bushwick Dr 45439 @ 18.71 miles
+    potential stop: 380 Blumen Ln 45439 @ 19.9 miles
+    potential stop: 4818 Hagen Ave 45417 @ 17.46 miles
+next stop: 4818 Hagen Ave 45417
+distance to next stop: 17.46
+----------------------------------------------------------------------------------------------
+4818 Hagen Ave 45417
+    potential stop: 4060 Gibson Dr 45371 @ 17.27 miles
+    potential stop: 250 Lindell Dr 45327 @ 10.76 miles
+    potential stop: 136 Worthington Dr 45327 @ 8.39 miles
+    potential stop: 6676 Banbury Dr 45005 @ 14.7 miles
+    potential stop: 5369 Union Rd 45005 @ 22.3 miles
+    potential stop: 52 Lakeridge Dr 45005 @ 21.54 miles
+    potential stop: 1 Evergeen Ct 45005 @ 21.25 miles
+    potential stop: 28 Anchor Ln 45066 @ 18.02 miles
+    potential stop: 859 Williow Oak Ct 45066 @ 21.03 miles
+    potential stop: 10783 Falls Creek Ln 45458 @ 18.36 miles
+    potential stop: 9157 Rolling Greens Trl 45342 @ 14.7 miles
+    potential stop: 227 W Circle Dr 45449 @ 6.64 miles
+    potential stop: 2176 Bushwick Dr 45439 @ 6.53 miles
+    potential stop: 380 Blumen Ln 45439 @ 4.26 miles
+next stop: 380 Blumen Ln 45439
+distance to next stop: 4.26
+----------------------------------------------------------------------------------------------
+380 Blumen Ln 45439
+    potential stop: 4060 Gibson Dr 45371 @ 19.27 miles
+    potential stop: 250 Lindell Dr 45327 @ 11.59 miles
+    potential stop: 136 Worthington Dr 45327 @ 9.22 miles
+    potential stop: 6676 Banbury Dr 45005 @ 15.53 miles
+    potential stop: 5369 Union Rd 45005 @ 15.49 miles
+    potential stop: 52 Lakeridge Dr 45005 @ 14.72 miles
+    potential stop: 1 Evergeen Ct 45005 @ 14.43 miles
+    potential stop: 28 Anchor Ln 45066 @ 11.2 miles
+    potential stop: 859 Williow Oak Ct 45066 @ 14.21 miles
+    potential stop: 10783 Falls Creek Ln 45458 @ 11.54 miles
+    potential stop: 9157 Rolling Greens Trl 45342 @ 7.88 miles
+    potential stop: 227 W Circle Dr 45449 @ 4.77 miles
+    potential stop: 2176 Bushwick Dr 45439 @ 3.49 miles
+    potential stop: 4818 Hagen Ave 45417 @ 4.85 miles
+next stop: 2176 Bushwick Dr 45439
+distance to next stop: 3.49
+----------------------------------------------------------------------------------------------
+2176 Bushwick Dr 45439
+    potential stop: 4060 Gibson Dr 45371 @ 18.43 miles
+    potential stop: 250 Lindell Dr 45327 @ 11.68 miles
+    potential stop: 136 Worthington Dr 45327 @ 9.86 miles
+    potential stop: 6676 Banbury Dr 45005 @ 16.08 miles
+    potential stop: 5369 Union Rd 45005 @ 14.96 miles
+    potential stop: 52 Lakeridge Dr 45005 @ 14.19 miles
+    potential stop: 1 Evergeen Ct 45005 @ 13.9 miles
+    potential stop: 28 Anchor Ln 45066 @ 9.52 miles
+    potential stop: 859 Williow Oak Ct 45066 @ 10.84 miles
+    potential stop: 10783 Falls Creek Ln 45458 @ 7.95 miles
+    potential stop: 9157 Rolling Greens Trl 45342 @ 6.76 miles
+    potential stop: 227 W Circle Dr 45449 @ 3.84 miles
+    potential stop: 380 Blumen Ln 45439 @ 3.57 miles
+    potential stop: 4818 Hagen Ave 45417 @ 7.22 miles
+next stop: 227 W Circle Dr 45449
+distance to next stop: 3.84
+----------------------------------------------------------------------------------------------
+227 W Circle Dr 45449
+    potential stop: 4060 Gibson Dr 45371 @ 20.03 miles
+    potential stop: 250 Lindell Dr 45327 @ 9.23 miles
+    potential stop: 136 Worthington Dr 45327 @ 6.44 miles
+    potential stop: 6676 Banbury Dr 45005 @ 12.74 miles
+    potential stop: 5369 Union Rd 45005 @ 14.75 miles
+    potential stop: 52 Lakeridge Dr 45005 @ 13.98 miles
+    potential stop: 1 Evergeen Ct 45005 @ 13.7 miles
+    potential stop: 28 Anchor Ln 45066 @ 10.47 miles
+    potential stop: 859 Williow Oak Ct 45066 @ 13.47 miles
+    potential stop: 10783 Falls Creek Ln 45458 @ 10.8 miles
+    potential stop: 9157 Rolling Greens Trl 45342 @ 6.25 miles
+    potential stop: 2176 Bushwick Dr 45439 @ 3.72 miles
+    potential stop: 380 Blumen Ln 45439 @ 4.72 miles
+    potential stop: 4818 Hagen Ave 45417 @ 5.79 miles
+next stop: 9157 Rolling Greens Trl 45342
+distance to next stop: 6.25
+----------------------------------------------------------------------------------------------
+9157 Rolling Greens Trl 45342
+    potential stop: 4060 Gibson Dr 45371 @ 23.74 miles
+    potential stop: 250 Lindell Dr 45327 @ 9.26 miles
+    potential stop: 136 Worthington Dr 45327 @ 7.44 miles
+    potential stop: 6676 Banbury Dr 45005 @ 8.96 miles
+    potential stop: 5369 Union Rd 45005 @ 9.47 miles
+    potential stop: 52 Lakeridge Dr 45005 @ 8.7 miles
+    potential stop: 1 Evergeen Ct 45005 @ 8.42 miles
+    potential stop: 28 Anchor Ln 45066 @ 5.19 miles
+    potential stop: 859 Williow Oak Ct 45066 @ 8.2 miles
+    potential stop: 10783 Falls Creek Ln 45458 @ 5.53 miles
+    potential stop: 227 W Circle Dr 45449 @ 6.73 miles
+    potential stop: 2176 Bushwick Dr 45439 @ 6.88 miles
+    potential stop: 380 Blumen Ln 45439 @ 8.09 miles
+    potential stop: 4818 Hagen Ave 45417 @ 10.64 miles
+next stop: 28 Anchor Ln 45066
+distance to next stop: 5.19
+----------------------------------------------------------------------------------------------
+28 Anchor Ln 45066
+    potential stop: 4060 Gibson Dr 45371 @ 26.63 miles
+    potential stop: 250 Lindell Dr 45327 @ 12.72 miles
+    potential stop: 136 Worthington Dr 45327 @ 12.0 miles
+    potential stop: 6676 Banbury Dr 45005 @ 9.79 miles
+    potential stop: 5369 Union Rd 45005 @ 8.6 miles
+    potential stop: 52 Lakeridge Dr 45005 @ 7.67 miles
+    potential stop: 1 Evergeen Ct 45005 @ 7.39 miles
+    potential stop: 859 Williow Oak Ct 45066 @ 3.07 miles
+    potential stop: 10783 Falls Creek Ln 45458 @ 2.91 miles
+    potential stop: 9157 Rolling Greens Trl 45342 @ 5.25 miles
+    potential stop: 227 W Circle Dr 45449 @ 10.69 miles
+    potential stop: 2176 Bushwick Dr 45439 @ 10.33 miles
+    potential stop: 380 Blumen Ln 45439 @ 10.99 miles
+    potential stop: 4818 Hagen Ave 45417 @ 17.95 miles
+next stop: 10783 Falls Creek Ln 45458
+distance to next stop: 2.91
+----------------------------------------------------------------------------------------------
+10783 Falls Creek Ln 45458
+    potential stop: 4060 Gibson Dr 45371 @ 26.91 miles
+    potential stop: 250 Lindell Dr 45327 @ 13.26 miles
+    potential stop: 136 Worthington Dr 45327 @ 11.44 miles
+    potential stop: 6676 Banbury Dr 45005 @ 11.28 miles
+    potential stop: 5369 Union Rd 45005 @ 10.16 miles
+    potential stop: 52 Lakeridge Dr 45005 @ 9.39 miles
+    potential stop: 1 Evergeen Ct 45005 @ 9.1 miles
+    potential stop: 28 Anchor Ln 45066 @ 2.91 miles
+    potential stop: 859 Williow Oak Ct 45066 @ 3.34 miles
+    potential stop: 9157 Rolling Greens Trl 45342 @ 5.53 miles
+    potential stop: 227 W Circle Dr 45449 @ 10.98 miles
+    potential stop: 2176 Bushwick Dr 45439 @ 7.95 miles
+    potential stop: 380 Blumen Ln 45439 @ 11.27 miles
+    potential stop: 4818 Hagen Ave 45417 @ 18.24 miles
+next stop: 859 Williow Oak Ct 45066
+distance to next stop: 3.34
+----------------------------------------------------------------------------------------------
+859 Williow Oak Ct 45066
+    potential stop: 4060 Gibson Dr 45371 @ 29.82 miles
+    potential stop: 250 Lindell Dr 45327 @ 15.65 miles
+    potential stop: 136 Worthington Dr 45327 @ 14.92 miles
+    potential stop: 6676 Banbury Dr 45005 @ 11.21 miles
+    potential stop: 5369 Union Rd 45005 @ 10.26 miles
+    potential stop: 52 Lakeridge Dr 45005 @ 8.97 miles
+    potential stop: 1 Evergeen Ct 45005 @ 8.69 miles
+    potential stop: 28 Anchor Ln 45066 @ 3.07 miles
+    potential stop: 10783 Falls Creek Ln 45458 @ 3.33 miles
+    potential stop: 9157 Rolling Greens Trl 45342 @ 8.44 miles
+    potential stop: 227 W Circle Dr 45449 @ 13.88 miles
+    potential stop: 2176 Bushwick Dr 45439 @ 10.85 miles
+    potential stop: 380 Blumen Ln 45439 @ 14.18 miles
+    potential stop: 4818 Hagen Ave 45417 @ 21.14 miles
+next stop: 1 Evergeen Ct 45005
+distance to next stop: 8.69
+----------------------------------------------------------------------------------------------
+1 Evergeen Ct 45005
+    potential stop: 4060 Gibson Dr 45371 @ 29.96 miles
+    potential stop: 250 Lindell Dr 45327 @ 10.57 miles
+    potential stop: 136 Worthington Dr 45327 @ 9.84 miles
+    potential stop: 6676 Banbury Dr 45005 @ 6.31 miles
+    potential stop: 5369 Union Rd 45005 @ 2.82 miles
+    potential stop: 52 Lakeridge Dr 45005 @ 0.34 miles
+    potential stop: 28 Anchor Ln 45066 @ 8.58 miles
+    potential stop: 859 Williow Oak Ct 45066 @ 8.68 miles
+    potential stop: 10783 Falls Creek Ln 45458 @ 8.92 miles
+    potential stop: 9157 Rolling Greens Trl 45342 @ 8.58 miles
+    potential stop: 227 W Circle Dr 45449 @ 14.03 miles
+    potential stop: 2176 Bushwick Dr 45439 @ 13.66 miles
+    potential stop: 380 Blumen Ln 45439 @ 14.32 miles
+    potential stop: 4818 Hagen Ave 45417 @ 21.29 miles
+next stop: 52 Lakeridge Dr 45005
+distance to next stop: 0.34
+----------------------------------------------------------------------------------------------
+52 Lakeridge Dr 45005
+    potential stop: 4060 Gibson Dr 45371 @ 30.25 miles
+    potential stop: 250 Lindell Dr 45327 @ 10.86 miles
+    potential stop: 136 Worthington Dr 45327 @ 10.13 miles
+    potential stop: 6676 Banbury Dr 45005 @ 6.6 miles
+    potential stop: 5369 Union Rd 45005 @ 3.1 miles
+    potential stop: 1 Evergeen Ct 45005 @ 0.34 miles
+    potential stop: 28 Anchor Ln 45066 @ 8.87 miles
+    potential stop: 859 Williow Oak Ct 45066 @ 8.97 miles
+    potential stop: 10783 Falls Creek Ln 45458 @ 9.2 miles
+    potential stop: 9157 Rolling Greens Trl 45342 @ 8.87 miles
+    potential stop: 227 W Circle Dr 45449 @ 14.31 miles
+    potential stop: 2176 Bushwick Dr 45439 @ 13.95 miles
+    potential stop: 380 Blumen Ln 45439 @ 14.61 miles
+    potential stop: 4818 Hagen Ave 45417 @ 21.57 miles
+next stop: 5369 Union Rd 45005
+distance to next stop: 3.1
+----------------------------------------------------------------------------------------------
+5369 Union Rd 45005
+    potential stop: 4060 Gibson Dr 45371 @ 31.02 miles
+    potential stop: 250 Lindell Dr 45327 @ 10.77 miles
+    potential stop: 136 Worthington Dr 45327 @ 10.05 miles
+    potential stop: 6676 Banbury Dr 45005 @ 6.51 miles
+    potential stop: 52 Lakeridge Dr 45005 @ 3.11 miles
+    potential stop: 1 Evergeen Ct 45005 @ 2.82 miles
+    potential stop: 28 Anchor Ln 45066 @ 9.64 miles
+    potential stop: 859 Williow Oak Ct 45066 @ 10.0 miles
+    potential stop: 10783 Falls Creek Ln 45458 @ 9.97 miles
+    potential stop: 9157 Rolling Greens Trl 45342 @ 9.64 miles
+    potential stop: 227 W Circle Dr 45449 @ 15.08 miles
+    potential stop: 2176 Bushwick Dr 45439 @ 14.72 miles
+    potential stop: 380 Blumen Ln 45439 @ 15.38 miles
+    potential stop: 4818 Hagen Ave 45417 @ 22.34 miles
+next stop: 6676 Banbury Dr 45005
+distance to next stop: 6.51
+----------------------------------------------------------------------------------------------
+6676 Banbury Dr 45005
+    potential stop: 4060 Gibson Dr 45371 @ 32.51 miles
+    potential stop: 250 Lindell Dr 45327 @ 6.57 miles
+    potential stop: 136 Worthington Dr 45327 @ 6.58 miles
+    potential stop: 5369 Union Rd 45005 @ 6.39 miles
+    potential stop: 52 Lakeridge Dr 45005 @ 6.48 miles
+    potential stop: 1 Evergeen Ct 45005 @ 6.2 miles
+    potential stop: 28 Anchor Ln 45066 @ 9.79 miles
+    potential stop: 859 Williow Oak Ct 45066 @ 11.07 miles
+    potential stop: 10783 Falls Creek Ln 45458 @ 11.46 miles
+    potential stop: 9157 Rolling Greens Trl 45342 @ 8.99 miles
+    potential stop: 227 W Circle Dr 45449 @ 13.21 miles
+    potential stop: 2176 Bushwick Dr 45439 @ 16.21 miles
+    potential stop: 380 Blumen Ln 45439 @ 15.53 miles
+    potential stop: 4818 Hagen Ave 45417 @ 14.7 miles
+next stop: 250 Lindell Dr 45327
+distance to next stop: 6.57
+----------------------------------------------------------------------------------------------
+250 Lindell Dr 45327
+    potential stop: 4060 Gibson Dr 45371 @ 27.75 miles
+    potential stop: 136 Worthington Dr 45327 @ 2.1 miles
+    potential stop: 6676 Banbury Dr 45005 @ 6.57 miles
+    potential stop: 5369 Union Rd 45005 @ 10.79 miles
+    potential stop: 52 Lakeridge Dr 45005 @ 10.88 miles
+    potential stop: 1 Evergeen Ct 45005 @ 10.59 miles
+    potential stop: 28 Anchor Ln 45066 @ 12.69 miles
+    potential stop: 859 Williow Oak Ct 45066 @ 16.31 miles
+    potential stop: 10783 Falls Creek Ln 45458 @ 13.27 miles
+    potential stop: 9157 Rolling Greens Trl 45342 @ 9.27 miles
+    potential stop: 227 W Circle Dr 45449 @ 9.26 miles
+    potential stop: 2176 Bushwick Dr 45439 @ 12.47 miles
+    potential stop: 380 Blumen Ln 45439 @ 11.59 miles
+    potential stop: 4818 Hagen Ave 45417 @ 10.76 miles
+next stop: 136 Worthington Dr 45327
+distance to next stop: 2.1
+----------------------------------------------------------------------------------------------
+last stop:
+136 Worthington Dr 45327
+distance to home: 25.38
+total drive miles: 99.42999999999998
+----------------------------------------------------------------------------------------------
+Map URL: https://www.google.com/maps/dir/39.8872693,-84.1443793/39.7293122,-84.2705321/39.7021305,-84.2412774/39.6795806,-84.20576969999999/39.6716338,-84.2597535/39.613985,-84.2441582/39.5753209,-84.216064/39.5851916,-84.19292/39.5546824,-84.1766892/39.5305807,-84.28001309999999/39.5298376,-84.27513909999999/39.52180449999999,-84.3099012/39.5512194,-84.3567312/39.6347979,-84.3756847/39.63316570000001,-84.35155540000001/39.8872693,-84.1443793/
