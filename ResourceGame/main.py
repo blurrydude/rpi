@@ -27,14 +27,25 @@ class Game:
         self.unit_to_move = None
         self.mouse_mode = MouseMode.STANDBY
         self.mouse_dragging = False
-        self.show_map = True
-        self.show_resources = True
         self.fonts = [
             pygame.font.SysFont(None, 16),
             pygame.font.SysFont(None, 20),
             pygame.font.SysFont(None, 24),
             pygame.font.SysFont(None, 32)
         ]
+        self.show_map = True
+        self.show_resources = True
+        self.show_menu = False
+        self.current_menu = "game"
+        self.menu_size = (math.round(self.screen_size[0]/5),math.round(self.screen_size[1]/2))
+        self.menu_pos = (math.round(self.screen_size[0]/6)*4,math.round(self.screen_size[1]/4))
+        self.menus = {
+            "game": Menu("game",[]),
+            "build": Menu("build",[
+                MenuButton("Worker", self.build_worker, [ResourceRequirement(ResourceType.GOLD,100)]),
+                MenuButton("Mine", self.build_mine, [ResourceRequirement(ResourceType.GOLD,500)])
+            ])
+        }
         self.text_elements = {
             "notification": TextElement(self.screen, 20, 20, self.fonts[3], "", shadow=True, show=False),
             "fps": TextElement(self.screen, 20, 4, self.fonts[2], "0 fps", shadow=True, show=True)
@@ -47,7 +58,8 @@ class Game:
             "snow": pygame.Surface((self.tile_size, self.tile_size)),
             "iron": pygame.Surface((self.tile_size-2, self.tile_size-2)),
             "copper": pygame.Surface((self.tile_size-2, self.tile_size-2)),
-            "gold": pygame.Surface((self.tile_size-2, self.tile_size-2))
+            "gold": pygame.Surface((self.tile_size-2, self.tile_size-2)),
+            "menu_bg": pygame.Surface(self.menu_size)
         }
         self.surfaces["grass"].fill((0,255,0))
         self.surfaces["water"].fill((0,0,255))
@@ -56,8 +68,18 @@ class Game:
         self.surfaces["iron"].fill((128, 128, 255))
         self.surfaces["copper"].fill((196, 0, 0))
         self.surfaces["gold"].fill((200, 255, 0))
+        self.surfaces["menu_bg"].fill((0,0,0))
         #self.bg = pygame.image.fromstring(self.map.image.tobytes(),self.map.image.size,self.map.image.mode).convert()
-    
+
+    def build_mine(self):
+        self.show_menu = False
+    def build_worker(self):
+        self.text_elements["notification"].update_text("Place Worker Unit")
+        self.text_elements["notification"].show = True
+        self.mouse_mode = MouseMode.PLACE_UNIT
+        self.unit_to_place = Worker()
+        self.show_menu = False
+
     def move_view(self, dx, dy):
         self.view_pos = (
             min(self.map_size[0]-self.view_max[0],max(0,self.view_pos[0]+dx)),
@@ -75,9 +97,14 @@ class Game:
         if pressed_keys[pygame.K_RIGHT]:
             self.move_view(1,0)
         if pressed_keys[pygame.K_m]:
-            self.show_map = self.show_map == False
-        if pressed_keys[pygame.K_r]:
-            self.show_resources = self.show_resources == False
+            self.current_menu = "game"
+            self.show_menu = True
+        if pressed_keys[pygame.K_b]:
+            self.current_menu = "build"
+            self.show_menu = True
+        #     self.show_map = self.show_map == False
+        # if pressed_keys[pygame.K_r]:
+        #     self.show_resources = self.show_resources == False
         
         if pressed_keys[pygame.K_c] and self.mouse_mode == MouseMode.STANDBY:
             self.text_elements["notification"].update_text("Place Worker Unit")
@@ -92,7 +119,9 @@ class Game:
         if self.last_mouse_press != mouse_press[0]:
             self.last_mouse_press = mouse_press[0]
             change = True
-        if change is True and self.mouse_mode != MouseMode.STANDBY and mouse_press[0] is True:
+        if change is True and self.show_menu is True and mouse_press[0] is True:
+            self.handle_menu_mouse(mouse_pos)
+        elif change is True and self.mouse_mode != MouseMode.STANDBY and mouse_press[0] is True:
             self.handle_mouse_left(mouse_pos)
         elif mouse_press[0] is True:
             dx = round((mouse_pos[0] - self.last_mouse_pos[0]) / self.tile_size)
@@ -105,6 +134,14 @@ class Game:
         if change is True and self.mouse_dragging is True and mouse_press[0] is False:
             self.mouse_dragging = False
         self.last_mouse_pos = mouse_pos
+
+    def handle_menu_mouse(self, pos):
+        menu = self.menus[self.current_menu]
+        button_width = math.round(self.screen_size[0]/6)
+        button_height = 32
+        for i in range(len(menu.buttons)):
+            button = menu.buttons[i]
+            dostuff
 
     def handle_standby_mouse_up(self, pos):
         map_pos = (
@@ -207,6 +244,10 @@ class Game:
             pygame.draw.circle(self.screen, (196, 128, 0), ((worker.x-self.view_pos[0])*self.tile_size+(self.tile_size/2), (worker.y-self.view_pos[1])*self.tile_size+(self.tile_size/2)), (self.tile_size/3))
         
         #UI
+        if self.show_menu is True:
+            self.screen.blit(self.surfaces["menu_bg"],self.menu_pos)
+            for 
+
         for key in self.text_elements:
             self.text_elements[key].draw()
 
@@ -215,6 +256,22 @@ class Game:
             pygame.draw.circle(self.screen, (128, 128, 0), (self.last_mouse_pos[0], self.last_mouse_pos[1]), math.floor(self.tile_size/2)+2)
         if self.mouse_mode == MouseMode.MOVE_UNIT_TO:
             pygame.draw.circle(self.screen, (0, 128, 0), (self.last_mouse_pos[0], self.last_mouse_pos[1]), math.floor(self.tile_size/3)+2)
+
+class Menu:
+    def __init__(self, label, buttons):
+        self.label = label
+        self.buttons = buttons
+
+class MenuButton:
+    def __init__(self, label, on_click, requirements):
+        self.label = label
+        self.requirements = requirements
+        self.on_click = on_click
+
+class ResourceRequirement:
+    def __init__(self, resource_type, amount):
+        self.resource_type = resource_type
+        self.amount = amount
 
 class TextElement:
     def __init__(self, screen, x, y, font, text, color=(255,255,255), shadow=False, show=True):
