@@ -91,8 +91,24 @@ class Rollershade:
         if self.moving[addy] is True:
             return
         self.moving[addy] = True
+        self.motors[addy].throttle = 0.2
+        time.sleep(0.5)
+        self.motors[addy].throttle = 0.4
+        time.sleep(0.5)
+        self.motors[addy].throttle = 0.5
+        time.sleep(0.5)
+        self.motors[addy].throttle = 0.8
+        time.sleep(0.5)
         self.motors[addy].throttle = 1.0
-        time.sleep(6)
+        time.sleep(3)
+        self.motors[addy].throttle = 0.8
+        time.sleep(0.5)
+        self.motors[addy].throttle = 0.6
+        time.sleep(0.5)
+        self.motors[addy].throttle = 0.4
+        time.sleep(0.5)
+        self.motors[addy].throttle = 0.2
+        time.sleep(0.5)
         self.motors[addy].throttle = 0.0
         self.moving[addy] = False
         input_state = GPIO.input(self.read_pins[addy])
@@ -104,10 +120,20 @@ class Rollershade:
             return
         self.moving[addy] = True
         input_state = GPIO.input(self.read_pins[addy])
+        self.motors[addy].throttle = -0.2
+        time.sleep(0.5)
+        self.motors[addy].throttle = -0.4
+        time.sleep(0.5)
+        self.motors[addy].throttle = -0.6
+        time.sleep(0.5)
+        self.motors[addy].throttle = -0.8
+        time.sleep(0.5)
         self.motors[addy].throttle = -1.0
         start = time.time()
         while input_state == 1 and time.time() - start < 10:
             input_state = GPIO.input(self.read_pins[addy])
+        self.motors[addy].throttle = -0.5
+        time.sleep(0.2)
         self.motors[addy].throttle = 0.0
         self.moving[addy] = False
         self.shade_up[addy] = input_state != 1
