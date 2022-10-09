@@ -807,7 +807,7 @@ class SmarterCircuitsMCP:
         if self.circuit_authority is False:
             return
         self.log("SmarterCircuitsMCP","executing command: "+command)
-        command = command.lower()
+        command = command.lower().replace('-', ' ')
         if " bot says " in command:
             room = command.split(' ')[0]
             command = command.split(' !c ')[1]
