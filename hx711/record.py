@@ -1,6 +1,7 @@
+import time
+time.sleep(15)
 import Adafruit_DHT
 import RPi.GPIO as GPIO
-import time
 import sys
 import os
 import json
@@ -8,7 +9,7 @@ from datetime import datetime
 from hx711 import HX711
 
 failed_read_halt_limit = 10
-referenceUnit = -465
+referenceUnit = -475
 temperature = None
 humidity = None
 failed_reads = 0
@@ -67,15 +68,16 @@ def read_sensor():
     
     failed_reads = 0
 
-while True:
-    try:
-        read_sensor()
-        val = hx.get_weight(5)
-        log(val)
+if __name__ == "__main__":
+    while True:
+        try:
+            read_sensor()
+            val = hx.get_weight(5)
+            log(val)
 
-        hx.power_down()
-        hx.power_up()
-        time.sleep(10)
+            hx.power_down()
+            hx.power_up()
+            time.sleep(10)
 
-    except (KeyboardInterrupt, SystemExit):
-        cleanAndExit()
+        except (KeyboardInterrupt, SystemExit):
+            cleanAndExit()

@@ -95,7 +95,7 @@ class SmarterAPI:
                 "circuits": circuits
             }
         
-        @self.app.route('/control/<text>')
+        @self.app.route('/control/<text>',methods=['GET'])
         def control(text):
             self.mcp.mqtt.publish("smarter_circuits/command",text)
 

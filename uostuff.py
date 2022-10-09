@@ -4,8 +4,8 @@ import os
 import json
 
 items = {}
-#directory = "C:\\Users\\idkline\\Dropbox\\UOStuff\\UOArt\\Items\\"
-directory = "/home/ian/Dropbox/UOStuff/UOArt/Items/"
+directory = "C:\\Users\\idkline\\Dropbox\\UOStuff\\UOArt\\Items\\"
+#directory = "/home/ian/Dropbox/UOStuff/UOArt/Items/"
 home_dir = os.path.dirname(os.path.realpath(__file__))+"/"
 
 image_size = (1920, 1080)
@@ -57,4 +57,5 @@ def tile_item(target1, target2, itemid):
             add_item(img, itemid, (x,y,target1[2]))
 
 read_json()
+img.save("C:\\Temp\AAAAAAAAA.png")
 img.show()

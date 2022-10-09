@@ -1,48 +1,58 @@
 [
-    {
-        "command": "tile",
-        "target1": [0,0,0],
-        "target2": [9,9,0],
-        "itemid": 1173
-    },
-    {
-        "command":"add",
-        "target": [2,2,0],
-        "itemid": 301
-    },
-    {
-        "command":"add",
-        "target": [2,3,0],
-        "itemid": 305
-    },
-    {
-        "command":"add",
-        "target": [2,4,0],
-        "itemid": 305
-    },
-    {
-        "command":"add",
-        "target": [2,5,0],
-        "itemid": 305
-    },
-    {
-        "command":"add",
-        "target": [3,5,0],
-        "itemid": 304
-    },
-    {
-        "command":"add",
-        "target": [4,5,0],
-        "itemid": 304
-    },
-    {
-        "command":"add",
-        "target": [5,4,0],
-        "itemid": 305
-    },
-    {
-        "command":"add",
-        "target": [5,5,0],
-        "itemid": 306
-    }
+	{
+		"command": "tile",
+		"target1": [0, 0, 0],
+		"target2": [9, 9, 0],
+		"itemid": 1173
+	},
+	{
+		"command": "add",
+		"target": [0, 5, 0],
+		"itemid": 39935
+	},
+	{
+		"command": "add",
+		"target": [0, 6, 0],
+		"itemid": 39911
+	},
+	{
+		"command": "add",
+		"target": [0, 7, 0],
+		"itemid": 39920
+	},
+	{
+		"command": "add",
+		"target": [1, 7, 0],
+		"itemid": 39922
+	},
+	{
+		"command": "add",
+		"target": [2, 2, 0],
+		"itemid": 39909
+	},
+	{
+		"command": "add",
+		"target": [2, 3, 0],
+		"itemid": 39910
+	},
+	{
+		"command": "add",
+		"target": [2, 4, 0],
+		"itemid": 39911
+	},
+	{
+		"command": "add",
+		"target": [2, 5, 0],
+		"itemid": 39912
+	},
+	{
+		"command": "add",
+		"target": [2, 6, 0],
+		"itemid": 39913
+	},
+	{
+		"command": "add",
+		"target": [2, 7, 0],
+		"itemid": 39914
+	}
 ]
