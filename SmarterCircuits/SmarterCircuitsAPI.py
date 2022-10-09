@@ -97,7 +97,7 @@ class SmarterAPI:
         
         @self.app.route('/control/<text>',methods=['GET'])
         def control(text):
-            self.mcp.mqtt.publish("smarter_circuits/command",text)
+            self.mcp.mqtt.publish("smarter_circuits/command",text.replace("-"," "))
 
         _thread.start_new_thread(self.start, ())
 
