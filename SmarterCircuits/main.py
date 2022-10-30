@@ -412,17 +412,20 @@ class SmarterCircuitsMCP:
             return
         if "status" not in topic:
             return
-        data = message
+        data = json.loads(message)
         for circuit in self.config.circuits:
             if(circuit.id != id):
                 continue
-            circuit.status.relay.on = data["output"]
-            circuit.status.relay.power = data["current"]
-            circuit.status.relay.energy = data["apower"]
-            circuit.status.temperature = data["temperature"]["tC"]
-            circuit.status.temperature_f = data["temperature"]["tF"]
-            circuit.status.overtemperature = 0
-            circuit.status.voltage = data["voltage"]
+            try:
+                circuit.status.relay.on = data["output"]
+                circuit.status.relay.power = data["current"]
+                circuit.status.relay.energy = data["apower"]
+                circuit.status.temperature = data["temperature"]["tC"]
+                circuit.status.temperature_f = data["temperature"]["tF"]
+                circuit.status.overtemperature = 0
+                circuit.status.voltage = data["voltage"]
+            except:
+                self.send_discord_message(message)
 
 
     def handle_shelly_uni_message(self, id, topic, message):
