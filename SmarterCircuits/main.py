@@ -416,17 +416,15 @@ class SmarterCircuitsMCP:
         for circuit in self.config.circuits:
             if(circuit.id != id):
                 continue
-            try:
-                circuit.status.relay.on = data["output"]
-                circuit.status.relay.power = data["current"]
-                circuit.status.relay.energy = data["apower"]
-                circuit.status.temperature = data["temperature"]["tC"]
-                circuit.status.temperature_f = data["temperature"]["tF"]
-                circuit.status.overtemperature = 0
-                circuit.status.voltage = data["voltage"]
-                self.send_discord_message(self.discord_debug_room,"SUCCESS: "+message)
-            except:
-                self.send_discord_message(self.discord_debug_room,message)
+            if("switch:"+circuit.relay_id not in topic):
+                continue
+            circuit.status.relay.on = data["output"]
+            circuit.status.relay.power = data["current"]
+            circuit.status.relay.energy = data["apower"]
+            circuit.status.temperature = data["temperature"]["tC"]
+            circuit.status.temperature_f = data["temperature"]["tF"]
+            circuit.status.overtemperature = 0
+            circuit.status.voltage = data["voltage"]
 
 
     def handle_shelly_uni_message(self, id, topic, message):
