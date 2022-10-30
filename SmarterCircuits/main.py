@@ -391,6 +391,8 @@ class SmarterCircuitsMCP:
     def handle_shelly_message(self, topic, message):
         s = topic.split('/')
         id = s[1]
+        if "pro4pm" in id:
+            self.handle_shelly_pro4pm_message(id, topic.replace("shellies/"+id+"/",""), message)
         if "1pm" in id or "switch25" in id:
             self.handle_shelly_relay_message(id, topic.replace("shellies/"+id+"/",""), message)
         if "dw" in id:
@@ -405,6 +407,24 @@ class SmarterCircuitsMCP:
             self.handle_shelly_uni_message(id, topic, message)
         return
     
+    def handle_shelly_pro4pm_message(self, id, topic, message):
+        if self.circuit_authority is False:
+            return
+        if "status" not in topic:
+            return
+        data = json.loads(message)
+        for circuit in self.config.circuits:
+            if(circuit.id != id):
+                continue
+            circuit.status.relay.on = data["output"]
+            circuit.status.relay.power = data["current"]
+            circuit.status.relay.energy = data["apower"]
+            circuit.status.temperature = data["temperature"]["tC"]
+            circuit.status.temperature_f = data["temperature"]["tF"]
+            circuit.status.overtemperature = 0
+            circuit.status.voltage = data["voltage"]
+
+
     def handle_shelly_uni_message(self, id, topic, message):
         if self.circuit_authority is False:
             return
