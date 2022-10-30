@@ -416,7 +416,7 @@ class SmarterCircuitsMCP:
         for circuit in self.config.circuits:
             if(circuit.id != id):
                 continue
-            if("switch:"+circuit.relay_id not in topic):
+            if(int(circuit.relay_id) != data["id"]):
                 continue
             circuit.status.relay.on = data["output"]
             circuit.status.relay.power = data["current"]
