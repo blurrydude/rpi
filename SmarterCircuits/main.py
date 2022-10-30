@@ -412,7 +412,7 @@ class SmarterCircuitsMCP:
             return
         if "status" not in topic:
             return
-        data = json.loads(message)
+        data = message
         for circuit in self.config.circuits:
             if(circuit.id != id):
                 continue
