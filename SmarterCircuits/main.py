@@ -424,9 +424,9 @@ class SmarterCircuitsMCP:
                 circuit.status.temperature_f = data["temperature"]["tF"]
                 circuit.status.overtemperature = 0
                 circuit.status.voltage = data["voltage"]
-                self.send_discord_message("SUCCESS: "+message)
+                self.send_discord_message(self.discord_debug_room,"SUCCESS: "+message)
             except:
-                self.send_discord_message(message)
+                self.send_discord_message(self.discord_debug_room,message)
 
 
     def handle_shelly_uni_message(self, id, topic, message):
