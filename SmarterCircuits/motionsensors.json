@@ -127,8 +127,8 @@
         ]
       },
       {
-        "start": "turn on the day room light",
-        "stop": "turn off the day room light",
+        "start": "turn on the deck light",
+        "stop": "turn off the deck light",
         "conditions": [
           { "prop": "mode", "comparitor": "=", "value": "midnight" }
         ]
