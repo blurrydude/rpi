@@ -1,120 +1,139 @@
 [
-    {
-        "name":"Guest Bathroom",
-        "commands": [{
-            "start":"turn on guest bathroom",
-            "stop":"turn off guest bathroom",
-            "conditions": [
-            ]
-        }],
-        "id":"shellymotionsensor-60A423BECB98",
-        "auto_off":true,
-        "off_time_minutes":"30",
-        "ip_address":"192.168.1.150"
-    },
-    {
-        "name":"Master Bathroom",
-        "commands": [
-            {
-                "start":"turn on master bath",
-                "stop":"turn off master bath",
-                "conditions": [
-                    {"prop":"mode","comparitor":"!=","value":"night"},
-                    {"prop":"mode","comparitor":"!=","value":"midnight"}
-                ]
-            },
-            { 
-                "start": "turn on shower fan", 
-                "stop": "turn off shower fan", 
-                "conditions": [
-                    {"prop":"mode","comparitor":"=","value":"night"},
-                    {"prop":"mode","comparitor":"=","value":"midnight"}
-                ] 
-            }
-        ],
-        "id":"shellymotionsensor-60A42386DDE2",
-        "auto_off":true,
-        "off_time_minutes":"20",
-        "ip_address":"192.168.1.151"
-    },
-    {
-        "name":"Kitchen",
-        "commands": [],
-        "id":"shellymotionsensor-60A42386E5BA",
-        "auto_off":false,
-        "off_time_minutes":"30",
-        "ip_address":"192.168.1.152"
-    },
-    {
-        "name":"Garage",
-        "commands": [{
-            "start":"turn on shop lights",
-            "stop":"turn off shop lights",
-            "conditions": [{"prop":"mode","comparitor":"!=","value":"night"},{"prop":"mode","comparitor":"!=","value":"midnight"}]
-        },{
-            "start":"turn on stairway",
-            "stop":"turn off stairway",
-            "conditions": []
-        }],
-        "id":"shellymotionsensor-60A423872550",
-        "auto_off":true,
-        "off_time_minutes":"30",
-        "ip_address":"192.168.1.153"
-    },
-    {
-        "name":"Stairway",
-        "commands": [{
-            "start":"turn on stairway",
-            "stop":"turn off stairway",
-            "conditions": []
-        }],
-        "id":"shellymotionsensor-60A423976276",
-        "auto_off":true,
-        "off_time_minutes":"3",
-        "ip_address":"192.168.1.154"
-    },
-    {
-        "name":"Game Room",
-        "commands": [{
-            "start":"",
-            "stop":"",
-            "conditions": []
-        },{
-            "start":"",
-            "stop":"",
-            "conditions": []
-        }],
-        "id":"shellymotionsensor-60A423C67472",
-        "auto_off":false,
-        "off_time_minutes":"30",
-        "ip_address":"192.168.2.58"
-    },
-    {
-        "name":"Critter Cam",
-        "commands": [{
-            "start":"turn on deck light",
-            "stop":"turn off deck light",
-            "conditions": [{"prop":"mode","comparitor":"=","value":"night"},{"prop":"mode","comparitor":"=","value":"midnight"}]
-        }],
-        "id":"shellymotionsensor-60A42395F69E",
-        "auto_off":true,
-        "off_time_minutes":"5",
-        "ip_address":"192.168.2.56"
-    },
-    {
-        "name":"Deck",
-        "commands": [{
-            "start":"turn on the deck fountain",
-            "stop":"turn off the deck fountain",
-            "conditions": [{"prop":"mode","comparitor":"!=","value":"midnight"}]
-        },{
-            "start":"turn on the day room light",
-            "stop":"turn off the day room light",
-            "conditions": [{"prop":"mode","comparitor":"=","value":"midnight"}]
-        }],
-        "id":"shellymotionsensor-60A4239A6298",
-        "auto_off":true,
-        "off_time_minutes":"30",
-        "ip_address":"192.168.1.155"
-    }
+  {
+    "name": "Guest Bathroom",
+    "commands": [
+      {
+        "start": "turn on guest bathroom",
+        "stop": "turn off guest bathroom",
+        "conditions": []
+      }
+    ],
+    "id": "shellymotionsensor-60A423BECB98",
+    "auto_off": true,
+    "off_time_minutes": "30",
+    "ip_address": "192.168.1.150"
+  },
+  {
+    "name": "Master Bathroom",
+    "commands": [
+      {
+        "start": "turn on master bath",
+        "stop": "turn off master bath",
+        "conditions": [
+          { "prop": "mode", "comparitor": "!=", "value": "night" },
+          { "prop": "mode", "comparitor": "!=", "value": "midnight" }
+        ]
+      },
+      {
+        "start": "turn on shower fan",
+        "stop": "turn off shower fan",
+        "conditions": [
+          { "prop": "mode", "comparitor": "=", "value": "night" },
+          { "prop": "mode", "comparitor": "=", "value": "midnight" }
+        ]
+      }
+    ],
+    "id": "shellymotionsensor-60A42386DDE2",
+    "auto_off": true,
+    "off_time_minutes": "20",
+    "ip_address": "192.168.1.151"
+  },
+  {
+    "name": "Kitchen",
+    "commands": [],
+    "id": "shellymotionsensor-60A42386E5BA",
+    "auto_off": false,
+    "off_time_minutes": "30",
+    "ip_address": "192.168.1.152"
+  },
+  {
+    "name": "Garage",
+    "commands": [
+      {
+        "start": "turn on shop lights",
+        "stop": "turn off shop lights",
+        "conditions": [
+          { "prop": "mode", "comparitor": "!=", "value": "night" },
+          { "prop": "mode", "comparitor": "!=", "value": "midnight" }
+        ]
+      },
+      {
+        "start": "turn on stairway",
+        "stop": "turn off stairway",
+        "conditions": []
+      }
+    ],
+    "id": "shellymotionsensor-60A423872550",
+    "auto_off": true,
+    "off_time_minutes": "30",
+    "ip_address": "192.168.1.153"
+  },
+  {
+    "name": "Stairway",
+    "commands": [
+      {
+        "start": "turn on stairway",
+        "stop": "turn off stairway",
+        "conditions": []
+      }
+    ],
+    "id": "shellymotionsensor-60A423976276",
+    "auto_off": true,
+    "off_time_minutes": "3",
+    "ip_address": "192.168.1.154"
+  },
+  {
+    "name": "Game Room",
+    "commands": [
+      {
+        "start": "turn on game tables",
+        "stop": "turn off game tables",
+        "conditions": [{ "prop": "mode", "comparitor": "=", "value": "night" }]
+      }
+    ],
+    "id": "shellymotionsensor-60A423C67472",
+    "auto_off": false,
+    "off_time_minutes": "30",
+    "ip_address": "192.168.2.58"
+  },
+  {
+    "name": "Critter Cam",
+    "commands": [
+      {
+        "start": "turn on deck light",
+        "stop": "turn off deck light",
+        "conditions": [
+          { "prop": "mode", "comparitor": "=", "value": "night" },
+          { "prop": "mode", "comparitor": "=", "value": "midnight" }
+        ]
+      }
+    ],
+    "id": "shellymotionsensor-60A42395F69E",
+    "auto_off": true,
+    "off_time_minutes": "5",
+    "ip_address": "192.168.2.56"
+  },
+  {
+    "name": "Deck",
+    "commands": [
+      {
+        "start": "turn on the deck fountain",
+        "stop": "turn off the deck fountain",
+        "conditions": [
+          { "prop": "mode", "comparitor": "!=", "value": "midnight" }
+        ]
+      },
+      {
+        "start": "turn on the day room light",
+        "stop": "turn off the day room light",
+        "conditions": [
+          { "prop": "mode", "comparitor": "=", "value": "midnight" }
+        ]
+      }
+    ],
+    "id": "shellymotionsensor-60A4239A6298",
+    "auto_off": true,
+    "off_time_minutes": "30",
+    "ip_address": "192.168.1.155"
+  }
 ]
