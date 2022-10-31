@@ -408,8 +408,6 @@ class SmarterCircuitsMCP:
         return
     
     def handle_shelly_pro4pm_message(self, id, topic, message):
-        if self.circuit_authority is False:
-            return
         if "status" not in topic:
             return
         data = json.loads(message)
@@ -418,19 +416,12 @@ class SmarterCircuitsMCP:
                 continue
             if(int(circuit.relay_id) != data["id"]):
                 continue
-            self.send_discord_message(self.discord_debug_room, "pro4pm circuit update")
             circuit.status.relay.on = data["output"]
-            self.send_discord_message(self.discord_debug_room, "pro4pm circuit on updated")
-            circuit.status.relay.power = data["current"]
-            self.send_discord_message(self.discord_debug_room, "pro4pm circuit power updated")
-            circuit.status.relay.energy = data["apower"]
-            self.send_discord_message(self.discord_debug_room, "pro4pm circuit energy updated")
+            circuit.status.relay.power = data["apower"]
+            circuit.status.relay.energy = data["current"]
             circuit.status.temperature = data["temperature"]["tC"]
-            self.send_discord_message(self.discord_debug_room, "pro4pm circuit temperature updated")
             circuit.status.temperature_f = data["temperature"]["tF"]
-            self.send_discord_message(self.discord_debug_room, "pro4pm circuit temperature_f updated")
             circuit.status.voltage = data["voltage"]
-            self.send_discord_message(self.discord_debug_room, "pro4pm circuit updated "+json.dumps(circuit.status))
 
 
     def handle_shelly_uni_message(self, id, topic, message):
