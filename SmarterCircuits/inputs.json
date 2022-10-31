@@ -1,140 +1,134 @@
 {
-    "shellyplusi4-083af200a4b0": 
-    {
-        "0": {
-            "single_push": ["toggle the shop light"],
-            "long_push": ["turn off the shop light"],
-            "double_push": ["turn off the shop light"]
-        },
-        "1": {
-            "single_push": ["toggle the garage lights"],
-            "long_push": ["turn off the garage lights"],
-            "double_push": ["turn off the garage lights"]
-        },
-        "2": {
-            "single_push": ["toggle the laundry room"],
-            "long_push": ["turn off the workbench fan"],
-            "double_push": ["toggle the workbench fan"]
-        },
-        "3": {
-            "single_push": ["toggle the storage room"],
-            "long_push": ["turn off the storage room"],
-            "double_push": ["turn off the storage room"]
-        }
-    },
-    "shellyplusi4-083af200fe38": 
-    {
-        "0": {
-            "single_push": ["toggle the master bath"],
-            "long_push": ["turn off the master bath"],
-            "double_push": ["turn off the master bath"]
-        },
-        "1": {
-            "single_push": ["toggle the stairway"],
-            "long_push": ["turn off the stairway"],
-            "double_push": ["turn off the stairway"]
-        },
-        "2": {
-            "single_push": ["toggle the shower fan"],
-            "long_push": ["turn off the shower fan"],
-            "double_push": ["turn off the shower fan"]
-        },
-        "3": {
-            "single_push": ["switch 4"],
-            "long_push": ["switch 4"],
-            "double_push": ["switch 4"]
-        }
-    },
-    "shellyplusi4-083af200a500": 
-    {
-        "0": {
-            "single_push": ["toggle the gym lamp"],
-            "long_push": ["turn off the gym lamp"],
-            "double_push": ["turn off the gym lamp"]
-        },
-        "1": {
-            "single_push": ["toggle the guest bathroom"],
-            "long_push": ["turn off the guest bathroom"],
-            "double_push": ["turn off the guest bathroom"]
-        },
-        "2": {
-            "single_push": ["toggle the library"],
-            "long_push": ["turn off the library"],
-            "double_push": ["turn off the library"]
-        },
-        "3": {
-            "single_push": ["toggle the garage lights"],
-            "long_push": ["turn off the garage lights"],
-            "double_push": ["turn off the garage lights"]
-        }
-    },
-    "shellyplusi4-083af200d788": 
-    {
-        "0": {
-            "single_push": ["toggle the living room lamp"],
-            "long_push": ["turn off the living room lamp"],
-            "double_push": ["turn off the living room lamp"]
-        },
-        "1": {
-            "single_push": ["toggle the day room fan"],
-            "long_push": ["turn off the day room fan"],
-            "double_push": ["turn off the day room fan"]
-        },
-        "2": {
-            "single_push": ["toggle the kitchen"],
-            "long_push": ["turn off the kitchen"],
-            "double_push": ["turn off the kitchen"]
-        },
-        "3": {
-            "single_push": ["toggle the porch light"],
-            "long_push": ["turn off the porch light"],
-            "double_push": ["turn off the porch light"]
-        }
-    },
-    "shellyplusi4-083af200fe60": 
-    {
-        "0": {
-            "single_push": ["toggle the bedroom lamp"],
-            "long_push": ["turn off the bedroom lamp"],
-            "double_push": ["turn off the bedroom lamp"]
-        },
-        "1": {
-            "single_push": ["toggle the deck rail"],
-            "long_push": ["turn off the deck rail"],
-            "double_push": ["turn off the deck rail"]
-        },
-        "2": {
-            "single_push": ["toggle the under cabinet"],
-            "long_push": ["turn off the under cabinet"],
-            "double_push": ["turn off the under cabinet"]
-        },
-        "3": {
-            "single_push": ["toggle the switch 16"],
-            "long_push": ["turn off the switch 16"],
-            "double_push": ["turn off the switch 16"]
-        }
-    },
-    "shellyplusi4-083af200ff20": 
-    {
-        "0": {
-            "single_push": ["toggle the lamp post"],
-            "long_push": ["turn off the lamp post"],
-            "double_push": ["turn off the lamp post"]
-        },
-        "1": {
-            "single_push": ["toggle the dining room"],
-            "long_push": ["turn off the dining room"],
-            "double_push": ["turn off the dining room"]
-        },
-        "2": {
-            "single_push": ["toggle the switch 19"],
-            "long_push": ["turn off the switch 19"],
-            "double_push": ["turn off the switch 19"]
-        },
-        "3": {
-            "single_push": ["toggle the bar"],
-            "long_push": ["turn off the bar"],
-            "double_push": ["turn off the bar"]
-        }
-    }
+	"shellyplusi4-083af200a4b0": {
+		"0": {
+			"single_push": ["toggle the shop light"],
+			"long_push": ["turn off the shop light"],
+			"double_push": ["turn off the shop light"]
+		},
+		"1": {
+			"single_push": ["toggle the garage lights"],
+			"long_push": ["turn off the garage lights"],
+			"double_push": ["turn off the garage lights"]
+		},
+		"2": {
+			"single_push": ["toggle the laundry room"],
+			"long_push": ["turn off the workbench fan"],
+			"double_push": ["toggle the workbench fan"]
+		},
+		"3": {
+			"single_push": ["toggle the storage room"],
+			"long_push": ["turn off the storage room"],
+			"double_push": ["turn off the storage room"]
+		}
+	},
+	"shellyplusi4-083af200fe38": {
+		"0": {
+			"single_push": ["toggle the master bath"],
+			"long_push": ["turn off the master bath"],
+			"double_push": ["turn off the master bath"]
+		},
+		"1": {
+			"single_push": ["toggle the stairway"],
+			"long_push": ["turn off the stairway"],
+			"double_push": ["turn off the stairway"]
+		},
+		"2": {
+			"single_push": ["toggle the shower fan"],
+			"long_push": ["turn off the shower fan"],
+			"double_push": ["turn off the shower fan"]
+		},
+		"3": {
+			"single_push": ["switch 4"],
+			"long_push": ["switch 4"],
+			"double_push": ["switch 4"]
+		}
+	},
+	"shellyplusi4-083af200a500": {
+		"0": {
+			"single_push": ["toggle the gym lamp"],
+			"long_push": ["turn off the gym lamp"],
+			"double_push": ["turn off the gym lamp"]
+		},
+		"1": {
+			"single_push": ["toggle the guest bathroom"],
+			"long_push": ["turn off the guest bathroom"],
+			"double_push": ["turn off the guest bathroom"]
+		},
+		"2": {
+			"single_push": ["toggle the library lamp"],
+			"long_push": ["turn off the library lamp"],
+			"double_push": ["turn off the library lamp"]
+		},
+		"3": {
+			"single_push": ["toggle the garage lights"],
+			"long_push": ["turn off the garage lights"],
+			"double_push": ["turn off the garage lights"]
+		}
+	},
+	"shellyplusi4-083af200d788": {
+		"0": {
+			"single_push": ["toggle the living room lamp"],
+			"long_push": ["turn off the living room lamp"],
+			"double_push": ["turn off the living room lamp"]
+		},
+		"1": {
+			"single_push": ["toggle the day room fan"],
+			"long_push": ["turn off the day room fan"],
+			"double_push": ["turn off the day room fan"]
+		},
+		"2": {
+			"single_push": ["toggle the kitchen"],
+			"long_push": ["turn off the kitchen"],
+			"double_push": ["turn off the kitchen"]
+		},
+		"3": {
+			"single_push": ["toggle the porch light"],
+			"long_push": ["turn off the porch light"],
+			"double_push": ["turn off the porch light"]
+		}
+	},
+	"shellyplusi4-083af200fe60": {
+		"0": {
+			"single_push": ["toggle the bedroom lamp"],
+			"long_push": ["turn off the bedroom lamp"],
+			"double_push": ["turn off the bedroom lamp"]
+		},
+		"1": {
+			"single_push": ["toggle the deck rail"],
+			"long_push": ["turn off the deck rail"],
+			"double_push": ["turn off the deck rail"]
+		},
+		"2": {
+			"single_push": ["toggle the under cabinet"],
+			"long_push": ["turn off the under cabinet"],
+			"double_push": ["turn off the under cabinet"]
+		},
+		"3": {
+			"single_push": ["toggle the switch 16"],
+			"long_push": ["turn off the switch 16"],
+			"double_push": ["turn off the switch 16"]
+		}
+	},
+	"shellyplusi4-083af200ff20": {
+		"0": {
+			"single_push": ["toggle the lamp post"],
+			"long_push": ["turn off the lamp post"],
+			"double_push": ["turn off the lamp post"]
+		},
+		"1": {
+			"single_push": ["toggle the dining room"],
+			"long_push": ["turn off the dining room"],
+			"double_push": ["turn off the dining room"]
+		},
+		"2": {
+			"single_push": ["toggle the switch 19"],
+			"long_push": ["turn off the switch 19"],
+			"double_push": ["turn off the switch 19"]
+		},
+		"3": {
+			"single_push": ["toggle the bar"],
+			"long_push": ["turn off the bar"],
+			"double_push": ["turn off the bar"]
+		}
+	}
 }
