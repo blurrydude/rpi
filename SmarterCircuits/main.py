@@ -425,6 +425,7 @@ class SmarterCircuitsMCP:
             circuit.status.temperature_f = data["temperature"]["tF"]
             circuit.status.overtemperature = 0
             circuit.status.voltage = data["voltage"]
+            self.send_discord_message(self.discord_debug_room, "pro4pm circuit updated "+json.dumps(circuit.status))
 
 
     def handle_shelly_uni_message(self, id, topic, message):
