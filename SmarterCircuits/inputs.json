@@ -107,6 +107,28 @@
       "double_push": ["toggle the lamp post"]
     }
   },
+  "shellyplusi4-083af2013d5c": {
+    "0": {
+      "single_push": ["toggle the garage lights"],
+      "long_push": ["toggle the garage lights"],
+      "double_push": ["toggle the garage lights"]
+    },
+    "1": {
+      "single_push": ["toggle the shop light"],
+      "long_push": ["toggle the shop light"],
+      "double_push": ["toggle the shop light"]
+    },
+    "2": {
+      "single_push": ["toggle the laundry room"],
+      "long_push": ["toggle the laundry room"],
+      "double_push": ["toggle the laundry room"]
+    },
+    "3": {
+      "single_push": ["toggle the storage room"],
+      "long_push": ["toggle the storage room"],
+      "double_push": ["toggle the storage room"]
+    }
+  },
   "shellyplusi4-083af200a4b0": {
     "0": {
       "single_push": ["toggle the shop light"],
