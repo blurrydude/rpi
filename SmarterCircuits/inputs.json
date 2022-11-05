@@ -85,6 +85,28 @@
       "double_push": ["toggle the deck fountain"]
     }
   },
+  "shellyplusi4-083af200ff40": {
+    "0": {
+      "single_push": ["toggle the dining room"],
+      "long_push": ["toggle the dining room"],
+      "double_push": ["toggle the dining room"]
+    },
+    "1": {
+      "single_push": ["toggle the fireplace"],
+      "long_push": ["toggle the fireplace"],
+      "double_push": ["toggle the fireplace"]
+    },
+    "2": {
+      "single_push": ["toggle the porch"],
+      "long_push": ["toggle the porch"],
+      "double_push": ["toggle the porch"]
+    },
+    "3": {
+      "single_push": ["toggle the lamp post"],
+      "long_push": ["toggle the lamp post"],
+      "double_push": ["toggle the lamp post"]
+    }
+  },
   "shellyplusi4-083af200a4b0": {
     "0": {
       "single_push": ["toggle the shop light"],
