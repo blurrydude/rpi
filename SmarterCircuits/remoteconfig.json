@@ -68,10 +68,10 @@
             "options": {
                 "1": { "title": "Game Room", "action": "command", "value": "toggle the game room" },
                 "2": { "title": "Game Tables", "action": "command", "value": "toggle the game tables" },
-                "3": { "title": "Dining Room", "action": "command", "value": "toggle the dining room" },
-                "4": { "title": "Bar", "action": "command", "value": "toggle the bar" },
-                "5": { "title": "Kitchen", "action": "command", "value": "toggle the kitchen" },
-                "6": { "title": "Counter", "action": "command", "value": "toggle the under cabinet lights" },
+                "3": { "title": "Close Shades", "action": "command", "value": "close the shades" },
+                "4": { "title": "Open Shades", "action": "command", "value": "open the shades" },
+                "5": { "title": "Bar", "action": "command", "value": "toggle the bar" },
+                "6": { "title": "Kitchen", "action": "command", "value": "toggle the kitchen" },
                 "7": { "title": "Day Room", "action": "command", "value": "toggle the day room" },
                 "8": { "title": "Living Room", "action": "command", "value": "toggle the living room" }
             }
