@@ -35,14 +35,14 @@
       ]
     },
     "2": {
-      "single_push": ["toggle the laundry room"],
-      "long_push": ["turn off the workbench fan"],
-      "double_push": ["toggle the workbench fan"]
+      "single_push": ["turn off the dining room", "turn off the kitchen", "turn off the bar", "turn on the under cabinet", "turn on the coffee station"],
+      "long_push": ["turn off the dining room", "turn off the kitchen", "turn off the bar", "turn on the under cabinet", "turn on the coffee station"],
+      "double_push": ["turn off the dining room", "turn off the kitchen", "turn off the bar", "turn on the under cabinet", "turn on the coffee station"]
     },
     "3": {
-      "single_push": ["toggle the storage room"],
-      "long_push": ["turn off the storage room"],
-      "double_push": ["turn off the storage room"]
+      "single_push": ["toggle the kitchen"],
+      "long_push": ["toggle the kitchen"],
+      "double_push": ["toggle the kitchen"]
     }
   },
   "shellyplusi4-083af200a4b0": {
