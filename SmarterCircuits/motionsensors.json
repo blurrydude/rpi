@@ -103,12 +103,9 @@
     "name": "Critter Cam",
     "commands": [
       {
-        "start": "turn on deck light",
-        "stop": "turn off deck light",
-        "conditions": [
-          { "prop": "mode", "comparitor": "=", "value": "night" },
-          { "prop": "mode", "comparitor": "=", "value": "midnight" }
-        ]
+        "start": "turn on under cabinet",
+        "stop": "turn off under cabinet",
+        "conditions": []
       }
     ],
     "id": "shellymotionsensor-60A42395F69E",
