@@ -1,4 +1,134 @@
 {
+  "shellyplusi4-083af200df3c": {
+    "0": {
+      "single_push": [
+        "turn on the game room",
+        "turn on the game tables",
+        "close the shades"
+      ],
+      "long_push": [
+        "turn on the game room",
+        "turn on the game tables",
+        "close the shades"
+      ],
+      "double_push": [
+        "turn on the game room",
+        "turn on the game tables",
+        "close the shades"
+      ]
+    },
+    "1": {
+      "single_push": [
+        "turn off the game room",
+        "turn off the game tables",
+        "open the shades"
+      ],
+      "long_push": [
+        "turn off the game room",
+        "turn off the game tables",
+        "open the shades"
+      ],
+      "double_push": [
+        "turn off the game room",
+        "turn off the game tables",
+        "open the shades"
+      ]
+    },
+    "2": {
+      "single_push": [
+        "turn off the dining room",
+        "turn off the kitchen",
+        "turn off the bar",
+        "turn on the under cabinet",
+        "turn on the coffee station"
+      ],
+      "long_push": [
+        "turn off the dining room",
+        "turn off the kitchen",
+        "turn off the bar",
+        "turn on the under cabinet",
+        "turn on the coffee station"
+      ],
+      "double_push": [
+        "turn off the dining room",
+        "turn off the kitchen",
+        "turn off the bar",
+        "turn on the under cabinet",
+        "turn on the coffee station"
+      ]
+    },
+    "3": {
+      "single_push": ["toggle the kitchen"],
+      "long_push": ["toggle the kitchen"],
+      "double_push": ["toggle the kitchen"]
+    }
+  },
+  "shellyplusi4-083af200b62c": {
+    "0": {
+      "single_push": ["toggle the living room lamp"],
+      "long_push": ["toggle the living room lamp"],
+      "double_push": ["toggle the living room lamp"]
+    },
+    "1": {
+      "single_push": ["toggle the day room lamp"],
+      "long_push": ["toggle the day room lamp"],
+      "double_push": ["toggle the day room lamp"]
+    },
+    "2": {
+      "single_push": ["toggle the deck rail"],
+      "long_push": ["toggle the deck rail"],
+      "double_push": ["toggle the deck rail"]
+    },
+    "3": {
+      "single_push": ["toggle the deck fountain"],
+      "long_push": ["toggle the deck fountain"],
+      "double_push": ["toggle the deck fountain"]
+    }
+  },
+  "shellyplusi4-083af200ff40": {
+    "0": {
+      "single_push": ["toggle the dining room"],
+      "long_push": ["toggle the dining room"],
+      "double_push": ["toggle the dining room"]
+    },
+    "1": {
+      "single_push": ["toggle the fireplace"],
+      "long_push": ["toggle the fireplace"],
+      "double_push": ["toggle the fireplace"]
+    },
+    "2": {
+      "single_push": ["toggle the porch"],
+      "long_push": ["toggle the porch"],
+      "double_push": ["toggle the porch"]
+    },
+    "3": {
+      "single_push": ["toggle the lamp post"],
+      "long_push": ["toggle the lamp post"],
+      "double_push": ["toggle the lamp post"]
+    }
+  },
+  "shellyplusi4-083af2013d5c": {
+    "0": {
+      "single_push": ["toggle the garage lights"],
+      "long_push": ["toggle the garage lights"],
+      "double_push": ["toggle the garage lights"]
+    },
+    "1": {
+      "single_push": ["toggle the shop light"],
+      "long_push": ["toggle the shop light"],
+      "double_push": ["toggle the shop light"]
+    },
+    "2": {
+      "single_push": ["toggle the laundry room"],
+      "long_push": ["toggle the laundry room"],
+      "double_push": ["toggle the laundry room"]
+    },
+    "3": {
+      "single_push": ["toggle the storage room"],
+      "long_push": ["toggle the storage room"],
+      "double_push": ["toggle the storage room"]
+    }
+  },
   "shellyplusi4-083af200a4b0": {
     "0": {
       "single_push": ["toggle the shop light"],
