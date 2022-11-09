@@ -75,6 +75,7 @@ class SmarterCircuitsPassiveMonitor:
                 wrapped = textwrap.wrap(text,self.line_char_width)
             
             self.last_display = datetime.now()
+            self.screen_open()
             self.do_display(wrapped)
             # if self.display_on == False:
             #     _thread.start_new_thread(self.screen_open, ())
@@ -120,9 +121,10 @@ class SmarterCircuitsPassiveMonitor:
     
     def screen_open(self):
         if self.display_on is False:
-            self.mqtt.publish("smarter_circuits/command","turn on cabinet projector")
-            time.sleep(3)
-            os.system("echo 'on 0.0.0.0' | cec-client -s -d 1")
+            # self.mqtt.publish("smarter_circuits/command","turn on cabinet projector")
+            # time.sleep(3)
+            # os.system("echo 'on 0.0.0.0' | cec-client -s -d 1")
+            os.system("DISPLAY=:0 xset dpms force on")
             self.display_on = True
         # time.sleep(5)
         # beepy.beep(sound="ping")
