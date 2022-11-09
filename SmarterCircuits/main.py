@@ -1053,6 +1053,7 @@ class SmarterCircuitsPeer:
         return json.dumps(self, default=lambda o: o.__dict__, 
             sort_keys=True, indent=4)
 
+
 if __name__ == "__main__":
     myname = socket.gethostname()
     try:
