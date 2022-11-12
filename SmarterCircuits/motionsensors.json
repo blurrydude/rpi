@@ -50,22 +50,19 @@
     "name": "Garage",
     "commands": [
       {
-        "start": "turn on shop lights",
-        "stop": "turn off shop lights",
-        "conditions": [
-          { "prop": "mode", "comparitor": "!=", "value": "night" },
-          { "prop": "mode", "comparitor": "!=", "value": "midnight" }
-        ]
+        "start": "turn on garage lights",
+        "stop": "turn off garage lights",
+        "conditions": []
       },
       {
-        "start": "turn on stairway",
-        "stop": "turn off stairway",
+        "start": "turn on garage lights",
+        "stop": "turn off garage lights",
         "conditions": []
       }
     ],
     "id": "shellymotionsensor-60A423872550",
     "auto_off": true,
-    "off_time_minutes": "30",
+    "off_time_minutes": "10",
     "ip_address": "192.168.1.153"
   },
   {
