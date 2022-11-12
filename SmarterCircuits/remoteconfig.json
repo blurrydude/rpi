@@ -60,6 +60,11 @@
           "title": "Shades",
           "action": "nav",
           "value": "shades"
+        },
+        "9": {
+          "title": "Sensor Status",
+          "action": "command",
+          "value": "sensor status"
         }
       }
     },
