@@ -202,7 +202,7 @@ class SmarterCircuitsMCP:
             data = data + sensor.name.upper() + ": " + str(round(sensor.status.temperature,1)) + " F " + str(round(sensor.status.humidity,1)) +"% (dew point: "+str(dp)+" F, batt "+str(round(sensor.status.battery,1))+"%)\n"
         for motion_id in self.config.motion_sensors.keys():
             motion = self.config.motion_sensors[motion_id]
-            data = data + sensor.name.upper() + ": " + str(motion.status.timestamp) + " : " + str(round(motion.status.lux,1)) +" lux, "+str(round(motion.status.battery,1))+"% battery\n"
+            data = data + motion.name.upper() + ": " + str(motion.status.timestamp) + " : " + str(round(motion.status.lux,1)) +" lux, "+str(round(motion.status.battery,1))+"% battery\n"
             
         self.send_discord_message(self.discord_house_room, data)
         self.mqtt.publish("notifications",data)
