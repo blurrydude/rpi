@@ -24,7 +24,7 @@ class SmarterCircuitsPassiveMonitor:
         self.screen_timer = 0
         self.font_size = 48
         self.line_char_width = 64
-        self.lines = 9
+        self.lines = 12
         self.last_display = datetime.now()
         _thread.start_new_thread(self.sleep_timer, ())
         self.start()
