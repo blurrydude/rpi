@@ -78,8 +78,10 @@ class SmarterCircuitsPassiveMonitor:
                 return
             # print("alerting: "+text)
             # pyautogui.alert(text, "HOUSE ALERT")
-            if "\\n" in text:
-                wrapped = text.split('\\n')
+            if "~~~" in text:
+                wrapped = text.split('~~~')
+            elif "\n" in text:
+                wrapped = text.split('\n')
             else:
                 wrapped = textwrap.wrap(text,self.line_char_width)
             
