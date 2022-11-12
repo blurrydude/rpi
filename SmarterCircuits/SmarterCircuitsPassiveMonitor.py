@@ -67,6 +67,15 @@ class SmarterCircuitsPassiveMonitor:
             if text == "closecloseclose":
                 self.stop()
                 return
+            if "set font size" in text:
+                self.font_size = int(text.split(' ')[3])
+                return
+            if "set line size" in text:
+                self.line_char_width = int(text.split(' ')[3])
+                return
+            if "set line limit" in text:
+                self.lines = int(text.split(' ')[3])
+                return
             # print("alerting: "+text)
             # pyautogui.alert(text, "HOUSE ALERT")
             if "\\n" in text:
