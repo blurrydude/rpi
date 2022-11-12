@@ -40,7 +40,22 @@
   },
   {
     "name": "Kitchen",
-    "commands": [],
+    "commands": [
+      {
+        "start": "turn on kitchen",
+        "stop": "turn off kitchen",
+        "conditions": [
+          { "prop": "mode", "comparitor": "=", "value": "morning" },
+          { "prop": "mode", "comparitor": "=", "value": "day" },
+          { "prop": "mode", "comparitor": "=", "value": "evening" }
+        ]
+      },
+      {
+        "start": "turn on bar",
+        "stop": "turn off bar",
+        "conditions": [{ "prop": "mode", "comparitor": "=", "value": "night" }]
+      }
+    ],
     "id": "shellymotionsensor-60A42386E5BA",
     "auto_off": false,
     "off_time_minutes": "30",
@@ -53,16 +68,11 @@
         "start": "turn on garage lights",
         "stop": "turn off garage lights",
         "conditions": []
-      },
-      {
-        "start": "turn on garage lights",
-        "stop": "turn off garage lights",
-        "conditions": []
       }
     ],
     "id": "shellymotionsensor-60A423872550",
     "auto_off": true,
-    "off_time_minutes": "10",
+    "off_time_minutes": "5",
     "ip_address": "192.168.1.153"
   },
   {
@@ -85,6 +95,14 @@
       {
         "start": "turn on game tables",
         "stop": "turn off game tables",
+        "conditions": [
+          { "prop": "mode", "comparitor": "=", "value": "night" },
+          { "prop": "mode", "comparitor": "=", "value": "evening" }
+        ]
+      },
+      {
+        "start": "turn on game room",
+        "stop": "turn off game room",
         "conditions": [
           { "prop": "mode", "comparitor": "=", "value": "night" },
           { "prop": "mode", "comparitor": "=", "value": "evening" }
