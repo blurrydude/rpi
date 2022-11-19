@@ -426,5 +426,16 @@
     "on_modes": [],
     "off_modes": [],
     "zones": ["Library","Ventilation"]
+  },
+
+  {
+    "location": "",
+    "ip_address": "192.168.2.42",
+    "id": "shelly1pm-84CCA8B15464",
+    "relay_id": "0",
+    "name": "Bedroom Heater",
+    "on_modes": [],
+    "off_modes": [],
+    "zones": ["Master Bedroom","Ventilation"]
   }
 ]
