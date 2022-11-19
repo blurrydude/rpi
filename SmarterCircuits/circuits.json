@@ -415,5 +415,16 @@
     "on_modes": [],
     "off_modes": [],
     "zones": ["Game Room"]
+  },
+
+  {
+    "location": "",
+    "ip_address": "192.168.2.27",
+    "id": "shelly1pm-84cca8ac7e36",
+    "relay_id": "0",
+    "name": "Library Heater",
+    "on_modes": [],
+    "off_modes": [],
+    "zones": ["Library","Ventilation"]
   }
 ]
