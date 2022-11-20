@@ -65,8 +65,8 @@
     "name": "Garage",
     "commands": [
       {
-        "start": "turn on garage lights",
-        "stop": "turn off garage lights",
+        "start": "turn on laundry room",
+        "stop": "turn off laundry room",
         "conditions": []
       }
     ],
