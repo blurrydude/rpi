@@ -101,8 +101,8 @@
         ]
       },
       {
-        "start": "turn on game room",
-        "stop": "turn off game room",
+        "start": "turn on game room light",
+        "stop": "turn off game room light",
         "conditions": [
           { "prop": "mode", "comparitor": "=", "value": "night" },
           { "prop": "mode", "comparitor": "=", "value": "evening" }
