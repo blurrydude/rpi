@@ -28,7 +28,7 @@
     "relay_id": "1",
     "name": "Library Lamp",
     "on_modes": ["Alert"],
-    "off_modes": ["Dark", "Night"],
+    "off_modes": ["Dark"],
     "zones": ["Library", "Up Stairs"]
   },
 
