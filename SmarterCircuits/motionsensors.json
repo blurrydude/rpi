@@ -90,22 +90,13 @@
     "ip_address": "192.168.1.154"
   },
   {
-    "name": "Game Room",
+    "name": "Day Room",
     "commands": [
       {
-        "start": "turn on game tables",
-        "stop": "turn off game tables",
+        "start": "turn on day room light",
+        "stop": "turn off day room light",
         "conditions": [
-          { "prop": "mode", "comparitor": "=", "value": "night" },
-          { "prop": "mode", "comparitor": "=", "value": "evening" }
-        ]
-      },
-      {
-        "start": "turn on game room light",
-        "stop": "turn off game room light",
-        "conditions": [
-          { "prop": "mode", "comparitor": "=", "value": "night" },
-          { "prop": "mode", "comparitor": "=", "value": "evening" }
+          { "prop": "mode", "comparitor": "!=", "value": "midnight" }
         ]
       }
     ],
