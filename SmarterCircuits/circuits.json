@@ -48,7 +48,7 @@
     "ip_address": "192.168.1.103",
     "id": "shelly1pm-C82B961DD3B1",
     "relay_id": "0",
-    "name": "Game Room",
+    "name": "Game Room Light",
     "on_modes": ["Alert"],
     "off_modes": ["Dark", "Night", "Day"],
     "zones": ["Game Room", "Down Stairs"]
@@ -425,7 +425,7 @@
     "name": "Game Room Heater",
     "on_modes": [],
     "off_modes": [],
-    "zones": ["Game Room","Ventilation"]
+    "zones": ["Game Room", "Ventilation"]
   },
 
   {
@@ -436,6 +436,6 @@
     "name": "Bedroom Heater",
     "on_modes": [],
     "off_modes": [],
-    "zones": ["Master Bedroom","Ventilation"]
+    "zones": ["Master Bedroom", "Ventilation"]
   }
 ]
