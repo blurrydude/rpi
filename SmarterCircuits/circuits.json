@@ -422,10 +422,10 @@
     "ip_address": "192.168.2.27",
     "id": "shelly1pm-84CCA8AC7E36",
     "relay_id": "0",
-    "name": "Library Heater",
+    "name": "Game Room Heater",
     "on_modes": [],
     "off_modes": [],
-    "zones": ["Library","Ventilation"]
+    "zones": ["Game Room","Ventilation"]
   },
 
   {
