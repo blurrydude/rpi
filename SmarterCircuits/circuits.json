@@ -49,7 +49,7 @@
     "id": "shelly1pm-C82B961DD3B1",
     "relay_id": "0",
     "name": "Game Room Light",
-    "on_modes": ["Alert"],
+    "on_modes": ["Alert", "Evening"],
     "off_modes": ["Dark", "Night", "Day"],
     "zones": ["Game Room", "Down Stairs"]
   },
@@ -71,7 +71,7 @@
     "id": "shelly1pm-68C63AFB726B",
     "relay_id": "0",
     "name": "Game Tables",
-    "on_modes": ["Evening", "Alert"],
+    "on_modes": ["Evening", "Alert", "Midnight"],
     "off_modes": ["Dark", "Night", "Day"],
     "zones": ["Game Room", "Down Stairs"]
   },
@@ -127,7 +127,7 @@
     "relay_id": "0",
     "name": "Storage Room",
     "on_modes": ["Alert"],
-    "off_modes": [],
+    "off_modes": ["Night"],
     "zones": ["Garage", "Storage"]
   },
 
@@ -191,7 +191,7 @@
     "ip_address": "192.168.1.116",
     "id": "shellyswitch25-8CAAB55F402F",
     "relay_id": "0",
-    "name": "Hallway",
+    "name": "Hallway Light",
     "on_modes": ["Alert"],
     "off_modes": ["Dark", "Night", "Day", "Evening"],
     "zones": ["Hallway", "Up Stairs"]
@@ -215,7 +215,7 @@
     "relay_id": "0",
     "name": "Master Bath",
     "on_modes": ["Shower", "Alert"],
-    "off_modes": ["Dark", "Night"],
+    "off_modes": ["Dark"],
     "zones": ["Master Bath", "Up Stairs"]
   },
 
