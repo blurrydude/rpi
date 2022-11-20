@@ -493,6 +493,7 @@ class SmarterCircuitsMCP:
     def handle_shelly_i4_message(self, message):
         if self.circuit_authority is False:
             return
+        self.mqtt.publish("smarter_circuits/i4_message",message)
         self.remote.handle_i4_message(message)
 
     def handle_shelly_relay_message(self, id, subtopic, message):
