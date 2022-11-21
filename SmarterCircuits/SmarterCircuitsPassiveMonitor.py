@@ -22,9 +22,9 @@ class SmarterCircuitsPassiveMonitor:
         self.labels = []
         self.display_on = False
         self.screen_timer = 0
-        self.font_size = 32
-        self.line_char_width = 42
-        self.lines = 9
+        self.font_size = 48
+        self.line_char_width = 64
+        self.lines = 12
         self.last_display = datetime.now()
         _thread.start_new_thread(self.sleep_timer, ())
         self.start()
@@ -67,14 +67,28 @@ class SmarterCircuitsPassiveMonitor:
             if text == "closecloseclose":
                 self.stop()
                 return
+            if "set font size" in text:
+                self.font_size = int(text.split(' ')[3])
+                return
+            if "set line size" in text:
+                self.line_char_width = int(text.split(' ')[3])
+                return
+            if "set line limit" in text:
+                self.lines = int(text.split(' ')[3])
+                return
             # print("alerting: "+text)
             # pyautogui.alert(text, "HOUSE ALERT")
-            if "\\n" in text:
+            if "~~~" in text:
+                wrapped = text.split('~~~')
+            elif "\\n" in text:
                 wrapped = text.split('\\n')
+            elif "\n" in text:
+                wrapped = text.split('\n')
             else:
                 wrapped = textwrap.wrap(text,self.line_char_width)
             
             self.last_display = datetime.now()
+            self.screen_open()
             self.do_display(wrapped)
             # if self.display_on == False:
             #     _thread.start_new_thread(self.screen_open, ())
@@ -119,11 +133,13 @@ class SmarterCircuitsPassiveMonitor:
             self.screen_wipe(labels)
     
     def screen_open(self):
-        if self.display_on is False:
-            self.mqtt.publish("smarter_circuits/command","turn on cabinet projector")
-            time.sleep(3)
-            os.system("echo 'on 0.0.0.0' | cec-client -s -d 1")
-            self.display_on = True
+        # if self.display_on is False:
+            # self.mqtt.publish("smarter_circuits/command","turn on cabinet projector")
+            # time.sleep(3)
+            # os.system("echo 'on 0.0.0.0' | cec-client -s -d 1")
+            # os.system("DISPLAY=:0 xset dpms force on")
+            # self.display_on = True
+        os.system("DISPLAY=:0 xset dpms force on")
         # time.sleep(5)
         # beepy.beep(sound="ping")
         # time.sleep(0.5)

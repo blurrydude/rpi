@@ -40,7 +40,22 @@
   },
   {
     "name": "Kitchen",
-    "commands": [],
+    "commands": [
+      {
+        "start": "turn on kitchen",
+        "stop": "turn off kitchen",
+        "conditions": [
+          { "prop": "mode", "comparitor": "=", "value": "morning" },
+          { "prop": "mode", "comparitor": "=", "value": "day" },
+          { "prop": "mode", "comparitor": "=", "value": "evening" }
+        ]
+      },
+      {
+        "start": "turn on bar",
+        "stop": "turn off bar",
+        "conditions": [{ "prop": "mode", "comparitor": "=", "value": "night" }]
+      }
+    ],
     "id": "shellymotionsensor-60A42386E5BA",
     "auto_off": false,
     "off_time_minutes": "30",
@@ -50,22 +65,14 @@
     "name": "Garage",
     "commands": [
       {
-        "start": "turn on shop lights",
-        "stop": "turn off shop lights",
-        "conditions": [
-          { "prop": "mode", "comparitor": "!=", "value": "night" },
-          { "prop": "mode", "comparitor": "!=", "value": "midnight" }
-        ]
-      },
-      {
-        "start": "turn on stairway",
-        "stop": "turn off stairway",
+        "start": "turn on laundry room",
+        "stop": "turn off laundry room",
         "conditions": []
       }
     ],
     "id": "shellymotionsensor-60A423872550",
     "auto_off": true,
-    "off_time_minutes": "30",
+    "off_time_minutes": "5",
     "ip_address": "192.168.1.153"
   },
   {
@@ -83,14 +90,13 @@
     "ip_address": "192.168.1.154"
   },
   {
-    "name": "Game Room",
+    "name": "Day Room",
     "commands": [
       {
-        "start": "turn on game tables",
-        "stop": "turn off game tables",
+        "start": "turn on day room light",
+        "stop": "turn off day room light",
         "conditions": [
-          { "prop": "mode", "comparitor": "=", "value": "night" },
-          { "prop": "mode", "comparitor": "=", "value": "evening" }
+          { "prop": "mode", "comparitor": "!=", "value": "midnight" }
         ]
       }
     ],
@@ -100,21 +106,18 @@
     "ip_address": "192.168.2.58"
   },
   {
-    "name": "Critter Cam",
+    "name": "Counter Motion",
     "commands": [
       {
-        "start": "turn on deck light",
-        "stop": "turn off deck light",
-        "conditions": [
-          { "prop": "mode", "comparitor": "=", "value": "night" },
-          { "prop": "mode", "comparitor": "=", "value": "midnight" }
-        ]
+        "start": "turn on under cabinet",
+        "stop": "turn off under cabinet",
+        "conditions": []
       }
     ],
     "id": "shellymotionsensor-60A42395F69E",
     "auto_off": true,
-    "off_time_minutes": "5",
-    "ip_address": "192.168.2.56"
+    "off_time_minutes": "10",
+    "ip_address": "192.168.2.64"
   },
   {
     "name": "Deck",

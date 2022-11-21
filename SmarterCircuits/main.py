@@ -188,6 +188,24 @@ class SmarterCircuitsMCP:
                 data = data + circuit.name +": "+str(circuit.status.relay.power) + " W\n"
         data = data + "System Power Usage: "+str(power)+" W\nCurrent Mode: " + self.mode.upper()
         self.send_discord_message(self.discord_house_room, data)
+        self.mqtt.publish("notifications",data)
+
+    def send_sensor_states(self):
+        data = ""
+        for thermokey in self.thermostats.keys():
+            thermo = self.thermostats[thermokey]
+            dp = self.get_dew_point_f(thermo.state.temperature, thermo.state.humidity)
+            data = data + thermo.room.upper() + ": " + str(round(thermo.state.temperature,1)) + " F " + str(round(thermo.state.humidity,1)) +"% (dew point: "+str(dp)+" F)\n"
+        for sensor_id in self.config.ht_sensors.keys():
+            sensor = self.config.ht_sensors[sensor_id]
+            dp = self.get_dew_point_f(sensor.status.temperature, sensor.status.humidity)
+            data = data + sensor.name.upper() + ": " + str(round(sensor.status.temperature,1)) + " F " + str(round(sensor.status.humidity,1)) +"% (dew point: "+str(dp)+" F, batt "+str(round(sensor.status.battery,1))+"%)\n"
+        for motion_id in self.config.motion_sensors.keys():
+            motion = self.config.motion_sensors[motion_id]
+            data = data + motion.name.upper() + ": " + str(motion.status.timestamp) + " : " + str(round(motion.status.lux,1)) +" lux, "+str(round(motion.status.battery,1))+"% battery\n"
+            
+        self.send_discord_message(self.discord_house_room, data)
+        self.mqtt.publish("notifications",data)
     
     def log_temp_data(self):
         if self.circuit_authority is False:
@@ -475,6 +493,7 @@ class SmarterCircuitsMCP:
     def handle_shelly_i4_message(self, message):
         if self.circuit_authority is False:
             return
+        self.mqtt.publish("smarter_circuits/i4_message",message)
         self.remote.handle_i4_message(message)
 
     def handle_shelly_relay_message(self, id, subtopic, message):
@@ -837,6 +856,9 @@ class SmarterCircuitsMCP:
         if "show status" in command:
             self.send_system_state()
             return
+        if "sensor status" in command:
+            self.send_sensor_states()
+            return
         if " on" in command:
             com = "on"
         if "zone" in command or "area" in command or "all of the" in command:
@@ -1052,6 +1074,7 @@ class SmarterCircuitsPeer:
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__, 
             sort_keys=True, indent=4)
+
 
 if __name__ == "__main__":
     myname = socket.gethostname()
