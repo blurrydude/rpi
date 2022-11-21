@@ -281,7 +281,7 @@ if __name__ == "__main__":
     while running is True:
         now = time.time()
         dtnow = datetime.now()
-        if dtnow.minute in [0,15,30,45] and dtnow.second == 0 and dtnow > last_time_update + timedelta(minutes=14):
+        if dtnow.minute in [0,15,30,45] and dtnow > last_time_update + timedelta(minutes=14):
             last_time_update = dtnow
             timestr = dtnow.strftime("%H %M")
             do_message(timestr)
