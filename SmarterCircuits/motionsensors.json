@@ -11,7 +11,11 @@
     "id": "shellymotionsensor-60A423BECB98",
     "auto_off": true,
     "off_time_minutes": "30",
-    "ip_address": "192.168.1.150"
+    "ip_address": "192.168.1.150",
+    "lux_over_limit": 10000,
+    "lux_under_limit": 0,
+    "lux_over_command": "",
+    "lux_under_command": ""
   },
   {
     "name": "Master Bathroom",
@@ -36,7 +40,11 @@
     "id": "shellymotionsensor-60A42386DDE2",
     "auto_off": true,
     "off_time_minutes": "20",
-    "ip_address": "192.168.1.151"
+    "ip_address": "192.168.1.151",
+    "lux_over_limit": 10000,
+    "lux_under_limit": 0,
+    "lux_over_command": "",
+    "lux_under_command": ""
   },
   {
     "name": "Kitchen",
@@ -59,7 +67,11 @@
     "id": "shellymotionsensor-60A42386E5BA",
     "auto_off": false,
     "off_time_minutes": "30",
-    "ip_address": "192.168.1.152"
+    "ip_address": "192.168.1.152",
+    "lux_over_limit": 10000,
+    "lux_under_limit": 0,
+    "lux_over_command": "",
+    "lux_under_command": ""
   },
   {
     "name": "Garage",
@@ -73,7 +85,11 @@
     "id": "shellymotionsensor-60A423872550",
     "auto_off": true,
     "off_time_minutes": "5",
-    "ip_address": "192.168.1.153"
+    "ip_address": "192.168.1.153",
+    "lux_over_limit": 10000,
+    "lux_under_limit": 0,
+    "lux_over_command": "",
+    "lux_under_command": ""
   },
   {
     "name": "Stairway",
@@ -87,7 +103,11 @@
     "id": "shellymotionsensor-60A423976276",
     "auto_off": true,
     "off_time_minutes": "3",
-    "ip_address": "192.168.1.154"
+    "ip_address": "192.168.1.154",
+    "lux_over_limit": 10000,
+    "lux_under_limit": 0,
+    "lux_over_command": "",
+    "lux_under_command": ""
   },
   {
     "name": "Day Room",
@@ -103,7 +123,11 @@
     "id": "shellymotionsensor-60A423C67472",
     "auto_off": false,
     "off_time_minutes": "30",
-    "ip_address": "192.168.2.58"
+    "ip_address": "192.168.2.58",
+    "lux_over_limit": 10000,
+    "lux_under_limit": 0,
+    "lux_over_command": "",
+    "lux_under_command": ""
   },
   {
     "name": "Counter Motion",
@@ -117,7 +141,11 @@
     "id": "shellymotionsensor-60A42395F69E",
     "auto_off": true,
     "off_time_minutes": "10",
-    "ip_address": "192.168.2.64"
+    "ip_address": "192.168.2.64",
+    "lux_over_limit": 10000,
+    "lux_under_limit": 0,
+    "lux_over_command": "",
+    "lux_under_command": ""
   },
   {
     "name": "Deck",
@@ -140,6 +168,10 @@
     "id": "shellymotionsensor-60A4239A6298",
     "auto_off": true,
     "off_time_minutes": "30",
-    "ip_address": "192.168.1.155"
+    "ip_address": "192.168.1.155",
+    "lux_over_limit": 800,
+    "lux_under_limit": 500,
+    "lux_over_command": "switch to day mode",
+    "lux_under_command": "switch to evening mode"
   }
 ]

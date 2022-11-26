@@ -596,6 +596,7 @@ class SmarterCircuitsMCP:
             self.battery_status_check(sensor)
         if sensor.status.lux != data["lux"]:
             sensor.status.lux = data["lux"]
+            self.handle_lux(sensor)
         if sensor.status.vibration != data["vibration"]:
             sensor.status.vibration = data["vibration"]
         if sensor.status.timestamp != data["timestamp"]:
@@ -603,6 +604,16 @@ class SmarterCircuitsMCP:
         if sensor.status.motion != data["motion"]:
             sensor.status.motion = data["motion"]
             self.handle_motion(sensor)
+
+    def handle_lux(self, sensor:MotionSensor):
+        if self.circuit_authority is not True:
+            return
+        if sensor.status.lux < sensor.lux_under_limit and self.lux_last_state_over is True:
+            self.execute_command(sensor.lux_under_command)
+            self.lux_last_state_over = False
+        elif sensor.status.lux > sensor.lux_over_limit and self.lux_last_state_over is not True:
+            self.execute_command(sensor.lux_over_command)
+            self.lux_last_state_over = True
 
     def handle_motion(self, sensor:MotionSensor):
         if self.circuit_authority is not True:

@@ -126,6 +126,10 @@ class SmarterConfig:
         motion_sensor_list = json.load(motion_sensor_data)
         for sensor in motion_sensor_list:
             motion_sensor = MotionSensor(sensor["id"],sensor["ip_address"],sensor["name"],sensor["auto_off"],sensor["off_time_minutes"])
+            motion_sensor.lux_over_limit = sensor["lux_over_limit"]
+            motion_sensor.lux_over_command = sensor["lux_over_limit"]
+            motion_sensor.lux_under_limit = sensor["lux_under_limit"]
+            motion_sensor.lux_under_command = sensor["lux_under_command"]
             for com in sensor["commands"]:
                 conditions = []
                 for con in com["conditions"]:

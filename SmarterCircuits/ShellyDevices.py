@@ -93,6 +93,11 @@ class MotionSensor:
         self.commands = []
         self.auto_off = auto_off
         self.off_time_minutes = off_time_minutes
+        self.lux_over_limit = 10000
+        self.lux_under_limit = 0
+        self.lux_over_command = ''
+        self.lux_under_command = ''
+        self.lux_last_state_over = False
         self.status = MotionSensorStatus()
 
 class MotionSensorStatus:
