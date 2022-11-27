@@ -608,12 +608,12 @@ class SmarterCircuitsMCP:
     def handle_lux(self, sensor:MotionSensor):
         if self.circuit_authority is not True:
             return
-        if sensor.status.lux < sensor.lux_under_limit and self.lux_last_state_over is True:
+        if sensor.status.lux < sensor.lux_under_limit and sensor.lux_last_state_over is True:
             self.execute_command(sensor.lux_under_command)
-            self.lux_last_state_over = False
-        elif sensor.status.lux > sensor.lux_over_limit and self.lux_last_state_over is not True:
+            sensor.lux_last_state_over = False
+        elif sensor.status.lux > sensor.lux_over_limit and sensor.lux_last_state_over is not True:
             self.execute_command(sensor.lux_over_command)
-            self.lux_last_state_over = True
+            sensor.lux_last_state_over = True
 
     def handle_motion(self, sensor:MotionSensor):
         if self.circuit_authority is not True:
