@@ -13,6 +13,10 @@ def on_message(client, userdata, message):
     global last_message
     global rooms
     result = str(message.payload.decode("utf-8"))
+    if "i4_message" in message.topic:
+        print(result)
+        client.publish('notifications',result)
+        return
     topic = message.topic.split('/')
     room = topic[2]
     data = json.loads(result)
@@ -38,6 +42,7 @@ def failure_detected():
 if __name__ == "__main__":
     client.on_message = on_message
     client.connect('192.168.2.200')
+    client.subscribe('smarter_circuits/i4_message')
     client.subscribe('smarter_circuits/sensors/#')
     client.subscribe('smarter_circuits/thermostats/#')
     client.loop_start()

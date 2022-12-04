@@ -354,5 +354,14 @@ if __name__ == "__main__":
             #time.sleep(0.1)
             wait_till = time.time() + 0.1
             continue
+        elif mode == 8:
+            last = num_pixels - 1
+            current_colors[last] = current_colors[0]
+            pixels[x] = current_colors[last]
+            for i in range(last):
+                current_colors[i] = current_colors[i+1]
+                pixels[x] = current_colors[i]
+            pixels.show()
+            time.sleep(0.1)
     client.loop_stop()
     client.disconnect()

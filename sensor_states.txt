@@ -1,3 +1,3 @@
-bedroom: 66.92 32.7
-gameroom: 70.34 34.4
-hallway: 70.34 34.1
+hallway: 70.16 33.0
+bedroom: 66.74 32.8
+gameroom: 70.7 33.5
