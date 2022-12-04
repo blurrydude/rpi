@@ -166,13 +166,18 @@ def on_message(client, userdata, message):
         if mode == 0:
             fill((r,g,b))
         elif mode == 1:
-            pixels[int(args[4])] = (r,g,b)
+            i = int(args[4])
+            c = (r,g,b)
+            pixels[i] = c
+            current_colors[i] = c
             pixels.show()
         elif mode == 2:
             s = int(args[4])
             e = int(args[5])
             while s <= e:
-                pixels[s] = (r,g,b)
+                c = (r,g,b)
+                pixels[s] = c
+                current_colors[s] = c
                 s = s + 1
             pixels.show()
 
