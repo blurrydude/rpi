@@ -357,10 +357,10 @@ if __name__ == "__main__":
         elif mode == 8:
             last = num_pixels - 1
             current_colors[last] = current_colors[0]
-            pixels[x] = current_colors[last]
+            pixels[last] = current_colors[last]
             for i in range(last):
                 current_colors[i] = current_colors[i+1]
-                pixels[x] = current_colors[i]
+                pixels[i] = current_colors[i]
             pixels.show()
             time.sleep(0.1)
     client.loop_stop()
