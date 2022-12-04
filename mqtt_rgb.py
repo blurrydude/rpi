@@ -154,6 +154,7 @@ def on_message(client, userdata, message):
     global mode
     result = str(message.payload.decode("utf-8"))
     print("Received: "+result)
+    client.publish('pi/' + myname + '/commands', "Received: "+result)
     if result == "stop":
         running = False
     args = result.split(':')
@@ -281,7 +282,7 @@ if __name__ == "__main__":
     while running is True:
         now = time.time()
         dtnow = datetime.now()
-        if dtnow.minute in [0,15,30,45] and dtnow > last_time_update + timedelta(minutes=14):
+        if myname == "namepi" and dtnow.minute in [0,15,30,45] and dtnow > last_time_update + timedelta(minutes=14):
             last_time_update = dtnow
             timestr = dtnow.strftime("%H %M")
             do_message(timestr)
