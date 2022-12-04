@@ -367,6 +367,6 @@ if __name__ == "__main__":
                 current_colors[i] = current_colors[i+1]
                 pixels[i] = current_colors[i]
             pixels.show()
-            time.sleep(0.1)
+            time.sleep(0.0333)
     client.loop_stop()
     client.disconnect()
