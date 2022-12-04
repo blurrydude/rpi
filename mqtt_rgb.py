@@ -154,7 +154,7 @@ def on_message(client, userdata, message):
     global mode
     result = str(message.payload.decode("utf-8"))
     print("Received: "+result)
-    client.publish('pi/' + myname + '/commands', "Received: "+result)
+    client.publish('pi/' + myname + '/received', "Received: "+result)
     if result == "stop":
         running = False
     args = result.split(':')
