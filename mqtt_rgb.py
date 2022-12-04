@@ -63,6 +63,7 @@ num_pixels = 8
 ORDER = neopixel.GRB
 rainbow_cycle_delay = 0.001
 mqtt_enabled = True
+delay = 0.0333
 ##################################
 
 modes = ["0","1","2","3","4","5","6","7"]
@@ -152,12 +153,16 @@ def rainbow_cycle(wait):
 def on_message(client, userdata, message):
     global running
     global mode
+    global delay
     result = str(message.payload.decode("utf-8"))
     print("Received: "+result)
     client.publish('pi/' + myname + '/received', "Received: "+result)
     if result == "stop":
         running = False
     args = result.split(':')
+    if args[0] == "setdelay":
+        delay = float(args[1])
+        return
     mode = int(args[0])
     if mode <= 2:
         r = int(args[1])
@@ -367,6 +372,6 @@ if __name__ == "__main__":
                 current_colors[i] = current_colors[i+1]
                 pixels[i] = current_colors[i]
             pixels.show()
-            time.sleep(0.0333)
+            time.sleep(delay)
     client.loop_stop()
     client.disconnect()
