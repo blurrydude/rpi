@@ -448,5 +448,16 @@
     "on_modes": [],
     "off_modes": [],
     "zones": ["Living Room", "Ventilation"]
+  },
+
+  {
+    "location": "",
+    "ip_address": "192.168.2.29",
+    "id": "shelly1pm-C82B961DE112",
+    "relay_id": "0",
+    "name": "Garage Heater",
+    "on_modes": [],
+    "off_modes": [],
+    "zones": ["Garage", "Ventilation"]
   }
 ]
