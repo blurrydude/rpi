@@ -59,7 +59,7 @@
     "ip_address": "192.168.1.104",
     "id": "shelly1pm-68C63AFB315A",
     "relay_id": "0",
-    "name": "Livingroom Lamp",
+    "name": "Living Room Lamp",
     "on_modes": ["Evening", "Alert"],
     "off_modes": ["Dark", "Night", "Day"],
     "zones": ["Living Room", "Down Stairs"]
@@ -290,7 +290,7 @@
     "ip_address": "192.168.1.120",
     "id": "shellyswitch25-8CAAB55F3B3F",
     "relay_id": "1",
-    "name": "Livingroom TV",
+    "name": "Living Room TV",
     "on_modes": [],
     "off_modes": [],
     "zones": []
@@ -444,7 +444,7 @@
     "ip_address": "192.168.2.49",
     "id": "shelly1pm-F4CFA2748033",
     "relay_id": "0",
-    "name": "Livingroom Heater",
+    "name": "Living Room Heater",
     "on_modes": [],
     "off_modes": [],
     "zones": ["Living Room", "Ventilation"]
