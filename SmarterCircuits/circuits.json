@@ -92,7 +92,7 @@
     "ip_address": "192.168.1.107",
     "id": "shelly1pm-68C63AFB6BD5",
     "relay_id": "0",
-    "name": "Bench Fan",
+    "name": "Shop Heater",
     "on_modes": [],
     "off_modes": ["Alert"],
     "zones": ["Ventilation", "Garage"]
@@ -437,5 +437,16 @@
     "on_modes": [],
     "off_modes": [],
     "zones": ["Master Bedroom", "Ventilation"]
+  },
+
+  {
+    "location": "",
+    "ip_address": "192.168.2.49",
+    "id": "shelly1pm-F4CFA2748033",
+    "relay_id": "0",
+    "name": "Livingroom Heater",
+    "on_modes": [],
+    "off_modes": [],
+    "zones": ["Living Room", "Ventilation"]
   }
 ]
