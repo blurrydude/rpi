@@ -184,7 +184,7 @@
     "offTimes":["Mon,Tue,Wed,Thu,Fri,Sat,Sun:05:15","Mon,Tue,Wed,Thu,Fri,Sat,Sun:11:00","Mon,Tue,Wed,Thu,Fri,Sat,Sun:17:00"]}, 
 
     {"notes":"192.168.1.107",
-    "address": "shelly1pm-68C63AFB6BD5", "relay":"0", "label":"Bench Fan",
+    "address": "shelly1pm-68C63AFB6BD5", "relay":"0", "label":"Shop Heater",
     "onModes": [],
     "offModes":["Alert"],
     "zones":["Ventilation", "Garage"],
