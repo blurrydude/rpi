@@ -269,5 +269,13 @@
     "offModes":["Dark","Night","Midnight"],
     "zones":["Garage"],
     "onTimes":[],
-    "offTimes":[]} 
+    "offTimes":[]} , 
+
+    {"notes":"192.168.2.49",
+    "address": "shelly1pm-F4CFA2748033", "relay":"0", "label":"Livingroom Heater",
+    "onModes": [],
+    "offModes":[],
+    "zones":["Ventilation", "Living Room"],
+    "onTimes":[],
+    "offTimes":[]}
 ]
