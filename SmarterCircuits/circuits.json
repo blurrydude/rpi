@@ -93,8 +93,8 @@
     "id": "shelly1pm-68C63AFB6BD5",
     "relay_id": "0",
     "name": "Shop Heater",
-    "on_modes": [],
-    "off_modes": ["Alert"],
+    "on_modes": ["Evening"],
+    "off_modes": ["Day"],
     "zones": ["Ventilation", "Garage"]
   },
 
@@ -423,8 +423,8 @@
     "id": "shelly1pm-84CCA8AC7E36",
     "relay_id": "0",
     "name": "Game Room Heater",
-    "on_modes": [],
-    "off_modes": [],
+    "on_modes": ["Evening"],
+    "off_modes": ["Morning"],
     "zones": ["Game Room", "Ventilation"]
   },
 
@@ -434,8 +434,8 @@
     "id": "shelly1pm-84CCA8B15464",
     "relay_id": "0",
     "name": "Bedroom Heater",
-    "on_modes": [],
-    "off_modes": [],
+    "on_modes": ["Evening","Midnight"],
+    "off_modes": ["Night", "Morning"],
     "zones": ["Master Bedroom", "Ventilation"]
   },
 
@@ -445,8 +445,8 @@
     "id": "shelly1pm-F4CFA2748033",
     "relay_id": "0",
     "name": "Living Room Heater",
-    "on_modes": [],
-    "off_modes": [],
+    "on_modes": ["Evening"],
+    "off_modes": ["Day"],
     "zones": ["Living Room", "Ventilation"]
   },
 
@@ -456,8 +456,8 @@
     "id": "shelly1pm-C82B961DE112",
     "relay_id": "0",
     "name": "Garage Heater",
-    "on_modes": [],
-    "off_modes": [],
+    "on_modes": ["Evening"],
+    "off_modes": ["Morning"],
     "zones": ["Garage", "Ventilation"]
   }
 ]
