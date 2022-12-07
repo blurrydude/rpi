@@ -851,7 +851,7 @@ class SmarterCircuitsMCP:
             self.log("SmarterCircuitsMCP","command response: "+str(r.status_code))
         except:
             self.log("SmarterCircuitsMCP",'failed to send command')
-
+    
     def execute_command(self, command):
         if self.circuit_authority is False:
             return
@@ -899,6 +899,9 @@ class SmarterCircuitsMCP:
                     if c.status.relay.on is True:
                         com = "off"
                         c.status.relay.on = False
+                    if "dimmer" in c.id:
+                        topic = "shellies/"+c.id+"/light/0/command"
+                        command_list.append({"t":topic,"c":com})
                     if "pro4pm" in c.id:
                         topic = "shellies/"+c.id+"/rpc"
                         rid = int(c.relay_id)
@@ -912,6 +915,9 @@ class SmarterCircuitsMCP:
             for ci in range(0,len(self.config.circuits)):
                 c = self.config.circuits[ci]
                 if c.name.lower() in command or c.name.lower().replace("light","lamp") in command:
+                    if "dimmer" in c.id:
+                        topic = "shellies/"+c.id+"/light/0/command"
+                        command_list.append({"t":topic,"c":com})
                     if "pro4pm" in c.id:
                         topic = "shellies/"+c.id+"/rpc"
                         rid = int(c.relay_id)

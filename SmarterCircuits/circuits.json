@@ -26,9 +26,9 @@
 		"ip_address": "192.168.1.101",
 		"id": "shellyswitch25-8CAAB55F44D7",
 		"relay_id": "1",
-		"name": "Library Lamp",
-		"on_modes": ["Alert"],
-		"off_modes": ["Dark"],
+		"name": "Library Outlet",
+		"on_modes": [],
+		"off_modes": [],
 		"zones": ["Library", "Up Stairs"]
 	},
 
@@ -470,5 +470,27 @@
 		"on_modes": ["Evening"],
 		"off_modes": ["Morning"],
 		"zones": ["Dining Room", "Ventilation"]
+	},
+
+	{
+		"location": "",
+		"ip_address": "192.168.2.39",
+		"id": "shellydimmer2-3C6105E411C6",
+		"relay_id": "0",
+		"name": "Work Lamp",
+		"on_modes": [],
+		"off_modes": [],
+		"zones": ["Game Room"]
+	},
+
+	{
+		"location": "",
+		"ip_address": "192.168.2.47",
+		"id": "shellydimmer2-3C6105E4241E",
+		"relay_id": "0",
+		"name": "Library Light",
+		"on_modes": [],
+		"off_modes": [],
+		"zones": ["Library", "Up Stairs"]
 	}
 ]
