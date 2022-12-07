@@ -413,6 +413,8 @@ class SmarterCircuitsMCP:
             self.handle_shelly_pro4pm_message(id, topic.replace("shellies/"+id+"/",""), message)
         if "1pm" in id or "switch25" in id:
             self.handle_shelly_relay_message(id, topic.replace("shellies/"+id+"/",""), message)
+        if "dimmer2" in id:
+            self.handle_shelly_dimmer_message(id, topic.replace("shellies/"+id+"/",""), message)
         if "dw" in id:
             self.handle_shelly_dw_message(id, topic.replace("shellies/"+id+"/",""), message)
         if "ht" in id:
@@ -495,6 +497,28 @@ class SmarterCircuitsMCP:
             return
         self.mqtt.publish("smarter_circuits/i4_message",message)
         self.remote.handle_i4_message(message)
+
+    def handle_shelly_dimmer_message(self, id, subtopic, message):
+        for circuit in self.config.circuits:
+            if(circuit.id != id):
+                continue
+            if subtopic == "light/"+circuit.relay_id:
+                circuit.status.relay.on = message == "on"
+            if subtopic == "light/"+circuit.relay_id+"/power":
+                circuit.status.relay.power = float(message)
+            if subtopic == "light/"+circuit.relay_id+"/energy":
+                circuit.status.relay.energy = int(message)
+            if subtopic == "temperature":
+                circuit.status.temperature = float(message)
+            if subtopic == "temperature_f":
+                circuit.status.temperature_f = float(message)
+            if subtopic == "overtemperature":
+                circuit.status.overtemperature = int(message)
+            if subtopic == "temperature_status":
+                circuit.status.temperature = message
+            if subtopic == "voltage":
+                circuit.status.voltage = float(message)  
+
 
     def handle_shelly_relay_message(self, id, subtopic, message):
         for circuit in self.config.circuits:
