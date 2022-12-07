@@ -12,8 +12,8 @@
 		},
 		"2": {
 			"single_push": ["toggle the laundry room"],
-			"long_push": ["turn off the workbench fan"],
-			"double_push": ["toggle the workbench fan"]
+			"long_push": ["turn off the shop heater"],
+			"double_push": ["toggle the shop heater"]
 		},
 		"3": {
 			"single_push": ["toggle the storage room"],
