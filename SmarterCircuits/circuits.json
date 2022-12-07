@@ -478,8 +478,8 @@
 		"id": "shellydimmer2-3C6105E411C6",
 		"relay_id": "0",
 		"name": "Work Lamp",
-		"on_modes": [],
-		"off_modes": [],
+		"on_modes": ["Evening"],
+		"off_modes": ["Night"],
 		"zones": ["Game Room"]
 	},
 
@@ -489,8 +489,8 @@
 		"id": "shellydimmer2-3C6105E4241E",
 		"relay_id": "0",
 		"name": "Library Light",
-		"on_modes": [],
-		"off_modes": [],
+		"on_modes": ["Evening"],
+		"off_modes": ["Midnight"],
 		"zones": ["Library", "Up Stairs"]
 	}
 ]
