@@ -10,8 +10,8 @@ root = os.path.dirname(os.path.realpath(__file__))+"/" #'C:\\Code\\rpi\\SmarterC
 
 client = mqtt.Client()
 master = Tk() 
-base_width = 1024
-base_height = 768
+base_width = 800
+base_height = 600
 points_scale = 0.78125
 master.geometry("800x600")
 master.attributes('-fullscreen', True)
