@@ -11,6 +11,7 @@ root = os.path.dirname(os.path.realpath(__file__))+"/" #'C:\\Code\\rpi\\SmarterC
 client = mqtt.Client()
 master = Tk() 
 master.geometry("1024x768")
+master.attributes('-fullscreen', True)
 
 canvas = Canvas(master, width=1024, height=768) 
 canvas.place(x=0, y=0) 
