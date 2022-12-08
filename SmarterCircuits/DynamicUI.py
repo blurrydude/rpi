@@ -181,8 +181,9 @@ def draw_all():
         fill = "red"
         if circuit.status.relay.on:
             fill = "green"
+        watts = circuit.status.relay.power
         canvas.create_rectangle(circuit_button_x,y,circuit_button_x+circuit_button_width,y+circuit_button_height, fill=fill, outline="gray") 
-        canvas.create_text(circuit_button_x+(circuit_button_width/2),y+(circuit_button_height/2),text=circuit.name,fill='black',font="Times "+str(circuit_button_font_size))
+        canvas.create_text(circuit_button_x+(circuit_button_width/2),y+(circuit_button_height/2),text=circuit.name+" ~ "+str(round(watts))+"W",fill='black',font="Times "+str(circuit_button_font_size))
         c = c + 1
     
     c = 0
@@ -242,8 +243,6 @@ def handle_shelly_message(topic, message):
         handle_shelly_relay_message(id, topic.replace("shellies/"+id+"/",""), message)
     if "dimmer2" in id:
         handle_shelly_dimmer_message(id, topic.replace("shellies/"+id+"/",""), message)
-    if "ht" in id:
-        handle_shelly_ht_message(id, topic.replace("shellies/"+id+"/",""), message)
     return
 
 def update_circuit(id, on = None, power = None, voltage = None):
@@ -308,26 +307,6 @@ def handle_shelly_relay_message(id, subtopic, message):
             circuit.status.temperature = message
         if subtopic == "voltage":
             circuit.status.voltage = float(message)    
-
-def handle_shelly_ht_message(id, subtopic, message):
-    sensor = config.ht_sensors[id]
-    if subtopic == "sensor/battery":
-        battery = int(message)
-        if sensor.status.battery != battery:
-            sensor.status.battery = battery
-            if circuit_authority is True:
-                send_discord_message(discord_house_room, sensor.name+" battery level is "+str(sensor.status.battery)+" %")
-            battery_status_check(sensor)
-    if subtopic == "sensor/temperature":
-        sensor.status.temperature = float(message)
-        if circuit_authority is True:
-            send_discord_message(discord_house_room, sensor.name+" temperature is "+message+" F")
-
-    if subtopic == "sensor/humidity":
-        sensor.status.humidity = float(message)
-        if circuit_authority is True:
-            dp = get_dew_point_f(sensor.status.temperature, sensor.status.humidity)
-            send_discord_message(discord_house_room, sensor.name+" humidity is "+message+" % dew point is "+str(dp)+" F")
 
 def load_circuits():
     global circuits
