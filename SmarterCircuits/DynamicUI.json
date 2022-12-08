@@ -1,10 +1,10 @@
 {
 	"base_width": 800,
 	"base_height": 600,
-	"points_scale": 0.7,
+	"points_scale": 0.72,
 	"circuit_button_x": 500,
 	"circuit_button_width": 280,
-	"circuit_button_height": 36,
+	"circuit_button_height": 42,
 	"circuit_button_y_start": 30,
 	"circuit_button_font_size": 16,
 	"info_block_x": 20,
