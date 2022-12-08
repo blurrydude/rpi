@@ -4,8 +4,9 @@ from tkinter import *
 import json
 import paho.mqtt.client as mqtt
 import datetime
+import os
 
-root = 'C:\\Code\\rpi\\SmarterCircuits\\'
+root = os.path.dirname(os.path.realpath(__file__))+"/" #'C:\\Code\\rpi\\SmarterCircuits\\'
 
 client = mqtt.Client()
 master = Tk() 
