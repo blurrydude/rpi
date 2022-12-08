@@ -8,9 +8,9 @@
 	"circuit_button_y_start": 35,
 	"circuit_button_font_size": 20,
 	"info_block_x": 20,
-	"info_block_y": 440,
-	"info_block_font_size": 20,
-	"info_block_spacing": 32,
+	"info_block_y": 400,
+	"info_block_font_size": 16,
+	"info_block_spacing": 24,
 	"rooms": [
 		{
 			"name": "Day Room",
