@@ -12,6 +12,7 @@ root = os.path.dirname(os.path.realpath(__file__))+"/" #'C:\\Code\\rpi\\SmarterC
 
 client = mqtt.Client()
 master = Tk() 
+master.configure(bg='black')
 base_width = 800
 base_height = 600
 circuit_button_x = 690
