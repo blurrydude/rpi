@@ -150,7 +150,7 @@ def draw_all():
     global canvas
     load_config()
     canvas.destroy()
-    canvas = Canvas(master, width=base_width, height=base_height) 
+    canvas = Canvas(master, width=base_width, height=base_height, bg='black') 
     canvas.place(x=0, y=0) 
     canvas.create_rectangle(0, 0, base_width, base_height, fill="black", outline="black")
     
@@ -339,7 +339,7 @@ def load_circuits():
 if __name__ == "__main__":
     load_circuits()
     load_config()
-    canvas = Canvas(master, width=base_width, height=base_height)
+    canvas = Canvas(master, width=base_width, height=base_height, bg='black')
     master.geometry(str(base_width)+"x"+str(base_height))
     master.attributes('-fullscreen', True)
     master.configure(bg='black')
