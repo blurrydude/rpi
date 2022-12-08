@@ -163,7 +163,7 @@ def draw_all():
             i = i + 1
     
     if selected_room != "":
-        canvas.create_text(820,15,text=selected_room,fill='white')
+        canvas.create_text(circuit_button_x+(circuit_button_width/2),15,text=selected_room,fill='white')
     
     c = 0
     for circuit in room_circuits:
