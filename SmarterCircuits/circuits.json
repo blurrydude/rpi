@@ -326,7 +326,7 @@
 		"name": "Garage Lights",
 		"on_modes": ["Alert"],
 		"off_modes": ["Dark", "Night", "Day"],
-		"zones": []
+		"zones": ["Garage"]
 	},
 
 	{

@@ -152,7 +152,7 @@ def draw_all():
     canvas.destroy()
     canvas = Canvas(master, width=base_width, height=base_height) 
     canvas.place(x=0, y=0) 
-    canvas.create_rectangle(0, 0, base_width, base_height, fill="black")
+    canvas.create_rectangle(0, 0, base_width, base_height, fill="black", outline="black")
     
     for room in rooms:
         draw_room(room)
@@ -261,6 +261,10 @@ def handle_shelly_pro4pm_message(id, topic, message):
         if(int(circuit.relay_id) != data["id"]):
             continue
         circuit.status.relay.on = data["output"]
+        on = data["output"]
+        if on != circuit.status.relay.on:
+            circuit.status.relay.on = data["output"]
+            check_room_states(circuit.name)
         circuit.status.relay.power = data["apower"]
         circuit.status.relay.energy = data["current"]
         circuit.status.temperature = data["temperature"]["tC"]
@@ -272,7 +276,10 @@ def handle_shelly_dimmer_message(id, subtopic, message):
         if(circuit.id != id):
             continue
         if subtopic == "light/"+circuit.relay_id:
-            circuit.status.relay.on = message == "on"
+            on = message == "on"
+            if on != circuit.status.relay.on:
+                circuit.status.relay.on = message == "on"
+                check_room_states(circuit.name)
         if subtopic == "light/"+circuit.relay_id+"/power":
             circuit.status.relay.power = float(message)
         if subtopic == "light/"+circuit.relay_id+"/energy":
@@ -293,7 +300,10 @@ def handle_shelly_relay_message(id, subtopic, message):
         if(circuit.id != id):
             continue
         if subtopic == "relay/"+circuit.relay_id:
-            circuit.status.relay.on = message == "on"
+            on = message == "on"
+            if on != circuit.status.relay.on:
+                circuit.status.relay.on = message == "on"
+                check_room_states(circuit.name)
         if subtopic == "relay/"+circuit.relay_id+"/power":
             circuit.status.relay.power = float(message)
         if subtopic == "relay/"+circuit.relay_id+"/energy":
@@ -308,6 +318,15 @@ def handle_shelly_relay_message(id, subtopic, message):
             circuit.status.temperature = message
         if subtopic == "voltage":
             circuit.status.voltage = float(message)    
+
+def check_room_states(name):
+    update = False
+    for room_circuit in room_circuits:
+        if name != room_circuit.name:
+            continue
+        update = True
+    if update:
+        draw_all()
 
 def load_circuits():
     global circuits
