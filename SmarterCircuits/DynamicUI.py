@@ -12,11 +12,16 @@ client = mqtt.Client()
 master = Tk() 
 base_width = 800
 base_height = 600
-master.geometry("800x600")
-master.attributes('-fullscreen', True)
-
-canvas = Canvas(master, width=base_width, height=base_height) 
-canvas.place(x=0, y=0) 
+circuit_button_x = 690
+circuit_button_width = 250
+circuit_button_height = 48
+circuit_button_y_start = 35
+circuit_button_font_size = 20
+info_block_x = 20
+info_block_y = 600
+info_block_font_size = 20
+info_block_spacing = 32
+points_scale = 1
 
 show_points = False
 
@@ -29,17 +34,6 @@ rooms = []
 
 roomstats = {}
 last_notification = ""
-
-circuit_button_x = 690
-circuit_button_width = 250
-circuit_button_height = 48
-circuit_button_y_start = 35
-circuit_button_font_size = 20
-info_block_x = 20
-info_block_y = 600
-info_block_font_size = 20
-info_block_spacing = 32
-points_scale = 1
 
 def on_message(client, userdata, message):
     global roomstats
@@ -201,6 +195,8 @@ def load_config():
     global info_block_font_size
     global info_block_spacing
     global points_scale
+    global base_width
+    global base_height
     config_data = open(root+'DynamicUI.json')
     config = json.load(config_data)
     points = config["points"]
@@ -219,6 +215,10 @@ def load_config():
     info_block_font_size = config["info_block_font_size"]
     info_block_spacing = config["info_block_spacing"]
     points_scale = config["points_scale"]
+    if config["base_width"] != base_width:
+        base_width = config["base_width"]
+        base_height = config["base_height"]
+        master.geometry(str(base_width)+"x"+str(base_height))
 
 if __name__ == "__main__":
     load_config()
