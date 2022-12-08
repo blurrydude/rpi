@@ -10,10 +10,13 @@ root = os.path.dirname(os.path.realpath(__file__))+"/" #'C:\\Code\\rpi\\SmarterC
 
 client = mqtt.Client()
 master = Tk() 
-master.geometry("1024x768")
-master.attributes('-fullscreen', True)
+base_width = 1024
+base_height = 768
+points_scale = 0.78125
+master.geometry("800x600")
+#master.attributes('-fullscreen', True)
 
-canvas = Canvas(master, width=1024, height=768) 
+canvas = Canvas(master, width=base_width, height=base_height) 
 canvas.place(x=0, y=0) 
 
 show_points = False
@@ -32,6 +35,11 @@ circuit_button_x = 690
 circuit_button_width = 250
 circuit_button_height = 48
 circuit_button_y_start = 35
+circuit_button_font_size = 20
+info_block_x = 20
+info_block_y = 600
+info_block_font_size = 20
+info_block_spacing = 32
 
 def on_message(client, userdata, message):
     global roomstats
@@ -136,9 +144,9 @@ def draw_all():
     global canvas
     load_config()
     canvas.destroy()
-    canvas = Canvas(master, width=1024, height=768) 
+    canvas = Canvas(master, width=base_width, height=base_height) 
     canvas.place(x=0, y=0) 
-    canvas.create_rectangle(0, 0, 1024, 768, fill="black")
+    canvas.create_rectangle(0, 0, base_width, base_height, fill="black")
     
     for room in rooms:
         draw_room(room)
@@ -166,14 +174,14 @@ def draw_all():
     for circuit in room_circuits:
         y = circuit_button_y_start+(c*(circuit_button_height+8))
         canvas.create_rectangle(circuit_button_x,y,circuit_button_x+circuit_button_width,y+circuit_button_height, fill="green", outline="green") 
-        canvas.create_text(circuit_button_x+(circuit_button_width/2),y+(circuit_button_height/2),text=circuit,fill='black',font="Times 20")
+        canvas.create_text(circuit_button_x+(circuit_button_width/2),y+(circuit_button_height/2),text=circuit,fill='black',font="Times "+str(circuit_button_font_size))
         c = c + 1
     
     c = 0
-    y = 600
+    y = info_block_y
     for room in roomstats.keys():
-        y = 600+(c*36)
-        canvas.create_text(20,y,text=room+": "+str(round(roomstats[room]["temp"],2)),fill='white',anchor='nw',font='times 24')
+        canvas.create_text(info_block_x,y,text=room+": "+str(round(roomstats[room]["temp"],2)),fill='white',anchor='nw',font='times '+str(info_block_font_size))
+        y = y + info_block_spacing
         c = c + 1
     
     canvas.create_text(20,y+36,text=datetime.datetime.now().strftime("%m-%d-%Y %H:%M:%S")+" - "+last_notification,fill='yellow',anchor='nw',font='times 24')
@@ -182,11 +190,32 @@ def load_config():
     global points
     global lines
     global rooms
+    global circuit_button_x
+    global circuit_button_width
+    global circuit_button_height
+    global circuit_button_y_start
+    global circuit_button_font_size
+    global info_block_x
+    global info_block_y
+    global info_block_font_size
+    global info_block_spacing
     config_data = open(root+'DynamicUI.json')
     config = json.load(config_data)
     points = config["points"]
+    for point in points:
+        point[0] = point[0] * points_scale
+        point[1] = point[1] * points_scale
     lines = config["lines"]
     rooms = config["rooms"]
+    circuit_button_x = config["circuit_button_x"]
+    circuit_button_width = config["circuit_button_width"]
+    circuit_button_height = config["circuit_button_height"]
+    circuit_button_y_start = config["circuit_button_y_start"]
+    circuit_button_font_size = config["circuit_button_font_size"]
+    info_block_x = config["info_block_x"]
+    info_block_y = config["info_block_y"]
+    info_block_font_size = config["info_block_font_size"]
+    info_block_spacing = config["info_block_spacing"]
 
 if __name__ == "__main__":
     load_config()
