@@ -179,7 +179,7 @@ def draw_all():
         y = y + info_block_spacing
         c = c + 1
     
-    canvas.create_text(20,y+36,text=datetime.datetime.now().strftime("%m-%d-%Y %H:%M:%S")+" - "+last_notification,fill='yellow',anchor='nw',font='times 24')
+    canvas.create_text(info_block_x,y,text="Notification: "+last_notification,fill='yellow',anchor='nw',font='times '+str(info_block_font_size))
 
 def load_config():
     global points
