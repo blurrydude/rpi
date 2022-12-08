@@ -14,7 +14,7 @@ base_width = 1024
 base_height = 768
 points_scale = 0.78125
 master.geometry("800x600")
-#master.attributes('-fullscreen', True)
+master.attributes('-fullscreen', True)
 
 canvas = Canvas(master, width=base_width, height=base_height) 
 canvas.place(x=0, y=0) 
@@ -69,8 +69,9 @@ def click(event):
     global show_points
     x, y = event.x, event.y
     print('{}, {}'.format(x, y))
-    if x > 1000 and y < 24:
+    if x > base_width - 10 and y < 10:
         show_points = show_points == False
+        master.attributes('-fullscreen', show_points == False)
         draw_all()
         return
     for room in rooms:
