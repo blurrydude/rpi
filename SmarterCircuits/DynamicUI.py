@@ -6,6 +6,8 @@ import paho.mqtt.client as mqtt
 import datetime
 import os
 
+from ShellyDevices import RelayModule
+
 root = os.path.dirname(os.path.realpath(__file__))+"/" #'C:\\Code\\rpi\\SmarterCircuits\\'
 
 client = mqtt.Client()
@@ -28,6 +30,7 @@ show_room_names = False
 
 selected_room = ""
 room_circuits = []
+circuits = []
 
 points = []
 lines = []
@@ -45,6 +48,9 @@ def on_message(client, userdata, message):
         if message != last_notification:
             last_notification = message
             draw_all()
+        return
+    if topic[0] == "shellies":
+        handle_shelly_message(message.topic, result)
         return
     data = json.loads(result)
     if topic[1] == 'sensors':
@@ -64,7 +70,7 @@ def click(event):
     global show_points
     global show_room_names
     x, y = event.x, event.y
-    print('{}, {}'.format(x, y))
+    #print('{}, {}'.format(x, y))
     if x > base_width - 10 and y < 10:
         show_points = show_points == False
         master.attributes('-fullscreen', show_points == False)
@@ -98,24 +104,22 @@ def click(event):
             return
 
 def click_circuit(circuit):
-    print(circuit+" clicked")
-    client.publish('smarter_circuits/commands','toggle '+circuit.lower())
+    #print(circuit.name+" clicked")
+    client.publish('smarter_circuits/commands','toggle '+circuit.name.lower())
 
 def click_room(room):
     global selected_room
     global room_circuits
     if room["name"] == "":
         return
-    print(room["name"]+" clicked")
+    #print(room["name"]+" clicked")
     selected_room = room["name"]
     
-    config_data = open(root+'circuits.json')
-    circuits = json.load(config_data)
     room_circuits = []
     for circuit in circuits:
-        if room["name"] in circuit["zones"]:
-            print(circuit)
-            room_circuits.append(circuit["name"])
+        if room["name"] in circuit.zones:
+            #print(circuit)
+            room_circuits.append(circuit)
     
     draw_all()
 
@@ -174,8 +178,11 @@ def draw_all():
     c = 0
     for circuit in room_circuits:
         y = circuit_button_y_start+(c*(circuit_button_height+8))
-        canvas.create_rectangle(circuit_button_x,y,circuit_button_x+circuit_button_width,y+circuit_button_height, fill="green", outline="green") 
-        canvas.create_text(circuit_button_x+(circuit_button_width/2),y+(circuit_button_height/2),text=circuit,fill='black',font="Times "+str(circuit_button_font_size))
+        fill = "red"
+        if circuit.status.relay.on:
+            fill = "green"
+        canvas.create_rectangle(circuit_button_x,y,circuit_button_x+circuit_button_width,y+circuit_button_height, fill=fill, outline="gray") 
+        canvas.create_text(circuit_button_x+(circuit_button_width/2),y+(circuit_button_height/2),text=circuit.name,fill='black',font="Times "+str(circuit_button_font_size))
         c = c + 1
     
     c = 0
@@ -226,13 +233,119 @@ def load_config():
         base_height = config["base_height"]
         master.geometry(str(base_width)+"x"+str(base_height))
 
+def handle_shelly_message(topic, message):
+    s = topic.split('/')
+    id = s[1]
+    if "pro4pm" in id:
+        handle_shelly_pro4pm_message(id, topic.replace("shellies/"+id+"/",""), message)
+    if "1pm" in id or "switch25" in id:
+        handle_shelly_relay_message(id, topic.replace("shellies/"+id+"/",""), message)
+    if "dimmer2" in id:
+        handle_shelly_dimmer_message(id, topic.replace("shellies/"+id+"/",""), message)
+    if "ht" in id:
+        handle_shelly_ht_message(id, topic.replace("shellies/"+id+"/",""), message)
+    return
+
+def update_circuit(id, on = None, power = None, voltage = None):
+    for circuit in circuits:
+        if(circuit.id != id):
+            continue
+
+def handle_shelly_pro4pm_message(id, topic, message):
+    if "status" not in topic:
+        return
+    data = json.loads(message)
+    for circuit in circuits:
+        if(circuit.id != id):
+            continue
+        if(int(circuit.relay_id) != data["id"]):
+            continue
+        circuit.status.relay.on = data["output"]
+        circuit.status.relay.power = data["apower"]
+        circuit.status.relay.energy = data["current"]
+        circuit.status.temperature = data["temperature"]["tC"]
+        circuit.status.temperature_f = data["temperature"]["tF"]
+        circuit.status.voltage = data["voltage"]
+
+def handle_shelly_dimmer_message(id, subtopic, message):
+    for circuit in circuits:
+        if(circuit.id != id):
+            continue
+        if subtopic == "light/"+circuit.relay_id:
+            circuit.status.relay.on = message == "on"
+        if subtopic == "light/"+circuit.relay_id+"/power":
+            circuit.status.relay.power = float(message)
+        if subtopic == "light/"+circuit.relay_id+"/energy":
+            circuit.status.relay.energy = int(message)
+        if subtopic == "temperature":
+            circuit.status.temperature = float(message)
+        if subtopic == "temperature_f":
+            circuit.status.temperature_f = float(message)
+        if subtopic == "overtemperature":
+            circuit.status.overtemperature = int(message)
+        if subtopic == "temperature_status":
+            circuit.status.temperature = message
+        if subtopic == "voltage":
+            circuit.status.voltage = float(message)  
+
+def handle_shelly_relay_message(id, subtopic, message):
+    for circuit in circuits:
+        if(circuit.id != id):
+            continue
+        if subtopic == "relay/"+circuit.relay_id:
+            circuit.status.relay.on = message == "on"
+        if subtopic == "relay/"+circuit.relay_id+"/power":
+            circuit.status.relay.power = float(message)
+        if subtopic == "relay/"+circuit.relay_id+"/energy":
+            circuit.status.relay.energy = int(message)
+        if subtopic == "temperature":
+            circuit.status.temperature = float(message)
+        if subtopic == "temperature_f":
+            circuit.status.temperature_f = float(message)
+        if subtopic == "overtemperature":
+            circuit.status.overtemperature = int(message)
+        if subtopic == "temperature_status":
+            circuit.status.temperature = message
+        if subtopic == "voltage":
+            circuit.status.voltage = float(message)    
+
+def handle_shelly_ht_message(id, subtopic, message):
+    sensor = config.ht_sensors[id]
+    if subtopic == "sensor/battery":
+        battery = int(message)
+        if sensor.status.battery != battery:
+            sensor.status.battery = battery
+            if circuit_authority is True:
+                send_discord_message(discord_house_room, sensor.name+" battery level is "+str(sensor.status.battery)+" %")
+            battery_status_check(sensor)
+    if subtopic == "sensor/temperature":
+        sensor.status.temperature = float(message)
+        if circuit_authority is True:
+            send_discord_message(discord_house_room, sensor.name+" temperature is "+message+" F")
+
+    if subtopic == "sensor/humidity":
+        sensor.status.humidity = float(message)
+        if circuit_authority is True:
+            dp = get_dew_point_f(sensor.status.temperature, sensor.status.humidity)
+            send_discord_message(discord_house_room, sensor.name+" humidity is "+message+" % dew point is "+str(dp)+" F")
+
+def load_circuits():
+    global circuits
+    circuit_data = open(root+'circuits.json')
+    circuit_list = json.load(circuit_data)
+    circuits = []
+    for circuit in circuit_list:
+        circuits.append(RelayModule(circuit["id"],circuit["ip_address"],circuit["name"],circuit["relay_id"],circuit["location"],circuit["zones"],circuit["on_modes"],circuit["off_modes"]))
+
 if __name__ == "__main__":
+    load_circuits()
     load_config()
     canvas = Canvas(master, width=base_width, height=base_height)
     master.geometry(str(base_width)+"x"+str(base_height))
     master.attributes('-fullscreen', True)
     client.on_message = on_message
     client.connect('192.168.2.200')
+    client.subscribe('shellies/#')
     client.subscribe('smarter_circuits/sensors/#')
     client.subscribe('smarter_circuits/thermostats/#')
     client.subscribe('notifications')
