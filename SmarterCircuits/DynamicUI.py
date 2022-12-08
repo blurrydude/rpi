@@ -222,6 +222,7 @@ def load_config():
 
 if __name__ == "__main__":
     load_config()
+    canvas = Canvas(master, width=base_width, height=base_height)
     client.on_message = on_message
     client.connect('192.168.2.200')
     client.subscribe('smarter_circuits/sensors/#')
