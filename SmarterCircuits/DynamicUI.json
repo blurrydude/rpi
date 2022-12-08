@@ -1,7 +1,7 @@
 {
 	"base_width": 800,
 	"base_height": 600,
-	"points_scale": 0.6,
+	"points_scale": 0.7,
 	"circuit_button_x": 525,
 	"circuit_button_width": 250,
 	"circuit_button_height": 48,
