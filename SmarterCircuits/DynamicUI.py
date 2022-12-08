@@ -268,6 +268,7 @@ def handle_shelly_pro4pm_message(id, topic, message):
         power = data["apower"]
         if power != circuit.status.relay.power:
             circuit.status.relay.power = power
+            check_room_states(circuit.name)
         circuit.status.relay.energy = data["current"]
         circuit.status.temperature = data["temperature"]["tC"]
         circuit.status.temperature_f = data["temperature"]["tF"]
@@ -286,6 +287,7 @@ def handle_shelly_dimmer_message(id, subtopic, message):
             power = float(message)
             if power != circuit.status.relay.power:
                 circuit.status.relay.power = power
+                check_room_states(circuit.name)
         if subtopic == "light/"+circuit.relay_id+"/energy":
             circuit.status.relay.energy = int(message)
         if subtopic == "temperature":
@@ -312,6 +314,7 @@ def handle_shelly_relay_message(id, subtopic, message):
             power = float(message)
             if power != circuit.status.relay.power:
                 circuit.status.relay.power = power
+                check_room_states(circuit.name)
         if subtopic == "relay/"+circuit.relay_id+"/energy":
             circuit.status.relay.energy = int(message)
         if subtopic == "temperature":
