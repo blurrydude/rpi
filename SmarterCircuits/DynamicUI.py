@@ -323,6 +323,7 @@ if __name__ == "__main__":
     canvas = Canvas(master, width=base_width, height=base_height)
     master.geometry(str(base_width)+"x"+str(base_height))
     master.attributes('-fullscreen', True)
+    master.configure(bg='black')
     client.on_message = on_message
     client.connect('192.168.2.200')
     client.subscribe('shellies/#')
