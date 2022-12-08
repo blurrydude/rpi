@@ -24,6 +24,7 @@ info_block_spacing = 32
 points_scale = 1
 
 show_points = False
+show_room_names = False
 
 selected_room = ""
 room_circuits = []
@@ -61,11 +62,16 @@ def on_message(client, userdata, message):
 
 def click(event):
     global show_points
+    global show_room_names
     x, y = event.x, event.y
     print('{}, {}'.format(x, y))
     if x > base_width - 10 and y < 10:
         show_points = show_points == False
         master.attributes('-fullscreen', show_points == False)
+        draw_all()
+        return
+    if x < 10 and y < 10:
+        show_room_names = show_room_names == False
         draw_all()
         return
     for room in rooms:
@@ -132,7 +138,7 @@ def draw_room(room):
     br = points[rectangles[0][1]]
     x = tl[0] + ((br[0] - tl[0]) /2)
     y = points[rectangles[0][0]][1] + 12
-    if name != '':
+    if show_room_names and name != '':
         canvas.create_text(x,y,text=name,fill='black')
 
 def draw_all():
