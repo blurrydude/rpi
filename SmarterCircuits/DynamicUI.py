@@ -47,7 +47,7 @@ def on_message(client, userdata, message):
     topic = message.topic.split('/')
     if topic[0] == "notifications":
         if message != last_notification:
-            last_notification = message
+            last_notification = result
             draw_all()
         return
     if topic[0] == "shellies":
