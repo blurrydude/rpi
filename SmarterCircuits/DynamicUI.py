@@ -28,6 +28,7 @@ points_scale = 1
 
 show_points = False
 show_room_names = False
+running = True
 
 selected_room = ""
 room_circuits = []
@@ -348,6 +349,18 @@ def load_circuits():
     for circuit in circuit_list:
         circuits.append(RelayModule(circuit["id"],circuit["ip_address"],circuit["name"],circuit["relay_id"],circuit["location"],circuit["zones"],circuit["on_modes"],circuit["off_modes"]))
 
+def on_disconnect(client, userdata, rc):
+    global running
+    try:
+        client.connect('192.168.2.200')
+        client.subscribe('shellies/#')
+        client.subscribe('smarter_circuits/sensors/#')
+        client.subscribe('smarter_circuits/thermostats/#')
+        client.subscribe('notifications')
+    except:
+        time.sleep(5)
+        on_disconnect(client, userdata, rc)
+
 if __name__ == "__main__":
     load_circuits()
     load_config()
@@ -356,15 +369,17 @@ if __name__ == "__main__":
     master.attributes('-fullscreen', True)
     master.configure(bg='black')
     client.on_message = on_message
+    client.on_disconnect = on_disconnect
     client.connect('192.168.2.200')
     client.subscribe('shellies/#')
     client.subscribe('smarter_circuits/sensors/#')
     client.subscribe('smarter_circuits/thermostats/#')
     client.subscribe('notifications')
+    running = True
     client.loop_start()
     draw_all()
     master.bind('<Button-1>', click)
     master.mainloop() 
-        
+    running = False
     client.loop_stop()
     client.disconnect()
