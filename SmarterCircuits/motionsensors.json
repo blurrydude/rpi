@@ -102,7 +102,7 @@
     ],
     "id": "shellymotionsensor-60A423976276",
     "auto_off": true,
-    "off_time_minutes": "3",
+    "off_time_minutes": "15",
     "ip_address": "192.168.1.154",
     "lux_over_limit": 10000,
     "lux_under_limit": 0,
@@ -113,8 +113,8 @@
     "name": "Day Room",
     "commands": [
       {
-        "start": "turn on day room light",
-        "stop": "turn off day room light",
+        "start": "turn on master bath",
+        "stop": "turn off master bath",
         "conditions": [
           { "prop": "mode", "comparitor": "!=", "value": "midnight" }
         ]
