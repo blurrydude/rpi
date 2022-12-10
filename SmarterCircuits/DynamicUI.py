@@ -43,29 +43,32 @@ last_notification = ""
 def on_message(client, userdata, message):
     global roomstats
     global last_notification
-    result = str(message.payload.decode("utf-8"))
-    topic = message.topic.split('/')
-    if topic[0] == "notifications":
-        if message != last_notification:
-            last_notification = result
-            draw_all()
-        return
-    if topic[0] == "shellies":
-        handle_shelly_message(message.topic, result)
-        return
-    data = json.loads(result)
-    if topic[1] == 'sensors':
-        temp = round(data['temp'],2)
-        hum = round(data['hum'],2)
-        if topic[2] not in roomstats.keys() or roomstats[topic[2]]["temp"] != temp:
-            roomstats[topic[2]] = {"temp":temp, "hum": hum}
-            draw_all()
-    elif topic[1] == 'thermostats':
-        temp = data['state']['temperature']
-        hum = data['state']['humidity']
-        if topic[2] not in roomstats.keys() or roomstats[topic[2]]["temp"] != temp:
-            roomstats[topic[2]] = {"temp":temp, "hum": hum}
-            draw_all()
+    try:
+        result = str(message.payload.decode("utf-8"))
+        topic = message.topic.split('/')
+        if topic[0] == "notifications":
+            if message != last_notification:
+                last_notification = result
+                draw_all()
+            return
+        if topic[0] == "shellies":
+            handle_shelly_message(message.topic, result)
+            return
+        data = json.loads(result)
+        if topic[1] == 'sensors':
+            temp = round(data['temp'],2)
+            hum = round(data['hum'],2)
+            if topic[2] not in roomstats.keys() or roomstats[topic[2]]["temp"] != temp:
+                roomstats[topic[2]] = {"temp":temp, "hum": hum}
+                draw_all()
+        elif topic[1] == 'thermostats':
+            temp = data['state']['temperature']
+            hum = data['state']['humidity']
+            if topic[2] not in roomstats.keys() or roomstats[topic[2]]["temp"] != temp:
+                roomstats[topic[2]] = {"temp":temp, "hum": hum}
+                draw_all()
+    except:
+        pass
 
 def click(event):
     global show_points
