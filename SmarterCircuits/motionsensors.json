@@ -18,28 +18,20 @@
     "lux_under_command": ""
   },
   {
-    "name": "Master Bathroom",
+    "name": "Day Room",
     "commands": [
       {
-        "start": "turn on master bath",
-        "stop": "turn off master bath",
+        "start": "turn on day room light",
+        "stop": "turn off day room light",
         "conditions": [
           { "prop": "mode", "comparitor": "!=", "value": "night" },
           { "prop": "mode", "comparitor": "!=", "value": "midnight" }
-        ]
-      },
-      {
-        "start": "turn on shower fan",
-        "stop": "turn off shower fan",
-        "conditions": [
-          { "prop": "mode", "comparitor": "=", "value": "night" },
-          { "prop": "mode", "comparitor": "=", "value": "midnight" }
         ]
       }
     ],
     "id": "shellymotionsensor-60A42386DDE2",
     "auto_off": true,
-    "off_time_minutes": "20",
+    "off_time_minutes": "5",
     "ip_address": "192.168.1.151",
     "lux_over_limit": 10000,
     "lux_under_limit": 0,
@@ -110,7 +102,7 @@
     "lux_under_command": ""
   },
   {
-    "name": "Day Room",
+    "name": "Master Bath",
     "commands": [
       {
         "start": "turn on master bath",

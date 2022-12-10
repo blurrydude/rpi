@@ -1,7 +1,8 @@
 #! /usr/bin/env python3
+import time
+time.sleep(15)
 import json
 import paho.mqtt.client as mqtt
-import time
 import datetime
 
 client = mqtt.Client()
@@ -13,7 +14,10 @@ def on_message(client, userdata, message):
         return
     config_data = open('control_config.json')
     config = json.load(config_data)
-    client.publish('smarter_circuits/commands',config[int(data[0])][data[1]])
+    command = config[int(data[0])][data[1]]
+    print("command: "+command)
+    if command != '':
+        client.publish('smarter_circuits/commands',command)
 
 if __name__ == "__main__":
     client.on_message = on_message
