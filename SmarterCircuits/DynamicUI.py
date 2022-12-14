@@ -209,12 +209,12 @@ def draw_main():
     if client.is_connected() is False:
         status_color = 'red'
         status = 'not connected'
-    canvas.create_text(info_block_x,y,text="MQTT: "+status,fill=status_color,anchor='nw',font='times '+str(info_block_font_size))
+    canvas.create_text(circuit_button_height,6,text="MQTT: "+status,fill=status_color,anchor='nw',font='times '+str(info_block_font_size))
 
     lb = circuit_button_height / 2
     canvas.create_rectangle(base_width - lb,0,base_width-1,lb, fill='gray', outline="gray") 
     canvas.create_rectangle(0,0,lb,lb, fill='cyan', outline="cyan") 
-    canvas.create_rectangle(circuit_button_height*2,10,lb,lb, fill=status_color, outline="white") 
+    #canvas.create_rectangle(circuit_button_height,10,circuit_button_height+lb,lb, fill=status_color, outline="white") 
 
 def load_config():
     global points
