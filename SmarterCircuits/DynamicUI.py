@@ -214,7 +214,9 @@ def draw_main():
     lb = circuit_button_height / 2
     canvas.create_rectangle(base_width - lb,0,base_width-1,lb, fill='gray', outline="gray") 
     canvas.create_rectangle(0,0,lb,lb, fill='cyan', outline="cyan") 
-    #canvas.create_rectangle(circuit_button_height,10,circuit_button_height+lb,lb, fill=status_color, outline="white") 
+
+    canvas.create_rectangle(200,info_block_y,200+circuit_button_width,info_block_y+circuit_button_height, fill='purple', outline="white")
+    canvas.create_text(200+(circuit_button_width/2),info_block_y+(circuit_button_height/2),text="Climate",fill='white',font="Times "+str(circuit_button_font_size))
 
 def load_config():
     global points
