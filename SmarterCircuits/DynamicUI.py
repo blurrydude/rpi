@@ -76,12 +76,13 @@ def click(event):
     global show_room_names
     x, y = event.x, event.y
     #print('{}, {}'.format(x, y))
-    if x > base_width - 10 and y < 10:
+    lb = circuit_button_height / 2
+    if x > base_width - lb and y < lb:
         show_points = show_points == False
         master.attributes('-fullscreen', show_points == False)
         draw_all()
         return
-    if x < 10 and y < 10:
+    if x < lb and y < lb:
         show_room_names = show_room_names == False
         draw_all()
         return
@@ -157,7 +158,10 @@ def draw_all():
     canvas = Canvas(master, width=base_width, height=base_height, bg='black') 
     canvas.place(x=0, y=0) 
     canvas.create_rectangle(0, 0, base_width, base_height, fill="black", outline="black")
-    
+    draw_main()
+
+def draw_main():
+
     for room in rooms:
         draw_room(room)
 
@@ -199,6 +203,18 @@ def draw_all():
         c = c + 1
     
     canvas.create_text(info_block_x,y,text="Notification: "+last_notification,fill='yellow',anchor='nw',font='times '+str(info_block_font_size))
+    y = y + info_block_spacing
+    status_color = 'green'
+    status = 'connected'
+    if client.is_connected() is False:
+        status_color = 'red'
+        status = 'not connected'
+    canvas.create_text(info_block_x,y,text="MQTT: "+status,fill=status_color,anchor='nw',font='times '+str(info_block_font_size))
+
+    lb = circuit_button_height / 2
+    canvas.create_rectangle(base_width - lb,0,base_width-1,lb, fill='gray', outline="gray") 
+    canvas.create_rectangle(0,0,lb,lb, fill='cyan', outline="cyan") 
+    canvas.create_rectangle(circuit_button_height*2,10,lb,lb, fill=status_color, outline="white") 
 
 def load_config():
     global points
@@ -351,7 +367,9 @@ def load_circuits():
 
 def on_disconnect(client, userdata, rc):
     global running
+    draw_all()
     try:
+        time.sleep(5)
         client.connect('192.168.2.200')
         client.subscribe('shellies/#')
         client.subscribe('smarter_circuits/sensors/#')
