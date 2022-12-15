@@ -5,6 +5,7 @@ import json
 import paho.mqtt.client as mqtt
 import datetime
 import os
+from shapely.geometry import LineString
 
 from ShellyDevices import RelayModule
 
@@ -29,6 +30,8 @@ points_scale = 1
 show_points = False
 show_room_names = False
 running = True
+
+screen = "main"
 
 selected_room = ""
 room_circuits = []
@@ -76,6 +79,20 @@ def click(event):
     global show_room_names
     x, y = event.x, event.y
     #print('{}, {}'.format(x, y))
+    if screen == "main":
+        click_main(x, y)
+    elif screen == "climate":
+        click_climate(x, y)
+    elif screen == "menu":
+        click_menu(x, y)
+
+def click_main(x, y):
+    global screen
+    global show_room_names
+    global show_points
+    if x >= 200 and x <= 200+circuit_button_width and y >= info_block_y and y <= info_block_y+circuit_button_height:
+        switch_screen("menu")
+        return
     lb = circuit_button_height / 2
     if x > base_width - lb and y < lb:
         show_points = show_points == False
@@ -108,6 +125,52 @@ def click(event):
         if x >= rx1 and x <= rx2 and y >= ry1 and y <= ry2:
             click_circuit(circuit)
             return
+
+def click_climate(x, y):
+    if detect_home_click(x,y):
+        return
+
+
+def click_menu(x, y):
+    if detect_home_click(x,y):
+        return
+
+def switch_screen(switch_to):
+    global screen
+    screen = switch_to
+    draw_all()
+
+def detect_home_click(x, y):
+    global screen
+    crosses = 0
+    unit = circuit_button_height
+    half_unit = unit / 2
+    p1 = (x,y)
+    p2 = (x+base_width,y)
+    a = (unit,unit)
+    b = (unit+half_unit,half_unit)
+    c = (unit*2,unit)
+    d = (unit*2,unit*1.5)
+    e = (unit,unit*1.5)
+    if lines_cross(p1,p2,a,b):
+        crosses = crosses + 1
+    if lines_cross(p1,p2,b,c):
+        crosses = crosses + 1
+    if lines_cross(p1,p2,c,d):
+        crosses = crosses + 1
+    if lines_cross(p1,p2,d,e):
+        crosses = crosses + 1
+    if lines_cross(p1,p2,a,e):
+        crosses = crosses + 1
+    if crosses == 0 or crosses == 2:
+        return False
+    switch_screen("main")
+    return True
+
+def lines_cross(p1,p2,p3,p4):
+    line = LineString([p1,p2])
+    other = LineString([p3,p4])
+    return line.intersects(other)
 
 def click_circuit(circuit):
     #print(circuit.name+" clicked")
@@ -158,10 +221,46 @@ def draw_all():
     canvas = Canvas(master, width=base_width, height=base_height, bg='black') 
     canvas.place(x=0, y=0) 
     canvas.create_rectangle(0, 0, base_width, base_height, fill="black", outline="black")
-    draw_main()
+    if screen == "main":
+        draw_main()
+    elif screen == "climate":
+        draw_climate()
+    elif screen == "menu":
+        draw_menu()
+
+def draw_climate():
+    draw_screen_title("CLIMATE")
+    draw_home_button()
+
+def draw_menu():
+    draw_screen_title("MENU")
+    draw_home_button()
+
+def draw_home_button():
+    unit = circuit_button_height
+    half_unit = unit / 2
+    canvas.create_polygon(
+        unit,unit,
+        unit+half_unit,half_unit,
+        unit*2,unit,
+        unit*2,unit*1.5,
+        unit,unit*1.5,
+        fill="orange", outline="orange")
+    bit = unit / 7
+    wy = unit + bit
+    wx = wy
+    canvas.create_rectangle(wx,unit,wx+bit,wy,fill="black",outline="black")
+    wx = wx + bit + bit
+    canvas.create_rectangle(wx,unit,wx+bit,unit*1.5,fill="black",outline="black")
+    wx = wx + bit + bit
+    canvas.create_rectangle(wx,unit,wx+bit,wy,fill="black",outline="black")
+
+def draw_screen_title(title):
+    tx = base_width / 2
+    ty = 10
+    canvas.create_text(tx,ty,text=title,fill='white')
 
 def draw_main():
-
     for room in rooms:
         draw_room(room)
 
@@ -215,8 +314,8 @@ def draw_main():
     canvas.create_rectangle(base_width - lb,0,base_width-1,lb, fill='gray', outline="gray") 
     canvas.create_rectangle(0,0,lb,lb, fill='cyan', outline="cyan") 
 
-    canvas.create_rectangle(200,info_block_y,200+circuit_button_width,info_block_y+circuit_button_height, fill='purple', outline="white")
-    canvas.create_text(200+(circuit_button_width/2),info_block_y+(circuit_button_height/2),text="Climate",fill='white',font="Times "+str(circuit_button_font_size))
+    canvas.create_rectangle(200,info_block_y,200+(circuit_button_width/2),info_block_y+circuit_button_height, fill='purple', outline="white")
+    canvas.create_text(200+(circuit_button_width/4),info_block_y+(circuit_button_height/2),text="MENU",fill='white',font="Times "+str(circuit_button_font_size))
 
 def load_config():
     global points
