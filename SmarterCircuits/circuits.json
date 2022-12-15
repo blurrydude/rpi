@@ -466,7 +466,7 @@
 		"ip_address": "192.168.2.55",
 		"id": "shelly1pm-C82B961DDFDF",
 		"relay_id": "0",
-		"name": "Dining Room Heater",
+		"name": "Bath Heater",
 		"on_modes": ["Evening"],
 		"off_modes": ["Morning"],
 		"zones": ["Dining Room", "Ventilation"]
