@@ -53,7 +53,8 @@ def on_message(client, userdata, message):
         if topic[0] == "notifications":
             if message != last_notification:
                 last_notification = result
-                draw_all()
+                if screen == "main":
+                    draw_all()
             return
         if topic[0] == "shellies":
             handle_shelly_message(message.topic, result)
@@ -64,13 +65,15 @@ def on_message(client, userdata, message):
             hum = round(data['hum'],2)
             if topic[2] not in roomstats.keys() or roomstats[topic[2]]["temp"] != temp:
                 roomstats[topic[2]] = {"temp":temp, "hum": hum}
-                draw_all()
+                if screen == "main":
+                    draw_all()
         elif topic[1] == 'thermostats':
             temp = data['state']['temperature']
             hum = data['state']['humidity']
             if topic[2] not in roomstats.keys() or roomstats[topic[2]]["temp"] != temp:
                 roomstats[topic[2]] = {"temp":temp, "hum": hum}
-                draw_all()
+                if screen == "main" or screen == "climate":    
+                    draw_all()
     except:
         pass
 
@@ -130,9 +133,12 @@ def click_climate(x, y):
     if detect_home_click(x,y):
         return
 
-
 def click_menu(x, y):
     if detect_home_click(x,y):
+        return
+    unit = circuit_button_height
+    if x >= unit and y >= unit*2 and x <= unit+circuit_button_width and y <= unit*2+circuit_button_height:
+        switch_screen("climate")
         return
 
 def switch_screen(switch_to):
@@ -231,10 +237,22 @@ def draw_all():
 def draw_climate():
     draw_screen_title("CLIMATE")
     draw_home_button()
+    c = 0
+    y = circuit_button_height*2
+    for room in roomstats.keys():
+        canvas.create_text(circuit_button_height,y,text=room+": "+str(round(roomstats[room]["temp"],2)),fill='white',anchor='nw',font='times '+str(info_block_font_size))
+        y = y + info_block_spacing
+        c = c + 1
 
 def draw_menu():
     draw_screen_title("MENU")
     draw_home_button()
+    draw_climate_button()
+
+def draw_climate_button():
+    unit = circuit_button_height
+    canvas.create_rectangle(unit,unit*2,unit+circuit_button_width,unit*2+circuit_button_height,fill="blue",outline="blue")
+    canvas.create_text(unit+(circuit_button_width/2),unit*2+(unit/2),text="Climate Control",fill="white", font='times '+str(circuit_button_font_size))
 
 def draw_home_button():
     unit = circuit_button_height
@@ -258,7 +276,7 @@ def draw_home_button():
 def draw_screen_title(title):
     tx = base_width / 2
     ty = 10
-    canvas.create_text(tx,ty,text=title,fill='white')
+    canvas.create_text(tx,ty,text=title,fill='white',font='times '+str(circuit_button_font_size))
 
 def draw_main():
     for room in rooms:
