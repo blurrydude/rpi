@@ -1,5 +1,6 @@
 {
 	"mqtt_broker": "192.168.2.200",
+	"redraw_time_seconds": 10,
 	"base_width": 800,
 	"base_height": 600,
 	"points_scale": 0.72,
