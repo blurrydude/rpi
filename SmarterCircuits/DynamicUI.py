@@ -237,6 +237,7 @@ def draw_all():
 def draw_climate():
     draw_screen_title("CLIMATE")
     draw_home_button()
+    draw_mqtt_status()
     c = 0
     y = circuit_button_height*2
     for room in roomstats.keys():
@@ -247,13 +248,21 @@ def draw_climate():
 def draw_menu():
     draw_screen_title("MENU")
     draw_home_button()
+    draw_mqtt_status()
     draw_climate_button()
+    draw_labels_button()
+
+def draw_labels_button():
+    draw_button(circuit_button_height,circuit_button_height*2+circuit_button_height+8,"Climate Control","blue")
 
 def draw_climate_button():
-    unit = circuit_button_height
-    canvas.create_rectangle(unit,unit*2,unit+circuit_button_width,unit*2+circuit_button_height,fill="blue",outline="blue")
-    canvas.create_text(unit+(circuit_button_width/2),unit*2+(unit/2),text="Climate Control",fill="white", font='times '+str(circuit_button_font_size))
+    draw_button(circuit_button_height,circuit_button_height*2,"Climate Control","blue")
 
+def draw_button(x, y, label, color):
+    unit = circuit_button_height
+    canvas.create_rectangle(x,y,x+circuit_button_width,y+circuit_button_height,fill=color,outline=color)
+    canvas.create_text(x+(circuit_button_width/2),y+(unit/2),text=label,fill="white", font='times '+str(circuit_button_font_size))
+    
 def draw_home_button():
     unit = circuit_button_height
     half_unit = unit / 2
@@ -275,7 +284,7 @@ def draw_home_button():
 
 def draw_screen_title(title):
     tx = base_width / 2
-    ty = 10
+    ty = 16
     canvas.create_text(tx,ty,text=title,fill='white',font='times '+str(circuit_button_font_size))
 
 def draw_main():
@@ -321,12 +330,8 @@ def draw_main():
     
     canvas.create_text(info_block_x,y,text="Notification: "+last_notification,fill='yellow',anchor='nw',font='times '+str(info_block_font_size))
     y = y + info_block_spacing
-    status_color = 'green'
-    status = 'connected'
-    if client.is_connected() is False:
-        status_color = 'red'
-        status = 'not connected'
-    canvas.create_text(circuit_button_height,6,text="MQTT: "+status,fill=status_color,anchor='nw',font='times '+str(info_block_font_size))
+
+    draw_mqtt_status()
 
     lb = circuit_button_height / 2
     canvas.create_rectangle(base_width - lb,0,base_width-1,lb, fill='gray', outline="gray") 
@@ -334,6 +339,14 @@ def draw_main():
 
     canvas.create_rectangle(200,info_block_y,200+(circuit_button_width/2),info_block_y+circuit_button_height, fill='purple', outline="white")
     canvas.create_text(200+(circuit_button_width/4),info_block_y+(circuit_button_height/2),text="MENU",fill='white',font="Times "+str(circuit_button_font_size))
+
+def draw_mqtt_status():
+    status_color = 'green'
+    status = 'connected'
+    if client.is_connected() is False:
+        status_color = 'red'
+        status = 'not connected'
+    canvas.create_text(circuit_button_height*2,6,text="MQTT: "+status,fill=status_color,anchor='nw',font='times '+str(info_block_font_size))
 
 def load_config():
     global points
