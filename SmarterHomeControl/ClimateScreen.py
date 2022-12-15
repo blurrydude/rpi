@@ -22,25 +22,25 @@ class ClimateScreen:
             self.ui.canvas.create_text(unit*16,y,text="heat below: "+str(roomstat["low"]),fill=fill,font='times '+str(self.ui.config.circuit_button_font_size))
             self.ui.canvas.create_text(unit*32,y,text=roomstat["status"],anchor='w',fill=fill,font='times '+str(self.ui.config.circuit_button_font_size))
             self.ui.canvas.create_polygon(
-                unit*15,y-unit,
-                unit*16,y-(unit*2),
-                unit*17,y-unit,
+                unit*14,y-unit,
+                unit*16,y-(unit*3),
+                unit*18,y-unit,
                 fill="red",outline="red")
             self.ui.canvas.create_polygon(
-                unit*15,y+unit,
-                unit*16,y+(unit*2),
-                unit*17,y+unit,
+                unit*14,y+unit,
+                unit*16,y+(unit*3),
+                unit*18,y+unit,
                 fill="blue",outline="blue")
             self.ui.canvas.create_text(unit*26,y,text="cool above: "+str(roomstat["high"]),fill=fill,font='times '+str(self.ui.config.circuit_button_font_size))
             self.ui.canvas.create_polygon(
-                unit*25,y-unit,
-                unit*26,y-(unit*2),
-                unit*27,y-unit,
+                unit*24,y-unit,
+                unit*26,y-(unit*3),
+                unit*28,y-unit,
                 fill="red",outline="red")
             self.ui.canvas.create_polygon(
-                unit*25,y+unit,
-                unit*26,y+(unit*2),
-                unit*27,y+unit,
+                unit*24,y+unit,
+                unit*26,y+(unit*3),
+                unit*28,y+unit,
                 fill="blue",outline="blue")
             y = y + (self.ui.config.circuit_button_height*3)
             c = c + 1
@@ -53,21 +53,21 @@ class ClimateScreen:
         for room in self.ui.brain.roomstats.keys():
             roomstat = self.ui.brain.roomstats[room]
             poly_up_low = [
-                (unit*15,py-unit),
-                (unit*16,py-(unit*2)),
-                (unit*17,py-unit)]
+                (unit*14,py-unit),
+                (unit*16,py-(unit*3)),
+                (unit*18,py-unit)]
             poly_down_low = [
-                (unit*15,py+unit),
-                (unit*16,py+(unit*2)),
-                (unit*17,py+unit)]
+                (unit*14,py+unit),
+                (unit*16,py+(unit*3)),
+                (unit*18,py+unit)]
             poly_up_high = [
-                (unit*25,py-unit),
-                (unit*26,py-(unit*2)),
-                (unit*27,py-unit)]
+                (unit*24,py-unit),
+                (unit*26,py-(unit*3)),
+                (unit*28,py-unit)]
             poly_down_high = [
-                (unit*25,py+unit),
+                (unit*24,py+unit),
                 (unit*26,py+(unit*2)),
-                (unit*27,py+unit)]
+                (unit*28,py+unit)]
 
             py = py + (self.ui.config.circuit_button_height*3)
             update = False
