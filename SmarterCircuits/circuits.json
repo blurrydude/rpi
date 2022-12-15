@@ -469,7 +469,7 @@
 		"name": "Bath Heater",
 		"on_modes": ["Evening"],
 		"off_modes": ["Morning"],
-		"zones": ["Dining Room", "Ventilation"]
+		"zones": ["Guest Bathroom", "Ventilation"]
 	},
 
 	{
