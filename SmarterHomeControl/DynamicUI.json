@@ -8,7 +8,7 @@
 	"circuit_button_width": 280,
 	"circuit_button_height": 42,
 	"circuit_button_y_start": 30,
-	"circuit_button_font_size": 16,
+	"circuit_button_font_size": 18,
 	"info_block_x": 20,
 	"info_block_y": 400,
 	"info_block_font_size": 16,

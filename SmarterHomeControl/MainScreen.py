@@ -76,5 +76,5 @@ class MainScreen:
 
         self.ui.draw_mqtt_status()
 
-        self.ui.canvas.create_rectangle(200,self.ui.config.info_block_y,200+(self.ui.config.circuit_button_width/2),self.ui.config.info_block_y+self.ui.config.circuit_button_height, fill='purple', outline="white")
-        self.ui.canvas.create_text(200+(self.ui.config.circuit_button_width/4),self.ui.config.info_block_y+(self.ui.config.circuit_button_height/2),text="MENU",fill='white',font="Times "+str(self.ui.config.circuit_button_font_size))
+        self.ui.canvas.create_rectangle(300,self.ui.config.info_block_y,300+(self.ui.config.circuit_button_width/2),self.ui.config.info_block_y+self.ui.config.circuit_button_height, fill='purple', outline="white")
+        self.ui.canvas.create_text(300+(self.ui.config.circuit_button_width/4),self.ui.config.info_block_y+(self.ui.config.circuit_button_height/2),text="MENU",fill='white',font="Times "+str(self.ui.config.circuit_button_font_size))
