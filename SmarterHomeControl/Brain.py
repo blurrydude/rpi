@@ -24,7 +24,7 @@ class Brain:
         self.config.load_config()
         self.load_circuits()
         self.mqtt.start()
-        _thread.start_new_thread(self.timer_tick,())
+        _thread.start_new_thread(self.timer,())
         self.ui.start()
     
     def stop(self):
@@ -33,13 +33,13 @@ class Brain:
         self.ui.stop()
         exit()
     
-    def timer_tick(self):
-        time.sleep(1)
-        self.ticks = self.ticks + 1
-        if self.ticks == self.config.redraw_time_seconds:
-            self.ticks = 0
-            _thread.start_new_thread(self.redraw,())
-        self.timer_tick()
+    def timer(self):
+        while True:
+            time.sleep(1)
+            self.ticks = self.ticks + 1
+            if self.ticks == self.config.redraw_time_seconds:
+                self.ticks = 0
+                _thread.start_new_thread(self.redraw,())
 
     def redraw(self):
         self.ui.draw_all()
