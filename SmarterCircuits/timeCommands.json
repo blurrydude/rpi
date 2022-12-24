@@ -32,14 +32,6 @@
         "command": "switch to day mode"
     },
     {
-        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunset",
-        "command": "thermoset gameroom temperature_high_setting 75"
-    },
-    {
-        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunset",
-        "command": "thermoset gameroom temperature_low_setting 69"
-    },
-    {
         "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunrise",
         "command": "thermoset gameroom temperature_high_setting 75"
     },
@@ -48,19 +40,11 @@
         "command": "thermoset gameroom temperature_low_setting 71"
     },
     {
-        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunset",
-        "command": "thermoset hallway temperature_high_setting 75"
-    },
-    {
-        "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunset",
-        "command": "thermoset hallway temperature_low_setting 69"
-    },
-    {
         "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunrise",
         "command": "thermoset hallway temperature_high_setting 76"
     },
     {
         "days_time": "Monday,Tuesday,Wednsday,Thursday,Friday,Saturday,Sunday:sunrise",
-        "command": "thermoset hallway temperature_high_setting 72"
+        "command": "thermoset hallway temperature_low_setting 72"
     }
 ]
