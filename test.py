@@ -91,6 +91,43 @@
 # test23 = thing2 == thing3
 # print(test12)
 # print(test23)
+#39567751
+import random
+from PIL import Image, ImageDraw
+
+# Constants for the size of the image
+WIDTH = 500
+HEIGHT = 500
+
+# Create an image to draw on
+image = Image.new("RGB", (WIDTH, HEIGHT), (0, 0, 0))
+draw = ImageDraw.Draw(image)
+
+# Generate a random number of rectangles
+num_rectangles = random.randint(1, 10)
+
+# Generate random rectangles
+for i in range(num_rectangles):
+    # Generate random dimensions and position for the rectangle
+    x = random.randint(0, WIDTH-1)
+    y = random.randint(0, HEIGHT-1)
+    w = random.randint(1, WIDTH-x)
+    h = random.randint(1, HEIGHT-y)
+
+    # Generate a random color for the rectangle
+    r = random.randint(0, 255)
+    g = random.randint(0, 255)
+    b = random.randint(0, 255)
+    color = (r, g, b)
+
+    # Draw the rectangle
+    draw.rectangle((x, y, x+w, y+h), fill=color)
+
+# Save the image
+image.save("rectangles.bmp")
+print("Saved image to rectangles.bmp")
+
+
 
 # import requests
 # r =requests.get('https://api.idkline.com/state')
@@ -359,6 +396,6 @@
 # rh = 34
 # print(DewData(tf,rh, watt_per_degree_celsius).toJSON())
 
-a = (1,1)
-b = (2,3)
-print(a + b)
+# a = (1,1)
+# b = (2,3)
+# print(a + b)
