@@ -21,26 +21,31 @@ class Buttons:
         self.button_up_y = None
 
     def update(self):
-        self.r_pressed = self.button_r.value() > 0
-        self.g_pressed = self.button_g.value() > 0
-        self.b_pressed = self.button_b.value() > 0
-        self.y_pressed = self.button_y.value() > 0
-        if self.r_pressed != self.button_r_pressed:
-            self.button_r_pressed = self.r_pressed
+        r_pressed = self.button_r.value() > 0
+        g_pressed = self.button_g.value() > 0
+        b_pressed = self.button_b.value() > 0
+        y_pressed = self.button_y.value() > 0
+        if r_pressed != self.button_r_pressed:
+            self.button_r_pressed = r_pressed
             self.since_last_press = 0
             self.handle_r_button()
-        if self.g_pressed != self.button_g_pressed:
-            self.button_g_pressed = self.g_pressed
+            return True
+        if g_pressed != self.button_g_pressed:
+            self.button_g_pressed = g_pressed
             self.since_last_press = 0
             self.handle_g_button()
-        if self.b_pressed != self.button_b_pressed:
-            self.button_b_pressed = self.b_pressed
+            return True
+        if b_pressed != self.button_b_pressed:
+            self.button_b_pressed = b_pressed
             self.since_last_press = 0
             self.handle_b_button()
-        if self.y_pressed != self.button_y_pressed:
-            self.button_y_pressed = self.y_pressed
+            return True
+        if y_pressed != self.button_y_pressed:
+            self.button_y_pressed = y_pressed
             self.since_last_press = 0
             self.handle_y_button()
+            return True
+        return False
 
     def handle_r_button(self):
         if self.button_r_pressed and self.button_down_r is not None:

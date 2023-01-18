@@ -1,0 +1,15 @@
+bad_thing=Cigarette
+motivations:
+One steps forward into growth or back into safety.
+There is nothing you can't endure if you remember the passage of time.
+Time is limited, make the most of it.
+end
+craving_reminders:
+You can wait another ten minutes.
+Focus on the things you will gain by quitting.
+No great change was easy, keep going.
+Remember how this will increase your quality of life.
+Think of how much money you will save when you don't smoke.
+Remember what bad mornings feel like as a smoker.
+Think of how much better you will feel after you've quit.
+end

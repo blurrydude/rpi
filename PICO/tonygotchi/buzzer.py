@@ -69,7 +69,10 @@ class Buzzer:
             ]
 
     def note(self, n):
-        return self.notes[self.note_index(n)]
+        #print('note:'+n)
+        ni = self.note_index(n)
+        #print('note index:'+str(ni))
+        return self.notes[ni]
 
     def note_index(self, n):
         if n == 'c':
@@ -195,7 +198,10 @@ class Buzzer:
         return 59
         
     def play_note(self, n, dur):
-        self.play_tone(self.notes[self.note(n)])
+        #print('play note:'+n)
+        f = self.note(n)
+        #print('note freq:'+str(f))
+        self.play_tone(f)
         time.sleep(dur)
         self.be_quiet()
         
@@ -248,3 +254,4 @@ class Buzzer:
                 print('bad at '+c)
                 self.be_quiet()
         self.be_quiet()
+
