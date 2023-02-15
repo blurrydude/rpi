@@ -75,9 +75,9 @@
       "double_push": ["toggle the day room light"]
     },
     "2": {
-      "single_push": ["toggle the deck rail"],
-      "long_push": ["toggle the deck rail"],
-      "double_push": ["toggle the deck rail"]
+      "single_push": ["toggle the day room light"],
+      "long_push": ["toggle the day room light"],
+      "double_push": ["toggle the day room light"]
     },
     "3": {
       "single_push": ["toggle the deck fountain"],
@@ -226,7 +226,7 @@
     "1": {
       "single_push": ["toggle the day room light"],
       "long_push": ["turn off the day room light"],
-      "double_push": ["turn off the deck rail"]
+      "double_push": ["turn off the day room light"]
     },
     "2": {
       "single_push": ["toggle the under cabinet"],
