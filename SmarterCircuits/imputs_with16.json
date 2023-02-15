@@ -224,8 +224,8 @@
       "double_push": ["turn off the bedroom lamp"]
     },
     "1": {
-      "single_push": ["toggle the deck rail"],
-      "long_push": ["turn off the deck rail"],
+      "single_push": ["toggle the day room light"],
+      "long_push": ["turn off the day room light"],
       "double_push": ["turn off the deck rail"]
     },
     "2": {
