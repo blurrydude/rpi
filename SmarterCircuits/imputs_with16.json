@@ -70,9 +70,9 @@
       "double_push": ["toggle the living room lamp"]
     },
     "1": {
-      "single_push": ["toggle the day room lamp"],
-      "long_push": ["toggle the day room lamp"],
-      "double_push": ["toggle the day room lamp"]
+      "single_push": ["toggle the day room light"],
+      "long_push": ["toggle the day room light"],
+      "double_push": ["toggle the day room light"]
     },
     "2": {
       "single_push": ["toggle the deck rail"],

@@ -92,6 +92,12 @@
 # print(test12)
 # print(test23)
 #39567751
+#43139231
+#40566491
+#40312181
+#40009901
+#41563901
+#39737841
 import random
 from PIL import Image, ImageDraw
 
