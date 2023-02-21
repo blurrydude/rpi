@@ -12,7 +12,9 @@ import beepy
  
 class SmarterCircuitsPassiveMonitor:
     def __init__(self):
-        self.mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(["192.168.2.200"],["notifications","remote_menu"],self.on_message)
+        self.discord_house_room = "976692334920077342"
+        self.discord_debug_room = "922927575884505119"
+        self.mqtt = SmarterCircuitsMQTT.SmarterMQTTClient(["192.168.2.200"],["notifications","remote_menu","camera_motion/#"],self.on_message)
         self.running = True
         # self.cameras = [
         #     cv2.VideoCapture("http://192.168.0.201/videostream.cgi?user=viewer&pwd=viewer"),
@@ -28,6 +30,9 @@ class SmarterCircuitsPassiveMonitor:
         self.last_display = datetime.now()
         _thread.start_new_thread(self.sleep_timer, ())
         self.start()
+
+    def send_discord_message(self, room, message):
+        self.mqtt.publish("discord/out/"+room,message)
 
     def sleep_timer(self):
         while self.running is True:
@@ -66,6 +71,10 @@ class SmarterCircuitsPassiveMonitor:
             #     self.do_video_display(cam, sec)
             if text == "closecloseclose":
                 self.stop()
+                return
+            if "camera_motion" in topic:
+                camera = topic.split('/')[1]
+                self.send_discord_message(self.discord_house_room,f"motion on {camera}")
                 return
             if "set font size" in text:
                 self.font_size = int(text.split(' ')[3])
