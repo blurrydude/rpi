@@ -29,6 +29,7 @@ class SmarterCircuitsPassiveMonitor:
         self.lines = 12
         self.last_display = datetime.now()
         _thread.start_new_thread(self.sleep_timer, ())
+        self.last_camera_motion = {}
         self.start()
 
     def send_discord_message(self, room, message):
@@ -74,7 +75,12 @@ class SmarterCircuitsPassiveMonitor:
                 return
             if "camera_motion" in topic:
                 camera = topic.split('/')[1]
-                self.send_discord_message(self.discord_house_room,f"motion on {camera}")
+                now = datetime.now()
+                if camera not in self.last_camera_motion.keys():
+                    self.last_camera_motion[camera] = now
+                if now > self.last_camera_motion[camera] + timedelta(seconds=30):
+                    self.send_discord_message(self.discord_house_room,f"motion on {camera}")
+                    self.last_camera_motion[camera] = now
                 return
             if "set font size" in text:
                 self.font_size = int(text.split(' ')[3])
