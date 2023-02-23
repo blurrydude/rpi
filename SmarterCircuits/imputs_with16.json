@@ -70,14 +70,14 @@
       "double_push": ["toggle the living room lamp"]
     },
     "1": {
-      "single_push": ["toggle the day room light"],
-      "long_push": ["toggle the day room light"],
-      "double_push": ["toggle the day room light"]
+      "single_push": ["toggle the Dog Light"],
+      "long_push": ["toggle the Dog Light"],
+      "double_push": ["toggle the Dog Light"]
     },
     "2": {
-      "single_push": ["toggle the day room light"],
-      "long_push": ["toggle the day room light"],
-      "double_push": ["toggle the day room light"]
+      "single_push": ["toggle the Dog Light"],
+      "long_push": ["toggle the Dog Light"],
+      "double_push": ["toggle the Dog Light"]
     },
     "3": {
       "single_push": ["toggle the deck fountain"],
@@ -212,9 +212,9 @@
       "double_push": ["turn off the kitchen"]
     },
     "3": {
-      "single_push": ["toggle the porch light"],
-      "long_push": ["turn off the porch light"],
-      "double_push": ["turn off the porch light"]
+      "single_push": ["toggle the Porch Light"],
+      "long_push": ["turn off the Porch Light"],
+      "double_push": ["turn off the Porch Light"]
     }
   },
   "shellyplusi4-083af200fe60": {
@@ -224,9 +224,9 @@
       "double_push": ["turn off the bedroom lamp"]
     },
     "1": {
-      "single_push": ["toggle the day room light"],
-      "long_push": ["turn off the day room light"],
-      "double_push": ["turn off the day room light"]
+      "single_push": ["toggle the Dog Light"],
+      "long_push": ["turn off the Dog Light"],
+      "double_push": ["turn off the Dog Light"]
     },
     "2": {
       "single_push": ["toggle the under cabinet"],

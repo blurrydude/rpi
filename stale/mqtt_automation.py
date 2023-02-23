@@ -24,7 +24,7 @@ circuits = {
     "workoutroom": {"id": "workoutroom", "address": "shellyswitch25-8CAAB55F4553", "relay":"0", "label":"Gym Lamp", "last_update": 0}, #192.168.1.245 - Unknown
     "livingroomtv": {"id": "livingroomtv", "address": "shellyswitch25-8CAAB55F3B3F", "relay":"1", "label":"Livingroom TV", "last_update": 0}, #192.168.1.244 - Unknown
     "lamppost": {"id": "lamppost", "address": "shelly1pm-84CCA8A11963", "relay":"0"     , "label":"Lamp post", "last_update": 0}, #192.168.1.62 - Lamp Post and Driveway
-    "porch": {"id": "porch", "address": "shellyswitch25-8CAAB55F44D6", "relay":"0", "label":"Porch", "last_update": 0}, #192.168.1.243 - Porch Light
+    "porch": {"id": "porch", "address": "shellyswitch25-8CAAB55F44D6", "relay":"0", "label":"Porch", "last_update": 0}, #192.168.1.243 - Front Door Cam
     "fireplace": {"id": "fireplace", "address": "shelly1pm-8CAAB574C489", "relay":"0"     , "label":"Fireplace", "last_update": 0}, #192.168.1.60 - Fireplace Lights
     "dining": {"id": "dining", "address": "shellyswitch25-8CAAB55F44D6", "relay":"1", "label":"Dining Room", "last_update": 0}, #192.168.1.243 - Dining Room Light
     "kitchen": {"id": "kitchen", "address": "shellyswitch25-8CAAB55F405D", "relay":"1", "label":"Kitchen", "last_update": 0}, #192.168.1.242 - Kitchen Lights

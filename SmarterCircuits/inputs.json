@@ -82,9 +82,9 @@
 			"double_push": ["turn off the kitchen"]
 		},
 		"3": {
-			"single_push": ["toggle the porch light"],
-			"long_push": ["turn off the porch light"],
-			"double_push": ["turn off the porch light"]
+			"single_push": ["toggle the Porch Light"],
+			"long_push": ["turn off the Porch Light"],
+			"double_push": ["turn off the Porch Light"]
 		}
 	},
 	"shellyplusi4-083af200fe60": {

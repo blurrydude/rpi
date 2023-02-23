@@ -21,8 +21,8 @@
     "name": "Day Room",
     "commands": [
       {
-        "start": "turn on day room light",
-        "stop": "turn off day room light",
+        "start": "turn on Dog Light",
+        "stop": "turn off Dog Light",
         "conditions": [
           { "prop": "mode", "comparitor": "!=", "value": "night" },
           { "prop": "mode", "comparitor": "!=", "value": "midnight" }

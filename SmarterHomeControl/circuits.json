@@ -158,7 +158,7 @@
 		"ip_address": "192.168.1.113",
 		"id": "shelly1pm-8CAAB55F8173",
 		"relay_id": "0",
-		"name": "Day Room Light",
+		"name": "Dog Light",
 		"on_modes": ["Alert"],
 		"off_modes": ["Dark", "Night", "Day"],
 		"zones": ["Down Stairs", "Day Room"]
@@ -422,7 +422,7 @@
 		"ip_address": "192.168.2.27",
 		"id": "shelly1pm-84CCA8AC7E36",
 		"relay_id": "0",
-		"name": "Game Room Heater",
+		"name": "Master Bath Heater",
 		"on_modes": ["Evening"],
 		"off_modes": ["Morning"],
 		"zones": ["Game Room", "Ventilation"]
@@ -455,7 +455,7 @@
 		"ip_address": "192.168.2.29",
 		"id": "shelly1pm-C82B961DE112",
 		"relay_id": "0",
-		"name": "Garage Heater",
+		"name": "Porch Light",
 		"on_modes": ["Evening"],
 		"off_modes": ["Morning"],
 		"zones": ["Garage", "Ventilation"]
@@ -466,7 +466,7 @@
 		"ip_address": "192.168.2.55",
 		"id": "shelly1pm-C82B961DDFDF",
 		"relay_id": "0",
-		"name": "Bath Heater",
+		"name": "Shop Heater",
 		"on_modes": ["Evening"],
 		"off_modes": ["Morning"],
 		"zones": ["Guest Bathroom", "Ventilation"]

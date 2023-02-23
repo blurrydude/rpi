@@ -26,7 +26,7 @@ keywordTopics = [
 circuit = {
     "A1": {"id": "A1", "address": "shelly1pm-8CAAB574C489",      "relay":"0"}, #192.168.1.60 - Fireplace Lights
     "B1": {"id": "B1", "address": "shelly1pm-84CCA8A11963",      "relay":"0"}, #192.168.1.62 - Lamp Post and Driveway
-    "C1": {"id": "C1", "address": "shellyswitch25-8CAAB55F44D6", "relay":"0"}, #192.168.1.243 - Porch Light
+    "C1": {"id": "C1", "address": "shellyswitch25-8CAAB55F44D6", "relay":"0"}, #192.168.1.243 - Front Door Cam
     "C2": {"id": "C2", "address": "shellyswitch25-8CAAB55F44D6", "relay":"1"}, #192.168.1.243 - Dining Room Light
     "D1": {"id": "D1", "address": "shellyswitch25-8CAAB55F405D", "relay":"0"}, #192.168.1.242 - Office Fan
     "D2": {"id": "D2", "address": "shellyswitch25-8CAAB55F405D", "relay":"1"}, #192.168.1.242 - Kitchen Lights

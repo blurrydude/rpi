@@ -96,8 +96,8 @@
             "stop":"turn off the deck light",
             "conditions": [{"type":"mode_is","value":"midnight"},{"type":"mode_is","value":"night"}]
         },{
-            "start":"turn on the day room light",
-            "stop":"turn off the day room light",
+            "start":"turn on the Dog Light",
+            "stop":"turn off the Dog Light",
             "conditions": [{"type":"mode_is","value":"midnight"}]
         }],
         "address":"shellymotionsensor-60A4239A6298",

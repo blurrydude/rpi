@@ -232,7 +232,7 @@
     "offTimes":[]}, 
 
     {"notes":"192.168.1.113",
-    "address": "shelly1pm-8CAAB55F8173", "relay":"0", "label":"Day Room Light",
+    "address": "shelly1pm-8CAAB55F8173", "relay":"0", "label":"Dog Light",
     "onModes": ["Morning", "Lunch", "Dinner", "Evening", "Alert"],
     "offModes":["Dark", "Night", "Day"],
     "zones":["Down Stairs", "Day Room"],
