@@ -92,7 +92,7 @@
 		"ip_address": "192.168.1.107",
 		"id": "shelly1pm-68C63AFB6BD5",
 		"relay_id": "0",
-		"name": "Shop Heater",
+		"name": "Laser",
 		"on_modes": ["Evening"],
 		"off_modes": ["Day"],
 		"zones": ["Ventilation", "Garage"]
@@ -466,7 +466,7 @@
 		"ip_address": "192.168.2.55",
 		"id": "shelly1pm-C82B961DDFDF",
 		"relay_id": "0",
-		"name": "Laser",
+		"name": "Shop Heater",
 		"on_modes": ["Evening"],
 		"off_modes": ["Morning"],
 		"zones": ["Guest Bathroom", "Ventilation"]
