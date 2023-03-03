@@ -257,7 +257,7 @@
 		"ip_address": "192.168.1.119",
 		"id": "shellyswitch25-8CAAB55F44D6",
 		"relay_id": "0",
-		"name": "Porch",
+		"name": "Porch Power",
 		"on_modes": ["Evening", "Night", "Alert"],
 		"off_modes": ["Morning", "Dark", "Midnight", "Day"],
 		"zones": ["Front Yard", "Exterior"]
@@ -458,7 +458,7 @@
 		"name": "Porch Light",
 		"on_modes": ["Evening"],
 		"off_modes": ["Morning"],
-		"zones": ["Garage", "Ventilation"]
+		"zones": ["Front Yard", "Exterior"]
 	},
 
 	{
@@ -466,7 +466,7 @@
 		"ip_address": "192.168.2.55",
 		"id": "shelly1pm-C82B961DDFDF",
 		"relay_id": "0",
-		"name": "Shop Heater",
+		"name": "Laser",
 		"on_modes": ["Evening"],
 		"off_modes": ["Morning"],
 		"zones": ["Guest Bathroom", "Ventilation"]

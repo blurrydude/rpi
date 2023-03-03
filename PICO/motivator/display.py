@@ -78,3 +78,27 @@ class Display:
                 self.oled.poweroff()
                 self.asleep = True
                 self.cycle = 0
+
+    def draw_line(self, point_a, point_b):
+        self.oled.line(point_a[0],point_a[1],point_b[0],point_b[1],1)
+
+    def draw_circle(self, x, y, r):
+        # Draw a circle centered at (x,y) with radius r
+        for i in range(x - r, x + r + 1):
+            for j in range(y - r, y + r + 1):
+                if (i - x)**2 + (j - y)**2 <= r**2:
+                    self.oled.pixel(i, j, 1)
+                    
+    def draw_hexagon(self, x, y, r):
+        # Draw a hexagon centered at (x,y) with radius r
+        for i in range(6):
+            x1 = x + r * math.cos(i * math.pi / 3)
+            y1 = y + r * math.sin(i * math.pi / 3)
+            x2 = x + r * math.cos((i + 1) * math.pi / 3)
+            y2 = y + r * math.sin((i + 1) * math.pi / 3)
+            self.oled.line(int(x1), int(y1), int(x2), int(y2), 1)
+    
+    def draw_points(self, points):
+        for point in points:
+            self.oled.pixel(point[0], point[1], 1)
+
