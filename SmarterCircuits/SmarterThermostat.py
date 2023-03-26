@@ -102,7 +102,7 @@ class Thermostat:
         self.post = True
 
         self.ha_token = ''
-        with open('~/ha_token') as f:
+        with open('/home/pi/ha_token') as f:
             self.ha_token = f.read().strip()
 
         self.state = ThermostatState()
