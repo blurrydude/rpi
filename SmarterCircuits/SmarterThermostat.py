@@ -508,4 +508,5 @@ class Thermostat:
         if to_log is True:
             SmarterLog.log("SmarterThermostat",json_string)
         else:
-            self.mcp.mqtt.publish("smarter_circuits/thermostats/"+self.room, json_string)
+            #self.mcp.mqtt.publish("smarter_circuits/thermostats/"+self.room, json_string)
+            requests.post("http://192.168.2.82:8123/api/states/thermostat.hallway",data)
