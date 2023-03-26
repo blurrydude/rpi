@@ -513,8 +513,8 @@ class Thermostat:
             SmarterLog.log("SmarterThermostat",json_string)
         else:
             #self.mcp.mqtt.publish("smarter_circuits/thermostats/"+self.room, json_string)
-            tstate = {"state": str(round(state["temperature"],2)), "attributes": {"unit_of_measurement": "°F"}}
-            hstate = {"state": str(round(state["humidity"],2)), "attributes": {"unit_of_measurement": "%"}}
+            tstate = {"state": str(round(state["temperature"],2)), "entity_id":f"sensor.{self.room}_thermostat_temperature", "attributes": {"unit_of_measurement": "°F"}}
+            hstate = {"state": str(round(state["humidity"],2)), "entity_id":f"sensor.{self.room}_thermostat_humidity","attributes": {"unit_of_measurement": "%"}}
             requests.post(f"http://192.168.2.82:8123/api/states/sensor.{self.room}_thermostat_temperature",json.dumps(tstate),headers={
                 "Authorization": f"Bearer {self.ha_token}",
                 "content-type": "application/json",
@@ -535,19 +535,19 @@ class Thermostat:
             whf = "0"
             if self.state.whf_on:
                 whf = "1"
-            requests.post(f"http://192.168.2.82:8123/api/states/binary_sensor.{self.room}_heat_on",json.dumps({"state":heat}),headers={
+            requests.post(f"http://192.168.2.82:8123/api/states/binary_sensor.{self.room}_heat_on",json.dumps({"state":heat,"entity_id":f"sensor.{self.room}_heat_on"}),headers={
                 "Authorization": f"Bearer {self.ha_token}",
                 "content-type": "application/json",
             })
-            requests.post(f"http://192.168.2.82:8123/api/states/binary_sensor.{self.room}_ac_on",json.dumps({"state":ac}),headers={
+            requests.post(f"http://192.168.2.82:8123/api/states/binary_sensor.{self.room}_ac_on",json.dumps({"state":ac,"entity_id":f"sensor.{self.room}_ac_on"}),headers={
                 "Authorization": f"Bearer {self.ha_token}",
                 "content-type": "application/json",
             })
-            requests.post(f"http://192.168.2.82:8123/api/states/binary_sensor.{self.room}_fan_on",json.dumps({"state":fan}),headers={
+            requests.post(f"http://192.168.2.82:8123/api/states/binary_sensor.{self.room}_fan_on",json.dumps({"state":fan,"entity_id":f"sensor.{self.room}_fan_on"}),headers={
                 "Authorization": f"Bearer {self.ha_token}",
                 "content-type": "application/json",
             })
-            requests.post(f"http://192.168.2.82:8123/api/states/binary_sensor.{self.room}_whf_on",json.dumps({"state":whf}),headers={
+            requests.post(f"http://192.168.2.82:8123/api/states/binary_sensor.{self.room}_whf_on",json.dumps({"state":whf,"entity_id":f"sensor.{self.room}_whf_on"}),headers={
                 "Authorization": f"Bearer {self.ha_token}",
                 "content-type": "application/json",
             })
