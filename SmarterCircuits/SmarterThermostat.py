@@ -478,6 +478,8 @@ class Thermostat:
         self.mcp.mqtt.publish("smarter_circuits/command",command)
 
     def report(self, to_log = False):
+        if self.state.humidity is None or self.state.temperature is None:
+            return
         state = {
             "ac_on": self.state.ac_on,
             "fan_on": self.state.fan_on,
