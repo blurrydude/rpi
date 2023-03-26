@@ -513,8 +513,8 @@ class Thermostat:
             SmarterLog.log("SmarterThermostat",json_string)
         else:
             #self.mcp.mqtt.publish("smarter_circuits/thermostats/"+self.room, json_string)
-            tstate = {"state": str(state["temperature"]), "attributes": {"unit_of_measurement": "°F"}}
-            hstate = {"state": str(state["humidity"]), "attributes": {"unit_of_measurement": "%"}}
+            tstate = {"state": str(round(state["temperature"],2)), "attributes": {"unit_of_measurement": "°F"}}
+            hstate = {"state": str(round(state["humidity"],2)), "attributes": {"unit_of_measurement": "%"}}
             requests.post(f"http://192.168.2.82:8123/api/states/sensor.{self.room}_thermostat_temperature",json.dumps(tstate),headers={
                 "Authorization": f"Bearer {self.ha_token}",
                 "content-type": "application/json",
