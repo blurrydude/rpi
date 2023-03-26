@@ -34,7 +34,7 @@ data = {
 with open('/home/ian/ha_token') as f:
     ha_token = f.read().strip()
 
-response = requests.post(f"http://192.168.2.82:8123/api/states/thermostat.hallway",json.dumps(data),headers={
+response = requests.post(f"http://192.168.2.82:8123/api/states/thermostat.hallway",json.dumps(state),headers={
     "Authorization": f"Bearer {ha_token}",
     "content-type": "application/json",
 })
