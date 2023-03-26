@@ -523,3 +523,19 @@ class Thermostat:
                 "Authorization": f"Bearer {self.ha_token}",
                 "content-type": "application/json",
             })
+            requests.post(f"http://192.168.2.82:8123/api/states/binary_sensor.{self.room}_heat_on",json.dumps({"state":self.state.heat_on}),headers={
+                "Authorization": f"Bearer {self.ha_token}",
+                "content-type": "application/json",
+            })
+            requests.post(f"http://192.168.2.82:8123/api/states/binary_sensor.{self.room}_ac_on",json.dumps({"state":self.state.ac_on}),headers={
+                "Authorization": f"Bearer {self.ha_token}",
+                "content-type": "application/json",
+            })
+            requests.post(f"http://192.168.2.82:8123/api/states/binary_sensor.{self.room}_fan_on",json.dumps({"state":self.state.fan_on}),headers={
+                "Authorization": f"Bearer {self.ha_token}",
+                "content-type": "application/json",
+            })
+            requests.post(f"http://192.168.2.82:8123/api/states/binary_sensor.{self.room}_whf_on",json.dumps({"state":self.state.whf_on}),headers={
+                "Authorization": f"Bearer {self.ha_token}",
+                "content-type": "application/json",
+            })
