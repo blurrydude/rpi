@@ -1,6 +1,6 @@
 import requests
 import json
-state = {
+state_raw = {
     "ac_on": False,
     "fan_on": False,
     "heat_on": False,
@@ -9,6 +9,8 @@ state = {
     "temperature": 70.9,
     "whf_on": False
 }
+
+state = {"state": "70.9", "attributes": {"unit_of_measurement": "°F"}}
 
 settings = {
     "air_circulation_minutes": 10,
@@ -34,9 +36,8 @@ data = {
 with open('/home/ian/ha_token') as f:
     ha_token = f.read().strip()
 
-for k in state.keys():
-    print(k)
-    requests.post(f"http://192.168.2.82:8123/api/states/thermostat.hallway_{k}",data=str(state[k]),headers={
-        "Authorization": f"Bearer {ha_token}",
-        "content-type": "application/json",
-    })
+response = requests.post(f"http://192.168.2.82:8123/api/states/thermostat.hallway",json.dumps(state),headers={
+    "Authorization": f"Bearer {ha_token}",
+    "content-type": "application/json",
+})
+print(response)
