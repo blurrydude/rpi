@@ -101,6 +101,10 @@ class Thermostat:
         self.humidification_circuits = []
         self.post = True
 
+        self.ha_token = ''
+        with open('~/ha_token') as f:
+            self.ha_token = f.read().strip()
+
         self.state = ThermostatState()
         
         self.failed_reads = 0
@@ -509,4 +513,7 @@ class Thermostat:
             SmarterLog.log("SmarterThermostat",json_string)
         else:
             #self.mcp.mqtt.publish("smarter_circuits/thermostats/"+self.room, json_string)
-            requests.post("http://192.168.2.82:8123/api/states/thermostat.hallway",data)
+            requests.post("http://192.168.2.82:8123/api/states/thermostat.hallway",data,headers={
+                "Authorization": self.ha_token,
+                "content-type": "application/json",
+            })
