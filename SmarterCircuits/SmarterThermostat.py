@@ -514,6 +514,6 @@ class Thermostat:
         else:
             #self.mcp.mqtt.publish("smarter_circuits/thermostats/"+self.room, json_string)
             requests.post(f"http://192.168.2.82:8123/api/states/sensor.{self.room}thermostat",data,headers={
-                "Authorization": self.ha_token,
+                "Authorization": f"Bearer {self.ha_token}",
                 "content-type": "application/json",
             })
