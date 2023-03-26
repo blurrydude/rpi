@@ -28,9 +28,6 @@ class SendMqtt(MycroftSkill):
         self.client = mqtt.Client()
         self.thinker = Thinker(self)
         self.serial = serial.Serial ("/dev/ttyS0", 9600) 
-        # self.client.on_message = self.on_message
-        # self.client.subscribe('mycroft_out')
-        # self.client.loop_start()
 
     def send_pixels(self, pixels):
         c = ""
@@ -67,9 +64,7 @@ class SendMqtt(MycroftSkill):
         action = message.data.get('action')
 
         self.smile("00FF00")
-        #self.client.connect('192.168.2.200')
         self.client.publish('smarter_circuits/command',action)
-        #self.client.disconnect()
         self.blank()
 
         self.speak_dialog('mqtt.send', data={

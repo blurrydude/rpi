@@ -1,7 +1,8 @@
 # import the Python Imaging Library (PIL) to work with bitmap files
 from PIL import Image
 import paho.mqtt.client as mqtt
-
+#41167641
+#40348741
 client = mqtt.Client()
 # open the bitmap file
 img = Image.open('/home/ian/rpi/PICO/led_assistant/your_image.png')
@@ -33,12 +34,13 @@ for y in range(height):
             raise ValueError('Unsupported image mode: %s' % img.mode)
         # add the pixel information to the row list
         if color != "000000":
-            pixels = pixels + f"{x}{y}{color}64|"
+            coords = "{:02X}{:02X}".format(x,y)
+            pixels = pixels + f"{coords}{color}"
 
 # print the pixels list
 print(pixels)
 client.connect("192.168.2.200")
-client.publish("smarter_circuits/rgbring",pixels)
+client.publish("picolight",pixels)
 client.disconnect()
 #00FF000064|7000FF0064|11FF000064|6100FF0064|22FF000064|5200FF0064|250000FF64|55FFFF0064|160000FF64|66FFFF0064|070000FF64|77FFFF0064
 #10FF000064|11FF000064|6100FF0064|7100FF0064|22FF000064|5200FF0064|250000FF64|55FFFF0064|060000FF64|160000FF64|66FFFF0064|67FFFF0064
