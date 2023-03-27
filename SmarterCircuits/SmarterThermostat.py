@@ -139,6 +139,18 @@ class Thermostat:
         while True:
             try:
                 self.cycle()
+                self.settings.temperature_high_setting = float(requests.get(f"http://192.168.2.82:8123/api/states/input_number.cool_above",headers={
+                    "Authorization": f"Bearer {self.ha_token}",
+                    "content-type": "application/json",
+                }).json()["state"])
+                self.settings.temperature_low_setting = float(requests.get(f"http://192.168.2.82:8123/api/states/input_number.heat_below",headers={
+                    "Authorization": f"Bearer {self.ha_token}",
+                    "content-type": "application/json",
+                }).json()["state"])
+                self.settings.system_disabled = requests.get(f"http://192.168.2.82:8123/api/states/input_number.heat_below",headers={
+                    "Authorization": f"Bearer {self.ha_token}",
+                    "content-type": "application/json",
+                }).json()["state"] == "off"
             except:
                 self.log("BAD CYCLE!!!")
             time.sleep(10)
