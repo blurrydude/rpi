@@ -538,18 +538,18 @@ class Thermostat:
                     "Authorization": f"Bearer {self.ha_token}",
                     "content-type": "application/json",
                 })
-                heat = "0"
+                heat = "Off"
                 if self.state.heat_on:
-                    heat = "1"
-                fan = "0"
+                    heat = "On"
+                fan = "Off"
                 if self.state.ac_on:
-                    fan = "1"
-                ac = "0"
+                    fan = "On"
+                ac = "Off"
                 if self.state.fan_on:
-                    ac = "1"
-                whf = "0"
+                    ac = "On"
+                whf = "Off"
                 if self.state.whf_on:
-                    whf = "1"
+                    whf = "On"
                 requests.post(f"http://192.168.2.82:8123/api/states/binary_sensor.{self.room}_heat_on",json.dumps({"state":heat,"unique_id":f"{self.room}st1","entity_id":f"sensor.{self.room}_heat_on"}),headers={
                     "Authorization": f"Bearer {self.ha_token}",
                     "content-type": "application/json",
