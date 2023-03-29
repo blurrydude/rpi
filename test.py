@@ -98,40 +98,44 @@
 #40009901
 #41563901
 #39737841
-import random
-from PIL import Image, ImageDraw
 
-# Constants for the size of the image
-WIDTH = 500
-HEIGHT = 500
 
-# Create an image to draw on
-image = Image.new("RGB", (WIDTH, HEIGHT), (0, 0, 0))
-draw = ImageDraw.Draw(image)
+# import random
+# from PIL import Image, ImageDraw
 
-# Generate a random number of rectangles
-num_rectangles = random.randint(1, 10)
+# # Constants for the size of the image
+# WIDTH = 500
+# HEIGHT = 500
 
-# Generate random rectangles
-for i in range(num_rectangles):
-    # Generate random dimensions and position for the rectangle
-    x = random.randint(0, WIDTH-1)
-    y = random.randint(0, HEIGHT-1)
-    w = random.randint(1, WIDTH-x)
-    h = random.randint(1, HEIGHT-y)
+# # Create an image to draw on
+# image = Image.new("RGB", (WIDTH, HEIGHT), (0, 0, 0))
+# draw = ImageDraw.Draw(image)
 
-    # Generate a random color for the rectangle
-    r = random.randint(0, 255)
-    g = random.randint(0, 255)
-    b = random.randint(0, 255)
-    color = (r, g, b)
+# # Generate a random number of rectangles
+# num_rectangles = random.randint(1, 10)
 
-    # Draw the rectangle
-    draw.rectangle((x, y, x+w, y+h), fill=color)
+# # Generate random rectangles
+# for i in range(num_rectangles):
+#     # Generate random dimensions and position for the rectangle
+#     x = random.randint(0, WIDTH-1)
+#     y = random.randint(0, HEIGHT-1)
+#     w = random.randint(1, WIDTH-x)
+#     h = random.randint(1, HEIGHT-y)
 
-# Save the image
-image.save("rectangles.bmp")
-print("Saved image to rectangles.bmp")
+#     # Generate a random color for the rectangle
+#     r = random.randint(0, 255)
+#     g = random.randint(0, 255)
+#     b = random.randint(0, 255)
+#     color = (r, g, b)
+
+#     # Draw the rectangle
+#     draw.rectangle((x, y, x+w, y+h), fill=color)
+
+# # Save the image
+# image.save("rectangles.bmp")
+# print("Saved image to rectangles.bmp")
+
+
 
 
 
@@ -371,7 +375,7 @@ print("Saved image to rectangles.bmp")
 #         self.watt_cost = self.delta_c * wpdc
 #         self.amps_at_12v = self.watt_cost / 12
 #     def toJSON(self):
-#         return json.dumps(self, default=lambda o: o.__dict__, 
+#         return json.dumps(self, default=lambda o: o.__dict__,
 #             sort_keys=True, indent=4)
 
 # def get_dew_point_f(tf, rh):

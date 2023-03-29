@@ -147,10 +147,10 @@ class Thermostat:
                     "Authorization": f"Bearer {self.ha_token}",
                     "content-type": "application/json",
                 }).json()["state"])
-                self.settings.system_disabled = requests.get(f"http://192.168.2.82:8123/api/states/input_number.heat_below",headers={
+                self.settings.system_disabled = requests.get(f"http://192.168.2.82:8123/api/states/input_boolean.hvac_enabled",headers={
                     "Authorization": f"Bearer {self.ha_token}",
                     "content-type": "application/json",
-                }).json()["state"] == "off"
+                }).json()["state"].lower() == "off"
             except:
                 self.log("BAD CYCLE!!!")
             time.sleep(10)
@@ -492,76 +492,88 @@ class Thermostat:
     def report(self, to_log = False):
         if self.state.humidity is None or self.state.temperature is None:
             return
-        state = {
-            "ac_on": self.state.ac_on,
-            "fan_on": self.state.fan_on,
-            "heat_on": self.state.heat_on,
-            "humidity": self.state.humidity,
-            "status": self.state.status,
-            "temperature": self.state.temperature,
-            "whf_on": self.state.whf_on
-        }
+        try:
+            state = {
+                "ac_on": self.state.ac_on,
+                "fan_on": self.state.fan_on,
+                "heat_on": self.state.heat_on,
+                "humidity": self.state.humidity,
+                "status": self.state.status,
+                "temperature": self.state.temperature,
+                "whf_on": self.state.whf_on
+            }
 
-        settings = {
-            "air_circulation_minutes": self.settings.air_circulation_minutes,
-            "circulation_cycle_minutes": self.settings.circulation_cycle_minutes,
-            "failed_read_halt_limit": self.settings.failed_read_halt_limit,
-            "humidity_setting": self.settings.humidity_setting,
-            "stage_cooldown_minutes": self.settings.stage_cooldown_minutes,
-            "stage_limit_minutes": self.settings.stage_limit_minutes,
-            "swing_temp_offset": self.settings.swing_temp_offset,
-            "system_disabled": self.settings.system_disabled,
-            "temperature_high_setting": self.settings.temperature_high_setting,
-            "temperature_low_setting": self.settings.temperature_low_setting,
-            "use_whole_house_fan": self.settings.use_whole_house_fan,
-            "ventilation_cycle_minutes": self.settings.ventilation_cycle_minutes
-        }
+            settings = {
+                "air_circulation_minutes": self.settings.air_circulation_minutes,
+                "circulation_cycle_minutes": self.settings.circulation_cycle_minutes,
+                "failed_read_halt_limit": self.settings.failed_read_halt_limit,
+                "humidity_setting": self.settings.humidity_setting,
+                "stage_cooldown_minutes": self.settings.stage_cooldown_minutes,
+                "stage_limit_minutes": self.settings.stage_limit_minutes,
+                "swing_temp_offset": self.settings.swing_temp_offset,
+                "system_disabled": self.settings.system_disabled,
+                "temperature_high_setting": self.settings.temperature_high_setting,
+                "temperature_low_setting": self.settings.temperature_low_setting,
+                "use_whole_house_fan": self.settings.use_whole_house_fan,
+                "ventilation_cycle_minutes": self.settings.ventilation_cycle_minutes
+            }
 
-        data = {
-            "room": self.room,
-            "state": state,
-            "settings": settings
-        }
-        json_string = json.dumps(data)
-        if to_log is True:
-            SmarterLog.log("SmarterThermostat",json_string)
-        else:
-            #self.mcp.mqtt.publish("smarter_circuits/thermostats/"+self.room, json_string)
-            tstate = {"state": str(round(state["temperature"],2)),"unique_id":f"{self.room}st1", "entity_id":f"sensor.{self.room}_thermostat_temperature", "attributes": {"unit_of_measurement": "°F"}}
-            hstate = {"state": str(round(state["humidity"],2)),"unique_id":f"{self.room}st1", "entity_id":f"sensor.{self.room}_thermostat_humidity","attributes": {"unit_of_measurement": "%"}}
-            requests.post(f"http://192.168.2.82:8123/api/states/sensor.{self.room}_thermostat_temperature",json.dumps(tstate),headers={
-                "Authorization": f"Bearer {self.ha_token}",
-                "content-type": "application/json",
-            })
-            requests.post(f"http://192.168.2.82:8123/api/states/sensor.{self.room}_thermostat_humidity",json.dumps(hstate),headers={
-                "Authorization": f"Bearer {self.ha_token}",
-                "content-type": "application/json",
-            })
-            heat = "0"
-            if self.state.heat_on:
-                heat = "1"
-            fan = "0"
-            if self.state.ac_on:
-                fan = "1"
-            ac = "0"
-            if self.state.fan_on:
-                ac = "1"
-            whf = "0"
-            if self.state.whf_on:
-                whf = "1"
-            requests.post(f"http://192.168.2.82:8123/api/states/binary_sensor.{self.room}_heat_on",json.dumps({"state":heat,"unique_id":f"{self.room}st1","entity_id":f"sensor.{self.room}_heat_on"}),headers={
-                "Authorization": f"Bearer {self.ha_token}",
-                "content-type": "application/json",
-            })
-            requests.post(f"http://192.168.2.82:8123/api/states/binary_sensor.{self.room}_ac_on",json.dumps({"state":ac,"unique_id":f"{self.room}st1","entity_id":f"sensor.{self.room}_ac_on"}),headers={
-                "Authorization": f"Bearer {self.ha_token}",
-                "content-type": "application/json",
-            })
-            requests.post(f"http://192.168.2.82:8123/api/states/binary_sensor.{self.room}_fan_on",json.dumps({"state":fan,"unique_id":f"{self.room}st1","entity_id":f"sensor.{self.room}_fan_on"}),headers={
-                "Authorization": f"Bearer {self.ha_token}",
-                "content-type": "application/json",
-            })
-            requests.post(f"http://192.168.2.82:8123/api/states/binary_sensor.{self.room}_whf_on",json.dumps({"state":whf,"unique_id":f"{self.room}st1","entity_id":f"sensor.{self.room}_whf_on"}),headers={
-                "Authorization": f"Bearer {self.ha_token}",
-                "content-type": "application/json",
-            })
+            data = {
+                "room": self.room,
+                "state": state,
+                "settings": settings
+            }
+            json_string = json.dumps(data)
+            if to_log is True:
+                SmarterLog.log("SmarterThermostat",json_string)
+            else:
+                #self.mcp.mqtt.publish("smarter_circuits/thermostats/"+self.room, json_string)
+                tstate = {"state": str(round(state["temperature"],2)),"unique_id":f"{self.room}st1", "entity_id":f"sensor.{self.room}_thermostat_temperature", "attributes": {"unit_of_measurement": "°F"}}
+                hstate = {"state": str(round(state["humidity"],2)),"unique_id":f"{self.room}st1", "entity_id":f"sensor.{self.room}_thermostat_humidity","attributes": {"unit_of_measurement": "%"}}
+                requests.post(f"http://192.168.2.82:8123/api/states/sensor.{self.room}_thermostat_temperature",json.dumps(tstate),headers={
+                    "Authorization": f"Bearer {self.ha_token}",
+                    "content-type": "application/json",
+                })
+                requests.post(f"http://192.168.2.82:8123/api/states/sensor.{self.room}_thermostat_humidity",json.dumps(hstate),headers={
+                    "Authorization": f"Bearer {self.ha_token}",
+                    "content-type": "application/json",
+                })
+                heat = "0"
+                if self.state.heat_on:
+                    heat = "1"
+                fan = "0"
+                if self.state.ac_on:
+                    fan = "1"
+                ac = "0"
+                if self.state.fan_on:
+                    ac = "1"
+                whf = "0"
+                if self.state.whf_on:
+                    whf = "1"
+                requests.post(f"http://192.168.2.82:8123/api/states/binary_sensor.{self.room}_heat_on",json.dumps({"state":heat,"unique_id":f"{self.room}st1","entity_id":f"sensor.{self.room}_heat_on"}),headers={
+                    "Authorization": f"Bearer {self.ha_token}",
+                    "content-type": "application/json",
+                })
+                requests.post(f"http://192.168.2.82:8123/api/states/binary_sensor.{self.room}_ac_on",json.dumps({"state":ac,"unique_id":f"{self.room}st1","entity_id":f"sensor.{self.room}_ac_on"}),headers={
+                    "Authorization": f"Bearer {self.ha_token}",
+                    "content-type": "application/json",
+                })
+                requests.post(f"http://192.168.2.82:8123/api/states/binary_sensor.{self.room}_fan_on",json.dumps({"state":fan,"unique_id":f"{self.room}st1","entity_id":f"sensor.{self.room}_fan_on"}),headers={
+                    "Authorization": f"Bearer {self.ha_token}",
+                    "content-type": "application/json",
+                })
+                requests.post(f"http://192.168.2.82:8123/api/states/binary_sensor.{self.room}_whf_on",json.dumps({"state":whf,"unique_id":f"{self.room}st1","entity_id":f"sensor.{self.room}_whf_on"}),headers={
+                    "Authorization": f"Bearer {self.ha_token}",
+                    "content-type": "application/json",
+                })
+                if self.room == "hallway":
+                    requests.post(f"http://192.168.2.82:8123/api/states/input_number.low_temp_setting",json.dumps({"state":self.settings.temperature_low_setting,"unique_id":f"{self.room}st1","entity_id":f"input_number.low_temp_setting"}),headers={
+                        "Authorization": f"Bearer {self.ha_token}",
+                        "content-type": "application/json",
+                    })
+                    requests.post(f"http://192.168.2.82:8123/api/states/input_number.high_temp_setting",json.dumps({"state":self.settings.temperature_high_setting,"unique_id":f"{self.room}st1","entity_id":f"input_number.high_temp_setting"}),headers={
+                        "Authorization": f"Bearer {self.ha_token}",
+                        "content-type": "application/json",
+                    })
+        except:
+            print("bad")
