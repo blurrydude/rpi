@@ -542,10 +542,10 @@ class Thermostat:
                 if self.state.heat_on:
                     heat = "on"
                 fan = "off"
-                if self.state.ac_on:
+                if self.state.fan_on:
                     fan = "on"
                 ac = "off"
-                if self.state.fan_on:
+                if self.state.ac_on:
                     ac = "on"
                 whf = "off"
                 if self.state.whf_on:
