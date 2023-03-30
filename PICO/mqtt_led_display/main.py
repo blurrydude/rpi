@@ -137,8 +137,8 @@ def preset_pixel(x, y, c):
 ############ SCRIPT STARTS HERE ###################
 ###################################################
 # Set the SSID and passphrase of the ORBI56 network
-ssid = 'ORBI56'
-password = 'zanyballoon683'
+ssid = ''
+password = ''
 
 # Set the IP address of the MQTT broker and the topic to publish to
 mqtt_server = '192.168.2.200'
