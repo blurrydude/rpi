@@ -6,8 +6,8 @@ import time
 import _thread
 
 # Set the SSID and passphrase of the wifi network
-ssid = 'ORBI56'
-password = 'zanyballoon683'
+ssid = ''
+password = ''
 
 # Set the IP address of the MQTT broker
 mqtt_server = '192.168.2.200'
