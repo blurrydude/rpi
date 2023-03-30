@@ -147,6 +147,26 @@ class Thermostat:
                     "Authorization": f"Bearer {self.ha_token}",
                     "content-type": "application/json",
                 }).json()["state"])
+                self.settings.air_circulation_minutes = int(requests.get(f"http://192.168.2.82:8123/api/states/input_number.still_air_time_limit",headers={
+                    "Authorization": f"Bearer {self.ha_token}",
+                    "content-type": "application/json",
+                }).json()["state"])
+                self.settings.circulation_cycle_minutes = int(requests.get(f"http://192.168.2.82:8123/api/states/input_number.still_air_circulation_time",headers={
+                    "Authorization": f"Bearer {self.ha_token}",
+                    "content-type": "application/json",
+                }).json()["state"])
+                self.settings.ventilation_cycle_minutes = int(requests.get(f"http://192.168.2.82:8123/api/states/input_number.ventilation_assist_cycle_time",headers={
+                    "Authorization": f"Bearer {self.ha_token}",
+                    "content-type": "application/json",
+                }).json()["state"])
+                self.settings.swing_temp_offset = int(requests.get(f"http://192.168.2.82:8123/api/states/input_number.temperature_target_overshoot",headers={
+                    "Authorization": f"Bearer {self.ha_token}",
+                    "content-type": "application/json",
+                }).json()["state"])
+                self.settings.use_whole_house_fan = requests.get(f"http://192.168.2.82:8123/api/states/input_boolean.ac_ventilation_assist",headers={
+                    "Authorization": f"Bearer {self.ha_token}",
+                    "content-type": "application/json",
+                }).json()["state"].lower() == "off"
                 self.settings.system_disabled = requests.get(f"http://192.168.2.82:8123/api/states/input_boolean.hvac_enabled",headers={
                     "Authorization": f"Bearer {self.ha_token}",
                     "content-type": "application/json",
@@ -311,6 +331,8 @@ class Thermostat:
         self.report()
 
     def whf_on(self):
+        if self.room != 'hallway':
+            return
         try:
             self.log("whf_on")
             self.report(True)
@@ -329,6 +351,8 @@ class Thermostat:
         self.report()
 
     def whf_off(self):
+        if self.room != 'hallway':
+            return
         try:
             self.log("whf_off")
             self.report(True)
@@ -440,7 +464,7 @@ class Thermostat:
             return
         # if round(humidity) > self.settings.humidity_setting and self.settings.humidity_setting > 0 and self.has_circulated is False:
         #     self.circulate_air(circulation_cycle_minutes)
-        if self.state.temperature > self.settings.temperature_high_setting + 2 and self.has_ventilated is False:
+        if self.settings.ventilation_cycle_minutes > 0 and self.state.temperature > self.settings.temperature_high_setting + 2 and self.has_ventilated is False:
             self.ventilate_air(self.settings.ventilation_cycle_minutes)
         self.has_ventilated = False
         self.start_stage = datetime.now()
@@ -566,14 +590,5 @@ class Thermostat:
                     "Authorization": f"Bearer {self.ha_token}",
                     "content-type": "application/json",
                 })
-                if self.room == "hallway":
-                    requests.post(f"http://192.168.2.82:8123/api/states/input_number.low_temp_setting",json.dumps({"state":self.settings.temperature_low_setting,"unique_id":f"{self.room}st1","entity_id":f"input_number.low_temp_setting"}),headers={
-                        "Authorization": f"Bearer {self.ha_token}",
-                        "content-type": "application/json",
-                    })
-                    requests.post(f"http://192.168.2.82:8123/api/states/input_number.high_temp_setting",json.dumps({"state":self.settings.temperature_high_setting,"unique_id":f"{self.room}st1","entity_id":f"input_number.high_temp_setting"}),headers={
-                        "Authorization": f"Bearer {self.ha_token}",
-                        "content-type": "application/json",
-                    })
         except:
             print("bad")
