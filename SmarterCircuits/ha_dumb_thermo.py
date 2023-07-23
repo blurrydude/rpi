@@ -22,6 +22,10 @@ def set_circuit(circuit_pin, state):
     else:
         GPIO.output(circuit_pin, GPIO.LOW)
 
+
+set_circuit(heat_pin, False)
+set_circuit(ac_pin, False)
+set_circuit(fan_pin, False)
 while True:
     flip = requests.get(f"http://192.168.2.82:8123/api/states/input_boolean.gameroom_ac",headers={
             "Authorization": f"Bearer {ha_token}",
