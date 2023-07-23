@@ -1,4 +1,5 @@
 import time
+time.sleep(15)
 import requests
 import Adafruit_DHT
 import RPi.GPIO as GPIO
