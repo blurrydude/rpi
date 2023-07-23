@@ -139,6 +139,9 @@ class Thermostat:
         while True:
             try:
                 self.cycle()
+            except:
+                self.log("BAD CYCLE!!!")
+            try:
                 self.settings.temperature_high_setting = float(requests.get(f"http://192.168.2.82:8123/api/states/input_number.cool_above",headers={
                     "Authorization": f"Bearer {self.ha_token}",
                     "content-type": "application/json",
@@ -172,7 +175,7 @@ class Thermostat:
                     "content-type": "application/json",
                 }).json()["state"].lower() == "off"
             except:
-                self.log("BAD CYCLE!!!")
+                self.log("BAD HA UPDATE!!!")
             time.sleep(10)
     
     def set(self, setting, value):
