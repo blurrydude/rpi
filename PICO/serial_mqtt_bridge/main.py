@@ -43,9 +43,13 @@ def mqtt_loop():
 
 def serial_loop():
     while True:
-        message = comms.read()
-        if message is not None:
-            mqtt_client.publish('command', message)
+        try:
+            message = comms.read()
+            if message is not None:
+                mqtt_client.publish('command', message)
+        except:
+            #serial state can be weird after power drops, this is a sledgehammer to prevent that from interupting startup
+            pass
         time.sleep(0.2)
     
 mqtt_client = None
