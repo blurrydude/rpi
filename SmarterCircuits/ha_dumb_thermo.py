@@ -29,26 +29,29 @@ set_circuit(heat_pin, False)
 set_circuit(ac_pin, False)
 set_circuit(fan_pin, False)
 while True:
-    flip_ac = requests.get(f"http://192.168.2.82:8123/api/states/input_boolean.gameroom_ac",headers={
-            "Authorization": f"Bearer {ha_token}",
-            "content-type": "application/json",
-        }).json()["state"].lower() == "on"
-    flip_heat = requests.get(f"http://192.168.2.82:8123/api/states/input_boolean.gameroom_heat",headers={
-            "Authorization": f"Bearer {ha_token}",
-            "content-type": "application/json",
-        }).json()["state"].lower() == "on"
-    if flip_ac is True and flip_heat is True:
-        continue
-    if flip_ac != ac_on:
-        ac_on = flip_ac
-        if ac_on:
-            set_circuit(ac_pin, True)
-        else:
-            set_circuit(ac_pin, False)
-    if flip_heat != heat_on:
-        heat_on = flip_heat
-        if heat_on:
-            set_circuit(heat_pin, True)
-        else:
-            set_circuit(heat_pin, False)
+    try:
+        flip_ac = requests.get(f"http://192.168.2.82:8123/api/states/input_boolean.gameroom_ac",headers={
+                "Authorization": f"Bearer {ha_token}",
+                "content-type": "application/json",
+            }).json()["state"].lower() == "on"
+        flip_heat = requests.get(f"http://192.168.2.82:8123/api/states/input_boolean.gameroom_heat",headers={
+                "Authorization": f"Bearer {ha_token}",
+                "content-type": "application/json",
+            }).json()["state"].lower() == "on"
+        if flip_ac is True and flip_heat is True:
+            continue
+        if flip_ac != ac_on:
+            ac_on = flip_ac
+            if ac_on:
+                set_circuit(ac_pin, True)
+            else:
+                set_circuit(ac_pin, False)
+        if flip_heat != heat_on:
+            heat_on = flip_heat
+            if heat_on:
+                set_circuit(heat_pin, True)
+            else:
+                set_circuit(heat_pin, False)
+    except:
+        print("bad cycle")
     time.sleep(10)
